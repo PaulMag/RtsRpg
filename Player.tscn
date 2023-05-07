@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck62u5ls10ko"]
+[gd_scene load_steps=6 format=3 uid="uid://ck62u5ls10ko"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
 
@@ -10,8 +10,40 @@ properties/1/path = NodePath(".:direction")
 properties/1/spawn = false
 properties/1/sync = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
+bg_color = Color(0.6, 1, 0.6, 0.196078)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i42r7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4v4f7"]
+
 [node name="Player" type="Node"]
 script = ExtResource("1_ms6ct")
 
 [node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
+
+[node name="Panel" type="Panel" parent="."]
+theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
+
+[node name="SelectionDetector" type="Area2D" parent="."]
+material = SubResource("CanvasItemMaterial_i42r7")
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectionDetector"]
+shape = SubResource("RectangleShape2D_4v4f7")
+
+[node name="SelectionTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="SelectionDetector" to="." method="_on_selection_detector_area_entered"]
+[connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]
