@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://t6niqjntqex7"]
+[gd_scene load_steps=9 format=3 uid="uid://t6niqjntqex7"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_gjlve"]
 [ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="2_8i5vk"]
@@ -208,22 +208,6 @@ vertices = PackedVector2Array(14, 117, -110, 117, -150, 105, -150, 56, 298, 150,
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 0, 3), PackedInt32Array(1, 6, 7, 8, 2), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(13, 10, 9, 14), PackedInt32Array(4, 15, 16, 17), PackedInt32Array(18, 12, 11, 19, 17), PackedInt32Array(20, 13, 14, 21), PackedInt32Array(22, 21, 14, 18, 17), PackedInt32Array(23, 0, 5, 24, 25, 26), PackedInt32Array(23, 26, 27, 28, 6), PackedInt32Array(29, 2, 8, 30), PackedInt32Array(30, 8, 31, 32), PackedInt32Array(33, 34, 32, 31), PackedInt32Array(35, 36, 15, 37), PackedInt32Array(37, 15, 4, 3), PackedInt32Array(25, 38, 26), PackedInt32Array(16, 39, 22, 17), PackedInt32Array(24, 17, 19, 25), PackedInt32Array(7, 6, 28, 40), PackedInt32Array(31, 40, 28, 33), PackedInt32Array(33, 28, 37), PackedInt32Array(41, 33, 37), PackedInt32Array(3, 41, 37)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-368, -17, 659, -15, 660, 51, 344, 53, 343, 168, 407, 168, 409, 235, 487, 231, 489, 105, 568, 104, 569, 470, 199, 472, 199, 311, 151, 313, 152, 471, 17, 475, 20, 498, -369, 495), PackedVector2Array(181, 150, 298, 150, 297, 265, 182, 265), PackedVector2Array(342, 345, 519, 344, 520, 425, 344, 423), PackedVector2Array(-363, 52, -150, 56, -150, 105, -240, 109, -240, 237, -306, 239, -305, 109, -364, 111), PackedVector2Array(-333, 276, -179, 275, -177, 366, -334, 364), PackedVector2Array(-110, 117, 14, 117, 13, 463, -109, 461)])
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hef46"]
-bg_color = Color(0.6, 1, 0.6, 0.196078)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 1, 0, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6eagm"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5cmi"]
-
 [node name="Game" type="Node"]
 script = ExtResource("1_gjlve")
 
@@ -254,20 +238,6 @@ position = Vector2(44, 313)
 [node name="Unit3" parent="Dungeon/Units" groups=["units"] instance=ExtResource("3_7q04u")]
 position = Vector2(321, 325)
 playerId = 2
-
-[node name="Panel" type="Panel" parent="."]
-theme_override_styles/panel = SubResource("StyleBoxFlat_hef46")
-
-[node name="SelectionDetector" type="Area2D" parent="."]
-material = SubResource("CanvasItemMaterial_6eagm")
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectionDetector"]
-shape = SubResource("RectangleShape2D_j5cmi")
-
-[node name="SelectionTimer" type="Timer" parent="."]
-wait_time = 0.1
 
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("5_fivu0")
@@ -324,8 +294,6 @@ spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
 
-[connection signal="area_entered" from="SelectionDetector" to="." method="_on_selection_detector_area_entered"]
-[connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]
 [connection signal="pressed" from="Multiplayer/UI/Net/Options/Host" to="Multiplayer" method="_on_host_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/Net/Options/Connect" to="Multiplayer" method="_on_connect_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/Net/HBoxContainer/StartGame" to="Multiplayer" method="_on_start_game_pressed"]
