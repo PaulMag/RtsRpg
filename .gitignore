@@ -1,5 +1,6 @@
 .godot
 .import
+default_env.tres
 
 *.wav
 *.ogg
