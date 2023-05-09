@@ -2,9 +2,11 @@ extends Node
 
 @export var playerId = 0
 @export var direction := Vector2()
-@export var selectedUnits = []
+@export var selectedUnitIds = []
+@export var destination = Vector2.ZERO
 
 @export var isCloning = false
+@export var isIssuingMoveOrder = false
 
 const SELECTION_BOX_MINIMUM_SIZE = 5
 
@@ -13,7 +15,6 @@ var isDraggingMouse = false
 var isSelecting = false
 var selectionStart = Vector2()
 var selectionEnd = Vector2()
-
 
 func _ready():
 	playerId = name.to_int()
@@ -45,6 +46,10 @@ func _process(delta):
 func clone():
 	isCloning = true
 
+@rpc("call_local")
+func issueMoveOrder():
+	isIssuingMoveOrder = true
+
 
 func area_selected(start, end):
 	var area = []
@@ -53,7 +58,6 @@ func area_selected(start, end):
 	set_selection_area(area)
 
 func _input(event):
-	event.is_action_pressed("mouse_left_click")
 	if event.is_action_pressed("mouse_left_click"):
 		selectionStart = $Panel.get_global_mouse_position()
 		isDraggingMouse = true	
@@ -65,6 +69,10 @@ func _input(event):
 		isDraggingMouse = false
 		$Panel.visible = false
 		area_selected(selectionStart, selectionEnd)
+		
+	if event.is_action_pressed("mouse_right_click"):
+		destination = $Panel.get_global_mouse_position()
+		issueMoveOrder.rpc()
 
 func _on_selection_timer_timeout():
 	isSelecting = false
@@ -74,7 +82,7 @@ func set_selection_area(area):
 	allUnits = get_tree().get_nodes_in_group("units")
 	for unit in allUnits:
 		unit.set_selected(false)
-	selectedUnits = []
+	selectedUnitIds = []
 	isSelecting = true
 	$SelectionDetector/CollisionShape2D.disabled  = false
 	$SelectionDetector.position = (area[0] + area[1]) * 0.5
@@ -86,8 +94,7 @@ func _on_selection_detector_area_entered(area):
 	if isSelecting:
 		var unit = area.get_parent()
 		unit.set_selected(true)
-		selectedUnits.append(unit)
-		print(selectedUnits)
+		selectedUnitIds.append(unit.get_instance_id())
 		#TODO: Should select according to z_index ordering
 		var boxShape = abs(selectionStart - selectionEnd)
 		if boxShape.x + boxShape.y < SELECTION_BOX_MINIMUM_SIZE:

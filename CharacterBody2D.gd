@@ -53,21 +53,6 @@ func _input(event):
 	
 	if is_multiplayer_authority():
 	
-		if isSelected and event.is_action_pressed("mouse_right_click"):
-			pass
-		
-		if isSelected and event.is_action_pressed("ui_accept"):
-			isAttacking = true
-			attack(target)
-		elif isSelected and event.is_action_pressed("ui_cancel"):
-#			var newUnit = PLAYER_UNIT.instantiate()
-#			newUnit.position = position
-#			newUnit.position.x += 30
-#			get_parent().add_child(newUnit, true)
-			pass
-		elif isSelected:
-			isAttacking = false
-		
 		if event.is_action_pressed("mouse_right_click"):
 			followCursor = true
 		elif event.is_action_released("mouse_right_click"):
@@ -107,6 +92,10 @@ func _process(delta):
 	elif state == states.IDLE:
 		$AnimatedSprite2D.animation = "idle_" + FACING_MAPPING[facing]
 
+func move_to(_destination):
+	destination = _destination
+	followCursor = true
+
 func _physics_process(delta):
 	
 	if is_multiplayer_authority():
@@ -121,8 +110,7 @@ func _physics_process(delta):
 #		if Input.is_action_pressed("ui_down"):
 #			position.y += delta * SPEED
 	
-		if followCursor and isSelected:
-			destination = get_global_mouse_position()
+		if followCursor:
 			$NavigationAgent2D.target_position = destination
 			
 		if $NavigationAgent2D.is_target_reachable():
@@ -133,6 +121,7 @@ func _physics_process(delta):
 			
 			if position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
+				followCursor = false
 			else:
 				pass
 		else:
