@@ -1,10 +1,10 @@
-[gd_scene load_steps=62 format=3 uid="uid://du0bd8owk2eqb"]
+[gd_scene load_steps=62 format=3 uid="uid://ddhyrh1ph6cts"]
 
-[ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/walk/BODY_skeleton.png" id="1"]
-[ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="1_66j5u"]
+[ext_resource type="Texture2D" uid="uid://evabrhlp6gpt" path="res://sprites/units/skeleton/walk/BODY_skeleton.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://c1dqiqarc34r" path="res://sprites/units/selection_circle.png" id="1_66j5u"]
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="2_pg4xx"]
-[ext_resource type="Texture2D" uid="uid://4jxtstcb1i27" path="res://sprites/units/skeleton/slash/BODY_skeleton.png" id="3_yhbft"]
-[ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="4_ddvpk"]
+[ext_resource type="Texture2D" uid="uid://ci4uc3uyhtlhd" path="res://sprites/units/skeleton/slash/BODY_skeleton.png" id="3_yhbft"]
+[ext_resource type="AudioStream" uid="uid://blpfekf6npf5w" path="res://sounds/Hit damage 1.wav" id="4_ddvpk"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0

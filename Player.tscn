@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck62u5ls10ko"]
+[gd_scene load_steps=6 format=3 uid="uid://dgjf1i06k5s0y"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
 
@@ -9,6 +9,12 @@ properties/0/sync = false
 properties/1/path = NodePath(".:direction")
 properties/1/spawn = false
 properties/1/sync = true
+properties/2/path = NodePath(".:destination")
+properties/2/spawn = false
+properties/2/sync = true
+properties/3/path = NodePath(".:selectedUnitIds")
+properties/3/spawn = true
+properties/3/sync = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)
