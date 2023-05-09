@@ -92,6 +92,7 @@ func _process(delta):
 	elif state == states.IDLE:
 		$AnimatedSprite2D.animation = "idle_" + FACING_MAPPING[facing]
 
+
 func move_to(_destination):
 	destination = _destination
 	followCursor = true
@@ -99,16 +100,6 @@ func move_to(_destination):
 func _physics_process(delta):
 	
 	if is_multiplayer_authority():
-	
-#	if isSelected:
-#		if Input.is_action_pressed("ui_left"):
-#			position.x -= delta * SPEED
-#		if Input.is_action_pressed("ui_right"):
-#			position.x += delta * SPEED
-#		if Input.is_action_pressed("ui_up"):
-#			position.y -= delta * SPEED
-#		if Input.is_action_pressed("ui_down"):
-#			position.y += delta * SPEED
 	
 		if followCursor:
 			$NavigationAgent2D.target_position = destination
@@ -128,11 +119,6 @@ func _physics_process(delta):
 			pass
 		
 		move_and_slide()
-	#	velocity = position.direction_to(destination) * SPEED
-	#	if position.distance_to(destination) > 15:
-	#		move_and_slide()
-	#	else:
-	#		pass
 
 func damage(amount=1):
 	hp -= amount
@@ -141,17 +127,3 @@ func damage(amount=1):
 
 func attack(target):
 	target.damage()
-
-#	if selected:
-#		var direction_x = Input.get_axis("ui_left", "ui_right")
-#		var direction_y = Input.get_axis("ui_up", "ui_down")
-#		if direction_x:
-#			velocity.x = direction_x * SPEED
-#		else:
-#			velocity.x = move_toward(velocity.x, 0, SPEED)
-#		if direction_y:
-#			velocity.y = direction_y * SPEED
-#		else:
-#			velocity.y = move_toward(velocity.y, 0, SPEED)
-#
-#		move_and_slide()

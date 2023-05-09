@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Game.gd" id="1_gjlve"]
 [ext_resource type="Texture2D" uid="uid://bn5y6peojwd3" path="res://sprites/floortileset.png" id="2_8i5vk"]
 [ext_resource type="Script" path="res://Camera.gd" id="3_5s17m"]
-[ext_resource type="PackedScene" uid="uid://ddhyrh1ph6cts" path="res://Unit.tscn" id="3_7q04u"]
+[ext_resource type="PackedScene" uid="uid://dt5bucntp6q3q" path="res://units/Unit.tscn" id="4_l78ar"]
 [ext_resource type="Script" path="res://Multiplayer.gd" id="5_fivu0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2cqk"]
@@ -229,15 +229,14 @@ navigation_polygon = SubResource("NavigationPolygon_yp8w1")
 [node name="Units" type="Node2D" parent="Dungeon"]
 y_sort_enabled = true
 
-[node name="Unit1" parent="Dungeon/Units" groups=["units"] instance=ExtResource("3_7q04u")]
-position = Vector2(29, 208)
+[node name="Unit1" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+position = Vector2(-71, 76)
 
-[node name="Unit2" parent="Dungeon/Units" groups=["units"] instance=ExtResource("3_7q04u")]
-position = Vector2(44, 313)
+[node name="Unit2" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+position = Vector2(133, 180)
 
-[node name="Unit3" parent="Dungeon/Units" groups=["units"] instance=ExtResource("3_7q04u")]
-position = Vector2(321, 325)
-playerId = 2
+[node name="Unit3" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+position = Vector2(337, 210)
 
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("5_fivu0")
@@ -285,7 +284,6 @@ layout_mode = 2
 text = "Start Game"
 
 [node name="UnitSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
-_spawnable_scenes = PackedStringArray("res://Unit.tscn")
 spawn_path = NodePath("../../Dungeon/Units")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
