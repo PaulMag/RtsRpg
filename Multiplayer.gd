@@ -5,20 +5,10 @@ const PLAYER = preload("res://Player.tscn")
 const PORT = 4433
 
 func _process(delta):
-#	var allPlayersAndMultiplayer = get_tree().get_nodes_in_group("players")
-#	var allPlayers = []
-#	var first = true
-#	for player in allPlayersAndMultiplayer:
-#		if not first:
-#			allPlayers.append(player.playerId)
-#		first = false
-#	print(allPlayers)
 	var allPlayers = $Players.get_children()
 	var allPlayerIds = []
 	for player in allPlayers:
 		allPlayerIds.append(player.playerId)
-#	if randi_range(0, 60) == 0:
-#		print(multiplayer.get_unique_id(), "   ", allPlayerIds)
 
 func _ready():
 #	get_tree().paused = true
@@ -63,6 +53,7 @@ func start_game():
 	
 	if multiplayer.is_server():
 #		multiplayer.peer_connected.connect(add_player)
+#		multiplayer.peer_disconnected.connect(delete_player)
 		
 		for id in multiplayer.get_peers():
 			add_player(id)
@@ -75,7 +66,6 @@ func start_game():
 			print("Not dedicated server. Added player 1.")
 	
 	$"../Dungeon/Units/Unit3".playerId = playerd2id
-#	$"../Dungeon/Units/Unit3".set_multiplayer_authority(playerd2id)
 
 
 func _on_start_game_pressed():
