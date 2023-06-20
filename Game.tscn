@@ -241,7 +241,23 @@ position = Vector2(337, 210)
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("5_fivu0")
 
+[node name="PanelContainer" type="PanelContainer" parent="Multiplayer"]
+offset_left = -420.0
+offset_top = -80.0
+offset_right = -359.0
+offset_bottom = -40.0
+
+[node name="PlayerList" type="VBoxContainer" parent="Multiplayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Multiplayer/PanelContainer/PlayerList"]
+modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "Players:"
+horizontal_alignment = 1
+
 [node name="UI" type="Control" parent="Multiplayer"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = -139.0
@@ -249,37 +265,55 @@ offset_top = -37.0
 offset_right = 569.0
 offset_bottom = 481.0
 
-[node name="Net" type="VBoxContainer" parent="Multiplayer/UI"]
+[node name="Options" type="VBoxContainer" parent="Multiplayer/UI"]
 layout_mode = 0
 offset_left = 172.0
 offset_top = 22.0
 offset_right = 844.0
 offset_bottom = 467.0
+alignment = 1
 
-[node name="Options" type="HBoxContainer" parent="Multiplayer/UI/Net"]
+[node name="Hosting" type="HBoxContainer" parent="Multiplayer/UI/Options"]
 layout_mode = 2
+alignment = 1
 
-[node name="Label" type="Label" parent="Multiplayer/UI/Net/Options"]
+[node name="Host" type="Button" parent="Multiplayer/UI/Options/Hosting"]
 layout_mode = 2
-text = "Direct:"
+text = "Host new game"
 
-[node name="Host" type="Button" parent="Multiplayer/UI/Net/Options"]
+[node name="Joining" type="HBoxContainer" parent="Multiplayer/UI/Options"]
 layout_mode = 2
-text = "Host server"
+alignment = 1
 
-[node name="Connect" type="Button" parent="Multiplayer/UI/Net/Options"]
+[node name="Remote" type="LineEdit" parent="Multiplayer/UI/Options/Joining"]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Connect to existing host on IP:"
+text = "10.0.0.9"
+placeholder_text = "10.0.0.9"
+max_length = 15
+expand_to_text_length = true
+clear_button_enabled = true
+caret_blink = true
 
-[node name="Remote" type="LineEdit" parent="Multiplayer/UI/Net/Options"]
+[node name="Connect" type="Button" parent="Multiplayer/UI/Options/Joining"]
 layout_mode = 2
-text = "10.0.0.5"
-placeholder_text = "10.0.0.5"
+text = "Connect to existing game on IP"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Multiplayer/UI/Net"]
+[node name="Starting" type="HBoxContainer" parent="Multiplayer/UI/Options"]
 layout_mode = 2
+alignment = 1
 
-[node name="StartGame" type="Button" parent="Multiplayer/UI/Net/HBoxContainer"]
+[node name="PlayerName" type="LineEdit" parent="Multiplayer/UI/Options/Starting"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+placeholder_text = "Write your name"
+max_length = 16
+expand_to_text_length = true
+clear_button_enabled = true
+caret_blink = true
+
+[node name="StartGame" type="Button" parent="Multiplayer/UI/Options/Starting"]
 layout_mode = 2
 text = "Start Game"
 
@@ -292,6 +326,6 @@ spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
 
-[connection signal="pressed" from="Multiplayer/UI/Net/Options/Host" to="Multiplayer" method="_on_host_pressed"]
-[connection signal="pressed" from="Multiplayer/UI/Net/Options/Connect" to="Multiplayer" method="_on_connect_pressed"]
-[connection signal="pressed" from="Multiplayer/UI/Net/HBoxContainer/StartGame" to="Multiplayer" method="_on_start_game_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/Options/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/Options/Joining/Connect" to="Multiplayer" method="_on_connect_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/Options/Starting/StartGame" to="Multiplayer" method="_on_start_game_pressed"]
