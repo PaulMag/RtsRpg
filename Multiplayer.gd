@@ -1,6 +1,7 @@
 extends Node
 
 const PLAYER = preload("res://Player.tscn")
+const PLAYER_LABEL = preload("res://PlayerLabel.tscn")
 
 const PORT = 4433
 
@@ -30,7 +31,7 @@ func _on_host_pressed():
 
 func _on_connect_pressed():
 	# Start game as client, and join existing host
-	var txt : String = $UI/Net/Options/Remote.text
+	var txt : String = $UI/Options/Joining/Remote.text
 	if txt == "":
 		OS.alert("Need a remote to connect to.")
 		return
@@ -66,6 +67,14 @@ func start_game():
 			print("Not dedicated server. Added player 1.")
 	
 	$"../Dungeon/Units/Unit3".playerId = playerd2id
+	
+	
+	for player in $Players.get_children():
+		var playerLabelNode = PLAYER_LABEL.instantiate()
+		playerLabelNode.playerId = player.playerId
+		playerLabelNode.playerName = player.name
+		playerLabelNode.playerColor = player.playerColor
+		$PanelContainer/PlayerList.add_child(playerLabelNode, true)
 
 
 func _on_start_game_pressed():

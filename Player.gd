@@ -1,6 +1,9 @@
 extends Node
 
 @export var playerId = 0
+@export var playerName = ""
+@export var playerColor : Color
+
 @export var direction := Vector2()
 @export var selectedUnitIds = []
 @export var destination = Vector2.ZERO
@@ -18,6 +21,7 @@ var selectionEnd = Vector2()
 
 func _ready():
 	playerId = name.to_int()
+	playerColor = Color(randf(), randf(), randf())
 	set_multiplayer_authority(playerId)
 	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
 	if multiplayer.is_server():

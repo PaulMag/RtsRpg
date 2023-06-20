@@ -15,6 +15,12 @@ properties/2/sync = true
 properties/3/path = NodePath(".:selectedUnitIds")
 properties/3/spawn = true
 properties/3/sync = true
+properties/4/path = NodePath(".:playerColor")
+properties/4/spawn = true
+properties/4/sync = true
+properties/5/path = NodePath(".:playerName")
+properties/5/spawn = false
+properties/5/sync = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)

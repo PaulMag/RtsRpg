@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq04xpl22e1hq"]
+
+[ext_resource type="Script" path="res://PlayerLabel.gd" id="1_35wee"]
+
+[node name="PlayerLabel" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_35wee")
+
+[node name="PlayerId" type="Label" parent="."]
+layout_mode = 2
+
+[node name="PlayerName" type="Label" parent="."]
+layout_mode = 2
