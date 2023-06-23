@@ -7,6 +7,8 @@ extends CharacterBody2D
 signal selected
 signal deselected
 
+@export var PROJECTILE = preload("res://projectiles/Bullet.tscn")
+
 const SPEED = 150.0
 const ATTACK_RANGE = 30
 const HP_MAX = 100
@@ -36,7 +38,6 @@ var target = self
 @export var targetUnit = self
 
 
-var isAttacking = false
 var followCursor = false
 
 func _ready():
@@ -57,7 +58,9 @@ func _process(delta):
 	$HealthBar.value = hp
 	
 	if is_multiplayer_authority():
-		if velocity:
+		if state == states.ATTACKING:
+			pass
+		elif velocity:
 			state = states.WALKING
 		else:
 			state = states.IDLE
@@ -73,8 +76,8 @@ func _process(delta):
 		elif velocity.y > 0:
 			facing = 2
 	
-	if isAttacking:
-		$AnimatedSprite2D.animation = "attack_up"
+	if state == states.ATTACKING:
+		$AnimatedSprite2D.animation = "attack_" + FACING_MAPPING[facing]
 	elif state == states.WALKING:
 		$AnimatedSprite2D.animation = "walk_" + FACING_MAPPING[facing]
 	elif state == states.IDLE:
@@ -114,4 +117,14 @@ func damage(amount=1):
 	$DamageSound.play()
 
 func attack(damage=5):
-	targetUnit.damage(damage)
+	state = states.ATTACKING
+	$AttackTimer.start()
+	var newProjectile = PROJECTILE.instantiate() as StaticBody2D
+	newProjectile.position = position
+	newProjectile.target = targetUnit
+	newProjectile.damage = damage
+	get_parent().get_parent().add_child(newProjectile)
+
+
+func _on_attack_timer_timeout():
+	state = states.IDLE
