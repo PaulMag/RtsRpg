@@ -9,7 +9,16 @@ func _physics_process(delta):
 				var unit = instance_from_id(unitId)
 				if unit.playerId == player.playerId:
 					unit.move_to(player.destination)
+					if player.targetedUnitId != 0:
+						unit.targetUnit = instance_from_id(player.targetedUnitId)
 			player.isIssuingMoveOrder = false
+
+		if player.isIssuingAttackOrder:
+			for unitId in player.selectedUnitIds:
+				var unit = instance_from_id(unitId)
+				unit.attack()
+			player.isIssuingAttackOrder = false
+
 		for unit in units:
 			if player.name.to_int() == unit.playerId:
 				unit.position += player.direction * delta * unit.SPEED

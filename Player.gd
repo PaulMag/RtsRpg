@@ -7,15 +7,18 @@ extends Node
 @export var direction := Vector2()
 @export var selectedUnitIds = []
 @export var destination = Vector2.ZERO
+@export var targetedUnitId : int
 
 @export var isCloning = false
 @export var isIssuingMoveOrder = false
+@export var isIssuingAttackOrder = false
 
 const SELECTION_BOX_MINIMUM_SIZE = 5
 
 var allUnits = []
 var isDraggingMouse = false
 var isSelecting = false
+var isTargeting = false
 var selectionStart = Vector2()
 var selectionEnd = Vector2()
 
@@ -46,6 +49,10 @@ func clone():
 func issueMoveOrder():
 	isIssuingMoveOrder = true
 
+@rpc("call_local")
+func issueAttackOrder():
+	isIssuingAttackOrder = true
+
 
 func area_selected(start, end):
 	var area = []
@@ -68,7 +75,10 @@ func _input(event):
 		
 	if event.is_action_pressed("mouse_right_click"):
 		destination = $Panel.get_global_mouse_position()
+		set_target_area(destination)
 		issueMoveOrder.rpc()
+	if event.is_action_pressed("ui_accept"):
+		issueAttackOrder.rpc()
 
 func _on_selection_timer_timeout():
 	isSelecting = false
@@ -104,3 +114,13 @@ func draw_selection_box(s=true):
 	pos.y = min(selectionStart.y, selectionEnd.y)
 	$Panel.position = pos
 	$Panel.size *= int(s)
+
+
+func set_target_area(position):
+	#TODO: Do this properly.
+	allUnits = get_tree().get_nodes_in_group("units")
+	for unit in allUnits:
+		if position.distance_to(unit.position) < 12:
+			targetedUnitId = unit.get_instance_id()
+			return
+	
