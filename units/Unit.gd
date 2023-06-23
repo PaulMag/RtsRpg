@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-var PLAYER_UNIT = load("Unit.tscn")
+#var PLAYER_UNIT = load("Unit.tscn")
+#var PLAYER_UNIT = preload("res://units/Unit.tscn")
+#var PLAYER_UNIT = preload("Unit.tscn")
 
 signal selected
 signal deselected
@@ -30,7 +32,9 @@ var target = self
 @export var isSelected = false
 @onready var selectedCircle = $SelectedCircle
 @onready var destination = position
-var targetUnit = null
+
+@export var targetUnit = self
+
 
 var isAttacking = false
 var followCursor = false
@@ -47,22 +51,6 @@ func set_selected(flag):
 		emit_signal("selected")
 	else:
 		emit_signal("deselected")
-		
-
-func _input(event):
-	
-	if is_multiplayer_authority():
-	
-		if event.is_action_pressed("mouse_right_click"):
-			followCursor = true
-		elif event.is_action_released("mouse_right_click"):
-			followCursor = false
-		
-		if event.is_action_released("mouse_right_click") and selectedCircle.visible:
-			var pos = get_global_mouse_position()
-			if pos.distance_to(position) < 20:
-				damage(7)
-
 
 func _process(delta):
 	
@@ -125,5 +113,5 @@ func damage(amount=1):
 	$HealthBar.value = hp
 	$DamageSound.play()
 
-func attack(target):
-	target.damage()
+func attack(damage=5):
+	targetUnit.damage(damage)
