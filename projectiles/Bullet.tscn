@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b71qgb2shicjn"]
 
-[ext_resource type="Script" path="res://projectiles/Bullet.gd" id="1_ex6uu"]
+[ext_resource type="Script" path="res://projectiles/Bullet.cs" id="1_kbjn7"]
 [ext_resource type="Texture2D" uid="uid://dca1ndxi8lpf6" path="res://sprites/projectiles/bullet.png" id="1_ktjkd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tan5x"]
@@ -30,7 +30,7 @@ size = Vector2(22, 6)
 
 [node name="Bullet" type="StaticBody2D"]
 collision_layer = 2
-script = ExtResource("1_ex6uu")
+script = ExtResource("1_kbjn7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lahdg")

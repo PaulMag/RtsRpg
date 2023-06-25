@@ -16,12 +16,12 @@ func _physics_process(delta):
 		if player.isIssuingAttackOrder:
 			for unitId in player.selectedUnitIds:
 				var unit = instance_from_id(unitId)
-				unit.attack()
+				unit.attack(self)
 			player.isIssuingAttackOrder = false
 
-		for unit in units:
-			if player.name.to_int() == unit.playerId:
-				unit.position += player.direction * delta * unit.SPEED
-				if player.isCloning:
-					unit.position.x -= 75
-		player.isCloning = false
+#		for unit in units:
+#			if player.name.to_int() == unit.playerId:
+#				unit.position += player.direction * delta * unit.SPEED
+#				if player.isCloning:
+#					unit.position.x -= 75
+#		player.isCloning = false

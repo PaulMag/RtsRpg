@@ -12,8 +12,12 @@ config_version=5
 
 config/name="RtsRpg"
 run/main_scene="res://Game.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.0", "C#")
 config/icon="res://icon.png"
+
+[dotnet]
+
+project/assembly_name="RtsRpg"
 
 [input]
 

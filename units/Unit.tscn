@@ -1,6 +1,6 @@
 [gd_scene load_steps=80 format=3 uid="uid://dt5bucntp6q3q"]
 
-[ext_resource type="Script" path="res://units/Unit.gd" id="1_m0gx0"]
+[ext_resource type="Script" path="res://units/Unit.cs" id="1_pjnp2"]
 [ext_resource type="Texture2D" uid="uid://c1dqiqarc34r" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
 [ext_resource type="Texture2D" uid="uid://ci4uc3uyhtlhd" path="res://sprites/units/skeleton/slash/BODY_skeleton.png" id="3_plnwv"]
 [ext_resource type="Texture2D" uid="uid://evabrhlp6gpt" path="res://sprites/units/skeleton/walk/BODY_skeleton.png" id="4_5jlwd"]
@@ -582,7 +582,7 @@ properties/3/sync = true
 
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
-script = ExtResource("1_m0gx0")
+script = ExtResource("1_pjnp2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("11")
