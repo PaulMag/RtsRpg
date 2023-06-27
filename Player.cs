@@ -21,7 +21,7 @@ public partial class Player : Node
 	
 	public const int SELECTION_BOX_MINIMUM_SIZE = 5;
 
-    public List<Unit> allUnits = new List<Unit>() { };
+	public List<Unit> allUnits = new List<Unit>() { };
 	public bool isDraggingMouse = false;
 	public bool isSelecting = false;
 	public bool isTargeting = false;
@@ -44,16 +44,16 @@ public partial class Player : Node
 		}
 		else
 		{
-            GD.Print($"Player on peer: {playerId}   '{Name}'");
-        }
+			GD.Print($"Player on peer: {playerId}   '{Name}'");
+		}
 
-        panel = GetNode<Panel>("Panel");
+		panel = GetNode<Panel>("Panel");
 		selectionDetector = GetNode<Area2D>("SelectionDetector");
 		collisionShape = GetNode<CollisionShape2D>("SelectionDetector/CollisionShape2D");
-    }
+	}
 	
 	public void _process(double delta)
-	{  
+	{
 		if(isDraggingMouse)
 		{
 			draw_selection_box();
@@ -65,30 +65,30 @@ public partial class Player : Node
 		}
 	}
 
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    public void clone()
+	//TODO: Figure out RPC
+	//@rpc("call_local")
+	public void clone()
 	{  
 		isCloning = true;
 	
 	}
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    [Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void issueMoveOrder()
+	//TODO: Figure out RPC
+	//@rpc("call_local")
+	[Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void issueMoveOrder()
 	{  
 		isIssuingMoveOrder = true;
 	
 	}
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    public void issueAttackOrder()
+	//TODO: Figure out RPC
+	//@rpc("call_local")
+	public void issueAttackOrder()
 	{  
 		isIssuingAttackOrder = true;
 	}
 	
 	public void area_selected(Vector2 start, Vector2 end)
-	{  
+	{
 		Vector2 area_start = new Vector2(Mathf.Min(start.X, end.X), Mathf.Min(start.Y, end.Y));
 		Vector2 area_end = new Vector2(Mathf.Max(start.X, end.X), Mathf.Max(start.Y, end.Y));
 		set_selection_area(area_start, area_end);
@@ -118,15 +118,16 @@ public partial class Player : Node
 		{
 			destination = panel.GetGlobalMousePosition();
 			set_target_area(destination);
-            //TODO: Figure out RPC
-            //issueMoveOrder.rpc();
-        }
-        if (@event.IsActionPressed("ui_accept"))
+			//TODO: Figure out RPC
+			//issueMoveOrder.rpc();
+			isIssuingMoveOrder = true;
+		}
+		if (@event.IsActionPressed("ui_accept"))
 		{
-            //TODO: Figure out RPC
-            //issueAttackOrder.rpc();
-        }
-    }
+			//TODO: Figure out RPC
+			//issueAttackOrder.rpc();
+		}
+	}
 	
 	public void _on_selection_timer_timeout()
 	{  
@@ -136,33 +137,36 @@ public partial class Player : Node
 	}
 	
 	public void set_selection_area(Vector2 start, Vector2 end)
-	{  
-		allUnits = (List<Unit>)GetTree().GetNodesInGroup("units").Select(x => (Unit)x);
+	{
+		allUnits = GetTree().GetNodesInGroup("units").OfType<Unit>().ToList();
 		foreach(var unit in allUnits)
 		{
 			unit.set_selected(false);
 		}
+
 		selectedUnitIds = new Array(){};
 		isSelecting = true;
 		collisionShape.Disabled  = false;
 		selectionDetector.Position = (start + end) * 0.5f;
 
-		collisionShape.Scale = new Vector2(Mathf.Abs(start.X - end.X), Mathf.Abs(start.Y - end.Y));
-
-		//collisionShape.Shape.GetRect().Size.X = Mathf.Abs(start.X - end.X);
-		//collisionShape.Shape.GetRect().Size.Y = Mathf.Abs(start.Y - end.Y);
+		float scaleModifier = 0.05f;  //TODO: Do this properly.
+		collisionShape.Scale = new Vector2(Mathf.Abs(start.X - end.X) * scaleModifier, Mathf.Abs(start.Y - end.Y) * scaleModifier);
 
 		GetNode<Timer>("SelectionTimer").Start();
 	
 	}
 	
 	public void _on_selection_detector_area_entered(Area2D area)
-	{  
+	{
+		GD.Print(area);
+
 		if(isSelecting)
 		{
 			var unit = area.GetParent<Unit>();
+			GD.Print(unit);
 			unit.set_selected(true);
 			selectedUnitIds.Append(unit.GetInstanceId());
+			GD.Print(selectedUnitIds);
 			//TODO: Should select according to z_index ordering
 			Vector2 boxShape = (selectionStart - selectionEnd).Abs();
 			if(boxShape.X + boxShape.Y < SELECTION_BOX_MINIMUM_SIZE)
@@ -187,8 +191,8 @@ public partial class Player : Node
 	public void set_target_area(Vector2 position)
 	{  
 		//TODO: Do this properly.
-		allUnits = (List<Unit>)GetTree().GetNodesInGroup("units").Select(x => (Unit)x);
-        foreach (Unit unit in allUnits)
+		allUnits = (List<Unit>)GetTree().GetNodesInGroup("units").OfType<Unit>().ToList();
+		foreach (Unit unit in allUnits)
 		{
 			if(position.DistanceTo(unit.Position) < 12)
 			{

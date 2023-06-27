@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b38hn31i1vg4d"]
 
-[ext_resource type="Script" path="res://Game.gd" id="1_gjlve"]
+[ext_resource type="Script" path="res://Game.cs" id="1_10te8"]
 [ext_resource type="Texture2D" uid="uid://bn5y6peojwd3" path="res://sprites/floortileset.png" id="2_8i5vk"]
 [ext_resource type="Script" path="res://Camera.gd" id="3_5s17m"]
 [ext_resource type="PackedScene" uid="uid://dt5bucntp6q3q" path="res://units/Unit.tscn" id="4_l78ar"]
@@ -209,7 +209,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(-368, -17, 659, -15, 660, 51, 344, 53, 343, 168, 407, 168, 409, 235, 487, 231, 489, 105, 568, 104, 569, 470, 199, 472, 199, 311, 151, 313, 152, 471, 17, 475, 20, 498, -369, 495), PackedVector2Array(181, 150, 298, 150, 297, 265, 182, 265), PackedVector2Array(342, 345, 519, 344, 520, 425, 344, 423), PackedVector2Array(-363, 52, -150, 56, -150, 105, -240, 109, -240, 237, -306, 239, -305, 109, -364, 111), PackedVector2Array(-333, 276, -179, 275, -177, 366, -334, 364), PackedVector2Array(-110, 117, 14, 117, 13, 463, -109, 461)])
 
 [node name="Game" type="Node"]
-script = ExtResource("1_gjlve")
+script = ExtResource("1_10te8")
 
 [node name="Dungeon" type="Node2D" parent="."]
 

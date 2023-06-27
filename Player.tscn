@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dgjf1i06k5s0y"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
+[ext_resource type="Script" path="res://Player.cs" id="1_7hlmp"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
 properties/0/path = NodePath(".:playerId")
@@ -24,6 +24,9 @@ properties/5/sync = true
 properties/6/path = NodePath(".:targetedUnitId")
 properties/6/spawn = false
 properties/6/sync = true
+properties/7/path = NodePath(".:isIssuingMoveOrder")
+properties/7/spawn = false
+properties/7/sync = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)
@@ -42,7 +45,7 @@ corner_radius_bottom_left = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4v4f7"]
 
 [node name="Player" type="Node"]
-script = ExtResource("1_ms6ct")
+script = ExtResource("1_7hlmp")
 
 [node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
