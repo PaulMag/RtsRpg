@@ -58,32 +58,6 @@ public partial class Player : Node
             draw_selection_box();
         }
         direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-        if (Input.IsActionJustPressed("ui_cancel"))
-        {
-            //clone.rpc();  //TODO: Figure out RPC
-        }
-    }
-
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    public void clone()
-    {
-        isCloning = true;
-
-    }
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    [Rpc(TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void issueMoveOrder()
-    {
-        isIssuingMoveOrder = true;
-
-    }
-    //TODO: Figure out RPC
-    //@rpc("call_local")
-    public void issueAttackOrder()
-    {
-        isIssuingAttackOrder = true;
     }
 
     public void area_selected(Vector2 start, Vector2 end)
@@ -117,14 +91,11 @@ public partial class Player : Node
         {
             destination = panel.GetGlobalMousePosition();
             set_target_area(destination);
-            //TODO: Figure out RPC
-            //issueMoveOrder.rpc();
             isIssuingMoveOrder = true;
         }
         if (@event.IsActionPressed("ui_accept"))
         {
-            //TODO: Figure out RPC
-            //issueAttackOrder.rpc();
+            isIssuingAttackOrder = true;
         }
     }
 
