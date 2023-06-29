@@ -3,19 +3,20 @@ using System.Collections.Generic;
 
 public partial class Unit : CharacterBody2D
 {
-
-    [Export]
-    PackedScene PROJECTILE = (PackedScene)ResourceLoader.Load("res://projectiles/Bullet.tscn");
+    [Export] PackedScene PROJECTILE = (PackedScene)ResourceLoader.Load("res://projectiles/Bullet.tscn");
 
     public const float SPEED = 150.0f;
     public const int ATTACK_RANGE = 30;
     public const int HP_MAX = 100;
-    public static readonly Dictionary<int, string> FACING_MAPPING = new Dictionary<int, string>(){
-        {1, "right"},
-        {2, "down"},
-        {3, "left"},
-        {4, "up" },
+
+    public static readonly Dictionary<int, string> FACING_MAPPING = new Dictionary<int, string>()
+    {
+        { 1, "right" },
+        { 2, "down" },
+        { 3, "left" },
+        { 4, "up" },
     };
+
     enum States
     {
         IDLE,
@@ -23,17 +24,13 @@ public partial class Unit : CharacterBody2D
         ATTACKING,
     }
 
-    [Export]
-    public int playerId = 1;
+    [Export] public int playerId = 1;
 
-    [Export]
-    int hp = 75;
+    [Export] int hp = 75;
 
-    [Export]
-    int facing = 2;
+    [Export] int facing = 2;
     public Unit target;
-    [Export]
-    States state = States.IDLE;
+    [Export] States state = States.IDLE;
 
     [Export] bool isSelected = false;
 
@@ -56,7 +53,6 @@ public partial class Unit : CharacterBody2D
         AddToGroup("units");
         selectedCircle.Visible = isSelected;
         GetNode<ProgressBar>("HealthBar").Value = hp;
-
     }
 
     public void set_selected(bool flag)
@@ -83,6 +79,7 @@ public partial class Unit : CharacterBody2D
                 state = States.WALKING;
             }
         }
+
         if (Mathf.Abs(Velocity.X) >= Mathf.Abs(Velocity.Y))
         {
             if (Velocity.X > 0)
@@ -105,6 +102,7 @@ public partial class Unit : CharacterBody2D
                 facing = 2;
             }
         }
+
         if (state == States.ATTACKING)
         {
             GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation = "attack_" + FACING_MAPPING[facing];
@@ -127,10 +125,8 @@ public partial class Unit : CharacterBody2D
 
     public void _physics_process(double delta)
     {
-
         if (IsMultiplayerAuthority())
         {
-
             if (followCursor)
             {
                 GetNode<NavigationAgent2D>("NavigationAgent2D").TargetPosition = destination;
@@ -149,6 +145,7 @@ public partial class Unit : CharacterBody2D
                     followCursor = false;
                 }
             }
+
             MoveAndSlide();
         }
     }
