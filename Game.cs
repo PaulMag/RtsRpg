@@ -4,14 +4,19 @@ using System.Linq;
 
 public partial class Game : Node
 {
-
     public void _physics_process(double delta)
     {
-        List<Player> players = (List<Player>)GetNode("Multiplayer/Players").GetChildren().Select(p => (Player)p);
-        List<Unit> units = (List<Unit>)GetNode("Dungeon/Units").GetChildren().Select(p => (Player)p);
+        GD.Print("hello");
+
+        List<Player> players = GetNode("Multiplayer/Players").GetChildren().OfType<Player>().ToList();
+        List<Unit> units = (List<Unit>)GetNode("Dungeon/Units").GetChildren().OfType<Unit>().ToList();
+
+        GD.Print(players);
 
         foreach (var player in players)
         {
+            GD.Print(player.selectedUnitIds);
+            GD.Print(player.isIssuingMoveOrder);
             if (player.isIssuingMoveOrder)
             {
                 foreach (var unitId in player.selectedUnitIds)
@@ -26,6 +31,7 @@ public partial class Game : Node
                         }
                     }
                 }
+
                 player.isIssuingMoveOrder = false;
             }
 
@@ -36,9 +42,9 @@ public partial class Game : Node
                     var unit = (Unit)InstanceFromId((ulong)unitId);
                     unit.attack();
                 }
+
                 player.isIssuingAttackOrder = false;
             }
-
         }
     }
 }
