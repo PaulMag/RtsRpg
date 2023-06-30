@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://b38hn31i1vg4d"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_10te8"]
-[ext_resource type="Texture2D" uid="uid://bn5y6peojwd3" path="res://sprites/floortileset.png" id="2_8i5vk"]
+[ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="2_8i5vk"]
 [ext_resource type="Script" path="res://Camera.gd" id="3_5s17m"]
 [ext_resource type="PackedScene" uid="uid://dt5bucntp6q3q" path="res://units/Unit.tscn" id="4_l78ar"]
-[ext_resource type="Script" path="res://Multiplayer.gd" id="5_fivu0"]
+[ext_resource type="Script" path="res://Multiplayer.cs" id="5_foxg4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2cqk"]
 texture = ExtResource("2_8i5vk")
@@ -193,7 +193,6 @@ texture_region_size = Vector2i(32, 32)
 7:0/0 = 0
 7:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 7:0/0/physics_layer_0/angular_velocity = 0.0
-3:0/size_in_atlas = Vector2i(2, 2)
 3:0/0 = 0
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
@@ -239,7 +238,7 @@ position = Vector2(133, 180)
 position = Vector2(337, 210)
 
 [node name="Multiplayer" type="Node" parent="."]
-script = ExtResource("5_fivu0")
+script = ExtResource("5_foxg4")
 
 [node name="PanelContainer" type="PanelContainer" parent="Multiplayer"]
 offset_left = -420.0
