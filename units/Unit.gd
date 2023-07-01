@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Unit
+
 #var PLAYER_UNIT = load("Unit.tscn")
 #var PLAYER_UNIT = preload("res://units/Unit.tscn")
 #var PLAYER_UNIT = preload("Unit.tscn")
@@ -24,28 +26,28 @@ enum states {
 	ATTACKING,
 }
 
-@export var playerId = 1
+@export var playerId := 1
 
-@export var hp = 75
-@export var facing = 2;
-var target = self
-@export var state = states.IDLE
+@export var hp := 75
+@export var facing := 2;
+var target := self
+@export var state := states.IDLE
 
-@export var isSelected = false
-@onready var selectedCircle = $SelectedCircle
-@onready var destination = position
+@export var isSelected := false
+@onready var selectedCircle : Sprite2D = $SelectedCircle
+@onready var destination : Vector2 = position
 
-@export var targetUnit = self
+@export var targetUnit: Unit = self
 
 
-var followCursor = false
+var followCursor := false
 
 func _ready():
 	self.add_to_group("units")
 	selectedCircle.visible = isSelected
 	$HealthBar.value = hp
 
-func set_selected(flag):
+func set_selected(flag: bool):
 	isSelected = flag
 	selectedCircle.visible = flag
 	if flag:
@@ -53,10 +55,10 @@ func set_selected(flag):
 	else:
 		emit_signal("deselected")
 
-func _process(delta):
-	
+func _process(delta: float):
+
 	$HealthBar.value = hp
-	
+
 	if is_multiplayer_authority():
 		if state == states.ATTACKING:
 			pass
@@ -64,7 +66,7 @@ func _process(delta):
 			state = states.WALKING
 		else:
 			state = states.IDLE
-	
+
 	if abs(velocity.x) >= abs(velocity.y):
 		if velocity.x > 0:
 			facing = 1
@@ -75,7 +77,7 @@ func _process(delta):
 			facing = 4
 		elif velocity.y > 0:
 			facing = 2
-	
+
 	if state == states.ATTACKING:
 		$AnimatedSprite2D.animation = "attack_" + FACING_MAPPING[facing]
 	elif state == states.WALKING:
@@ -84,23 +86,23 @@ func _process(delta):
 		$AnimatedSprite2D.animation = "idle_" + FACING_MAPPING[facing]
 
 
-func move_to(_destination):
+func move_to(_destination: Vector2):
 	destination = _destination
 	followCursor = true
 
-func _physics_process(delta):
-	
+func _physics_process(delta: float):
+
 	if is_multiplayer_authority():
-	
+
 		if followCursor:
 			$NavigationAgent2D.target_position = destination
-			
+
 		if $NavigationAgent2D.is_target_reachable():
 			var destinationNext = $NavigationAgent2D.get_next_path_position()
-			
+
 			velocity = position.direction_to(destinationNext).normalized() * SPEED
 			$NavigationAgent2D.set_velocity(velocity)
-			
+
 			if position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
 				followCursor = false
@@ -108,15 +110,15 @@ func _physics_process(delta):
 				pass
 		else:
 			pass
-		
+
 		move_and_slide()
 
-func damage(amount=1):
+func damage(amount: int = 1):
 	hp -= amount
 	$HealthBar.value = hp
 	$DamageSound.play()
 
-func attack(damage=5):
+func attack(damage: int = 5):
 	state = states.ATTACKING
 	$AttackTimer.start()
 	var newProjectile = PROJECTILE.instantiate() as StaticBody2D

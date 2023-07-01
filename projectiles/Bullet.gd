@@ -1,9 +1,11 @@
 extends StaticBody2D
 
+class_name Bullet
+
 var SPEED = 500
 
 var damage: int = 1
-var target: CharacterBody2D = null
+var target: Unit = null
 
 func _physics_process(delta: float) -> void:
 	if target:
@@ -11,7 +13,7 @@ func _physics_process(delta: float) -> void:
 		position += position.direction_to(target.position) * SPEED * delta
 
 
-func _on_area_2d_body_entered(unit: CharacterBody2D) -> void:
+func _on_area_2d_body_entered(unit: Unit) -> void:
 	if unit == target:
 		unit.damage(damage)
 		queue_free()
