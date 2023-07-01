@@ -635,4 +635,19 @@ replication_config = SubResource("SceneReplicationConfig_bwudf")
 wait_time = 0.6
 one_shot = true
 
+[node name="Label" type="Label" parent="."]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.0
+offset_right = 87.0
+offset_bottom = 78.0
+grow_horizontal = 2
+text = "Player X
+IDLE
+Weapon"
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

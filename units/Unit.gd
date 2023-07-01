@@ -88,6 +88,12 @@ func _process(delta: float):
 	elif state == states.IDLE:
 		$AnimatedSprite2D.animation = "idle_" + FACING_MAPPING[facing]
 
+	$Label.text = (
+		"Player " + str(playerId) + "\n"
+		+ str(state) + "\n"
+		+ (weaponEquipped.name if weaponEquipped else "no weapon")
+	)
+
 
 func move_to(_destination: Vector2):
 	destination = _destination
@@ -122,6 +128,8 @@ func damage(amount: int = 1):
 	$DamageSound.play()
 
 func attack():
+	if weaponEquipped == null:
+		return
 	if position.distance_to(targetUnit.position) > weaponEquipped.range:
 		return
 	state = states.ATTACKING
@@ -137,3 +145,9 @@ func attack():
 
 func _on_attack_timer_timeout():
 	state = states.IDLE
+
+func equip(slot: int) -> void:
+	if slot <= weapons.size() and slot >= 1:
+		weaponEquipped = weapons[slot - 1]
+	else:
+		weaponEquipped = null

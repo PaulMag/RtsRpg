@@ -14,6 +14,7 @@ class_name Player
 @export var isCloning := false
 @export var isIssuingMoveOrder := false
 @export var isIssuingAttackOrder := false
+@export var isIssuingEquipOrder := 0
 
 const SELECTION_BOX_MINIMUM_SIZE := 5
 
@@ -54,6 +55,9 @@ func issueMoveOrder():
 func issueAttackOrder():
 	isIssuingAttackOrder = true
 
+@rpc("call_local")
+func issueEquipOrder(slot: int):
+	isIssuingEquipOrder = slot
 
 func area_selected(start: Vector2, end: Vector2) -> void:
 	var area = []
@@ -80,6 +84,16 @@ func _input(event: InputEvent) -> void:
 		issueMoveOrder.rpc()
 	if event.is_action_pressed("ui_accept"):
 		issueAttackOrder.rpc()
+
+	if event.is_action_pressed("select_slot_1"):
+		issueEquipOrder.rpc(1)
+	elif event.is_action_pressed("select_slot_2"):
+		issueEquipOrder.rpc(2)
+	elif event.is_action_pressed("select_slot_3"):
+		issueEquipOrder.rpc(3)
+	elif event.is_action_pressed("select_slot_4"):
+		issueEquipOrder.rpc(4)
+
 
 func _on_selection_timer_timeout() -> void:
 	isSelecting = false
