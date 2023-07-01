@@ -98,7 +98,9 @@ func set_selection_area(area):
 
 func _on_selection_detector_area_entered(area):
 	if isSelecting:
-		var unit = area.get_parent()
+		var unit = area.get_parent() as Unit
+		if not unit is Unit:
+			return
 		unit.set_selected(true)
 		selectedUnitIds.append(unit.get_instance_id())
 		#TODO: Should select according to z_index ordering
