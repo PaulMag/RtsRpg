@@ -38,7 +38,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if isDraggingMouse:
 		draw_selection_box()
-	direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if Input.is_action_just_pressed("ui_cancel"):
 		clone.rpc()
 
@@ -65,7 +64,8 @@ func area_selected(start: Vector2, end: Vector2) -> void:
 	area.append(Vector2(max(start.x, end.x), max(start.y, end.y)))
 	set_selection_area(area)
 
-func _input(event: InputEvent) -> void:
+
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mouse_left_click"):
 		selectionStart = $Panel.get_global_mouse_position()
 		isDraggingMouse = true
@@ -130,6 +130,16 @@ func _on_selection_detector_area_entered(area) -> void:
 			isSelecting = false
 			$SelectionDetector/CollisionShape2D.disabled  = true
 
+		var weaponTextures: Array[Texture] = []
+		for slot in range(1, 4+1):
+			var weapon = unit.get_weapon(slot)
+			weaponTextures.append(weapon.texture if weapon else null)
+
+		$HUD/InventorySlots/HBoxContainer/InventorySlot1.set_texture_normal(weaponTextures[0])
+		$HUD/InventorySlots/HBoxContainer/InventorySlot2.set_texture_normal(weaponTextures[1])
+		$HUD/InventorySlots/HBoxContainer/InventorySlot3.set_texture_normal(weaponTextures[2])
+		$HUD/InventorySlots/HBoxContainer/InventorySlot4.set_texture_normal(weaponTextures[3])
+
 func draw_selection_box(s:=true) -> void:
 	$Panel.size = Vector2(abs(selectionStart.x - selectionEnd.x), abs(selectionStart.y - selectionEnd.y))
 	var pos = Vector2()
@@ -146,3 +156,15 @@ func set_target_area(position: Vector2) -> void:
 			targetedUnitId = unit.get_instance_id()
 			return
 
+
+func _on_inventory_slot_1_pressed() -> void:
+	issueEquipOrder.rpc(1)
+
+func _on_inventory_slot_2_pressed() -> void:
+	issueEquipOrder.rpc(2)
+
+func _on_inventory_slot_3_pressed() -> void:
+	issueEquipOrder.rpc(3)
+
+func _on_inventory_slot_4_pressed() -> void:
+	issueEquipOrder.rpc(4)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgjf1i06k5s0y"]
+[gd_scene load_steps=7 format=3 uid="uid://dgjf1i06k5s0y"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
+[ext_resource type="Texture2D" uid="uid://b11wyrmcs5xv7" path="res://sprites/hud/inventory_slots.png" id="2_g3wy4"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
 properties/0/path = NodePath(".:playerId")
@@ -60,5 +61,49 @@ shape = SubResource("RectangleShape2D_4v4f7")
 
 [node name="SelectionTimer" type="Timer" parent="."]
 
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="InventorySlots" type="TextureRect" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -40.0
+offset_right = 80.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_g3wy4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/InventorySlots"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="InventorySlot1" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventorySlot2" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventorySlot3" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventorySlot4" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [connection signal="area_entered" from="SelectionDetector" to="." method="_on_selection_detector_area_entered"]
 [connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]
+[connection signal="pressed" from="HUD/InventorySlots/HBoxContainer/InventorySlot1" to="." method="_on_inventory_slot_1_pressed"]
+[connection signal="pressed" from="HUD/InventorySlots/HBoxContainer/InventorySlot2" to="." method="_on_inventory_slot_2_pressed"]
+[connection signal="pressed" from="HUD/InventorySlots/HBoxContainer/InventorySlot3" to="." method="_on_inventory_slot_3_pressed"]
+[connection signal="pressed" from="HUD/InventorySlots/HBoxContainer/InventorySlot4" to="." method="_on_inventory_slot_4_pressed"]
