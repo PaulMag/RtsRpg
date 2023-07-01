@@ -1,7 +1,8 @@
 .godot
 .import
+.idea
+.vs
 default_env.tres
 
 *.wav
 *.ogg
-*.png
