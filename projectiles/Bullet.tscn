@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://b71qgb2shicjn"]
 
-[ext_resource type="Script" path="res://projectiles/Bullet.gd" id="1_ex6uu"]
+[ext_resource type="Script" path="res://projectiles/Bullet.gd" id="1_egnt8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8wf5g"]
 size = Vector2(22, 6)
 
 [node name="Bullet" type="StaticBody2D"]
 collision_layer = 2
-script = ExtResource("1_ex6uu")
+script = ExtResource("1_egnt8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 

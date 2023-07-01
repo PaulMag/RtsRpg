@@ -151,3 +151,11 @@ func equip(slot: int) -> void:
 		weaponEquipped = weapons[slot - 1]
 	else:
 		weaponEquipped = null
+
+func get_weapon(slot: int) -> Weapon:
+	if slot == 0:
+		return weaponEquipped
+	elif slot > weapons.size():
+		return null
+	else:
+		return weapons[slot - 1]
