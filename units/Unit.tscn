@@ -579,6 +579,9 @@ properties/2/sync = true
 properties/3/path = NodePath(".:hp")
 properties/3/spawn = false
 properties/3/sync = true
+properties/4/path = NodePath(".:playerId")
+properties/4/spawn = true
+properties/4/sync = true
 
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
@@ -634,5 +637,13 @@ replication_config = SubResource("SceneReplicationConfig_bwudf")
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+z_index = 2
+offset_left = -33.0
+offset_top = 12.0
+offset_right = 37.0
+offset_bottom = 38.0
+text = "Player ID"
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

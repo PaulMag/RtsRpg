@@ -6,6 +6,11 @@ public partial class Game : Node
 {
     public void _physics_process(double delta)
     {
+        if (! Multiplayer.IsServer())
+        {
+            return;
+        }
+
         GD.Print("hello");
 
         List<Player> players = GetNode("Multiplayer/Players").GetChildren().OfType<Player>().ToList();
@@ -24,7 +29,7 @@ public partial class Game : Node
                     Unit unit = (Unit)InstanceFromId((ulong)unitId);
                     if (unit.playerId == player.playerId)
                     {
-                        unit.move_to(player.destination);
+                        unit.moveTo(player.destination);
                         if (player.targetedUnitId != 0)
                         {
                             unit.targetUnit = (Unit)InstanceFromId(player.targetedUnitId);
@@ -40,7 +45,8 @@ public partial class Game : Node
                 foreach (var unitId in player.selectedUnitIds)
                 {
                     var unit = (Unit)InstanceFromId((ulong)unitId);
-                    unit.attack();
+                    unit.targetUnit = null;
+                    // unit.attack();
                 }
 
                 player.isIssuingAttackOrder = false;
