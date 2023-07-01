@@ -1,8 +1,8 @@
 extends Node
 
 func _physics_process(delta):
-	var players = $Multiplayer/Players.get_children()
-	var units = $Dungeon/Units.get_children()
+	var players = $Multiplayer/Players.get_children() as Array[Player]
+	var units = $Dungeon/Units.get_children() as Array[Unit]
 	for player in players:
 		if player.isIssuingMoveOrder:
 			for unitId in player.selectedUnitIds:
@@ -18,6 +18,12 @@ func _physics_process(delta):
 				var unit = instance_from_id(unitId)
 				unit.attack()
 			player.isIssuingAttackOrder = false
+
+		if player.isIssuingEquipOrder != 0:
+			for unitId in player.selectedUnitIds:
+				var unit: Unit = instance_from_id(unitId) as Unit
+				unit.equip(player.isIssuingEquipOrder)
+			player.isIssuingEquipOrder = 0
 
 		for unit in units:
 			if player.name.to_int() == unit.playerId:
