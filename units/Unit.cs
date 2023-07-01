@@ -1,15 +1,19 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
+using Godot.Collections;
 
 public partial class Unit : CharacterBody2D
 {
-    [Export] PackedScene PROJECTILE = (PackedScene)ResourceLoader.Load("res://projectiles/Bullet.tscn");
+    PackedScene PROJECTILE = (PackedScene)ResourceLoader.Load("res://projectiles/Weapon.tscn");
+    PackedScene PROJECTILE_SWORD = (PackedScene)ResourceLoader.Load("res://projectiles/Sword.tscn");
+    List<PackedScene> weapons = new ();
+    private PackedScene weaponEquipped;
 
     public const float SPEED = 150.0f;
-    public const int ATTACK_RANGE = 200;
+    // public const int ATTACK_RANGE = 200;
     public const int HP_MAX = 100;
 
-    public static readonly Dictionary<int, string> FACING_MAPPING = new Dictionary<int, string>()
+    public static readonly System.Collections.Generic.Dictionary<int, string> FACING_MAPPING = new System.Collections.Generic.Dictionary<int, string>()
     {
         { 1, "right" },
         { 2, "down" },
@@ -44,6 +48,10 @@ public partial class Unit : CharacterBody2D
 
     private void _ready()
     {
+        weapons.Add(PROJECTILE);
+        weapons.Add(PROJECTILE_SWORD);
+        weaponEquipped = weapons[1];
+
         destination = Position;
         selectedCircle = GetNode<Sprite2D>("SelectedCircle");
 
@@ -145,7 +153,7 @@ public partial class Unit : CharacterBody2D
 
         MoveAndSlide();
 
-        if (targetUnit != null && state == States.IDLE && Position.DistanceTo(targetUnit.Position) <= ATTACK_RANGE)
+        if (targetUnit != null && state == States.IDLE && Position.DistanceTo(targetUnit.Position) <= weaponEquipped.Instantiate<Weapon>().range)
         {
             attack();
         }
@@ -158,14 +166,14 @@ public partial class Unit : CharacterBody2D
         GetNode<AudioStreamPlayer2D>("DamageSound").Play();
     }
 
-    private void attack(int damage = 5)
+    private void attack()
     {
         state = States.ATTACKING;
         GetNode<Timer>("AttackTimer").Start();
-        Bullet newProjectile = PROJECTILE.Instantiate<Bullet>();
+        Weapon newProjectile = weaponEquipped.Instantiate<Weapon>();
         newProjectile.Position = Position;
         newProjectile.target = targetUnit;
-        newProjectile.damage = damage;
+        // newProjectile.damage = damage;
         GetParent().GetParent().AddChild(newProjectile);
     }
 

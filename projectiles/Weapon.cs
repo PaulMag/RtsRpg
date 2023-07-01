@@ -1,10 +1,10 @@
 using Godot;
 
-public partial class Bullet : StaticBody2D
+public partial class Weapon : StaticBody2D
 {
-    [Export]
     int speed = 500;
     public int damage = 1;
+    public int range = 400;
     public CharacterBody2D target = null;
 
     public override void _PhysicsProcess(double delta)
