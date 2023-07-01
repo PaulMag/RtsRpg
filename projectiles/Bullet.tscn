@@ -1,29 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://b71qgb2shicjn"]
+[gd_scene load_steps=3 format=3 uid="uid://b71qgb2shicjn"]
 
 [ext_resource type="Script" path="res://projectiles/Bullet.gd" id="1_ex6uu"]
-[ext_resource type="Texture2D" uid="uid://dca1ndxi8lpf6" path="res://sprites/projectiles/bullet.png" id="1_ktjkd"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tan5x"]
-atlas = ExtResource("1_ktjkd")
-region = Rect2(0, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g5bxe"]
-atlas = ExtResource("1_ktjkd")
-region = Rect2(0, 16, 32, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_lahdg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tan5x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g5bxe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 8.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8wf5g"]
 size = Vector2(22, 6)
@@ -32,9 +9,7 @@ size = Vector2(22, 6)
 collision_layer = 2
 script = ExtResource("1_ex6uu")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_lahdg")
-frame_progress = 0.478305
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2

@@ -10,6 +10,8 @@ signal selected
 signal deselected
 
 @export var PROJECTILE = preload("res://projectiles/Bullet.tscn")
+@export var weapons: Array[Weapon]
+var weaponEquipped: Weapon
 
 const SPEED = 150.0
 const ATTACK_RANGE = 30
@@ -46,6 +48,7 @@ func _ready():
 	self.add_to_group("units")
 	selectedCircle.visible = isSelected
 	$HealthBar.value = hp
+	weaponEquipped = weapons[0]
 
 func set_selected(flag: bool):
 	isSelected = flag
@@ -118,14 +121,18 @@ func damage(amount: int = 1):
 	$HealthBar.value = hp
 	$DamageSound.play()
 
-func attack(damage: int = 5):
+func attack():
+	if position.distance_to(targetUnit.position) > weaponEquipped.range:
+		return
 	state = states.ATTACKING
 	$AttackTimer.start()
-	var newProjectile = PROJECTILE.instantiate() as StaticBody2D
+	var newProjectile = PROJECTILE.instantiate() as Bullet
 	newProjectile.position = position
 	newProjectile.target = targetUnit
-	newProjectile.damage = damage
+	newProjectile.damage = weaponEquipped.damage
+	newProjectile.speed = weaponEquipped.bulletSpeed
 	get_parent().get_parent().add_child(newProjectile)
+	newProjectile.sprite.set_texture(weaponEquipped.bulletTexture)
 
 
 func _on_attack_timer_timeout():

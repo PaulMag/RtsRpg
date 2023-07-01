@@ -2,15 +2,19 @@ extends StaticBody2D
 
 class_name Bullet
 
-var SPEED = 500
+var speed: int
+var damage: int
+var target: Unit
 
-var damage: int = 1
-var target: Unit = null
+var sprite: Sprite2D
+
+func _ready() -> void:
+	sprite = $Sprite2D
 
 func _physics_process(delta: float) -> void:
 	if target:
 		rotation = position.angle_to_point(target.position)
-		position += position.direction_to(target.position) * SPEED * delta
+		position += position.direction_to(target.position) * speed * delta
 
 
 func _on_area_2d_body_entered(unit: Unit) -> void:
