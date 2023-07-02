@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0fw4g13ycw6o"
-path="res://.godot/imported/BODY_skeleton.png-174df1561de89d73bd18f972da3a7140.ctex"
+uid="uid://4jxtstcb1i27"
+path="res://.godot/imported/skeleton_slash.png-47d740df1f087dc2830b759b2bc20954.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/units/skeleton/walk/BODY_skeleton.png"
-dest_files=["res://.godot/imported/BODY_skeleton.png-174df1561de89d73bd18f972da3a7140.ctex"]
+source_file="res://sprites/units/skeleton/skeleton_slash.png"
+dest_files=["res://.godot/imported/skeleton_slash.png-47d740df1f087dc2830b759b2bc20954.ctex"]
 
 [params]
 
