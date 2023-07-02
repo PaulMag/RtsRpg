@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dca1ndxi8lpf6"
-path="res://.godot/imported/bullet.png-63eca3dfe2eb6c2db5525baadb66e85b.ctex"
+uid="uid://d0fw4g13ycw6o"
+path="res://.godot/imported/skeleton_walk.png-c5ed1f197ed319eefce4f2d6042eb8fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/projectiles/bullet.png"
-dest_files=["res://.godot/imported/bullet.png-63eca3dfe2eb6c2db5525baadb66e85b.ctex"]
+source_file="res://sprites/units/skeleton/skeleton_walk.png"
+dest_files=["res://.godot/imported/skeleton_walk.png-c5ed1f197ed319eefce4f2d6042eb8fe.ctex"]
 
 [params]
 
