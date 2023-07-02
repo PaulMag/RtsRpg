@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dgjf1i06k5s0y"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
-[ext_resource type="Texture2D" uid="uid://b11wyrmcs5xv7" path="res://sprites/hud/inventory_slots.png" id="2_g3wy4"]
+[ext_resource type="Texture2D" uid="uid://b11wyrmcs5xv7" path="res://sprites/hud/inventory_slots.png" id="2_vt24n"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
 properties/0/path = NodePath(".:playerId")
@@ -74,7 +74,7 @@ offset_top = -40.0
 offset_right = 80.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("2_g3wy4")
+texture = ExtResource("2_vt24n")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/InventorySlots"]
 layout_mode = 1
@@ -88,18 +88,22 @@ alignment = 1
 [node name="InventorySlot1" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+stretch_mode = 3
 
 [node name="InventorySlot2" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+stretch_mode = 3
 
 [node name="InventorySlot3" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+stretch_mode = 3
 
 [node name="InventorySlot4" type="TextureButton" parent="HUD/InventorySlots/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+stretch_mode = 3
 
 [connection signal="area_entered" from="SelectionDetector" to="." method="_on_selection_detector_area_entered"]
 [connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]
