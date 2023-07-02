@@ -121,6 +121,14 @@ func _physics_process(delta: float):
 			pass
 
 		move_and_slide()
+		
+		if (state == states.IDLE 
+			and weaponEquipped != null 
+			and targetUnit != null 
+			and targetUnit != self
+			and position.distance_to(targetUnit.position) <= weaponEquipped.range
+		):
+			attack()
 
 func damage(amount: int = 1):
 	hp -= amount
