@@ -18,6 +18,10 @@ class_name Player
 
 const SELECTION_BOX_MINIMUM_SIZE := 5
 
+var INVENTORY_SLOTS = preload("res://InventorySlots.tscn")
+#var unitInventories: Array[InventorySlots] = []
+var unitInventories: Dictionary = {}
+
 var isDraggingMouse := false
 var isSelecting := false
 var isTargeting := false
@@ -110,6 +114,7 @@ func set_selection_area(area) -> void:
 	for unit in get_all_units():
 		unit.set_selected(false)
 	selectedUnitIds = []
+	resetUnitInventories()
 	isSelecting = true
 	$SelectionDetector/CollisionShape2D.disabled  = false
 	$SelectionDetector.position = (area[0] + area[1]) * 0.5
@@ -129,16 +134,22 @@ func _on_selection_detector_area_entered(area) -> void:
 		if boxShape.x + boxShape.y < SELECTION_BOX_MINIMUM_SIZE:
 			isSelecting = false
 			$SelectionDetector/CollisionShape2D.disabled  = true
+		drawUnitInventory(unit)
 
-		var weaponTextures: Array[Texture] = []
-		for slot in range(1, 4+1):
-			var weapon = unit.get_weapon(slot)
-			weaponTextures.append(weapon.texture if weapon else null)
+func resetUnitInventories() -> void:
+	for unit in unitInventories:
+		unitInventories[unit].queue_free()
+	unitInventories = {}
 
-		$HUD/InventorySlots/HBoxContainer/InventorySlot1.set_texture_normal(weaponTextures[0])
-		$HUD/InventorySlots/HBoxContainer/InventorySlot2.set_texture_normal(weaponTextures[1])
-		$HUD/InventorySlots/HBoxContainer/InventorySlot3.set_texture_normal(weaponTextures[2])
-		$HUD/InventorySlots/HBoxContainer/InventorySlot4.set_texture_normal(weaponTextures[3])
+func drawUnitInventory(unit: Unit) -> void:
+	var inventory: InventorySlots = INVENTORY_SLOTS.instantiate() as InventorySlots
+	if unitInventories.has(unit):
+		unitInventories[unit].queue_free()
+	unitInventories[unit] = inventory
+	$HUD/Inventories.add_child(inventory)
+	inventory.update(unit)
+	inventory.player = self
+	unit.player = self  #TODO: Do this properly
 
 func draw_selection_box(s:=true) -> void:
 	$Panel.size = Vector2(abs(selectionStart.x - selectionEnd.x), abs(selectionStart.y - selectionEnd.y))
@@ -155,16 +166,3 @@ func set_target_area(position: Vector2) -> void:
 		if position.distance_to(unit.position) < 12:
 			targetedUnitId = unit.get_instance_id()
 			return
-
-
-func _on_inventory_slot_1_pressed() -> void:
-	issueEquipOrder.rpc(1)
-
-func _on_inventory_slot_2_pressed() -> void:
-	issueEquipOrder.rpc(2)
-
-func _on_inventory_slot_3_pressed() -> void:
-	issueEquipOrder.rpc(3)
-
-func _on_inventory_slot_4_pressed() -> void:
-	issueEquipOrder.rpc(4)
