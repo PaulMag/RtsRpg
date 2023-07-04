@@ -11,7 +11,7 @@ signal deselected
 
 @export var PROJECTILE = preload("res://projectiles/Bullet.tscn")
 @export var weapons: Array[Weapon]
-var weaponEquipped: Weapon
+@export var weaponSlotEquipped := 0
 
 const SPEED = 150.0
 const ATTACK_RANGE = 30
@@ -29,7 +29,9 @@ enum states {
 }
 
 @export var playerId := 1
+var player: Player
 
+@export var unitName: String = ""
 @export var hp := 75
 @export var facing := 2;
 var target := self
@@ -48,7 +50,8 @@ func _ready():
 	self.add_to_group("units")
 	selectedCircle.visible = isSelected
 	$HealthBar.value = hp
-	weaponEquipped = weapons[0]
+	if unitName == "":
+		unitName = "Unit #" + str(randi_range(1, 99))
 
 func set_selected(flag: bool):
 	isSelected = flag
@@ -90,8 +93,9 @@ func _process(delta: float):
 
 	$Label.text = (
 		"Player " + str(playerId) + "\n"
+		+ unitName + "\n"
 		+ str(state) + "\n"
-		+ (weaponEquipped.name if weaponEquipped else "no weapon")
+		+ (getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
 	)
 
 
@@ -121,12 +125,12 @@ func _physics_process(delta: float):
 			pass
 
 		move_and_slide()
-		
-		if (state == states.IDLE 
-			and weaponEquipped != null 
-			and targetUnit != null 
+
+		if (state == states.IDLE
+			and getEquippedWeapon() != null
+			and targetUnit != null
 			and targetUnit != self
-			and position.distance_to(targetUnit.position) <= weaponEquipped.range
+			and position.distance_to(targetUnit.position) <= getEquippedWeapon().range
 		):
 			attack()
 
@@ -136,34 +140,37 @@ func damage(amount: int = 1):
 	$DamageSound.play()
 
 func attack():
-	if weaponEquipped == null:
+	if getEquippedWeapon() == null:
 		return
-	if position.distance_to(targetUnit.position) > weaponEquipped.range:
+	if position.distance_to(targetUnit.position) > getEquippedWeapon().range:
 		return
 	state = states.ATTACKING
 	$AttackTimer.start()
 	var newProjectile = PROJECTILE.instantiate() as Bullet
 	newProjectile.position = position
 	newProjectile.target = targetUnit
-	newProjectile.damage = weaponEquipped.damage
-	newProjectile.speed = weaponEquipped.bulletSpeed
+	newProjectile.damage = getEquippedWeapon().damage
+	newProjectile.speed = getEquippedWeapon().bulletSpeed
 	get_parent().get_parent().add_child(newProjectile)
-	newProjectile.sprite.set_texture(weaponEquipped.bulletTexture)
+	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
 
 
 func _on_attack_timer_timeout():
 	state = states.IDLE
 
 func equip(slot: int) -> void:
-	if slot <= weapons.size() and slot >= 1:
-		weaponEquipped = weapons[slot - 1]
-	else:
-		weaponEquipped = null
+	weaponSlotEquipped = slot
+	if player != null:
+		player.drawUnitInventory(self)  #TODO: Do this properly
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:
-		return weaponEquipped
+		return null
 	elif slot > weapons.size():
 		return null
 	else:
 		return weapons[slot - 1]
+
+func getEquippedWeapon() -> Weapon:
+	return get_weapon(weaponSlotEquipped)
+

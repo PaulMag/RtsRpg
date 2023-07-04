@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://bswonwd367dt8"]
+
+[ext_resource type="Texture2D" uid="uid://b11wyrmcs5xv7" path="res://sprites/hud/inventory_slots.png" id="1_nomjn"]
+[ext_resource type="Script" path="res://InventorySlots.gd" id="2_fwy8n"]
+
+[node name="InventorySlots" type="TextureRect"]
+offset_left = 496.0
+offset_top = 608.0
+offset_right = 656.0
+offset_bottom = 648.0
+texture = ExtResource("1_nomjn")
+script = ExtResource("2_fwy8n")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="InventorySlot1" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch_mode = 3
+
+[node name="InventorySlot2" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch_mode = 3
+
+[node name="InventorySlot3" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch_mode = 3
+
+[node name="InventorySlot4" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch_mode = 3
+
+[connection signal="mouse_entered" from="HBoxContainer/InventorySlot1" to="." method="_on_inventory_slot_1_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/InventorySlot1" to="." method="_on_inventory_slot_1_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/InventorySlot1" to="." method="_on_inventory_slot_1_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/InventorySlot2" to="." method="_on_inventory_slot_2_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/InventorySlot2" to="." method="_on_inventory_slot_2_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/InventorySlot2" to="." method="_on_inventory_slot_2_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/InventorySlot3" to="." method="_on_inventory_slot_3_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/InventorySlot3" to="." method="_on_inventory_slot_3_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/InventorySlot3" to="." method="_on_inventory_slot_3_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/InventorySlot4" to="." method="_on_inventory_slot_4_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/InventorySlot4" to="." method="_on_inventory_slot_4_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/InventorySlot4" to="." method="_on_inventory_slot_4_pressed"]
