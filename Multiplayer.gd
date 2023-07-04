@@ -17,14 +17,14 @@ func _ready():
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
-		
+
 func _on_host_pressed():
 	# Start game as server
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT)
 	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
 		OS.alert("Failed to start multiplayer server.")
-		print("Failed to start multiplayer server.")		
+		print("Failed to start multiplayer server.")
 		return
 	multiplayer.multiplayer_peer = peer
 #	start_game()
@@ -45,30 +45,30 @@ func _on_connect_pressed():
 
 
 func start_game():
-	
+
 	$UI.hide()
 	print("Game started")
 	get_tree().paused = false
-	
+
 	var playerd2id : int
-	
+
 	if multiplayer.is_server():
 #		multiplayer.peer_connected.connect(add_player)
 #		multiplayer.peer_disconnected.connect(delete_player)
-		
+
 		for id in multiplayer.get_peers():
 			add_player(id)
 			print("Added peer player %s." % id)
 			playerd2id = id
-			
-		
+
+
 		if not OS.has_feature("dedicated_server"):
 			add_player(1)
 			print("Not dedicated server. Added player 1.")
-	
+
 	$"../Dungeon/Units/Unit3".playerId = playerd2id
-	
-	
+
+
 	for player in $Players.get_children():
 		var playerLabelNode = PLAYER_LABEL.instantiate()
 		playerLabelNode.playerId = player.playerId
