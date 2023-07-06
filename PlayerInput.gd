@@ -7,7 +7,7 @@ class_name PlayerInput
 @onready var selectionDetector: Area2D = $"../SelectionDetector"
 @onready var selectionDetectorCollision: CollisionShape2D = $"../SelectionDetector/CollisionShape2D"
 
-@export var selectedUnitIds: Array[int] = []
+@export var selectedUnitIds: Array = []
 @export var destination: Vector2
 @export var targetedUnitId: int
 
