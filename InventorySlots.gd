@@ -4,7 +4,7 @@ class_name InventorySlots
 
 var buttons: Array[TextureButton]
 var _unit: Unit
-var player: Player
+var player: PlayerInput
 
 const COLOR_EQUIPPED = Color(1, 1, 1)
 const COLOR_UNEQUIPPED = Color(0.5, 0.5, 0.5)
