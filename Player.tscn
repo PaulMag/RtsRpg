@@ -1,29 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgjf1i06k5s0y"]
+[gd_scene load_steps=7 format=3 uid="uid://dgjf1i06k5s0y"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
+[ext_resource type="Script" path="res://PlayerInput.gd" id="2_ppega"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
 properties/0/path = NodePath(".:playerId")
 properties/0/spawn = true
 properties/0/sync = false
-properties/1/path = NodePath(".:direction")
-properties/1/spawn = false
+properties/1/path = NodePath(".:playerColor")
+properties/1/spawn = true
 properties/1/sync = true
-properties/2/path = NodePath(".:destination")
+properties/2/path = NodePath(".:playerName")
 properties/2/spawn = false
 properties/2/sync = true
-properties/3/path = NodePath(".:selectedUnitIds")
+properties/3/path = NodePath("PlayerInput:destination")
 properties/3/spawn = true
 properties/3/sync = true
-properties/4/path = NodePath(".:playerColor")
+properties/4/path = NodePath("PlayerInput:targetedUnitId")
 properties/4/spawn = true
 properties/4/sync = true
-properties/5/path = NodePath(".:playerName")
-properties/5/spawn = false
+properties/5/path = NodePath("PlayerInput:selectedUnitIds")
+properties/5/spawn = true
 properties/5/sync = true
-properties/6/path = NodePath(".:targetedUnitId")
-properties/6/spawn = false
-properties/6/sync = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)
@@ -46,6 +44,7 @@ script = ExtResource("1_ms6ct")
 
 [node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
+script = ExtResource("2_ppega")
 
 [node name="Panel" type="Panel" parent="."]
 theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
@@ -75,5 +74,5 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 2
 
-[connection signal="area_entered" from="SelectionDetector" to="." method="_on_selection_detector_area_entered"]
-[connection signal="timeout" from="SelectionTimer" to="." method="_on_selection_timer_timeout"]
+[connection signal="area_entered" from="SelectionDetector" to="PlayerInput" method="_on_selection_detector_area_entered"]
+[connection signal="timeout" from="SelectionTimer" to="PlayerInput" method="_on_selection_timer_timeout"]

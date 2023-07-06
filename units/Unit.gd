@@ -161,7 +161,7 @@ func _on_attack_timer_timeout():
 func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
 	if player != null:
-		player.drawUnitInventory(self)  #TODO: Do this properly
+		player.input.drawUnitInventory(self)  #TODO: Do this properly
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:
