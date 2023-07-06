@@ -15,6 +15,8 @@ func _ready() -> void:
 	playerColor = Color(randf(), randf(), randf())
 	input.set_multiplayer_authority(playerId)
 	input.set_process(playerId == multiplayer.get_unique_id())
+	if playerId == multiplayer.get_unique_id():
+		input.createHud()
 	if multiplayer.is_server():
 		print("Player on server: ", playerId, "  '", name, "'  ", input.get_multiplayer_authority(), "'  ")
 	else:

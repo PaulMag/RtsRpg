@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfpv027l7sgll"]
+
+[ext_resource type="Script" path="res://Hud.gd" id="1_vek1c"]
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_vek1c")
+
+[node name="Inventories" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -172.0
+offset_right = 80.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2

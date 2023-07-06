@@ -29,7 +29,6 @@ enum states {
 }
 
 @export var playerId := 1
-var player: Player
 
 @export var unitName: String = ""
 @export var hp := 75
@@ -160,8 +159,7 @@ func _on_attack_timer_timeout():
 
 func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
-	if player != null:
-		player.input.drawUnitInventory(self)  #TODO: Do this properly
+	update.rpc()
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:
@@ -174,3 +172,8 @@ func get_weapon(slot: int) -> Weapon:
 func getEquippedWeapon() -> Weapon:
 	return get_weapon(weaponSlotEquipped)
 
+var isBeingUpdated := false
+
+@rpc("call_local")
+func update():
+	isBeingUpdated = true
