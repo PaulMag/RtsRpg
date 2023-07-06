@@ -2,6 +2,8 @@ extends MultiplayerSynchronizer
 
 class_name PlayerInput
 
+const HUD = preload("res://HUD.tscn")
+
 @onready var player: Player = $".."
 @onready var selectionPanel: Panel = $"../Panel"
 @onready var selectionDetector: Area2D = $"../SelectionDetector"
@@ -14,6 +16,9 @@ class_name PlayerInput
 @export var isIssuingMoveOrder := false
 @export var isIssuingAttackOrder := false
 @export var isIssuingEquipOrder := 0
+
+var hud: Hud
+var inventoryHud: VBoxContainer
 
 const SELECTION_BOX_MINIMUM_SIZE := 5
 
@@ -30,6 +35,11 @@ var selectionEnd: Vector2
 #func _ready() -> void:
 #	set_process(player.playerId == multiplayer.get_unique_id())
 
+
+func createHud() -> void:
+	hud = HUD.instantiate()
+	add_child(hud)
+	inventoryHud = hud.inventories
 
 func _unhandled_input(event: InputEvent) -> void:
 #	print("before ", player.playerId)
@@ -77,10 +87,20 @@ func issueAttackOrder():
 func issueEquipOrder(slot: int):
 	isIssuingEquipOrder = slot
 
+var unitUpdateCountdown = 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _process(delta: float) -> void:
 	if isDraggingMouse:
 		draw_selection_box()
+	for unitId in selectedUnitIds:
+		var unit = instance_from_id(unitId) as Unit
+		if unit.isBeingUpdated or unitUpdateCountdown > 0:
+			drawUnitInventory(unit)
+			if unit.isBeingUpdated:
+				unitUpdateCountdown = 10
+			else:
+				unitUpdateCountdown -= 1
+			unit.isBeingUpdated = 0
 
 
 func area_selected(start: Vector2, end: Vector2) -> void:
@@ -135,14 +155,14 @@ func resetUnitInventories() -> void:
 	unitInventories = {}
 
 func drawUnitInventory(unit: Unit) -> void:
-	var inventory: InventorySlots = INVENTORY_SLOTS.instantiate() as InventorySlots
 	if unitInventories.has(unit):
-		unitInventories[unit].queue_free()
-	unitInventories[unit] = inventory
-	$"../HUD/Inventories".add_child(inventory)
-	inventory.update(unit)
-	inventory.player = self
-	unit.player = player  #TODO: Do this properly
+		unitInventories[unit].update(unit)
+	else:
+		var inventory: InventorySlots = INVENTORY_SLOTS.instantiate() as InventorySlots
+		unitInventories[unit] = inventory
+		inventoryHud.add_child(inventory)
+		inventory.player = self
+		inventory.update(unit)
 
 func draw_selection_box(s:=true) -> void:
 	selectionPanel.size = Vector2(abs(selectionStart.x - selectionEnd.x), abs(selectionStart.y - selectionEnd.y))
