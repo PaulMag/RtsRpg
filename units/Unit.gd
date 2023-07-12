@@ -2,14 +2,11 @@ extends CharacterBody2D
 
 class_name Unit
 
-#var PLAYER_UNIT = load("Unit.tscn")
-#var PLAYER_UNIT = preload("res://units/Unit.tscn")
-#var PLAYER_UNIT = preload("Unit.tscn")
-
-signal selected
-signal deselected
 
 @export var PROJECTILE = preload("res://projectiles/Bullet.tscn")
+@export var AI_CONTROLLER = preload("res://units/AiController.tscn")
+
+@export var isAi := false
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
 
@@ -33,7 +30,6 @@ enum states {
 @export var unitName: String = ""
 @export var hp := 75
 @export var facing := 2;
-var target := self
 @export var state := states.IDLE
 
 @export var isSelected := false
@@ -51,14 +47,12 @@ func _ready():
 	$HealthBar.value = hp
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
+	if isAi:
+		add_child(AI_CONTROLLER.instantiate())
 
 func set_selected(flag: bool):
 	isSelected = flag
 	selectedCircle.visible = flag
-	if flag:
-		emit_signal("selected")
-	else:
-		emit_signal("deselected")
 
 func _process(delta: float):
 

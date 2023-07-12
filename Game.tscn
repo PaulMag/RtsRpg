@@ -229,18 +229,21 @@ navigation_polygon = SubResource("NavigationPolygon_yp8w1")
 y_sort_enabled = true
 
 [node name="Unit1" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
-position = Vector2(-71, 76)
+position = Vector2(-359, 26)
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("5_0ycnr"), ExtResource("6_lvi10")])
+weaponSlotEquipped = 1
 unitName = "Aron"
 
 [node name="Unit2" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
 position = Vector2(133, 180)
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("6_lvi10")])
+weaponSlotEquipped = 2
 unitName = "Beatrice"
 
 [node name="Unit3" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
 position = Vector2(337, 210)
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
+weaponSlotEquipped = 3
 unitName = "Conan"
 
 [node name="Multiplayer" type="Node" parent="."]
