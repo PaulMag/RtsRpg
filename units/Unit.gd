@@ -33,6 +33,8 @@ enum states {
 @export var state := states.IDLE
 
 @export var isSelected := false
+
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle : Sprite2D = $SelectedCircle
 @onready var destination : Vector2 = position
 
@@ -78,11 +80,11 @@ func _process(delta: float):
 			facing = 2
 
 	if state == states.ATTACKING:
-		$AnimatedSprite2D.animation = "attack_" + FACING_MAPPING[facing]
+		sprite.animation = "attack_" + FACING_MAPPING[facing]
 	elif state == states.WALKING:
-		$AnimatedSprite2D.animation = "walk_" + FACING_MAPPING[facing]
+		sprite.animation = "walk_" + FACING_MAPPING[facing]
 	elif state == states.IDLE:
-		$AnimatedSprite2D.animation = "idle_" + FACING_MAPPING[facing]
+		sprite.animation = "idle_" + FACING_MAPPING[facing]
 
 	$Label.text = (
 		"Player " + str(playerId) + "\n"
@@ -171,3 +173,17 @@ var isBeingUpdated := false
 @rpc("call_local")
 func update():
 	isBeingUpdated = true
+
+
+func _on_mouse_entered():
+	modulate = Color.RED
+
+
+func _on_selection_area_mouse_entered():
+	if isAi:
+		sprite.modulate = Color.RED
+	else:
+		sprite.modulate = Color.GREEN
+
+func _on_selection_area_mouse_exited():
+	sprite.modulate = Color.WHITE
