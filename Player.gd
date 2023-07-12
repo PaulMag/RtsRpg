@@ -28,22 +28,21 @@ func _process(delta):
 		return
 
 	if input.isIssuingMoveOrder:
-		for unitId in input.selectedUnitIds:
-			var unit = instance_from_id(unitId)
-			if unit.playerId == playerId:
-				unit.move_to(input.destination)
-				if input.targetedUnitId != 0:
-					unit.targetUnit = instance_from_id(input.targetedUnitId)
+		var unit = instance_from_id(input.selectedUnitId)
+		if unit and (unit.playerId == playerId):
+			unit.move_to(input.destination)
+			if input.targetedUnitId != 0:
+				unit.targetUnit = instance_from_id(input.targetedUnitId)
 		input.isIssuingMoveOrder = false
 
 	if input.isIssuingAttackOrder:
-		for unitId in input.selectedUnitIds:
-			var unit = instance_from_id(unitId)
+		var unit = instance_from_id(input.selectedUnitId)
+		if unit and (unit.playerId == playerId):
 			unit.attack()
-		input.isIssuingAttackOrder = false
+			input.isIssuingAttackOrder = false
 
 	if input.isIssuingEquipOrder != 0:
-		for unitId in input.selectedUnitIds:
-			var unit: Unit = instance_from_id(unitId) as Unit
+		var unit: Unit = instance_from_id(input.selectedUnitId) as Unit
+		if unit and (unit.playerId == playerId):
 			unit.equip(input.isIssuingEquipOrder)
-		input.isIssuingEquipOrder = 0
+			input.isIssuingEquipOrder = 0

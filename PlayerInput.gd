@@ -9,7 +9,7 @@ const HUD = preload("res://HUD.tscn")
 @onready var selectionDetector: Area2D = $"../SelectionDetector"
 @onready var selectionDetectorCollision: CollisionShape2D = $"../SelectionDetector/CollisionShape2D"
 
-@export var selectedUnitIds: Array = []
+@export var selectedUnitId: int
 @export var destination: Vector2
 @export var targetedUnitId: int
 
@@ -31,6 +31,7 @@ var isSelecting := false
 var isTargeting := false
 var selectionStart: Vector2
 var selectionEnd: Vector2
+var unitsInSelectionDetector: Array[Unit]
 
 #func _ready() -> void:
 #	set_process(player.playerId == multiplayer.get_unique_id())
@@ -92,16 +93,17 @@ var unitUpdateCountdown = 0  # Necessary because there is some delay in the sync
 func _process(delta: float) -> void:
 	if isDraggingMouse:
 		draw_selection_box()
-	for unitId in selectedUnitIds:
-		var unit = instance_from_id(unitId) as Unit
-		if unit.isBeingUpdated or unitUpdateCountdown > 0:
-			drawUnitInventory(unit)
-			if unit.isBeingUpdated:
-				unitUpdateCountdown = 10
-			else:
-				unitUpdateCountdown -= 1
-			unit.isBeingUpdated = 0
+	var unit = getSelectedUnit()
+	if unit and (unit.isBeingUpdated or unitUpdateCountdown > 0):
+		drawUnitInventory(unit)
+		if unit.isBeingUpdated:
+			unitUpdateCountdown = 10
+		else:
+			unitUpdateCountdown -= 1
+		unit.isBeingUpdated = 0
 
+func getSelectedUnit() -> Unit:
+	return instance_from_id(selectedUnitId)
 
 func area_selected(start: Vector2, end: Vector2) -> void:
 	var area = []
@@ -122,10 +124,26 @@ func get_all_units() -> Array[Unit]:
 		allUnits.append(node as Unit)
 	return allUnits
 
+func selectUnit(unit: Unit) -> void:
+	var maxY := 1e9
+	for u in unitsInSelectionDetector:
+		if u.playerId == player.playerId and u.position.y > unit.position.y:
+			maxY = u.position.y
+			unit = u
+	if unit.playerId != player.playerId:
+		return
+	if getSelectedUnit():
+		getSelectedUnit().set_selected(false)
+	unit.set_selected(true)
+	selectedUnitId = unit.get_instance_id()
+	resetUnitInventories()
+	drawUnitInventory(unit)
+
 func set_selection_area(area) -> void:
 	for unit in get_all_units():
 		unit.set_selected(false)
-	selectedUnitIds = []
+	selectedUnitId = 0
+	unitsInSelectionDetector = []
 	resetUnitInventories()
 	isSelecting = true
 	selectionDetectorCollision.disabled  = false
@@ -139,15 +157,8 @@ func _on_selection_detector_area_entered(area) -> void:
 		var unit = area.get_parent() as Unit
 		if not unit is Unit:
 			return
-		unit.set_selected(true)
-		selectedUnitIds.append(unit.get_instance_id())
-		print(selectedUnitIds)
-		#TODO: Should select according to z_index ordering
-		var boxShape = abs(selectionStart - selectionEnd)
-		if boxShape.x + boxShape.y < SELECTION_BOX_MINIMUM_SIZE:
-			isSelecting = false
-			selectionDetectorCollision.disabled  = true
-		drawUnitInventory(unit)
+		unitsInSelectionDetector.append(unit)
+		selectUnit(unit)
 
 func resetUnitInventories() -> void:
 	for unit in unitInventories:
