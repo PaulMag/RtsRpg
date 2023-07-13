@@ -27,22 +27,22 @@ func _process(delta):
 	if not multiplayer.is_server():
 		return
 
-	if input.isIssuingMoveOrder:
-		var unit = instance_from_id(input.selectedUnitId)
+	if input.isIssuingMoveOrder != Vector2.INF:  # INF represents no value
+		var unit = input.getSelectedUnit()
 		if unit and (unit.playerId == playerId):
-			unit.move_to(input.destination)
+			unit.move_to(input.isIssuingMoveOrder)
 			if input.targetedUnitId != 0:
 				unit.targetUnit = instance_from_id(input.targetedUnitId)
-		input.isIssuingMoveOrder = false
+		input.isIssuingMoveOrder = Vector2.INF
 
 	if input.isIssuingAttackOrder:
-		var unit = instance_from_id(input.selectedUnitId)
+		var unit = input.getSelectedUnit()
 		if unit and (unit.playerId == playerId):
 			unit.attack()
 			input.isIssuingAttackOrder = false
 
 	if input.isIssuingEquipOrder != 0:
-		var unit: Unit = instance_from_id(input.selectedUnitId) as Unit
+		var unit: Unit = input.getSelectedUnit()
 		if unit and (unit.playerId == playerId):
 			unit.equip(input.isIssuingEquipOrder)
 			input.isIssuingEquipOrder = 0

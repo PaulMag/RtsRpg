@@ -16,18 +16,14 @@ properties/2/path = NodePath(".:playerName")
 properties/2/spawn = false
 properties/2/sync = true
 properties/2/watch = false
-properties/3/path = NodePath("PlayerInput:destination")
+properties/3/path = NodePath("PlayerInput:targetedUnitId")
 properties/3/spawn = true
 properties/3/sync = true
 properties/3/watch = false
-properties/4/path = NodePath("PlayerInput:targetedUnitId")
+properties/4/path = NodePath("PlayerInput:selectedUnitId")
 properties/4/spawn = true
 properties/4/sync = true
 properties/4/watch = false
-properties/5/path = NodePath("PlayerInput:selectedUnitId")
-properties/5/spawn = true
-properties/5/sync = true
-properties/5/watch = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)

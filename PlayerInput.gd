@@ -10,12 +10,11 @@ const HUD = preload("res://HUD.tscn")
 @onready var selectionDetectorCollision: CollisionShape2D = $"../SelectionDetector/CollisionShape2D"
 
 @export var selectedUnitId: int
-@export var destination: Vector2
 @export var targetedUnitId: int
 
-@export var isIssuingMoveOrder := false
+var isIssuingMoveOrder := Vector2.INF  # INF represents no value
 @export var isIssuingAttackOrder := false
-@export var isIssuingEquipOrder := 0
+var isIssuingEquipOrder := 0
 
 var hud: Hud
 var inventoryHud: VBoxContainer
@@ -60,9 +59,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		area_selected(selectionStart, selectionEnd)
 
 	if event.is_action_pressed("mouse_right_click"):
-		destination = selectionPanel.get_global_mouse_position()
+		var destination = selectionPanel.get_global_mouse_position()
 		set_target_area(destination)
-		issueMoveOrder.rpc()
+		issueMoveOrder.rpc(destination)
 	if event.is_action_pressed("ui_accept"):
 		issueAttackOrder.rpc()
 
@@ -77,8 +76,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 @rpc("call_local")
-func issueMoveOrder():
-	isIssuingMoveOrder = true
+func issueMoveOrder(destination: Vector2):
+	isIssuingMoveOrder = destination
 
 @rpc("call_local")
 func issueAttackOrder():
