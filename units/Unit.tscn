@@ -633,8 +633,8 @@ stream = ExtResource("5_i8enp")
 
 [node name="SelectionArea" type="Area2D" parent="."]
 y_sort_enabled = true
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SelectionArea"]
 position = Vector2(0, -14)

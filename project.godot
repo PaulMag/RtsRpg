@@ -84,6 +84,7 @@ select_slot_4={
 
 2d_physics/layer_1="Units"
 2d_physics/layer_2="Projectiles"
+2d_physics/layer_3="Selection"
 
 [physics]
 
