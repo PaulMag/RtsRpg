@@ -625,6 +625,7 @@ offset_left = -24.0
 offset_top = -69.0
 offset_right = 25.0
 offset_bottom = -42.0
+mouse_filter = 2
 value = 55.57
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]

@@ -8,6 +8,7 @@ offset_left = 496.0
 offset_top = 608.0
 offset_right = 656.0
 offset_bottom = 648.0
+mouse_filter = 0
 texture = ExtResource("1_nomjn")
 script = ExtResource("2_fwy8n")
 
@@ -23,21 +24,25 @@ alignment = 1
 [node name="InventorySlot1" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 stretch_mode = 3
 
 [node name="InventorySlot2" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 stretch_mode = 3
 
 [node name="InventorySlot3" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 stretch_mode = 3
 
 [node name="InventorySlot4" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 stretch_mode = 3
 
 [connection signal="mouse_entered" from="HBoxContainer/InventorySlot1" to="." method="_on_inventory_slot_1_mouse_entered"]
