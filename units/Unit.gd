@@ -3,8 +3,9 @@ extends CharacterBody2D
 class_name Unit
 
 
-@export var PROJECTILE = preload("res://projectiles/Bullet.tscn")
-@export var AI_CONTROLLER = preload("res://units/AiController.tscn")
+var PROJECTILE = preload("res://projectiles/Bullet.tscn")
+var AI_CONTROLLER = preload("res://units/AiController.tscn")
+var CORPSE = preload("res://units/corpse/Corpse.tscn")
 
 @export var isAi := false
 @export var weapons: Array[Weapon]
@@ -36,6 +37,7 @@ enum states {
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle : Sprite2D = $SelectedCircle
+@onready var healthBar : ProgressBar = $HealthBar
 @onready var destination : Vector2 = position
 
 @export var targetUnit: Unit = self
@@ -46,7 +48,7 @@ var followCursor := false
 func _ready():
 	self.add_to_group("units")
 	selectedCircle.visible = isSelected
-	$HealthBar.value = hp
+	healthBar.value = hp
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
 	if isAi:
@@ -57,8 +59,6 @@ func set_selected(flag: bool):
 	selectedCircle.visible = flag
 
 func _process(delta: float):
-
-	$HealthBar.value = hp
 
 	if is_multiplayer_authority():
 		if state == states.ATTACKING:
@@ -131,8 +131,16 @@ func _physics_process(delta: float):
 
 func damage(amount: int = 1):
 	hp -= amount
-	$HealthBar.value = hp
+	healthBar.value = hp
 	$DamageSound.play()
+	if hp <= 0:
+		die()
+
+func die() -> void:
+	var corpse = CORPSE.instantiate()
+	corpse.position = position
+	get_parent().add_child(corpse)
+	queue_free()
 
 func attack():
 	if getEquippedWeapon() == null:
