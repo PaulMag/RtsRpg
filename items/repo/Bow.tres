@@ -8,6 +8,7 @@
 script = ExtResource("1_j0nsh")
 damage = 1
 range = 400
+manaCost = 0
 bulletSpeed = 500.0
 bulletTexture = ExtResource("1_4utxn")
 name = "Bow"

@@ -1,10 +1,11 @@
-[gd_scene load_steps=80 format=3 uid="uid://cc5silfo07dy"]
+[gd_scene load_steps=81 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" path="res://units/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
 [ext_resource type="Texture2D" uid="uid://4jxtstcb1i27" path="res://sprites/units/skeleton/skeleton_slash.png" id="3_uxcrt"]
 [ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/skeleton_walk.png" id="4_myvs8"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
+[ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="5_xkyn2"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0
@@ -579,18 +580,22 @@ properties/2/path = NodePath(".:state")
 properties/2/spawn = false
 properties/2/sync = true
 properties/2/watch = false
-properties/3/path = NodePath(".:hp")
-properties/3/spawn = false
+properties/3/path = NodePath(".:playerId")
+properties/3/spawn = true
 properties/3/sync = true
 properties/3/watch = false
-properties/4/path = NodePath(".:playerId")
+properties/4/path = NodePath(".:weaponSlotEquipped")
 properties/4/spawn = true
 properties/4/sync = true
 properties/4/watch = false
-properties/5/path = NodePath(".:weaponSlotEquipped")
+properties/5/path = NodePath(".:health")
 properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
+properties/6/path = NodePath(".:mana")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
 
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
@@ -619,14 +624,43 @@ max_speed = 150.0
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 15.0
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-modulate = Color(0, 1, 0, 1)
-offset_left = -24.0
-offset_top = -69.0
-offset_right = 25.0
-offset_bottom = -42.0
-mouse_filter = 2
+[node name="ProgressBars" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -58.0
+offset_right = 16.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="ProgressBars"]
+z_index = 1
+layout_mode = 2
+step = 0.01
 value = 55.57
+nine_patch_stretch = true
+stretch_margin_top = 8
+texture_under = ExtResource("5_xkyn2")
+texture_progress = ExtResource("5_xkyn2")
+tint_under = Color(0, 0, 0, 1)
+tint_progress = Color(1, 0, 0, 1)
+
+[node name="ManaBar" type="TextureProgressBar" parent="ProgressBars"]
+z_index = 1
+layout_mode = 2
+step = 0.01
+nine_patch_stretch = true
+stretch_margin_top = 8
+texture_under = ExtResource("5_xkyn2")
+texture_progress = ExtResource("5_xkyn2")
+tint_under = Color(0, 0, 0, 1)
+tint_progress = Color(0, 0, 1, 1)
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_i8enp")

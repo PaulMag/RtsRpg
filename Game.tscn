@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://b38hn31i1vg4d"]
+[gd_scene load_steps=11 format=3 uid="uid://b38hn31i1vg4d"]
 
 [ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="2_8i5vk"]
 [ext_resource type="Script" path="res://Camera.gd" id="3_5s17m"]
-[ext_resource type="PackedScene" uid="uid://cc5silfo07dy" path="res://units/Unit.tscn" id="4_l78ar"]
+[ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://units/Unit.tscn" id="4_l78ar"]
 [ext_resource type="Resource" uid="uid://ba1frpch73a7f" path="res://items/repo/Bow.tres" id="5_0ycnr"]
 [ext_resource type="Script" path="res://Multiplayer.gd" id="5_fivu0"]
 [ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://items/repo/Sword.tres" id="6_lvi10"]
+[ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://items/repo/HealingStaff.tres" id="6_xyc17"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2cqk"]
 texture = ExtResource("2_8i5vk")
@@ -230,13 +231,13 @@ y_sort_enabled = true
 
 [node name="Unit1" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
 position = Vector2(-359, 26)
-weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("5_0ycnr"), ExtResource("6_lvi10")])
+weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("5_0ycnr"), ExtResource("6_lvi10"), ExtResource("6_xyc17")])
 weaponSlotEquipped = 1
 unitName = "Aron"
 
 [node name="Unit2" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
 position = Vector2(133, 180)
-weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("6_lvi10")])
+weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("6_lvi10"), ExtResource("6_xyc17")])
 weaponSlotEquipped = 2
 unitName = "Beatrice"
 

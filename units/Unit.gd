@@ -11,9 +11,11 @@ var CORPSE = preload("res://units/corpse/Corpse.tscn")
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
 
-const SPEED = 150.0
-const ATTACK_RANGE = 30
-const HP_MAX = 100
+const SPEED := 150.0
+const ATTACK_RANGE := 30
+const HEALTH_MAX := 100
+const MANA_MAX := 50
+
 const FACING_MAPPING = {
 	1: "right",
 	2: "down",
@@ -27,17 +29,19 @@ enum states {
 }
 
 @export var playerId := 1
-
 @export var unitName: String = ""
-@export var hp := 75
+
+@export var health : int = 75
+@export var mana := 40
 @export var facing := 2;
 @export var state := states.IDLE
 
-@export var isSelected := false
+var isSelected := false
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle : Sprite2D = $SelectedCircle
-@onready var healthBar : ProgressBar = $HealthBar
+@onready var healthBar :TextureProgressBar  = $ProgressBars/HealthBar
+@onready var manaBar :TextureProgressBar  = $ProgressBars/ManaBar
 @onready var destination : Vector2 = position
 
 @export var targetUnit: Unit = self
@@ -48,7 +52,12 @@ var followCursor := false
 func _ready():
 	self.add_to_group("units")
 	selectedCircle.visible = isSelected
-	healthBar.value = hp
+
+	healthBar.max_value = HEALTH_MAX
+	healthBar.value = health
+	manaBar.max_value = MANA_MAX
+	manaBar.value = mana
+
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
 	if isAi:
@@ -59,6 +68,8 @@ func set_selected(flag: bool):
 	selectedCircle.visible = flag
 
 func _process(delta: float):
+	healthBar.value = health
+	manaBar.value = mana
 
 	if is_multiplayer_authority():
 		if state == states.ATTACKING:
@@ -130,12 +141,13 @@ func _physics_process(delta: float):
 			attack()
 
 func damage(amount: int = 1):
-	hp -= amount
-	healthBar.value = hp
+	health -= amount
 	$DamageSound.play()
-	if hp <= 0:
-		die()
+	health = clampi(health, 0, HEALTH_MAX)
+	if health <= 0:
+		die.rpc()
 
+@rpc("call_local")
 func die() -> void:
 	var corpse = CORPSE.instantiate()
 	corpse.position = position
@@ -147,7 +159,10 @@ func attack():
 		return
 	if position.distance_to(targetUnit.position) > getEquippedWeapon().range:
 		return
+	if getEquippedWeapon().manaCost > mana:
+		return
 	state = states.ATTACKING
+	spendMana(getEquippedWeapon().manaCost)
 	$AttackTimer.start()
 	var newProjectile = PROJECTILE.instantiate() as Bullet
 	newProjectile.position = position
@@ -157,6 +172,8 @@ func attack():
 	get_parent().get_parent().add_child(newProjectile)
 	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
 
+func spendMana(amount: int) -> void:
+	mana -= getEquippedWeapon().manaCost
 
 func _on_attack_timer_timeout():
 	state = states.IDLE
