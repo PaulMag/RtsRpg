@@ -7,7 +7,7 @@ class_name Player
 @export var playerColor: Color
 
 @onready var input: PlayerInput = $PlayerInput
-@onready var selectionDetector: SelectionDetector = $PlayerInput/SelectionDetector
+@onready var mouseDetector: MouseDetector = $PlayerInput/MouseDetector
 
 @export var unitIds: Array[int] = []
 
@@ -20,9 +20,9 @@ func _ready() -> void:
 	input.set_process(playerId == multiplayer.get_unique_id())
 	input.set_multiplayer_authority(playerId)
 
-	selectionDetector.set_process(playerId == multiplayer.get_unique_id())
-	selectionDetector.set_physics_process(playerId == multiplayer.get_unique_id())
-	selectionDetector.set_multiplayer_authority(playerId)
+	mouseDetector.set_process(playerId == multiplayer.get_unique_id())
+	mouseDetector.set_physics_process(playerId == multiplayer.get_unique_id())
+	mouseDetector.set_multiplayer_authority(playerId)
 
 	if playerId == multiplayer.get_unique_id():
 		input.createHud()

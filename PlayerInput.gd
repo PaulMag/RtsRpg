@@ -6,7 +6,7 @@ class_name PlayerInput
 const HUD = preload("res://HUD.tscn")
 
 @onready var player: Player = $".."
-@onready var selectionPanel: Panel = $"../Panel"
+@onready var mouseDetector: MouseDetector = $MouseDetector
 
 @export var selectedUnitId: int
 
@@ -31,13 +31,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
 		return
 
-	if event.is_action_pressed("mouse_right_click"):
-		var destination = selectionPanel.get_global_mouse_position()
-		issueMoveOrder.rpc(destination)
-	if event.is_action_pressed("ui_accept"):
-		issueAttackOrder.rpc()
+	if event.is_action_pressed("mouse_left_click"):
+		mouseDetector.startMouseSelection()
+		mouseDetector.finishMouseSelection()
+	elif event.is_action_pressed("mouse_right_click"):
+		mouseDetector.targetMousePoint()
 
-	if event.is_action_pressed("select_slot_1"):
+	elif event.is_action_pressed("select_slot_1"):
 		issueEquipOrder.rpc(1)
 	elif event.is_action_pressed("select_slot_2"):
 		issueEquipOrder.rpc(2)
@@ -73,6 +73,9 @@ func _process(delta: float) -> void:
 
 func getSelectedUnit() -> Unit:
 	return instance_from_id(selectedUnitId)
+
+func moveTo(destination: Vector2) -> void:
+	issueMoveOrder.rpc(destination)
 
 func selectUnit(unit: Unit) -> void:
 	if unit  == null:
