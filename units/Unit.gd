@@ -36,15 +36,13 @@ enum states {
 @export var facing := 2;
 @export var state := states.IDLE
 
-var isSelected := false
-
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle : Sprite2D = $SelectedCircle
 @onready var healthBar :TextureProgressBar  = $ProgressBars/HealthBar
 @onready var manaBar :TextureProgressBar  = $ProgressBars/ManaBar
 @onready var destination : Vector2 = position
 
-@export var targetUnit: Unit = self
+@export var targetUnit: Unit = null
 
 
 var followCursor := false
@@ -53,8 +51,6 @@ func _ready():
 	self.add_to_group("units")
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
-
-	selectedCircle.visible = isSelected
 
 	healthBar.max_value = HEALTH_MAX
 	healthBar.value = health
@@ -66,8 +62,12 @@ func _ready():
 	if isAi:
 		add_child(AI_CONTROLLER.instantiate())
 
-func set_selected(flag: bool):
-	isSelected = flag
+func setSelected(flag: bool):
+	selectedCircle.modulate = Color.GREEN
+	selectedCircle.visible = flag
+
+func setTargeted(flag: bool):
+	selectedCircle.modulate = Color.RED
 	selectedCircle.visible = flag
 
 func _process(delta: float):

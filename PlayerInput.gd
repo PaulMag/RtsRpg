@@ -7,6 +7,7 @@ const HUD = preload("res://HUD.tscn")
 
 @onready var player: Player = $".."
 @onready var mouseDetector: MouseDetector = $MouseDetector
+@onready var destinationMarker: DestinationMarker = $DestinationMarker
 
 @export var selectedUnitId: int
 
@@ -75,28 +76,40 @@ func getSelectedUnit() -> Unit:
 	return instance_from_id(selectedUnitId)
 
 func moveTo(destination: Vector2) -> void:
-	issueMoveOrder.rpc(destination)
+	if getSelectedUnit():
+		issueMoveOrder.rpc(destination)
+		destinationMarker.markMove(destination)
 
 func selectUnit(unit: Unit) -> void:
 	if unit  == null:
 		if getSelectedUnit():
-			getSelectedUnit().set_selected(false)
+			getSelectedUnit().setSelected(false)
+			if is_instance_valid(getSelectedUnit().targetUnit):
+				getSelectedUnit().targetUnit.setTargeted(false)
 			selectedUnitId = 0
 		resetUnitInventories()
 		return
 	if not unit in player.getUnits():
 		return
 	if getSelectedUnit():
-		getSelectedUnit().set_selected(false)
-	unit.set_selected(true)
+		getSelectedUnit().setSelected(false)
+		if is_instance_valid(getSelectedUnit().targetUnit):
+			getSelectedUnit().targetUnit.setTargeted(false)
+	unit.setSelected(true)
 	selectedUnitId = unit.get_instance_id()
+	if is_instance_valid(getSelectedUnit().targetUnit):
+		getSelectedUnit().targetUnit.setTargeted(true)
 	resetUnitInventories()
 	drawUnitInventory(unit)
 
 func targetUnit(unit: Unit) -> void:
-	if unit == null:
+	if unit == null or getSelectedUnit() == null:
 		return
 	issueAttackOrder.rpc(unit.get_instance_id())
+	if is_instance_valid(getSelectedUnit().targetUnit):
+		getSelectedUnit().targetUnit.setTargeted(false)
+	unit.setTargeted(true)
+	destinationMarker.markAttack(unit)
 
 func resetUnitInventories() -> void:
 	for unit in unitInventories:

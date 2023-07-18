@@ -601,6 +601,7 @@ script = ExtResource("1_m0gx0")
 shape = SubResource("11")
 
 [node name="SelectedCircle" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_f7eal")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

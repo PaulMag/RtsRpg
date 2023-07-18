@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgjf1i06k5s0y"]
+[gd_scene load_steps=10 format=3 uid="uid://dgjf1i06k5s0y"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_ms6ct"]
 [ext_resource type="Script" path="res://PlayerInput.gd" id="2_ppega"]
 [ext_resource type="Script" path="res://MouseDetector.gd" id="3_8wjyc"]
+[ext_resource type="Texture2D" uid="uid://dojwaff2ox3jq" path="res://sprites/units/target_marker.png" id="4_6wqka"]
+[ext_resource type="Script" path="res://DestinationMarker.gd" id="5_tqsym"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
 properties/0/path = NodePath(".:playerId")
@@ -60,3 +62,17 @@ script = ExtResource("3_8wjyc")
 
 [node name="SelectionPanel" type="Panel" parent="PlayerInput"]
 theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
+
+[node name="DestinationMarker" type="Node2D" parent="PlayerInput"]
+visible = false
+script = ExtResource("5_tqsym")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerInput/DestinationMarker"]
+texture = ExtResource("4_6wqka")
+offset = Vector2(0, -16)
+
+[node name="Timer" type="Timer" parent="PlayerInput/DestinationMarker"]
+wait_time = 1.75
+one_shot = true
+
+[connection signal="timeout" from="PlayerInput/DestinationMarker/Timer" to="PlayerInput/DestinationMarker" method="_on_timer_timeout"]
