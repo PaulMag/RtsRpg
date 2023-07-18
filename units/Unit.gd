@@ -170,6 +170,10 @@ func attack():
 		return
 	if getEquippedWeapon().manaCost > mana:
 		return
+	if not ((getEquippedWeapon().canTargetFriendly and targetUnit.faction == faction)
+			or (getEquippedWeapon().canTargetEnemy and targetUnit.faction != faction)
+		):
+		return
 	state = states.ATTACKING
 	spendMana(getEquippedWeapon().manaCost)
 	$AttackTimer.start()
