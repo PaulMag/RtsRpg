@@ -7,6 +7,7 @@ var PROJECTILE = preload("res://projectiles/Bullet.tscn")
 var AI_CONTROLLER = preload("res://units/AiController.tscn")
 var CORPSE = preload("res://units/corpse/Corpse.tscn")
 
+@export var faction := Global.Faction.ENEMIES
 @export var isAi := false
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
@@ -28,7 +29,6 @@ enum states {
 	ATTACKING,
 }
 
-@export var playerId := 1
 @export var unitName: String = ""
 
 @export var health : int = 75
@@ -51,6 +51,9 @@ var followCursor := false
 
 func _ready():
 	self.add_to_group("units")
+	if faction != Global.Faction.PLAYERS:
+		isAi = true
+
 	selectedCircle.visible = isSelected
 
 	healthBar.max_value = HEALTH_MAX
@@ -97,13 +100,19 @@ func _process(delta: float):
 	elif state == states.IDLE:
 		sprite.animation = "idle_" + FACING_MAPPING[facing]
 
+
 	$Label.text = (
-		"Player " + str(playerId) + "\n"
+		"Player " + str(getPlayer().playerId if getPlayer() else null) + "\n"
 		+ unitName + "\n"
 		+ str(state) + "\n"
 		+ (getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
 	)
 
+func getPlayer() -> Player:
+	for player in Global.getPlayers():
+		if self in player.getUnits():
+			return player
+	return null
 
 func move_to(_destination: Vector2):
 	destination = _destination
@@ -205,10 +214,12 @@ func _on_mouse_entered():
 
 
 func _on_selection_area_mouse_entered():
-	if isAi:
-		sprite.modulate = Color.RED
-	else:
+	if getPlayer() == Global.getPlayerCurrent():
 		sprite.modulate = Color.GREEN
+	elif faction == Global.Faction.PLAYERS:
+		sprite.modulate = Color.YELLOW
+	else:
+		sprite.modulate = Color.RED
 
 func _on_selection_area_mouse_exited():
 	sprite.modulate = Color.WHITE

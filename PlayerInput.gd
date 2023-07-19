@@ -74,13 +74,6 @@ func _process(delta: float) -> void:
 func getSelectedUnit() -> Unit:
 	return instance_from_id(selectedUnitId)
 
-func get_all_units() -> Array[Unit]:
-	var allNodes = get_tree().get_nodes_in_group("units")
-	var allUnits: Array[Unit] = []
-	for node in allNodes:
-		allUnits.append(node as Unit)
-	return allUnits
-
 func selectUnit(unit: Unit) -> void:
 	if unit  == null:
 		if getSelectedUnit():
@@ -88,7 +81,7 @@ func selectUnit(unit: Unit) -> void:
 			selectedUnitId = 0
 		resetUnitInventories()
 		return
-	if unit.playerId != player.playerId:
+	if not unit in player.getUnits():
 		return
 	if getSelectedUnit():
 		getSelectedUnit().set_selected(false)

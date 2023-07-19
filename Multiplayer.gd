@@ -5,11 +5,6 @@ const PLAYER_LABEL = preload("res://PlayerLabel.tscn")
 
 const PORT = 4433
 
-func _process(delta):
-	var allPlayers = $Players.get_children()
-	var allPlayerIds = []
-	for player in allPlayers:
-		allPlayerIds.append(player.playerId)
 
 func _ready():
 #	get_tree().paused = true
@@ -66,10 +61,14 @@ func start_game():
 			add_player(1)
 			print("Not dedicated server. Added player 1.")
 
-	$"../Dungeon/Units/Unit3".playerId = playerd2id
+	var players = Global.getPlayers()
+	var i = 0
+	for unit in Global.getAllUnits(Global.Faction.PLAYERS):
+		players[i].giveUnit(unit)
+		i += 1
+		i = 0 if i >= players.size() else i
 
-
-	for player in $Players.get_children():
+	for player in Global.getPlayers():
 		var playerLabelNode = PLAYER_LABEL.instantiate()
 		playerLabelNode.playerId = player.playerId
 		playerLabelNode.playerName = player.name

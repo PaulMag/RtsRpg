@@ -97,10 +97,10 @@ func selectUnit(unitsInSelectionDetector: Array[Unit]) -> void:
 	var maxY := 1e9
 	var unit: Unit
 	for u in unitsInSelectionDetector:
-		if u.playerId == player.playerId and (unit == null or u.position.y > unit.position.y):
+		if u in player.getUnits() and (unit == null or u.position.y > unit.position.y):
 			maxY = u.position.y
 			unit = u
-	if unit == null or unit.playerId != player.playerId:
+	if (unit == null) or (not unit in player.getUnits()):
 		return
 	playerInput.selectUnit(unit)
 

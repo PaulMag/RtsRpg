@@ -8,6 +8,8 @@ var flag = false
 
 func _process(delta):
 	unit.targetUnit = getClosestUnit()
+	if not unit.targetUnit:
+		return
 	if not unit.getEquippedWeapon():
 		unit.move_to(unit.targetUnit.position)
 	elif unit.position.distance_to(unit.targetUnit.position) < unit.getEquippedWeapon().range:
@@ -16,7 +18,7 @@ func _process(delta):
 		unit.move_to(unit.targetUnit.position)
 
 func getClosestUnit() -> Unit:
-	var units = getAllUnitsExceptSelf()
+	var units = getAllEnemyUnits()
 	var minDistance := 1e9
 	var closestUnit: Unit
 	for unit in units:
@@ -26,17 +28,9 @@ func getClosestUnit() -> Unit:
 			closestUnit = unit
 	return closestUnit
 
-func getAllUnitsExceptSelf() -> Array[Unit]:
+func getAllEnemyUnits() -> Array[Unit]:
 	var units: Array[Unit] = []
-	for unit in getAllUnits():
-		if unit != self.unit:
+	for unit in Global.getAllUnits():
+		if unit.faction != self.unit.faction:
 			units.append(unit)
 	return units
-
-func getAllUnits() -> Array[Unit]:
-	var allNodes = get_tree().get_nodes_in_group("units")
-	var allUnits: Array[Unit] = []
-	for node in allNodes:
-		if node is Unit:
-			allUnits.append(node as Unit)
-	return allUnits

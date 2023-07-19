@@ -9,8 +9,11 @@ class_name Player
 @onready var input: PlayerInput = $PlayerInput
 @onready var selectionDetector: SelectionDetector = $PlayerInput/SelectionDetector
 
+@export var unitIds: Array[int] = []
+
 
 func _ready() -> void:
+	add_to_group("players")
 	playerId = name.to_int()
 	playerColor = Color(randf(), randf(), randf())
 
@@ -35,13 +38,13 @@ func _process(delta):
 
 	if input.isIssuingMoveOrder != Vector2.INF:  # INF represents no value
 		var unit = input.getSelectedUnit()
-		if unit and (unit.playerId == playerId):
+		if unit and (unit in getUnits()):
 			unit.move_to(input.isIssuingMoveOrder)
 		input.isIssuingMoveOrder = Vector2.INF
 
 	if input.isIssuingAttackOrder != 0:
 		var unit = input.getSelectedUnit()
-		if unit and (unit.playerId == playerId):
+		if unit and (unit in getUnits()):
 			var targetUnit = instance_from_id(input.isIssuingAttackOrder) as Unit
 			if targetUnit != unit:
 				unit.targetUnit = targetUnit
@@ -49,6 +52,15 @@ func _process(delta):
 
 	if input.isIssuingEquipOrder != 0:
 		var unit: Unit = input.getSelectedUnit()
-		if unit and (unit.playerId == playerId):
+		if unit and (unit in getUnits()):
 			unit.equip(input.isIssuingEquipOrder)
 			input.isIssuingEquipOrder = 0
+
+func giveUnit(unit: Unit) -> void:
+	unitIds.append(unit.get_instance_id())
+
+func getUnits() -> Array[Unit]:
+	var units: Array[Unit] = []
+	for unitId in unitIds:
+		units.append(instance_from_id(unitId))
+	return units
