@@ -46,6 +46,8 @@ enum states {
 
 
 var followCursor := false
+var followTarget := false
+
 
 func _ready():
 	self.add_to_group("units")
@@ -114,9 +116,17 @@ func getPlayer() -> Player:
 			return player
 	return null
 
-func move_to(_destination: Vector2):
+func orderMove(_destination: Vector2):
 	destination = _destination
+	followTarget = false
 	followCursor = true
+
+func orderAttack(unit: Unit) -> void:
+	targetUnit = unit
+	followCursor = false
+	followTarget = true
+
+	destination = targetUnit.position
 
 func _physics_process(delta: float):
 
@@ -124,18 +134,26 @@ func _physics_process(delta: float):
 
 		if followCursor:
 			$NavigationAgent2D.target_position = destination
+		elif followTarget:
+			if is_instance_valid(targetUnit):
+				$NavigationAgent2D.target_position = targetUnit.position
+			else:
+				followTarget = false
 
-		if $NavigationAgent2D.is_target_reachable():
+		if (followCursor or followTarget) and $NavigationAgent2D.is_target_reachable():
 			var destinationNext = $NavigationAgent2D.get_next_path_position()
 
 			velocity = position.direction_to(destinationNext).normalized() * SPEED
 			$NavigationAgent2D.set_velocity(velocity)
 
-			if position.distance_to(destination) < 15:
+			var followRange = getEquippedWeapon().range if getEquippedWeapon() else 50
+
+			if followCursor and position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
 				followCursor = false
-			else:
-				pass
+			elif followTarget and position.distance_to(targetUnit.position) < followRange:
+				velocity = Vector2.ZERO
+				followTarget = false
 		else:
 			pass
 

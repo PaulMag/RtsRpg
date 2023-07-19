@@ -11,11 +11,11 @@ func _process(delta):
 	if not unit.targetUnit:
 		return
 	if not unit.getEquippedWeapon():
-		unit.move_to(unit.targetUnit.position)
+		unit.orderMove(unit.targetUnit.position)
 	elif unit.position.distance_to(unit.targetUnit.position) < unit.getEquippedWeapon().range:
-		unit.move_to(unit.position)  # Stop moving
+		unit.orderMove(unit.position)  # Stop moving
 	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().range:
-		unit.move_to(unit.targetUnit.position)
+		unit.orderMove(unit.targetUnit.position)
 
 func getClosestUnit() -> Unit:
 	var units = getAllEnemyUnits()

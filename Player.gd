@@ -39,7 +39,7 @@ func _process(delta):
 	if input.isIssuingMoveOrder != Vector2.INF:  # INF represents no value
 		var unit = input.getSelectedUnit()
 		if unit and (unit in getUnits()):
-			unit.move_to(input.isIssuingMoveOrder)
+			unit.orderMove(input.isIssuingMoveOrder)
 		input.isIssuingMoveOrder = Vector2.INF
 
 	if input.isIssuingAttackOrder != 0:
@@ -47,7 +47,7 @@ func _process(delta):
 		if unit and (unit in getUnits()):
 			var targetUnit = instance_from_id(input.isIssuingAttackOrder) as Unit
 			if targetUnit != unit:
-				unit.targetUnit = targetUnit
+				unit.orderAttack(targetUnit)
 			input.isIssuingAttackOrder = 0
 
 	if input.isIssuingEquipOrder != 0:
