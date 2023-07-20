@@ -4,6 +4,7 @@ class_name Bullet
 
 var speed: int
 var damage: int
+var attackingUnit: Unit
 var target: Unit
 
 var sprite: Sprite2D
@@ -21,5 +22,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_2d_body_entered(unit: Unit) -> void:
 	if unit == target:
-		unit.damage(damage)
+		var attack := Attack.new()
+		attack.damage = damage
+		attack.attackingUnit = attackingUnit
+		unit.damage(attack)
 		queue_free()

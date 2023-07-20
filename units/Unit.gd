@@ -48,6 +48,8 @@ enum states {
 var followCursor := false
 var followTarget := false
 
+var hatedUnits: Dictionary = {}
+
 
 func _ready():
 	self.add_to_group("units")
@@ -167,8 +169,13 @@ func _physics_process(delta: float):
 		):
 			attack()
 
-func damage(amount: int = 1):
-	health -= amount
+func damage(attack: Attack):
+	health -= attack.damage
+	if isAi:
+		if not attack.attackingUnit in hatedUnits:
+			hatedUnits[attack.attackingUnit] = 0
+		hatedUnits[attack.attackingUnit] += attack.damage
+		print(hatedUnits)
 	$DamageSound.play()
 	health = clampi(health, 0, HEALTH_MAX)
 	if health <= 0:
@@ -197,6 +204,7 @@ func attack():
 	$AttackTimer.start()
 	var newProjectile = PROJECTILE.instantiate() as Bullet
 	newProjectile.position = position
+	newProjectile.attackingUnit = self
 	newProjectile.target = targetUnit
 	newProjectile.damage = getEquippedWeapon().damage
 	newProjectile.speed = getEquippedWeapon().bulletSpeed
