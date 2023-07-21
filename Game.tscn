@@ -230,22 +230,46 @@ navigation_polygon = SubResource("NavigationPolygon_yp8w1")
 y_sort_enabled = true
 
 [node name="Unit1" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
-position = Vector2(-359, 26)
+position = Vector2(-359, 28)
+faction = 0
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("5_0ycnr"), ExtResource("6_lvi10"), ExtResource("6_xyc17")])
 weaponSlotEquipped = 1
 unitName = "Aron"
 
 [node name="Unit2" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
-position = Vector2(133, 180)
+position = Vector2(50, 180)
+faction = 0
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("6_lvi10"), ExtResource("6_xyc17")])
 weaponSlotEquipped = 2
 unitName = "Beatrice"
 
 [node name="Unit3" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
-position = Vector2(337, 210)
+position = Vector2(100, 100)
+faction = 0
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
 weaponSlotEquipped = 3
 unitName = "Conan"
+
+[node name="Unit4" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+modulate = Color(0.662745, 0, 1, 1)
+position = Vector2(337, 300)
+weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
+weaponSlotEquipped = 3
+unitName = "Doug"
+
+[node name="Unit5" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+modulate = Color(0.662745, 0, 1, 1)
+position = Vector2(400, 300)
+weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
+weaponSlotEquipped = 3
+unitName = "Eagle"
+
+[node name="Unit6" parent="Dungeon/Units" instance=ExtResource("4_l78ar")]
+modulate = Color(0.662745, 0, 1, 1)
+position = Vector2(400, 450)
+weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
+weaponSlotEquipped = 3
+unitName = "Fyre"
 
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("5_fivu0")
