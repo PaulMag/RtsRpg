@@ -4,6 +4,7 @@ class_name Bullet
 
 var speed: int
 var damage: int
+var isHealing: bool
 var attackingUnit: Unit
 var target: Unit
 
@@ -24,6 +25,7 @@ func _on_area_2d_body_entered(unit: Unit) -> void:
 	if unit == target:
 		var attack := Attack.new()
 		attack.damage = damage
+		attack.isHealing = isHealing
 		attack.attackingUnit = attackingUnit
 		unit.damage(attack)
 		queue_free()

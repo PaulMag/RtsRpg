@@ -7,7 +7,7 @@ var flag = false
 
 
 func _process(delta):
-	unit.targetUnit = getMostHatedUnit()
+	unit.targetUnit = getMostThreateningUnit()
 	if not unit.targetUnit:
 		return
 	if not unit.getEquippedWeapon():
@@ -17,17 +17,17 @@ func _process(delta):
 	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().range:
 		unit.orderMove(unit.targetUnit.position)
 
-func getMostHatedUnit() -> Unit:
-	var mostHatedUnit: Unit = null
-	var highestHate := -1
-	var hatedUnits = unit.hatedUnits.keys()
-	for u in hatedUnits:
+func getMostThreateningUnit() -> Unit:
+	var mostThreateningUnit: Unit = null
+	var highestThreat := -1
+	var threatTable = unit.threatTable.keys()
+	for u in threatTable:
 		if not is_instance_valid(u):
-			unit.hatedUnits.erase(u)  # Remove dead units from hate list.
-		elif unit.hatedUnits[u] > highestHate:
-			mostHatedUnit = u
-			highestHate = unit.hatedUnits[u]
-	return mostHatedUnit
+			unit.threatTable.erase(u)  # Remove dead units from threat list.
+		elif unit.threatTable[u] > highestThreat:
+			mostThreateningUnit = u
+			highestThreat = unit.threatTable[u]
+	return mostThreateningUnit
 
 func getClosestUnit() -> Unit:
 	var units = getAllEnemyUnits()
@@ -46,3 +46,9 @@ func getAllEnemyUnits() -> Array[Unit]:
 		if unit.faction != self.unit.faction:
 			units.append(unit)
 	return units
+
+func _on_range_field_body_entered(u):
+	if u is Unit:
+		if u.faction != unit.faction:
+			if not u in unit.threatTable:
+				unit.threatTable[u] = 0

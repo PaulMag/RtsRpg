@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=84 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" path="res://units/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/skeleton_walk.png" id="4_myvs8"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="5_xkyn2"]
+[ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://units/AiController.tscn" id="7_jkhdm"]
+[ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0
@@ -593,6 +595,9 @@ properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
+radius = 320.0
+
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_m0gx0")
@@ -661,6 +666,7 @@ tint_progress = Color(0, 0, 1, 1)
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_i8enp")
+volume_db = -35.0
 
 [node name="SelectionArea" type="Area2D" parent="."]
 y_sort_enabled = true
@@ -693,6 +699,30 @@ Weapon"
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="RangeField" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeField"]
+shape = SubResource("CircleShape2D_7arjd")
+
+[node name="TextureRect" type="TextureRect" parent="RangeField"]
+modulate = Color(1, 1, 1, 0.0980392)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -320.0
+offset_right = 320.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_rybnc")
+
+[node name="AiController" parent="." instance=ExtResource("7_jkhdm")]
+
 [connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
 [connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]

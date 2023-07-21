@@ -26,3 +26,10 @@ func getAllUnits(faction = null) -> Array[Unit]:
 		if (faction == null) or unit.faction == faction:
 			units.append(unit as Unit)
 	return units
+
+func getAllUnitsNotFaction(faction) -> Array[Unit]:
+	var units: Array[Unit] = []
+	for unit in get_tree().get_nodes_in_group("units"):
+		if unit.faction != faction:
+			units.append(unit as Unit)
+	return units

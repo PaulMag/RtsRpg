@@ -4,7 +4,6 @@ class_name Unit
 
 
 var PROJECTILE = preload("res://projectiles/Bullet.tscn")
-var AI_CONTROLLER = preload("res://units/AiController.tscn")
 var CORPSE = preload("res://units/corpse/Corpse.tscn")
 
 @export var faction := Global.Faction.ENEMIES
@@ -41,6 +40,8 @@ enum states {
 @onready var healthBar :TextureProgressBar  = $ProgressBars/HealthBar
 @onready var manaBar :TextureProgressBar  = $ProgressBars/ManaBar
 @onready var destination : Vector2 = position
+@onready var aiController : Node = $AiController
+@onready var rangeField : Area2D = $RangeField
 
 @export var targetUnit: Unit = null
 
@@ -48,7 +49,7 @@ enum states {
 var followCursor := false
 var followTarget := false
 
-var hatedUnits: Dictionary = {}
+var threatTable: Dictionary = {}
 
 
 func _ready():
@@ -63,12 +64,17 @@ func _ready():
 
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
-	if isAi:
-		add_child(AI_CONTROLLER.instantiate())
+	if not isAi:
+		aiController.queue_free()
+		remove_child(aiController)
 
 func setSelected(flag: bool):
 	selectedCircle.modulate = Color.GREEN
 	selectedCircle.visible = flag
+	if flag and getEquippedWeapon():
+		viewRangeField(getEquippedWeapon().range, Color(0, 0.5, 1))
+	else:
+		hideRangeField()
 
 func setTargeted(flag: bool):
 	selectedCircle.modulate = Color.RED
@@ -111,6 +117,14 @@ func _process(delta: float):
 		+ str(state) + "\n"
 		+ (getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
 	)
+
+func viewRangeField(radius: float, color: Color) -> void:
+	rangeField.scale = float(radius) / 320. * Vector2.ONE
+	rangeField.modulate = color
+	rangeField.visible = true
+
+func hideRangeField() -> void:
+	rangeField.visible = false
 
 func getPlayer() -> Player:
 	for player in Global.getPlayers():
@@ -170,16 +184,35 @@ func _physics_process(delta: float):
 			attack()
 
 func damage(attack: Attack):
-	health -= attack.damage
-	if isAi:
-		if not attack.attackingUnit in hatedUnits:
-			hatedUnits[attack.attackingUnit] = 0
-		hatedUnits[attack.attackingUnit] += attack.damage
-		print(hatedUnits)
-	$DamageSound.play()
-	health = clampi(health, 0, HEALTH_MAX)
+	if attack.isHealing:
+		var healthBefore = health
+		health += attack.damage
+		health = clampi(health, 0, HEALTH_MAX)
+		if is_instance_valid(attack.attackingUnit):
+			var healingReceived = health - healthBefore
+			var awareEnemyUnits: Array[Unit] = attack.attackingUnit.getAllAwareEnemyUnits()
+			for enemyUnit in awareEnemyUnits:
+				enemyUnit.addThreat(attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
+	else:
+		health -= attack.damage
+		addThreat(attack.attackingUnit, attack.damage)
+		$DamageSound.play()
+
 	if health <= 0:
 		die.rpc()
+
+func addThreat(unit: Unit, amount: float = 0) -> void:
+	if not unit in threatTable:
+		threatTable[unit] = 0
+	threatTable[unit] += amount
+
+func getAllAwareEnemyUnits() -> Array[Unit]:
+	var awareEnemyUnits: Array[Unit] = []
+	for unit in Global.getAllUnitsNotFaction(faction):
+		if self in unit.threatTable:
+			awareEnemyUnits.append(unit)
+	return awareEnemyUnits
+
 
 @rpc("call_local")
 func die() -> void:
@@ -207,6 +240,7 @@ func attack():
 	newProjectile.attackingUnit = self
 	newProjectile.target = targetUnit
 	newProjectile.damage = getEquippedWeapon().damage
+	newProjectile.isHealing = getEquippedWeapon().isHealing
 	newProjectile.speed = getEquippedWeapon().bulletSpeed
 	get_parent().get_parent().add_child(newProjectile)
 	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
@@ -220,6 +254,8 @@ func _on_attack_timer_timeout():
 func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
 	update.rpc()
+	if getEquippedWeapon():
+		viewRangeField(getEquippedWeapon().range, Color(0, 0.5, 1))
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:
@@ -239,10 +275,6 @@ func update():
 	isBeingUpdated = true
 
 
-func _on_mouse_entered():
-	modulate = Color.RED
-
-
 func _on_selection_area_mouse_entered():
 	if getPlayer() == Global.getPlayerCurrent():
 		sprite.modulate = Color.GREEN
@@ -250,6 +282,10 @@ func _on_selection_area_mouse_entered():
 		sprite.modulate = Color.YELLOW
 	else:
 		sprite.modulate = Color.RED
+		if isAi:
+			viewRangeField(320, Color.RED)
 
 func _on_selection_area_mouse_exited():
 	sprite.modulate = Color.WHITE
+	if faction != Global.Faction.PLAYERS:
+		hideRangeField()
