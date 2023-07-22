@@ -3,4 +3,8 @@
 .idea
 .vs
 
+*.pdn
+*.exe
+*.pck
+
 default_env.tres
