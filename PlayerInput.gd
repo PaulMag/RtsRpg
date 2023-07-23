@@ -3,7 +3,7 @@ extends MultiplayerSynchronizer
 class_name PlayerInput
 
 
-const HUD = preload("res://HUD.tscn")
+const HUD = preload("res://Hud.tscn")
 
 @onready var player: Player = $".."
 @onready var mouseDetector: MouseDetector = $MouseDetector
@@ -62,7 +62,7 @@ func issueEquipOrder(slot: int):
 
 var unitUpdateCountdown = 0  # Necessary because there is some delay in the syncing. (TODO)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var unit = getSelectedUnit()
 	if unit and (unit.isBeingUpdated or unitUpdateCountdown > 0):
 		drawUnitInventory(unit)

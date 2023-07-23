@@ -7,8 +7,9 @@
 [resource]
 script = ExtResource("1_j0nsh")
 damage = 1
-range = 400
+attackRange = 400
 manaCost = 0
+isHealing = false
 canTargetFriendly = false
 canTargetEnemy = true
 bulletSpeed = 500.0

@@ -30,8 +30,8 @@ enum states {
 
 @export var unitName: String = ""
 
-@export var health : int = 75
-@export var mana := 40
+@export var health: float = 75
+@export var mana: float = 40
 @export var facing := 2;
 @export var state := states.IDLE
 
@@ -72,7 +72,7 @@ func setSelected(flag: bool):
 	selectedCircle.modulate = Color.GREEN
 	selectedCircle.visible = flag
 	if flag and getEquippedWeapon():
-		viewRangeField(getEquippedWeapon().range, Color(0, 0.5, 1))
+		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
 	else:
 		hideRangeField()
 
@@ -80,7 +80,7 @@ func setTargeted(flag: bool):
 	selectedCircle.modulate = Color.RED
 	selectedCircle.visible = flag
 
-func _process(delta: float):
+func _process(_delta: float):
 	healthBar.value = health
 	manaBar.value = mana
 
@@ -110,12 +110,13 @@ func _process(delta: float):
 	elif state == states.IDLE:
 		sprite.animation = "idle_" + FACING_MAPPING[facing]
 
-
 	$Label.text = (
-		"Player " + str(getPlayer().playerId if getPlayer() else null) + "\n"
-		+ unitName + "\n"
-		+ str(state) + "\n"
-		+ (getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
+		"Player: %s\n%s\n%s\n%s\n" % [
+			(str(getPlayer().playerId) if getPlayer() else "none"),
+			unitName,
+			str(state),
+			(getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
+		]
 	)
 
 func viewRangeField(radius: float, color: Color) -> void:
@@ -144,7 +145,7 @@ func orderAttack(unit: Unit) -> void:
 
 	destination = targetUnit.position
 
-func _physics_process(delta: float):
+func _physics_process(_delta: float):
 
 	if is_multiplayer_authority():
 
@@ -162,7 +163,7 @@ func _physics_process(delta: float):
 			velocity = position.direction_to(destinationNext).normalized() * SPEED
 			$NavigationAgent2D.set_velocity(velocity)
 
-			var followRange = getEquippedWeapon().range if getEquippedWeapon() else 50
+			var followRange = getEquippedWeapon().attackRange if getEquippedWeapon() else 50
 
 			if followCursor and position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
@@ -179,23 +180,23 @@ func _physics_process(delta: float):
 			and getEquippedWeapon() != null
 			and targetUnit != null
 			and targetUnit != self
-			and position.distance_to(targetUnit.position) <= getEquippedWeapon().range
+			and position.distance_to(targetUnit.position) <= getEquippedWeapon().attackRange
 		):
 			attack()
 
-func damage(attack: Attack):
-	if attack.isHealing:
+func damage(_attack: Attack):
+	if _attack.isHealing:
 		var healthBefore = health
-		health += attack.damage
-		health = clampi(health, 0, HEALTH_MAX)
-		if is_instance_valid(attack.attackingUnit):
+		health += _attack.damage
+		health = clampf(health, 0, HEALTH_MAX)
+		if is_instance_valid(_attack.attackingUnit):
 			var healingReceived = health - healthBefore
-			var awareEnemyUnits: Array[Unit] = attack.attackingUnit.getAllAwareEnemyUnits()
+			var awareEnemyUnits: Array[Unit] = _attack.attackingUnit.getAllAwareEnemyUnits()
 			for enemyUnit in awareEnemyUnits:
-				enemyUnit.addThreat(attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
+				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
 	else:
-		health -= attack.damage
-		addThreat(attack.attackingUnit, attack.damage)
+		health -= _attack.damage
+		addThreat(_attack.attackingUnit, _attack.damage)
 		$DamageSound.play()
 
 	if health <= 0:
@@ -224,7 +225,7 @@ func die() -> void:
 func attack():
 	if getEquippedWeapon() == null:
 		return
-	if position.distance_to(targetUnit.position) > getEquippedWeapon().range:
+	if position.distance_to(targetUnit.position) > getEquippedWeapon().attackRange:
 		return
 	if getEquippedWeapon().manaCost > mana:
 		return
@@ -246,7 +247,7 @@ func attack():
 	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
 
 func spendMana(amount: int) -> void:
-	mana -= getEquippedWeapon().manaCost
+	mana -= amount
 
 func _on_attack_timer_timeout():
 	state = states.IDLE
@@ -255,7 +256,7 @@ func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
 	update.rpc()
 	if getEquippedWeapon():
-		viewRangeField(getEquippedWeapon().range, Color(0, 0.5, 1))
+		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:

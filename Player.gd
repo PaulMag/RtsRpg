@@ -32,7 +32,7 @@ func _ready() -> void:
 		print("Player on peer:   ", playerId, "  '", name, "'  ", input.get_multiplayer_authority(), "'  ")
 
 
-func _process(delta):
+func _process(_delta):
 	if not multiplayer.is_server():
 		return
 

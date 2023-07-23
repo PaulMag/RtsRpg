@@ -6,15 +6,15 @@ extends Node
 var flag = false
 
 
-func _process(delta):
+func _process(_delta):
 	unit.targetUnit = getMostThreateningUnit()
 	if not unit.targetUnit:
 		return
 	if not unit.getEquippedWeapon():
 		unit.orderMove(unit.targetUnit.position)
-	elif unit.position.distance_to(unit.targetUnit.position) < unit.getEquippedWeapon().range:
+	elif unit.position.distance_to(unit.targetUnit.position) < unit.getEquippedWeapon().attackRange:
 		unit.orderMove(unit.position)  # Stop moving
-	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().range:
+	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().attackRange:
 		unit.orderMove(unit.targetUnit.position)
 
 func getMostThreateningUnit() -> Unit:
@@ -33,18 +33,18 @@ func getClosestUnit() -> Unit:
 	var units = getAllEnemyUnits()
 	var minDistance := 1e9
 	var closestUnit: Unit
-	for unit in units:
-		var distance = unit.position.distance_to(self.unit.position)
+	for u in units:
+		var distance = u.position.distance_to(self.u.position)
 		if distance < minDistance:
 			minDistance = distance
-			closestUnit = unit
+			closestUnit = u
 	return closestUnit
 
 func getAllEnemyUnits() -> Array[Unit]:
 	var units: Array[Unit] = []
-	for unit in Global.getAllUnits():
-		if unit.faction != self.unit.faction:
-			units.append(unit)
+	for u in Global.getAllUnits():
+		if u.faction != self.u.faction:
+			units.append(u)
 	return units
 
 func _on_range_field_body_entered(u):

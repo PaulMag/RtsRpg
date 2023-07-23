@@ -6,8 +6,9 @@
 [resource]
 script = ExtResource("1_3ey63")
 damage = 10
-range = 100
+attackRange = 75
 manaCost = 0
+isHealing = false
 canTargetFriendly = false
 canTargetEnemy = true
 bulletSpeed = 999.0

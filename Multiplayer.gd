@@ -45,8 +45,6 @@ func start_game():
 	print("Game started")
 	get_tree().paused = false
 
-	var playerd2id : int
-
 	if multiplayer.is_server():
 #		multiplayer.peer_connected.connect(add_player)
 #		multiplayer.peer_disconnected.connect(delete_player)
@@ -54,8 +52,6 @@ func start_game():
 		for id in multiplayer.get_peers():
 			add_player(id)
 			print("Added peer player %s." % id)
-			playerd2id = id
-
 
 		if not OS.has_feature("dedicated_server"):
 			add_player(1)

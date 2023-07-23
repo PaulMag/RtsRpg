@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_hw73u")
 damage = 5
-range = 200
+attackRange = 200
 manaCost = 5
 isHealing = true
 canTargetFriendly = true

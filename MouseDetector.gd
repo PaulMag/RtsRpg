@@ -12,7 +12,7 @@ var selectionAreaStart: Vector2
 var selectionAreaEnd: Vector2
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if isDraggingMouse:
 		selectionAreaEnd = get_global_mouse_position()
 		draw_selection_box()
@@ -41,12 +41,12 @@ func selectArea(start: Vector2, end: Vector2) -> void:
 	var cornerB = Vector2(max(start.x, end.x), max(start.y, end.y))
 
 	var center: Vector2 = (cornerA + cornerB) * 0.5
-	var shape := Vector2(
+	var selectorShape := Vector2(
 		abs(cornerA.x - cornerB.x),
 		abs(cornerA.y - cornerB.y),
 	)
 
-	var unitsInDetector = getUnitsInDetector(center, shape)
+	var unitsInDetector = getUnitsInDetector(center, selectorShape)
 	var selectedUnit = pickSelectedUnit(unitsInDetector)
 	playerInput.selectUnit(selectedUnit)
 
@@ -72,11 +72,9 @@ func getUnitsInDetector(pos: Vector2, size := Vector2.ONE) -> Array[Unit]:
 	return unitsInDetector
 
 func pickSelectedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
-	var maxY := 1e9
 	var unit: Unit
 	for u in unitsInSelectionDetector:
 		if u in player.getUnits() and (unit == null or u.position.y > unit.position.y):
-			maxY = u.position.y
 			unit = u
 	if (unit == null) or (not unit in player.getUnits()):
 		return null
@@ -84,10 +82,8 @@ func pickSelectedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
 		return unit
 
 func pickTargetedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
-	var maxY := 1e9
 	var unit: Unit = null
 	for u in unitsInSelectionDetector:
 		if (unit == null or u.position.y > unit.position.y):
-			maxY = u.position.y
 			unit = u
 	return unit

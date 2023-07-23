@@ -3,7 +3,7 @@ extends Item
 class_name Weapon
 
 @export var damage: int
-@export var range: int
+@export var attackRange: int
 @export var manaCost: int
 @export var isHealing: bool = false
 @export var canTargetFriendly: bool = true
