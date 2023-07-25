@@ -1,38 +1,38 @@
 extends Node
 
-class_name Player
+class_name ServerPlayer
+
 
 @export var playerId: int
 @export var playerName: String
 @export var playerColor: Color
 
-@onready var input: PlayerInput = $PlayerInput
-@onready var mouseDetector: MouseDetector = $PlayerInput/MouseDetector
+var input: LocalPlayer
 
 @export var unitIds: Array[int] = []
 
 
-func _ready() -> void:
+var hasStarted = false
+
+func _enter_tree():
 	add_to_group("players")
+
+func _ready() -> void:
 	playerId = name.to_int()
 	playerColor = Color(randf(), randf(), randf())
+	$Timer.start()  #TODO: This is stupid.
 
-	input.set_process(playerId == multiplayer.get_unique_id())
-	input.set_multiplayer_authority(playerId)
-
-	mouseDetector.set_process(playerId == multiplayer.get_unique_id())
-	mouseDetector.set_physics_process(playerId == multiplayer.get_unique_id())
-	mouseDetector.set_multiplayer_authority(playerId)
-
-	if playerId == multiplayer.get_unique_id():
-		input.createHud()
-	if multiplayer.is_server():
-		print("Player on server: ", playerId, "  '", name, "'  ", input.get_multiplayer_authority(), "'  ")
-	else:
-		print("Player on peer:   ", playerId, "  '", name, "'  ", input.get_multiplayer_authority(), "'  ")
-
+func _on_timer_timeout():  #TODO: This is stupid.
+	for pi in get_tree().get_nodes_in_group("playerInputs"):
+		print("PlayerInput: %s   Name: %s" % [pi, pi.name])
+		if pi.name.to_int() == playerId:
+			input = pi
+			hasStarted = true
+			return
 
 func _process(_delta):
+	if not hasStarted:
+		return
 	if not multiplayer.is_server():
 		return
 
@@ -64,3 +64,4 @@ func getUnits() -> Array[Unit]:
 	for unitId in unitIds:
 		units.append(instance_from_id(unitId))
 	return units
+

@@ -3,14 +3,16 @@ extends ShapeCast2D
 class_name MouseDetector
 
 
-@onready var player: Player = $"../.."
-@onready var playerInput: PlayerInput = $".."
+@onready var playerInput: LocalPlayer = $".."
 @onready var selectionPanel: Panel = $"../SelectionPanel"
 
 var isDraggingMouse := false
 var selectionAreaStart: Vector2
 var selectionAreaEnd: Vector2
 
+
+#func _enter_tree():
+#	set_process(true)
 
 func _process(_delta: float) -> void:
 	if isDraggingMouse:
@@ -74,9 +76,9 @@ func getUnitsInDetector(pos: Vector2, size := Vector2.ONE) -> Array[Unit]:
 func pickSelectedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
 	var unit: Unit
 	for u in unitsInSelectionDetector:
-		if u in player.getUnits() and (unit == null or u.position.y > unit.position.y):
+		if u in playerInput.player.getUnits() and (unit == null or u.position.y > unit.position.y):
 			unit = u
-	if (unit == null) or (not unit in player.getUnits()):
+	if (unit == null) or (not unit in playerInput.player.getUnits()):
 		return null
 	else:
 		return unit

@@ -7,14 +7,14 @@ enum Faction {
 }
 
 
-func getPlayers() -> Array[Player]:
-	var players: Array[Player] = []
+func getPlayers() -> Array[ServerPlayer]:
+	var players: Array[ServerPlayer] = []
 	for player in get_tree().get_nodes_in_group("players"):
-		players.append(player as Player)
+		players.append(player as ServerPlayer)
 	return players
 
 # This returns the Player that represents the current Peer.
-func getPlayerCurrent() -> Player:
+func getPlayerCurrent() -> ServerPlayer:
 	for player in getPlayers():
 		if player.playerId == multiplayer.get_unique_id():
 			return player

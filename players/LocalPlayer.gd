@@ -1,15 +1,15 @@
 extends MultiplayerSynchronizer
 
-class_name PlayerInput
+class_name LocalPlayer
 
 
 const HUD = preload("res://Hud.tscn")
 
-@onready var player: Player = $".."
+var player: ServerPlayer
 @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 
-@export var selectedUnitId: int
+var selectedUnitId: int
 
 var isIssuingMoveOrder := Vector2.INF  # INF represents no value
 var isIssuingAttackOrder := 0
@@ -19,9 +19,20 @@ var hud: Hud
 var inventoryHud: VBoxContainer
 
 var INVENTORY_SLOTS = preload("res://InventorySlots.tscn")
-#var unitInventories: Array[InventorySlots] = []
 var unitInventories: Dictionary = {}
 
+
+func _enter_tree():
+	set_multiplayer_authority(name.to_int(), true)
+	add_to_group("playerInputs")
+
+func _ready():
+	for p in get_tree().get_nodes_in_group("players"):
+		if p.playerId == name.to_int():
+			player = p
+			break
+	set_process(player.playerId == multiplayer.get_unique_id())
+	createHud()
 
 func createHud() -> void:
 	hud = HUD.instantiate()
@@ -60,6 +71,10 @@ func issueAttackOrder(unitId: int):
 func issueEquipOrder(slot: int):
 	isIssuingEquipOrder = slot
 
+@rpc("call_local")
+func setSelectedUnitId(unitId: int):
+	selectedUnitId = unitId
+
 var unitUpdateCountdown = 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _process(_delta: float) -> void:
@@ -86,7 +101,7 @@ func selectUnit(unit: Unit) -> void:
 			getSelectedUnit().setSelected(false)
 			if is_instance_valid(getSelectedUnit().targetUnit):
 				getSelectedUnit().targetUnit.setTargeted(false)
-			selectedUnitId = 0
+			setSelectedUnitId.rpc(0)
 		resetUnitInventories()
 		return
 	if not unit in player.getUnits():
@@ -97,6 +112,7 @@ func selectUnit(unit: Unit) -> void:
 			getSelectedUnit().targetUnit.setTargeted(false)
 	unit.setSelected(true)
 	selectedUnitId = unit.get_instance_id()
+	setSelectedUnitId.rpc(unit.get_instance_id())
 	if is_instance_valid(getSelectedUnit().targetUnit):
 		getSelectedUnit().targetUnit.setTargeted(true)
 	resetUnitInventories()

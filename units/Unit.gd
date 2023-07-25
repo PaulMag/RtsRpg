@@ -127,7 +127,7 @@ func viewRangeField(radius: float, color: Color) -> void:
 func hideRangeField() -> void:
 	rangeField.visible = false
 
-func getPlayer() -> Player:
+func getPlayer() -> ServerPlayer:
 	for player in Global.getPlayers():
 		if self in player.getUnits():
 			return player

@@ -1,6 +1,7 @@
 extends Node
 
-const PLAYER = preload("res://Player.tscn")
+const PLAYER = preload("res://players/ServerPlayer.tscn")
+const LOCAL_PLAYER = preload("res://players/LocalPlayer.tscn")
 const PLAYER_LABEL = preload("res://PlayerLabel.tscn")
 
 const PORT = 4433
@@ -80,3 +81,7 @@ func add_player(id: int):
 	playerNode.playerId = id
 	playerNode.name = str(id)
 	$Players.add_child(playerNode, true)
+
+	var localPLayer = LOCAL_PLAYER.instantiate() as LocalPlayer
+	localPLayer.name = str(id)
+	add_child(localPLayer, true)

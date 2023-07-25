@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bi4frn2cgm5la"]
+
+[ext_resource type="Script" path="res://players/LocalPlayer.gd" id="1_m3y8e"]
+[ext_resource type="Script" path="res://MouseDetector.gd" id="2_qmo07"]
+[ext_resource type="Script" path="res://DestinationMarker.gd" id="3_o5uib"]
+[ext_resource type="Texture2D" uid="uid://dojwaff2ox3jq" path="res://sprites/units/target_marker.png" id="4_kqynk"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i42r7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sq0v5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
+bg_color = Color(0.6, 1, 0.6, 0.196078)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="LocalPlayer" type="MultiplayerSynchronizer"]
+replication_config = SubResource("SceneReplicationConfig_x4fsh")
+script = ExtResource("1_m3y8e")
+
+[node name="MouseDetector" type="ShapeCast2D" parent="."]
+material = SubResource("CanvasItemMaterial_i42r7")
+enabled = false
+shape = SubResource("RectangleShape2D_sq0v5")
+target_position = Vector2(0, 0)
+collision_mask = 4
+collide_with_areas = true
+script = ExtResource("2_qmo07")
+
+[node name="SelectionPanel" type="Panel" parent="."]
+theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
+
+[node name="DestinationMarker" type="Node2D" parent="."]
+visible = false
+script = ExtResource("3_o5uib")
+
+[node name="Sprite2D" type="Sprite2D" parent="DestinationMarker"]
+texture = ExtResource("4_kqynk")
+offset = Vector2(0, -16)
+
+[node name="Timer" type="Timer" parent="DestinationMarker"]
+wait_time = 1.75
+one_shot = true
+
+[connection signal="timeout" from="DestinationMarker/Timer" to="DestinationMarker" method="_on_timer_timeout"]

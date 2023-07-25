@@ -354,10 +354,14 @@ text = "Start Game"
 spawn_path = NodePath("../../Dungeon/Units")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
-_spawnable_scenes = PackedStringArray("res://Player.tscn")
+_spawnable_scenes = PackedStringArray("res://players/ServerPlayer.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
+_spawnable_scenes = PackedStringArray("res://players/LocalPlayer.tscn")
+spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Multiplayer/UI/Options/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/Options/Joining/Connect" to="Multiplayer" method="_on_connect_pressed"]
