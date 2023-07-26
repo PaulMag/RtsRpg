@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b38hn31i1vg4d"]
+[gd_scene load_steps=12 format=3 uid="uid://b38hn31i1vg4d"]
 
 [ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="2_8i5vk"]
 [ext_resource type="Script" path="res://Camera.gd" id="3_5s17m"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Multiplayer.gd" id="5_fivu0"]
 [ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://items/repo/Sword.tres" id="6_lvi10"]
 [ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://items/repo/HealingStaff.tres" id="6_xyc17"]
+[ext_resource type="PackedScene" uid="uid://dbln30dr8vpci" path="res://items/Pickup.tscn" id="7_4mktb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2cqk"]
 texture = ExtResource("2_8i5vk")
@@ -270,6 +271,17 @@ position = Vector2(400, 450)
 weapons = Array[Resource("res://items/classes/Weapon.gd")]([ExtResource("6_lvi10"), ExtResource("5_0ycnr"), ExtResource("5_0ycnr")])
 weaponSlotEquipped = 3
 unitName = "Fyre"
+
+[node name="Pickup01" parent="Dungeon" instance=ExtResource("7_4mktb")]
+itemType = ExtResource("6_lvi10")
+
+[node name="Pickup02" parent="Dungeon" instance=ExtResource("7_4mktb")]
+position = Vector2(100, 0)
+itemType = ExtResource("6_lvi10")
+
+[node name="Pickup03" parent="Dungeon" instance=ExtResource("7_4mktb")]
+position = Vector2(-100, 0)
+itemType = ExtResource("6_xyc17")
 
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("5_fivu0")

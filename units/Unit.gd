@@ -252,6 +252,15 @@ func spendMana(amount: int) -> void:
 func _on_attack_timer_timeout():
 	state = states.IDLE
 
+func giveItem(item: Item) -> bool:
+	if not item is Weapon:  # Only support for Weapon type so far
+		return false
+	if weapons.size() >= 4:  # Inventory is full
+		return false
+	weapons.append(item)
+	update.rpc()
+	return true
+
 func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
 	update.rpc()
