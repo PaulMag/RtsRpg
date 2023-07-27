@@ -17,3 +17,4 @@ offset_right = 80.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 2
+metadata/_edit_use_anchors_ = true

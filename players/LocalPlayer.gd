@@ -3,7 +3,7 @@ extends MultiplayerSynchronizer
 class_name LocalPlayer
 
 
-const HUD = preload("res://Hud.tscn")
+#const HUD = preload("res://Hud.tscn")
 
 var player: ServerPlayer
 @onready var mouseDetector: MouseDetector = $MouseDetector
@@ -15,8 +15,8 @@ var isIssuingMoveOrder := Vector2.INF  # INF represents no value
 var isIssuingAttackOrder := 0
 var isIssuingEquipOrder := 0
 
-var hud: Hud
-var inventoryHud: VBoxContainer
+#var hud: Hud
+@onready var inventoryHud: VBoxContainer = $CanvasLayer/Inventories
 
 var INVENTORY_SLOTS = preload("res://InventorySlots.tscn")
 var unitInventories: Dictionary = {}
@@ -30,14 +30,17 @@ func _ready():
 	for p in get_tree().get_nodes_in_group("players"):
 		if p.playerId == name.to_int():
 			player = p
-			break
+			$CanvasLayer.visible = true
+#			break
+		else:
+			$CanvasLayer.queue_free()
 	set_process(player.playerId == multiplayer.get_unique_id())
-	createHud()
+#	createHud()
 
-func createHud() -> void:
-	hud = HUD.instantiate()
-	add_child(hud)
-	inventoryHud = hud.inventories
+#func createHud() -> void:
+#	hud = HUD.instantiate()
+#	add_child(hud)
+#	inventoryHud = hud.inventories
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -141,3 +144,5 @@ func drawUnitInventory(unit: Unit) -> void:
 		inventoryHud.add_child(inventory)
 		inventory.player = self
 		inventory.update(unit)
+		inventory.set_process(true)
+		inventory.set_process_input(true)

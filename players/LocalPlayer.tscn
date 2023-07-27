@@ -51,4 +51,21 @@ offset = Vector2(0, -16)
 wait_time = 1.75
 one_shot = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Inventories" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -172.0
+offset_right = 80.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
+metadata/_edit_use_anchors_ = true
+
 [connection signal="timeout" from="DestinationMarker/Timer" to="DestinationMarker" method="_on_timer_timeout"]
