@@ -3,8 +3,8 @@ extends CharacterBody2D
 class_name Unit
 
 
-var PROJECTILE = preload("res://projectiles/Bullet.tscn")
-var CORPSE = preload("res://units/corpse/Corpse.tscn")
+var PROJECTILE := preload("res://projectiles/Bullet.tscn")
+var CORPSE := preload("res://units/corpse/Corpse.tscn")
 
 @export var faction := Global.Faction.ENEMIES
 @export var isAi := false
@@ -35,16 +35,20 @@ enum states {
 @export var facing := 2;
 @export var state := states.IDLE
 
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-@onready var selectedCircle : Sprite2D = $SelectedCircle
-@onready var healthBar :TextureProgressBar  = $ProgressBars/HealthBar
-@onready var manaBar :TextureProgressBar  = $ProgressBars/ManaBar
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var selectedCircle: Sprite2D = $SelectedCircle
+@onready var healthBar: TextureProgressBar  = $ProgressBars/HealthBar
+@onready var manaBar: TextureProgressBar  = $ProgressBars/ManaBar
+@onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
+@onready var aiController: Node = $AiController
+@onready var rangeField: Area2D = $RangeField
+@onready var label: Label = $Label
+@onready var damageSound: AudioStreamPlayer2D = $DamageSound
+@onready var attackTimer: Timer = $AttackTimer
+
 @onready var destination : Vector2 = position
-@onready var aiController : Node = $AiController
-@onready var rangeField : Area2D = $RangeField
 
 @export var targetUnit: Unit = null
-
 
 var followCursor := false
 var followTarget := false
@@ -52,7 +56,7 @@ var followTarget := false
 var threatTable: Dictionary = {}
 
 
-func _ready():
+func _ready() -> void:
 	self.add_to_group("units")
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
@@ -68,7 +72,7 @@ func _ready():
 		aiController.queue_free()
 		remove_child(aiController)
 
-func setSelected(flag: bool):
+func setSelected(flag: bool) -> void:
 	selectedCircle.modulate = Color.GREEN
 	selectedCircle.visible = flag
 	if flag and getEquippedWeapon():
@@ -76,11 +80,11 @@ func setSelected(flag: bool):
 	else:
 		hideRangeField()
 
-func setTargeted(flag: bool):
+func setTargeted(flag: bool) -> void:
 	selectedCircle.modulate = Color.RED
 	selectedCircle.visible = flag
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	healthBar.value = health
 	manaBar.value = mana
 
@@ -110,7 +114,7 @@ func _process(_delta: float):
 	elif state == states.IDLE:
 		sprite.animation = "idle_" + FACING_MAPPING[facing]
 
-	$Label.text = (
+	label.text = (
 		"Player: %s\n%s\n%s\n%s\n" % [
 			(str(getPlayer().playerId) if getPlayer() else "none"),
 			unitName,
@@ -133,7 +137,7 @@ func getPlayer() -> ServerPlayer:
 			return player
 	return null
 
-func orderMove(_destination: Vector2):
+func orderMove(_destination: Vector2) -> void:
 	destination = _destination
 	followTarget = false
 	followCursor = true
@@ -145,25 +149,25 @@ func orderAttack(unit: Unit) -> void:
 
 	destination = targetUnit.position
 
-func _physics_process(_delta: float):
+func _physics_process(_delta: float) -> void:
 
 	if is_multiplayer_authority():
 
 		if followCursor:
-			$NavigationAgent2D.target_position = destination
+			navigationAgent.target_position = destination
 		elif followTarget:
 			if is_instance_valid(targetUnit):
-				$NavigationAgent2D.target_position = targetUnit.position
+				navigationAgent.target_position = targetUnit.position
 			else:
 				followTarget = false
 
-		if (followCursor or followTarget) and $NavigationAgent2D.is_target_reachable():
-			var destinationNext = $NavigationAgent2D.get_next_path_position()
+		if (followCursor or followTarget) and navigationAgent.is_target_reachable():
+			var destinationNext := navigationAgent.get_next_path_position()
 
 			velocity = position.direction_to(destinationNext).normalized() * SPEED
-			$NavigationAgent2D.set_velocity(velocity)
+			navigationAgent.set_velocity(velocity)
 
-			var followRange = getEquippedWeapon().attackRange if getEquippedWeapon() else 50
+			var followRange := getEquippedWeapon().attackRange if getEquippedWeapon() else 50
 
 			if followCursor and position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
@@ -184,20 +188,20 @@ func _physics_process(_delta: float):
 		):
 			attack()
 
-func damage(_attack: Attack):
+func damage(_attack: Attack) -> void:
 	if _attack.isHealing:
-		var healthBefore = health
+		var healthBefore := health
 		health += _attack.damage
 		health = clampf(health, 0, HEALTH_MAX)
 		if is_instance_valid(_attack.attackingUnit):
-			var healingReceived = health - healthBefore
+			var healingReceived := health - healthBefore
 			var awareEnemyUnits: Array[Unit] = _attack.attackingUnit.getAllAwareEnemyUnits()
 			for enemyUnit in awareEnemyUnits:
 				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
 	else:
 		health -= _attack.damage
 		addThreat(_attack.attackingUnit, _attack.damage)
-		$DamageSound.play()
+		damageSound.play()
 
 	if health <= 0:
 		die.rpc()
@@ -217,12 +221,12 @@ func getAllAwareEnemyUnits() -> Array[Unit]:
 
 @rpc("call_local")
 func die() -> void:
-	var corpse = CORPSE.instantiate()
+	var corpse: Corpse = CORPSE.instantiate()
 	corpse.position = position
 	get_parent().add_child(corpse)
 	queue_free()
 
-func attack():
+func attack() -> void:
 	if getEquippedWeapon() == null:
 		return
 	if position.distance_to(targetUnit.position) > getEquippedWeapon().attackRange:
@@ -235,8 +239,9 @@ func attack():
 		return
 	state = states.ATTACKING
 	spendMana(getEquippedWeapon().manaCost)
-	$AttackTimer.start()
-	var newProjectile = PROJECTILE.instantiate() as Bullet
+	attackTimer.start()
+	#var newProjectile := PROJECTILE.instantiate() as Bullet
+	var newProjectile := PROJECTILE.instantiate() as Bullet
 	newProjectile.position = position
 	newProjectile.attackingUnit = self
 	newProjectile.target = targetUnit
@@ -249,7 +254,7 @@ func attack():
 func spendMana(amount: int) -> void:
 	mana -= amount
 
-func _on_attack_timer_timeout():
+func _on_attack_timer_timeout() -> void:
 	state = states.IDLE
 
 func giveItem(item: Item) -> bool:
@@ -281,11 +286,11 @@ func getEquippedWeapon() -> Weapon:
 var isBeingUpdated := false
 
 @rpc("call_local")
-func update():
+func update() -> void:
 	isBeingUpdated = true
 
 
-func _on_selection_area_mouse_entered():
+func _on_selection_area_mouse_entered() -> void:
 	if getPlayer() == Global.getPlayerCurrent():
 		sprite.modulate = Color.GREEN
 	elif faction == Global.Faction.PLAYERS:
@@ -295,7 +300,7 @@ func _on_selection_area_mouse_entered():
 		if isAi:
 			viewRangeField(320, Color.RED)
 
-func _on_selection_area_mouse_exited():
+func _on_selection_area_mouse_exited() -> void:
 	sprite.modulate = Color.WHITE
 	if faction != Global.Faction.PLAYERS:
 		hideRangeField()

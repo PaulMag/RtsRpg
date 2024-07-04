@@ -10,4 +10,4 @@ class_name Weapon
 @export var canTargetEnemy: bool = true
 
 @export var bulletSpeed: float
-@export var bulletTexture: Texture
+@export var bulletTexture: Texture2D

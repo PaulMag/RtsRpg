@@ -21,11 +21,11 @@ func _physics_process(delta: float) -> void:
 		position += Vector2.from_angle(rotation) * speed * delta
 
 
-func _on_area_2d_body_entered(body) -> void:
+func _on_area_2d_body_entered(body: Object) -> void:
 	if body == target:
 		var attack := Attack.new()
 		attack.damage = damage
 		attack.isHealing = isHealing
 		attack.attackingUnit = attackingUnit
-		body.damage(attack)
+		target.damage(attack)
 		queue_free()

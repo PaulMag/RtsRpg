@@ -31,31 +31,31 @@ func finishMouseSelection() -> void:
 	selectArea(selectionAreaStart, selectionAreaEnd)
 
 func draw_selection_box(s:=true) -> void:
-	selectionPanel.size = Vector2(abs(selectionAreaStart.x - selectionAreaEnd.x), abs(selectionAreaStart.y - selectionAreaEnd.y))
-	var pos = Vector2()
+	selectionPanel.size = Vector2(absf(selectionAreaStart.x - selectionAreaEnd.x) as float, absf(selectionAreaStart.y - selectionAreaEnd.y) as float)
+	var pos := Vector2()
 	pos.x = min(selectionAreaStart.x, selectionAreaEnd.x)
 	pos.y = min(selectionAreaStart.y, selectionAreaEnd.y)
 	selectionPanel.position = pos
 	selectionPanel.size *= int(s)
 
 func selectArea(start: Vector2, end: Vector2) -> void:
-	var cornerA = Vector2(min(start.x, end.x), min(start.y, end.y))
-	var cornerB = Vector2(max(start.x, end.x), max(start.y, end.y))
+	var cornerA := Vector2(minf(start.x, end.x) as float, minf(start.y, end.y) as float)
+	var cornerB := Vector2(maxf(start.x, end.x) as float, maxf(start.y, end.y) as float)
 
 	var center: Vector2 = (cornerA + cornerB) * 0.5
 	var selectorShape := Vector2(
-		abs(cornerA.x - cornerB.x),
-		abs(cornerA.y - cornerB.y),
+		absf(cornerA.x - cornerB.x) as float,
+		absf(cornerA.y - cornerB.y) as float,
 	)
 
-	var unitsInDetector = getUnitsInDetector(center, selectorShape)
-	var selectedUnit = pickSelectedUnit(unitsInDetector)
+	var unitsInDetector := getUnitsInDetector(center, selectorShape)
+	var selectedUnit := pickSelectedUnit(unitsInDetector)
 	playerInput.selectUnit(selectedUnit)
 
 func targetMousePoint() -> void:
 	var point := get_global_mouse_position()
-	var unitsInDetector = getUnitsInDetector(point)
-	var targetedUnit = pickTargetedUnit(unitsInDetector)
+	var unitsInDetector := getUnitsInDetector(point)
+	var targetedUnit := pickTargetedUnit(unitsInDetector)
 
 	if targetedUnit:
 		playerInput.targetUnit(targetedUnit)
@@ -64,11 +64,13 @@ func targetMousePoint() -> void:
 
 func getUnitsInDetector(pos: Vector2, size := Vector2.ONE) -> Array[Unit]:
 	position = pos
-	shape.size = size
+	var rectangleShape: RectangleShape2D = shape
+	rectangleShape.size = size
 	force_shapecast_update()
 	var unitsInDetector: Array[Unit] = []
 	for i in range(get_collision_count()):
-		var unit = get_collider(i).get_parent() as Unit
+		var collidingShape: Area2D = get_collider(i)
+		var unit := collidingShape.get_parent() as Unit
 		if unit is Unit:
 			unitsInDetector.append(unit)
 	return unitsInDetector

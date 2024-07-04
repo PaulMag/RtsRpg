@@ -20,16 +20,22 @@ func getPlayerCurrent() -> ServerPlayer:
 			return player
 	return null
 
-func getAllUnits(faction = null) -> Array[Unit]:
+func getAllUnits() -> Array[Unit]:
 	var units: Array[Unit] = []
 	for unit in get_tree().get_nodes_in_group("units"):
-		if (faction == null) or unit.faction == faction:
+		units.append(unit as Unit)
+	return units
+
+func getAllUnitsInFaction(faction: Faction) -> Array[Unit]:
+	var units: Array[Unit] = []
+	for unit in get_tree().get_nodes_in_group("units") as Array[Unit]:
+		if unit.faction == faction:
 			units.append(unit as Unit)
 	return units
 
-func getAllUnitsNotFaction(faction) -> Array[Unit]:
+func getAllUnitsNotFaction(faction: Faction) -> Array[Unit]:
 	var units: Array[Unit] = []
-	for unit in get_tree().get_nodes_in_group("units"):
+	for unit in get_tree().get_nodes_in_group("units") as Array[Unit]:
 		if unit.faction != faction:
 			units.append(unit as Unit)
 	return units

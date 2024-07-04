@@ -11,9 +11,9 @@ class_name Pickup
 func _ready() -> void:
 	sprite.texture = itemType.texture
 
-func _on_body_entered(body) -> void:
+func _on_body_entered(body: Unit) -> void:
 	if body is Unit:
-		var unit = body
+		var unit := body
 		if unit.faction == Global.Faction.PLAYERS:
 			if unit.giveItem(itemType):
 				queue_free()

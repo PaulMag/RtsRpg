@@ -21,8 +21,8 @@ func _ready() -> void:
 func update(unit: Unit) -> void:
 	_unit = unit  #TODO: Do this properly
 	for slot in range(1, 4+1):
-		var weapon = unit.get_weapon(slot)
-		var button = buttons[slot - 1]
+		var weapon := unit.get_weapon(slot)
+		var button := buttons[slot - 1]
 		button.set_texture_normal(weapon.texture if weapon else null)
 		if unit.weaponSlotEquipped == slot:
 			button.modulate = COLOR_EQUIPPED
@@ -43,37 +43,37 @@ func _on_inventory_slot_4_pressed() -> void:
 	player.issueEquipOrder.rpc(4)
 
 
-func _on_inventory_slot_1_mouse_entered():
+func _on_inventory_slot_1_mouse_entered() -> void:
 	if _unit.weaponSlotEquipped != 1:
 		buttons[0].modulate = COLOR_HOVER
 
-func _on_inventory_slot_1_mouse_exited():
+func _on_inventory_slot_1_mouse_exited() -> void:
 	if _unit.weaponSlotEquipped != 1:
 		buttons[0].modulate = COLOR_UNEQUIPPED
 
 
-func _on_inventory_slot_2_mouse_entered():
+func _on_inventory_slot_2_mouse_entered() -> void:
 	if _unit.weaponSlotEquipped != 2:
 		buttons[1].modulate = COLOR_HOVER
 
-func _on_inventory_slot_2_mouse_exited():
+func _on_inventory_slot_2_mouse_exited() -> void:
 	if _unit.weaponSlotEquipped != 2:
 		buttons[1].modulate = COLOR_UNEQUIPPED
 
 
-func _on_inventory_slot_3_mouse_entered():
+func _on_inventory_slot_3_mouse_entered() -> void:
 	if _unit.weaponSlotEquipped != 3:
 		buttons[2].modulate = COLOR_HOVER
 
-func _on_inventory_slot_3_mouse_exited():
+func _on_inventory_slot_3_mouse_exited() -> void:
 	if _unit.weaponSlotEquipped != 3:
 		buttons[2].modulate = COLOR_UNEQUIPPED
 
 
-func _on_inventory_slot_4_mouse_entered():
+func _on_inventory_slot_4_mouse_entered() -> void:
 	if _unit.weaponSlotEquipped != 4:
 		buttons[3].modulate = COLOR_HOVER
 
-func _on_inventory_slot_4_mouse_exited():
+func _on_inventory_slot_4_mouse_exited() -> void:
 	if _unit.weaponSlotEquipped != 4:
 		buttons[3].modulate = COLOR_UNEQUIPPED

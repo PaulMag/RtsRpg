@@ -16,7 +16,7 @@ var targetUnit: Unit = null
 var offset: float
 
 
-func _process(delta) -> void:
+func _process(delta: float) -> void:
 	if visible:
 		if is_instance_valid(targetUnit):
 			position = targetUnit.position
@@ -40,6 +40,6 @@ func markAttack(unit: Unit) -> void:
 	visible = true
 	timer.start()
 
-func _on_timer_timeout():
+func _on_timer_timeout() -> void:
 	visible = false
 	targetUnit = null

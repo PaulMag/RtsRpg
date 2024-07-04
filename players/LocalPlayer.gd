@@ -8,6 +8,7 @@ class_name LocalPlayer
 var player: ServerPlayer
 @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
+@onready var canvasLayer: CanvasLayer = $CanvasLayer
 
 var selectedUnitId: int
 
@@ -18,22 +19,22 @@ var isIssuingEquipOrder := 0
 #var hud: Hud
 @onready var inventoryHud: VBoxContainer = $CanvasLayer/Inventories
 
-var INVENTORY_SLOTS = preload("res://InventorySlots.tscn")
+var INVENTORY_SLOTS := preload("res://InventorySlots.tscn")
 var unitInventories: Dictionary = {}
 
 
-func _enter_tree():
+func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int(), true)
 	add_to_group("playerInputs")
 
-func _ready():
-	for p in get_tree().get_nodes_in_group("players"):
+func _ready() -> void:
+	for p in get_tree().get_nodes_in_group("players") as Array[ServerPlayer]:
 		if p.playerId == name.to_int():
 			player = p
-			$CanvasLayer.visible = true
+			canvasLayer.visible = true
 #			break
 		else:
-			$CanvasLayer.queue_free()
+			canvasLayer.queue_free()
 	set_process(player.playerId == multiplayer.get_unique_id())
 #	createHud()
 
@@ -63,25 +64,25 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 @rpc("call_local")
-func issueMoveOrder(destination: Vector2):
+func issueMoveOrder(destination: Vector2) -> void:
 	isIssuingMoveOrder = destination
 
 @rpc("call_local")
-func issueAttackOrder(unitId: int):
+func issueAttackOrder(unitId: int) -> void:
 	isIssuingAttackOrder = unitId
 
 @rpc("call_local")
-func issueEquipOrder(slot: int):
+func issueEquipOrder(slot: int) -> void:
 	isIssuingEquipOrder = slot
 
 @rpc("call_local")
-func setSelectedUnitId(unitId: int):
+func setSelectedUnitId(unitId: int) -> void:
 	selectedUnitId = unitId
 
-var unitUpdateCountdown = 0  # Necessary because there is some delay in the syncing. (TODO)
+var unitUpdateCountdown := 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _process(_delta: float) -> void:
-	var unit = getSelectedUnit()
+	var unit := getSelectedUnit()
 	if unit and (unit.isBeingUpdated or unitUpdateCountdown > 0):
 		drawUnitInventory(unit)
 		if unit.isBeingUpdated:
@@ -131,13 +132,15 @@ func targetUnit(unit: Unit) -> void:
 	destinationMarker.markAttack(unit)
 
 func resetUnitInventories() -> void:
-	for unit in unitInventories:
-		unitInventories[unit].queue_free()
+	for unit: Unit in unitInventories:
+		var unitInventorySlots: InventorySlots = unitInventories[unit]
+		unitInventorySlots.queue_free()
 	unitInventories = {}
 
 func drawUnitInventory(unit: Unit) -> void:
 	if unitInventories.has(unit):
-		unitInventories[unit].update(unit)
+		var unitInventorySlots: InventorySlots = unitInventories[unit]
+		unitInventorySlots.update(unit)
 	else:
 		var inventory: InventorySlots = INVENTORY_SLOTS.instantiate() as InventorySlots
 		unitInventories[unit] = inventory
