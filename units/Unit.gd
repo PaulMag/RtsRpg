@@ -40,7 +40,7 @@ enum states {
 @onready var healthBar: TextureProgressBar  = $ProgressBars/HealthBar
 @onready var manaBar: TextureProgressBar  = $ProgressBars/ManaBar
 @onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
-@onready var aiController: Node = $AiController
+@onready var aiController: AiController = $AiController
 @onready var rangeField: Area2D = $RangeField
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
@@ -189,6 +189,9 @@ func _physics_process(_delta: float) -> void:
 			attack()
 
 func damage(_attack: Attack) -> void:
+	if not multiplayer.is_server():
+		return
+
 	if _attack.isHealing:
 		var healthBefore := health
 		health += _attack.damage
@@ -210,6 +213,8 @@ func addThreat(unit: Unit, amount: float = 0) -> void:
 	if not unit in threatTable:
 		threatTable[unit] = 0
 	threatTable[unit] += amount
+	if isAi:
+		aiController.recalculateTarget()
 
 func getAllAwareEnemyUnits() -> Array[Unit]:
 	var awareEnemyUnits: Array[Unit] = []
@@ -224,7 +229,7 @@ func die() -> void:
 	var corpse: Corpse = CORPSE.instantiate()
 	corpse.position = position
 	get_parent().add_child(corpse)
-	queue_free()
+	Global.deleteUnit(self)
 
 func attack() -> void:
 	if getEquippedWeapon() == null:

@@ -39,3 +39,11 @@ func getAllUnitsNotFaction(faction: Faction) -> Array[Unit]:
 		if unit.faction != faction:
 			units.append(unit as Unit)
 	return units
+
+func deleteUnit(unit: Unit) -> void:
+	if unit == getPlayerCurrent().input.getSelectedUnit():
+		getPlayerCurrent().input.selectUnit(null)
+	for u in getAllUnits():
+		if unit in u.threatTable:
+			u.threatTable.erase(unit)
+	unit.queue_free()

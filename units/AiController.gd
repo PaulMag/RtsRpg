@@ -1,5 +1,7 @@
 extends Node
 
+class_name AiController
+
 
 @onready var unit: Unit = $".."
 
@@ -7,7 +9,6 @@ var flag := false
 
 
 func _process(_delta: float) -> void:
-	unit.targetUnit = getMostThreateningUnit()
 	if not unit.targetUnit:
 		return
 	if not unit.getEquippedWeapon():
@@ -16,6 +17,9 @@ func _process(_delta: float) -> void:
 		unit.orderMove(unit.position)  # Stop moving
 	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().attackRange:
 		unit.orderMove(unit.targetUnit.position)
+
+func recalculateTarget() -> void:
+	unit.targetUnit = getMostThreateningUnit()
 
 func getMostThreateningUnit() -> Unit:
 	var mostThreateningUnit: Unit = null
@@ -53,3 +57,4 @@ func _on_range_field_body_entered(body: Object) -> void:
 		if u.faction != unit.faction:
 			if not u in unit.threatTable:
 				unit.threatTable[u] = 0
+				recalculateTarget()
