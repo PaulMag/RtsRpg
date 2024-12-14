@@ -5,7 +5,10 @@ class_name LocalPlayer
 
 #const HUD = preload("res://Hud.tscn")
 
-var player: ServerPlayer
+@export var playerId: int
+@export var playerName: String
+@export var playerColor: Color
+
 @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 @onready var canvasLayer: CanvasLayer = $CanvasLayer
@@ -24,24 +27,11 @@ var unitInventories: Dictionary = {}
 
 
 func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int(), true)
-	add_to_group("playerInputs")
+	set_multiplayer_authority(name.to_int())
+	add_to_group("players")
 
 func _ready() -> void:
-	for p in get_tree().get_nodes_in_group("players") as Array[ServerPlayer]:
-		if p.playerId == name.to_int():
-			player = p
-			canvasLayer.visible = true
-#			break
-		else:
-			canvasLayer.queue_free()
-	set_process(player.playerId == multiplayer.get_unique_id())
-#	createHud()
-
-#func createHud() -> void:
-#	hud = HUD.instantiate()
-#	add_child(hud)
-#	inventoryHud = hud.inventories
+	playerColor = Color(randf(), randf(), randf())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -54,13 +44,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		mouseDetector.targetMousePoint()
 
 	elif event.is_action_pressed("select_slot_1"):
-		issueEquipOrder.rpc(1)
+		issueEquipOrder.rpc_id(1, 1)
 	elif event.is_action_pressed("select_slot_2"):
-		issueEquipOrder.rpc(2)
+		issueEquipOrder.rpc_id(1, 2)
 	elif event.is_action_pressed("select_slot_3"):
-		issueEquipOrder.rpc(3)
+		issueEquipOrder.rpc_id(1, 3)
 	elif event.is_action_pressed("select_slot_4"):
-		issueEquipOrder.rpc(4)
+		issueEquipOrder.rpc_id(1, 4)
 
 
 @rpc("call_local")
@@ -82,21 +72,44 @@ func setSelectedUnitId(unitId: int) -> void:
 var unitUpdateCountdown := 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _process(_delta: float) -> void:
-	var unit := getSelectedUnit()
-	if unit and (unit.isBeingUpdated or unitUpdateCountdown > 0):
-		drawUnitInventory(unit)
-		if unit.isBeingUpdated:
-			unitUpdateCountdown = 10
-		else:
-			unitUpdateCountdown -= 1
-		unit.isBeingUpdated = 0
+	if is_multiplayer_authority():
+		var unit := getSelectedUnit()
+		if unit and (unit.isBeingUpdated or unitUpdateCountdown > 0):
+			drawUnitInventory(unit)
+			if unit.isBeingUpdated:
+				unitUpdateCountdown = 10
+			else:
+				unitUpdateCountdown -= 1
+			unit.isBeingUpdated = 0
+
+	if multiplayer.is_server():
+		if isIssuingMoveOrder != Vector2.INF:  # INF represents no value
+			var unit := getSelectedUnit()
+			print("isIssuingMoveOrder  player %s  unit %s  unitId %s" % [playerId, unit, unit.unitId])
+			if unit and (unit.faction == Global.Faction.PLAYERS):
+				unit.orderMove(isIssuingMoveOrder)
+			isIssuingMoveOrder = Vector2.INF
+
+		if isIssuingAttackOrder != 0:
+			var unit := getSelectedUnit()
+			if unit and (unit.faction == Global.Faction.PLAYERS):
+				var targetUnit := Global.getUnitFromUnitId(isIssuingAttackOrder) as Unit
+				if targetUnit != unit:
+					unit.orderAttack(targetUnit)
+				isIssuingAttackOrder = 0
+
+		if isIssuingEquipOrder != 0:
+			var unit: Unit = getSelectedUnit()
+			if unit and (unit.faction == Global.Faction.PLAYERS):
+				unit.equip(isIssuingEquipOrder)
+				isIssuingEquipOrder = 0
 
 func getSelectedUnit() -> Unit:
-	return instance_from_id(selectedUnitId)
+	return Global.getUnitFromUnitId(selectedUnitId)
 
 func moveTo(destination: Vector2) -> void:
 	if getSelectedUnit():
-		issueMoveOrder.rpc(destination)
+		issueMoveOrder.rpc_id(1, destination)
 		destinationMarker.markMove(destination)
 
 func selectUnit(unit: Unit) -> void:
@@ -105,18 +118,16 @@ func selectUnit(unit: Unit) -> void:
 			getSelectedUnit().setSelected(false)
 			if is_instance_valid(getSelectedUnit().targetUnit):
 				getSelectedUnit().targetUnit.setTargeted(false)
-			setSelectedUnitId.rpc(0)
+			setSelectedUnitId.rpc_id(1, 0)
 		resetUnitInventories()
-		return
-	if not unit in player.getUnits():
 		return
 	if getSelectedUnit():
 		getSelectedUnit().setSelected(false)
 		if is_instance_valid(getSelectedUnit().targetUnit):
 			getSelectedUnit().targetUnit.setTargeted(false)
 	unit.setSelected(true)
-	selectedUnitId = unit.get_instance_id()
-	setSelectedUnitId.rpc(unit.get_instance_id())
+	selectedUnitId = unit.unitId
+	setSelectedUnitId.rpc_id(1, unit.unitId)
 	if is_instance_valid(getSelectedUnit().targetUnit):
 		getSelectedUnit().targetUnit.setTargeted(true)
 	resetUnitInventories()
@@ -125,7 +136,7 @@ func selectUnit(unit: Unit) -> void:
 func targetUnit(unit: Unit) -> void:
 	if unit == null or getSelectedUnit() == null:
 		return
-	issueAttackOrder.rpc(unit.get_instance_id())
+	issueAttackOrder.rpc_id(1, unit.unitId)
 	if is_instance_valid(getSelectedUnit().targetUnit):
 		getSelectedUnit().targetUnit.setTargeted(false)
 	unit.setTargeted(true)

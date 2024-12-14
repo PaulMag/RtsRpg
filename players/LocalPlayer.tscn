@@ -6,6 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://dojwaff2ox3jq" path="res://sprites/units/target_marker.png" id="4_kqynk"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]
+properties/0/path = NodePath(".:playerId")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:playerName")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:playerColor")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i42r7"]
 
@@ -24,6 +33,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="LocalPlayer" type="MultiplayerSynchronizer"]
+root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
 script = ExtResource("1_m3y8e")
 
@@ -41,6 +51,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
 
 [node name="DestinationMarker" type="Node2D" parent="."]
 visible = false
+z_index = 1
 script = ExtResource("3_o5uib")
 
 [node name="Sprite2D" type="Sprite2D" parent="DestinationMarker"]

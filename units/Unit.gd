@@ -6,6 +6,7 @@ class_name Unit
 var PROJECTILE := preload("res://projectiles/Bullet.tscn")
 var CORPSE := preload("res://units/corpse/Corpse.tscn")
 
+@export var unitId : int
 @export var faction := Global.Faction.ENEMIES
 @export var isAi := false
 @export var weapons: Array[Weapon]
@@ -57,6 +58,10 @@ var threatTable: Dictionary = {}
 
 
 func _ready() -> void:
+	if multiplayer.is_server():
+		unitId = randi()
+	print("unit _ready   player %s  unit %s  unitId %s" % [multiplayer.get_unique_id(), get_instance_id(), unitId])
+
 	self.add_to_group("units")
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
@@ -88,7 +93,7 @@ func _process(_delta: float) -> void:
 	healthBar.value = health
 	manaBar.value = mana
 
-	if is_multiplayer_authority():
+	if multiplayer.is_server():
 		if state == states.ATTACKING:
 			pass
 		elif velocity:
@@ -115,8 +120,7 @@ func _process(_delta: float) -> void:
 		sprite.animation = "idle_" + FACING_MAPPING[facing]
 
 	label.text = (
-		"Player: %s\n%s\n%s\n%s\n" % [
-			(str(getPlayer().playerId) if getPlayer() else "none"),
+		"Player: %s\n%s\n%s\n" % [
 			unitName,
 			str(state),
 			(getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
@@ -130,12 +134,6 @@ func viewRangeField(radius: float, color: Color) -> void:
 
 func hideRangeField() -> void:
 	rangeField.visible = false
-
-func getPlayer() -> ServerPlayer:
-	for player in Global.getPlayers():
-		if self in player.getUnits():
-			return player
-	return null
 
 func orderMove(_destination: Vector2) -> void:
 	destination = _destination
@@ -151,7 +149,7 @@ func orderAttack(unit: Unit) -> void:
 
 func _physics_process(_delta: float) -> void:
 
-	if is_multiplayer_authority():
+	if multiplayer.is_server():
 
 		if followCursor:
 			navigationAgent.target_position = destination
@@ -253,7 +251,7 @@ func attack() -> void:
 	newProjectile.damage = getEquippedWeapon().damage
 	newProjectile.isHealing = getEquippedWeapon().isHealing
 	newProjectile.speed = getEquippedWeapon().bulletSpeed
-	get_parent().get_parent().add_child(newProjectile)
+	get_parent().get_parent().add_child(newProjectile, true)
 	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
 
 func spendMana(amount: int) -> void:
@@ -296,10 +294,8 @@ func update() -> void:
 
 
 func _on_selection_area_mouse_entered() -> void:
-	if getPlayer() == Global.getPlayerCurrent():
+	if faction == Global.Faction.PLAYERS:
 		sprite.modulate = Color.GREEN
-	elif faction == Global.Faction.PLAYERS:
-		sprite.modulate = Color.YELLOW
 	else:
 		sprite.modulate = Color.RED
 		if isAi:

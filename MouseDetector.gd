@@ -78,9 +78,9 @@ func getUnitsInDetector(pos: Vector2, size := Vector2.ONE) -> Array[Unit]:
 func pickSelectedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
 	var unit: Unit
 	for u in unitsInSelectionDetector:
-		if u in playerInput.player.getUnits() and (unit == null or u.position.y > unit.position.y):
+		if u.faction == Global.Faction.PLAYERS and (unit == null or u.position.y > unit.position.y):
 			unit = u
-	if (unit == null) or (not unit in playerInput.player.getUnits()):
+	if (unit == null) or (not unit.faction == Global.Faction.PLAYERS):
 		return null
 	else:
 		return unit

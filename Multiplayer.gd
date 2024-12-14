@@ -1,13 +1,15 @@
 extends Node
 
-const PLAYER = preload("res://players/ServerPlayer.tscn")
 const LOCAL_PLAYER = preload("res://players/LocalPlayer.tscn")
 const PLAYER_LABEL = preload("res://PlayerLabel.tscn")
+const DUNGEON = preload("res://Dungeon.tscn")
 
 const PORT = 4433
 
-@onready var ui: Control = $UI
-@onready var remoteLineEdit: LineEdit = $UI/Options/Joining/Remote
+@onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
+@onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
+@onready var players: Node = $Players
+@onready var playerList: VBoxContainer = $UI/GameHud/VBoxContainer/PlayerList
 
 
 func _ready() -> void:
@@ -18,6 +20,9 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
+
+func _process(_delta: float) -> void:
+	updatePlayerStats()  #TODO: Should not happen every frame.
 
 func _on_host_pressed() -> void:
 	# Start game as server
@@ -47,7 +52,7 @@ func _on_connect_pressed() -> void:
 
 func start_game() -> void:
 
-	ui.hide()
+	multiplayerOptions.hide()
 	print("Game started")
 	get_tree().paused = false
 
@@ -63,30 +68,30 @@ func start_game() -> void:
 			add_player(1)
 			print("Not dedicated server. Added player 1.")
 
-	var players := Global.getPlayers()
-	var i := 0
-	for unit: Unit in Global.getAllUnitsInFaction(Global.Faction.PLAYERS):
-		players[i].giveUnit(unit)
-		i += 1
-		i = 0 if i >= players.size() else i
+		var dungeon := DUNGEON.instantiate()
+		add_sibling(dungeon, true)
 
+	for player in Global.getPlayers():
+		player.playerId = player.name.to_int()   #TODO: Why is this necessary???
+
+	Global.getPlayerCurrent().canvasLayer.visible = true
+
+func updatePlayerStats() -> void:
+	for node in playerList.get_children():
+		node.queue_free()
 	for player in Global.getPlayers():
 		var playerLabelNode: PlayerLabel = PLAYER_LABEL.instantiate()
 		playerLabelNode.playerId = player.playerId
 		playerLabelNode.playerName = player.name
 		playerLabelNode.playerColor = player.playerColor
-		$PanelContainer/PlayerList.add_child(playerLabelNode, true)
+		playerList.add_child(playerLabelNode, true)
 
 
 func _on_start_game_pressed() -> void:
 	start_game()
 
 func add_player(id: int) -> void:
-	var playerNode: ServerPlayer = PLAYER.instantiate()
-	playerNode.playerId = id
-	playerNode.name = str(id)
-	$Players.add_child(playerNode, true)
-
 	var localPLayer: LocalPlayer = LOCAL_PLAYER.instantiate() as LocalPlayer
+	localPLayer.playerId = id  #TODO: Why does this not work???
 	localPLayer.name = str(id)
-	add_child(localPLayer, true)
+	players.add_child(localPLayer, true)

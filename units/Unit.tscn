@@ -588,6 +588,12 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath(".:mana")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath(".:unitId")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath(".:weapons")
+properties/7/spawn = true
+properties/7/replication_mode = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
 radius = 320.0
