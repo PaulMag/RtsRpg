@@ -133,7 +133,7 @@ func selectUnit(unit: Unit) -> void:
 	resetUnitInventories()
 	drawUnitInventory(unit)
 
-func targetUnit(unit: Unit) -> void:
+func setTargetUnit(unit: Unit) -> void:
 	if unit == null or getSelectedUnit() == null:
 		return
 	issueAttackOrder.rpc_id(1, unit.unitId)

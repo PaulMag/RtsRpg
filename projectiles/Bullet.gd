@@ -2,7 +2,7 @@ extends StaticBody2D
 
 class_name Bullet
 
-var speed: int
+var speed: float
 var damage: int
 var isHealing: bool
 var attackingUnit: Unit

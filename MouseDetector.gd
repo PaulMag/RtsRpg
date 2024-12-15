@@ -58,7 +58,7 @@ func targetMousePoint() -> void:
 	var targetedUnit := pickTargetedUnit(unitsInDetector)
 
 	if targetedUnit:
-		playerInput.targetUnit(targetedUnit)
+		playerInput.setTargetUnit(targetedUnit)
 	else:
 		playerInput.moveTo(point)
 
@@ -76,7 +76,7 @@ func getUnitsInDetector(pos: Vector2, size := Vector2.ONE) -> Array[Unit]:
 	return unitsInDetector
 
 func pickSelectedUnit(unitsInSelectionDetector: Array[Unit]) -> Unit:
-	var unit: Unit
+	var unit: Unit = null
 	for u in unitsInSelectionDetector:
 		if u.faction == Global.Faction.PLAYERS and (unit == null or u.position.y > unit.position.y):
 			unit = u
