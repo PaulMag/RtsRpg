@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="RtsRpg"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://scenes/Game.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://sprites/projectiles/sword.png"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://scripts/Global.gd"
 
 [debug]
 
@@ -30,6 +30,16 @@ gdscript/warnings/unsafe_call_argument=2
 [dotnet]
 
 project/assembly_name="RtsRpg"
+
+[file_customization]
+
+folder_colors={
+"res://resources/": "green",
+"res://scenes/": "red",
+"res://scripts/": "blue",
+"res://sounds/": "yellow",
+"res://sprites/": "pink"
+}
 
 [input]
 

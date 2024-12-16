@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://dee70bilaqhd2"]
 
-[ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="1_ilo3b"]
-[ext_resource type="Script" path="res://Camera.gd" id="2_skgor"]
-[ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://units/Unit.tscn" id="3_sdpet"]
-[ext_resource type="Script" path="res://items/classes/Weapon.gd" id="4_6uung"]
-[ext_resource type="Resource" uid="uid://ba1frpch73a7f" path="res://items/repo/Bow.tres" id="5_xpxwo"]
-[ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://items/repo/Sword.tres" id="6_8dvib"]
-[ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://items/repo/HealingStaff.tres" id="7_h5ggr"]
-[ext_resource type="PackedScene" uid="uid://dbln30dr8vpci" path="res://items/Pickup.tscn" id="8_k51un"]
+[ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="1_5pkd6"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ip03w"]
+[ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="3_g615f"]
+[ext_resource type="Script" path="res://scripts/items/Weapon.gd" id="4_3m5wx"]
+[ext_resource type="Resource" uid="uid://ba1frpch73a7f" path="res://resources/items/Bow.tres" id="5_2um4g"]
+[ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://resources/items/Sword.tres" id="6_ac1dv"]
+[ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://resources/items/HealingStaff.tres" id="7_g66xv"]
+[ext_resource type="PackedScene" uid="uid://dbln30dr8vpci" path="res://scenes/Pickup.tscn" id="8_3ij0n"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_y4bko"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -16,7 +16,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, 16, -16, 16, 
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2cqk"]
-texture = ExtResource("1_ilo3b")
+texture = ExtResource("1_5pkd6")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_y4bko")
@@ -101,60 +101,60 @@ layer_0/tile_data = PackedInt32Array(196610, 3, 0, 262146, 3, 0, 327682, 3, 0, 3
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(146, 234)
-script = ExtResource("2_skgor")
+script = ExtResource("2_ip03w")
 
 [node name="Units" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Unit1" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit1" parent="Units" instance=ExtResource("3_g615f")]
 position = Vector2(-359, 28)
 faction = 0
-weapons = Array[ExtResource("4_6uung")]([ExtResource("5_xpxwo"), ExtResource("6_8dvib"), ExtResource("7_h5ggr")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("5_2um4g"), ExtResource("6_ac1dv"), ExtResource("7_g66xv")])
 weaponSlotEquipped = 1
 unitName = "Aron"
 
-[node name="Unit2" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit2" parent="Units" instance=ExtResource("3_g615f")]
 position = Vector2(50, 180)
 faction = 0
-weapons = Array[ExtResource("4_6uung")]([ExtResource("6_8dvib"), ExtResource("6_8dvib"), ExtResource("7_h5ggr")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("6_ac1dv"), ExtResource("7_g66xv")])
 weaponSlotEquipped = 2
 unitName = "Beatrice"
 
-[node name="Unit3" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit3" parent="Units" instance=ExtResource("3_g615f")]
 position = Vector2(100, 100)
 faction = 0
-weapons = Array[ExtResource("4_6uung")]([ExtResource("6_8dvib"), ExtResource("5_xpxwo"), ExtResource("5_xpxwo")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
 unitName = "Conan"
 
-[node name="Unit4" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit4" parent="Units" instance=ExtResource("3_g615f")]
 modulate = Color(0.662745, 0, 1, 1)
 position = Vector2(525, 450)
-weapons = Array[ExtResource("4_6uung")]([ExtResource("6_8dvib"), ExtResource("5_xpxwo"), ExtResource("5_xpxwo")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
 unitName = "Doug"
 
-[node name="Unit5" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit5" parent="Units" instance=ExtResource("3_g615f")]
 modulate = Color(0.662745, 0, 1, 1)
 position = Vector2(554, 397)
-weapons = Array[ExtResource("4_6uung")]([ExtResource("6_8dvib"), ExtResource("5_xpxwo"), ExtResource("5_xpxwo")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
 unitName = "Eagle"
 
-[node name="Unit6" parent="Units" instance=ExtResource("3_sdpet")]
+[node name="Unit6" parent="Units" instance=ExtResource("3_g615f")]
 modulate = Color(0.662745, 0, 1, 1)
 position = Vector2(559, 453)
-weapons = Array[ExtResource("4_6uung")]([ExtResource("6_8dvib"), ExtResource("5_xpxwo"), ExtResource("5_xpxwo")])
+weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
 unitName = "Fyre"
 
-[node name="Pickup01" parent="." instance=ExtResource("8_k51un")]
-itemType = ExtResource("6_8dvib")
+[node name="Pickup01" parent="." instance=ExtResource("8_3ij0n")]
+itemType = ExtResource("6_ac1dv")
 
-[node name="Pickup02" parent="." instance=ExtResource("8_k51un")]
+[node name="Pickup02" parent="." instance=ExtResource("8_3ij0n")]
 position = Vector2(100, 0)
-itemType = ExtResource("6_8dvib")
+itemType = ExtResource("6_ac1dv")
 
-[node name="Pickup03" parent="." instance=ExtResource("8_k51un")]
+[node name="Pickup03" parent="." instance=ExtResource("8_3ij0n")]
 position = Vector2(-100, 0)
-itemType = ExtResource("7_h5ggr")
+itemType = ExtResource("7_g66xv")

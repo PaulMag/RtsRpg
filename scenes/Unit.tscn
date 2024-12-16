@@ -1,12 +1,12 @@
 [gd_scene load_steps=84 format=3 uid="uid://c0cy3pn7up1o0"]
 
-[ext_resource type="Script" path="res://units/Unit.gd" id="1_m0gx0"]
+[ext_resource type="Script" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
 [ext_resource type="Texture2D" uid="uid://4jxtstcb1i27" path="res://sprites/units/skeleton/skeleton_slash.png" id="3_uxcrt"]
 [ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/skeleton_walk.png" id="4_myvs8"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="5_xkyn2"]
-[ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://units/AiController.tscn" id="7_jkhdm"]
+[ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
 
 [sub_resource type="CircleShape2D" id="11"]

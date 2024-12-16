@@ -3,8 +3,8 @@ extends CharacterBody2D
 class_name Unit
 
 
-var PROJECTILE := preload("res://projectiles/Bullet.tscn")
-var CORPSE := preload("res://units/corpse/Corpse.tscn")
+var PROJECTILE := preload("res://scenes/Bullet.tscn")
+var CORPSE := preload("res://scenes/Corpse.tscn")
 
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES

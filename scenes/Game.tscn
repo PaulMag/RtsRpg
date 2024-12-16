@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://b38hn31i1vg4d"]
 
-[ext_resource type="Script" path="res://Multiplayer.gd" id="5_fivu0"]
+[ext_resource type="Script" path="res://scripts/Multiplayer.gd" id="1_xw4tb"]
 
 [node name="Game" type="Node"]
 
 [node name="Multiplayer" type="Node" parent="."]
-script = ExtResource("5_fivu0")
+script = ExtResource("1_xw4tb")
 
 [node name="UI" type="CanvasLayer" parent="Multiplayer"]
 
@@ -77,13 +77,13 @@ layout_mode = 2
 text = "Start Game"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
-_spawnable_scenes = PackedStringArray("res://players/LocalPlayer.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/LocalPlayer.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Dungeon.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/Dungeon.tscn")
 spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]

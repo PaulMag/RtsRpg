@@ -1,8 +1,8 @@
 extends Node
 
-const LOCAL_PLAYER = preload("res://players/LocalPlayer.tscn")
-const PLAYER_LABEL = preload("res://PlayerLabel.tscn")
-const DUNGEON = preload("res://Dungeon.tscn")
+const LOCAL_PLAYER = preload("res://scenes/LocalPlayer.tscn")
+const PLAYER_LABEL = preload("res://scenes/PlayerLabel.tscn")
+const DUNGEON = preload("res://scenes/Dungeon.tscn")
 
 const PORT = 4433
 

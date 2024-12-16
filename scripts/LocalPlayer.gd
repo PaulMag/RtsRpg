@@ -22,7 +22,7 @@ var isIssuingEquipOrder := 0
 #var hud: Hud
 @onready var inventoryHud: VBoxContainer = $CanvasLayer/Inventories
 
-var INVENTORY_SLOTS := preload("res://InventorySlots.tscn")
+var INVENTORY_SLOTS := preload("res://scenes/InventorySlots.tscn")
 var unitInventories: Dictionary = {}
 
 
