@@ -11,6 +11,7 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 @export var isAi := false
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
+@export var loot := Global.Items.Bow
 
 const SPEED := 150.0
 const ATTACK_RANGE := 30
@@ -224,6 +225,10 @@ func getAllAwareEnemyUnits() -> Array[Unit]:
 
 @rpc("call_local")
 func die() -> void:
+	if multiplayer.is_server():
+		var pickup := Pickup.init(loot)
+		pickup.position = position
+		call_deferred("add_sibling", pickup, true)
 	var corpse: Corpse = CORPSE.instantiate()
 	corpse.position = position
 	get_parent().add_child(corpse)
@@ -260,11 +265,19 @@ func spendMana(amount: int) -> void:
 func _on_attack_timer_timeout() -> void:
 	state = states.IDLE
 
-func giveItem(item: Item) -> bool:
+@rpc("call_remote")
+func giveItem(itemType: Global.Items) -> bool:
+	# This method is called normally only on the server, which calls it again on the clients with rpc.
+	var item := load("res://resources/items/%s.tres" % Global.Items.find_key(itemType)) as Item
+	
 	if not item is Weapon:  # Only support for Weapon type so far
 		return false
 	if weapons.size() >= 4:  # Inventory is full
 		return false
+	
+	if multiplayer.is_server():
+		giveItem.rpc(itemType)
+	
 	weapons.append(item)
 	update.rpc()
 	return true

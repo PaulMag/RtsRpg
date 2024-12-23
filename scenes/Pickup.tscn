@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbln30dr8vpci"]
+[gd_scene load_steps=5 format=3 uid="uid://dbln30dr8vpci"]
 
 [ext_resource type="Script" path="res://scripts/Pickup.gd" id="1_08on1"]
 [ext_resource type="Texture2D" uid="uid://shm2auty0h2a" path="res://sprites/projectiles/bow.png" id="2_uv5qr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_73j80"]
 radius = 20.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eoid5"]
+properties/0/path = NodePath(".:itemType")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 0
 
 [node name="Pickup" type="Area2D"]
 collision_layer = 0
@@ -15,5 +23,8 @@ texture = ExtResource("2_uv5qr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_73j80")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_eoid5")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -139,6 +139,7 @@ modulate = Color(0.662745, 0, 1, 1)
 position = Vector2(554, 397)
 weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
+loot = 2
 unitName = "Eagle"
 
 [node name="Unit6" parent="Units" instance=ExtResource("3_g615f")]
@@ -146,15 +147,19 @@ modulate = Color(0.662745, 0, 1, 1)
 position = Vector2(559, 453)
 weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
+loot = 1
 unitName = "Fyre"
 
 [node name="Pickup01" parent="." instance=ExtResource("8_3ij0n")]
-itemType = ExtResource("6_ac1dv")
 
 [node name="Pickup02" parent="." instance=ExtResource("8_3ij0n")]
 position = Vector2(100, 0)
-itemType = ExtResource("6_ac1dv")
+itemType = 1
 
 [node name="Pickup03" parent="." instance=ExtResource("8_3ij0n")]
 position = Vector2(-100, 0)
-itemType = ExtResource("7_g66xv")
+itemType = 2
+
+[node name="PickupSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/Pickup.tscn")
+spawn_path = NodePath("../Units")

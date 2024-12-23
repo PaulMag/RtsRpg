@@ -6,6 +6,11 @@ enum Faction {
 	ENEMIES,
 }
 
+enum Items {
+	Bow,
+	HealingStaff,
+	Sword,
+}
 
 func getPlayers() -> Array[LocalPlayer]:
 	var players: Array[LocalPlayer] = []
