@@ -18,8 +18,6 @@ var damageReduction: float = 0
 var attributes: Attributes
 @export var attributesList: Array[Attributes]
 
-const ATTACK_RANGE := 30
-
 const FACING_MAPPING = {
 	1: "right",
 	2: "down",
@@ -49,6 +47,10 @@ enum states {
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var attackTimer: Timer = $AttackTimer
+@onready var unitHud: CanvasLayer = $UnitHud
+@onready var talentTree: Panel = $UnitHud/TalentTree
+@onready var talentTreeButton: Button = $UnitHud/TalentTreeButton
+@onready var talentTreeAttributeButtons: Control = $UnitHud/TalentTree/TalentAttributeButtons
 
 @onready var destination : Vector2 = position
 
@@ -84,6 +86,16 @@ func _ready() -> void:
 		aiController.queue_free()
 		remove_child(aiController)
 
+	for node in talentTreeAttributeButtons.get_children():
+		if node is TalentAttributeButton:
+			var talentAttributeButton := node as TalentAttributeButton
+			talentAttributeButton.pressed.connect(learnTalentAttribute.bind(talentAttributeButton))
+
+func learnTalentAttribute(talentAttributeButton: TalentAttributeButton) -> void:
+	addAttributes(talentAttributeButton.attributes)
+	talentAttributeButton.rankUp()
+	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
+
 func updateAttributes() -> void:
 	attributes = Attributes.sum(attributesList)
 	healthBar.setMaxValue(attributes.maxHealth)
@@ -101,6 +113,9 @@ func setSelected(flag: bool) -> void:
 		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
 	else:
 		hideRangeField()
+	unitHud.visible = flag
+	if not flag:
+		talentTreeButton.button_pressed = false
 
 func setTargeted(flag: bool) -> void:
 	selectedCircle.modulate = Color.RED
@@ -334,3 +349,6 @@ func _on_selection_area_mouse_exited() -> void:
 	sprite.modulate = Color.WHITE
 	if faction != Global.Faction.PLAYERS:
 		hideRangeField()
+
+func _on_talent_tree_button_toggled(toggled_on: bool) -> void:
+	talentTree.visible = toggled_on

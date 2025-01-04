@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=96 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
 [ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
+[ext_resource type="PackedScene" uid="uid://p2g5dfrrbk41" path="res://scenes/TalentAttributeButton.tscn" id="9_srmse"]
+[ext_resource type="Script" path="res://scripts/Attributes.gd" id="10_ovit6"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0
@@ -595,6 +597,116 @@ properties/6/replication_mode = 2
 [sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
 radius = 320.0
 
+[sub_resource type="InputEventAction" id="InputEventAction_kkuhh"]
+action = &"talent_tree"
+
+[sub_resource type="Shortcut" id="Shortcut_i6fgt"]
+events = [SubResource("InputEventAction_kkuhh")]
+
+[sub_resource type="Resource" id="Resource_sa48e"]
+script = ExtResource("10_ovit6")
+maxHealth = 10
+healthRegen = 0
+maxMana = 0
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_dpt6o"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 1
+maxMana = 0
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_niwlv"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 10
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_pdeq4"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 0
+manaRegen = 1
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_jr5p1"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 0
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 5
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_bhwvf"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 0
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 5
+speed = 0
+
+[sub_resource type="Resource" id="Resource_flww1"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 0
+manaRegen = 0
+armorPoints = 10
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+healSkill = 0
+speed = 0
+
+[sub_resource type="Resource" id="Resource_16wc6"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0
+maxMana = 0
+manaRegen = 0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 5
+attackSkill = 0
+healSkill = 0
+speed = 0
+
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
 motion_mode = 1
@@ -706,7 +818,206 @@ texture = ExtResource("7_rybnc")
 
 [node name="AiController" parent="." instance=ExtResource("7_jkhdm")]
 
+[node name="UnitHud" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -60.0
+offset_right = 80.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="TalentTreeButton" type="Button" parent="UnitHud"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -129.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+toggle_mode = true
+shortcut = SubResource("Shortcut_i6fgt")
+text = "Talent Tree"
+metadata/_edit_use_anchors_ = true
+
+[node name="TalentTree" type="Panel" parent="UnitHud"]
+visible = false
+offset_left = 130.0
+offset_top = 119.0
+offset_right = 1003.0
+offset_bottom = 546.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UnitHud/TalentTree"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 11.0
+offset_right = 496.0
+offset_bottom = 83.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 50
+text = "Talents"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelNextTalentCost" type="Label" parent="UnitHud/TalentTree"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 75.0
+offset_right = 496.0
+offset_bottom = 123.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+text = "Next talent costs 0 xp"
+metadata/_edit_use_anchors_ = true
+
+[node name="TalentAttributeButtons" type="Control" parent="UnitHud/TalentTree"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthMax" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.25
+anchor_top = -1.4
+anchor_right = -1.25
+anchor_bottom = -1.4
+offset_left = 650.0
+offset_top = 109.0
+offset_right = 699.0
+offset_bottom = 158.0
+attributes = SubResource("Resource_sa48e")
+talentName = "Health"
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthRegen" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.475
+anchor_top = -1.425
+anchor_right = -1.475
+anchor_bottom = -1.425
+offset_left = 799.0
+offset_top = 107.0
+offset_right = 848.0
+offset_bottom = 156.0
+attributes = SubResource("Resource_dpt6o")
+talentName = "Health regen"
+metadata/_edit_use_anchors_ = true
+
+[node name="ManaMax" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.15
+anchor_top = -2.25
+anchor_right = -1.15
+anchor_bottom = -2.25
+offset_left = 646.0
+offset_top = 240.0
+offset_right = 695.0
+offset_bottom = 289.0
+attributes = SubResource("Resource_niwlv")
+talentName = "Mana"
+metadata/_edit_use_anchors_ = true
+
+[node name="ManaRegen" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.275
+anchor_top = -2.55
+anchor_right = -1.275
+anchor_bottom = -2.55
+offset_left = 791.0
+offset_top = 252.0
+offset_right = 840.0
+offset_bottom = 301.0
+attributes = SubResource("Resource_pdeq4")
+talentName = "Mana regen"
+metadata/_edit_use_anchors_ = true
+
+[node name="AttackSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.35
+anchor_top = -1.675
+anchor_right = -1.35
+anchor_bottom = -1.675
+offset_left = 654.0
+offset_top = 317.0
+offset_right = 703.0
+offset_bottom = 366.0
+attributes = SubResource("Resource_jr5p1")
+talentName = "Attack skill"
+metadata/_edit_use_anchors_ = true
+
+[node name="HealSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.5
+anchor_top = -2.05
+anchor_right = -1.5
+anchor_bottom = -2.05
+offset_left = 800.0
+offset_top = 332.0
+offset_right = 849.0
+offset_bottom = 381.0
+attributes = SubResource("Resource_bhwvf")
+talentName = "Heal skill"
+metadata/_edit_use_anchors_ = true
+
+[node name="ArmorPoints" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.925
+anchor_top = 7.325
+anchor_right = -0.925
+anchor_bottom = 7.325
+offset_left = 637.0
+offset_top = 57.0
+offset_right = 686.0
+offset_bottom = 106.0
+attributes = SubResource("Resource_flww1")
+talentName = "Armor points"
+metadata/_edit_use_anchors_ = true
+
+[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.625
+anchor_top = 6.9
+anchor_right = -0.625
+anchor_bottom = 6.9
+offset_left = 765.0
+offset_top = 74.0
+offset_right = 814.0
+offset_bottom = 123.0
+attributes = SubResource("Resource_16wc6")
+talentName = "Armor skill"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
 [connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
+[connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" to="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ManaMax" to="UnitHud/TalentTree/TalentAttributeButtons/ManaMax" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ManaRegen" to="UnitHud/TalentTree/TalentAttributeButtons/ManaRegen" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/AttackSkill" to="UnitHud/TalentTree/TalentAttributeButtons/AttackSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealSkill" to="UnitHud/TalentTree/TalentAttributeButtons/HealSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ArmorPoints" to="UnitHud/TalentTree/TalentAttributeButtons/ArmorPoints" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ArmorSkill" to="UnitHud/TalentTree/TalentAttributeButtons/ArmorSkill" method="_on_pressed"]

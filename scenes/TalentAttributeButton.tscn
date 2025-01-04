@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://p2g5dfrrbk41"]
+
+[ext_resource type="PackedScene" uid="uid://ccoallcn4va30" path="res://scenes/TalentBaseButton.tscn" id="1_67xqx"]
+[ext_resource type="Script" path="res://scripts/TalentAttributeButton.gd" id="2_iod4t"]
+
+[node name="TalentAttributeButton" instance=ExtResource("1_67xqx")]
+tooltip_text = "Increase attributes."
+script = ExtResource("2_iod4t")
+attributes = null
+maxRank = 10
+rank = 0
+
+[node name="RankLabel" parent="MarginContainer" index="0"]
+text = "0/10"
+
+[node name="NameLabel" parent="." index="1"]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -75.0
+offset_top = 50.0
+offset_right = 125.0
+offset_bottom = 73.0
+grow_horizontal = 1
+grow_vertical = 1
+horizontal_alignment = 1
