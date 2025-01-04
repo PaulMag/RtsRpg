@@ -606,9 +606,9 @@ events = [SubResource("InputEventAction_kkuhh")]
 [sub_resource type="Resource" id="Resource_sa48e"]
 script = ExtResource("10_ovit6")
 maxHealth = 10
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -619,9 +619,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_dpt6o"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 1
+healthRegen = 0.5
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -632,9 +632,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_niwlv"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 10
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -645,9 +645,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_pdeq4"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 1
+manaRegen = 1.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -658,9 +658,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_jr5p1"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -671,9 +671,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_bhwvf"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -684,9 +684,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_flww1"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 10
 carryCapacity = 0
 armorSkill = 0
@@ -697,9 +697,9 @@ speed = 0
 [sub_resource type="Resource" id="Resource_16wc6"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
-healthRegen = 0
+healthRegen = 0.0
 maxMana = 0
-manaRegen = 0
+manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 5
@@ -779,6 +779,8 @@ replication_config = SubResource("SceneReplicationConfig_bwudf")
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true
+
+[node name="RegenTimer" type="Timer" parent="."]
 
 [node name="Label" type="Label" parent="."]
 z_index = 1
@@ -1011,6 +1013,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
 [connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
 [connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
 [connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" method="_on_pressed"]

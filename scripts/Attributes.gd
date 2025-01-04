@@ -2,9 +2,9 @@ extends Resource
 class_name Attributes
 
 @export var maxHealth: int = 0
-@export var healthRegen: int = 0
+@export var healthRegen: float = 0
 @export var maxMana: int = 0
-@export var manaRegen: int = 0
+@export var manaRegen: float = 0
 @export var armorPoints: int = 0
 @export var carryCapacity: int = 0
 @export var armorSkill: int = 0

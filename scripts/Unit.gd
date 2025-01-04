@@ -47,6 +47,7 @@ enum states {
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var attackTimer: Timer = $AttackTimer
+@onready var regenTimer: Timer = $RegenTimer
 @onready var unitHud: CanvasLayer = $UnitHud
 @onready var talentTree: Panel = $UnitHud/TalentTree
 @onready var talentTreeButton: Button = $UnitHud/TalentTreeButton
@@ -65,6 +66,7 @@ var threatTable: Dictionary = {}
 func _ready() -> void:
 	if multiplayer.is_server():
 		unitId = randi()
+		regenTimer.start()
 	print("unit _ready   player %s  unit %s  unitId %s" % [multiplayer.get_unique_id(), get_instance_id(), unitId])
 
 	self.add_to_group("units")
@@ -79,6 +81,9 @@ func _ready() -> void:
 	a.speed = 150
 	addAttributes(a)
 	updateAttributes()
+
+	health = attributes.maxHealth / 2.  #TODO: A temp solution to test healing etc.
+	mana = attributes.maxMana / 2.
 
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
@@ -352,3 +357,9 @@ func _on_selection_area_mouse_exited() -> void:
 
 func _on_talent_tree_button_toggled(toggled_on: bool) -> void:
 	talentTree.visible = toggled_on
+
+func _on_regen_timer_timeout() -> void:
+	health += attributes.healthRegen * regenTimer.wait_time
+	health = clampf(health, 0, attributes.maxHealth)
+	mana += attributes.manaRegen * regenTimer.wait_time
+	mana = clampf(mana, 0, attributes.maxMana)
