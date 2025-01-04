@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://4jxtstcb1i27" path="res://sprites/units/skeleton/skeleton_slash.png" id="3_uxcrt"]
 [ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/skeleton_walk.png" id="4_myvs8"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
-[ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="5_xkyn2"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
+[ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
 
 [sub_resource type="CircleShape2D" id="11"]
@@ -631,36 +631,21 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -58.0
-offset_right = 16.0
-offset_bottom = -44.0
+offset_left = -32.0
+offset_top = -75.0
+offset_right = 32.0
+offset_bottom = -43.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="HealthBar" type="TextureProgressBar" parent="ProgressBars"]
-z_index = 1
+[node name="HealthBar" parent="ProgressBars" instance=ExtResource("7_n4dth")]
 layout_mode = 2
-step = 0.01
-value = 55.57
-nine_patch_stretch = true
-stretch_margin_top = 8
-texture_under = ExtResource("5_xkyn2")
-texture_progress = ExtResource("5_xkyn2")
-tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(1, 0, 0, 1)
 
-[node name="ManaBar" type="TextureProgressBar" parent="ProgressBars"]
-z_index = 1
+[node name="ManaBar" parent="ProgressBars" instance=ExtResource("7_n4dth")]
 layout_mode = 2
-step = 0.01
-nine_patch_stretch = true
-stretch_margin_top = 8
-texture_under = ExtResource("5_xkyn2")
-texture_progress = ExtResource("5_xkyn2")
-tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(0, 0, 1, 1)
 
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]

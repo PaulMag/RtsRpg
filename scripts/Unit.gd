@@ -13,10 +13,12 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 @export var weaponSlotEquipped := 0
 @export var loot := Global.Items.Bow
 
-const SPEED := 150.0
+# Attributes
+var damageReduction: float = 0
+var attributes: Attributes
+@export var attributesList: Array[Attributes]
+
 const ATTACK_RANGE := 30
-const HEALTH_MAX := 100
-const MANA_MAX := 50
 
 const FACING_MAPPING = {
 	1: "right",
@@ -39,8 +41,8 @@ enum states {
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle: Sprite2D = $SelectedCircle
-@onready var healthBar: TextureProgressBar  = $ProgressBars/HealthBar
-@onready var manaBar: TextureProgressBar  = $ProgressBars/ManaBar
+@onready var healthBar: EnergyBar  = $ProgressBars/HealthBar
+@onready var manaBar: EnergyBar  = $ProgressBars/ManaBar
 @onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
 @onready var aiController: AiController = $AiController
 @onready var rangeField: Area2D = $RangeField
@@ -67,16 +69,30 @@ func _ready() -> void:
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
 
-	healthBar.max_value = HEALTH_MAX
-	healthBar.value = health
-	manaBar.max_value = MANA_MAX
-	manaBar.value = mana
+	attributesList = []
+	var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
+	a.maxHealth = 100
+	a.maxMana = 100
+	a.armorSkill = 100
+	a.speed = 150
+	addAttributes(a)
+	updateAttributes()
 
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
 	if not isAi:
 		aiController.queue_free()
 		remove_child(aiController)
+
+func updateAttributes() -> void:
+	attributes = Attributes.sum(attributesList)
+	healthBar.setMaxValue(attributes.maxHealth)
+	manaBar.setMaxValue(attributes.maxMana)
+	damageReduction = 10_000. / (10_000. + attributes.armorPoints * attributes.armorSkill)
+
+func addAttributes(newAttributes: Attributes) -> void:
+	attributesList.append(newAttributes)
+	updateAttributes()
 
 func setSelected(flag: bool) -> void:
 	selectedCircle.modulate = Color.GREEN
@@ -91,8 +107,8 @@ func setTargeted(flag: bool) -> void:
 	selectedCircle.visible = flag
 
 func _process(_delta: float) -> void:
-	healthBar.value = health
-	manaBar.value = mana
+	healthBar.setValue(health)
+	manaBar.setValue(mana)
 
 	if multiplayer.is_server():
 		if state == states.ATTACKING:
@@ -163,7 +179,7 @@ func _physics_process(_delta: float) -> void:
 		if (followCursor or followTarget) and navigationAgent.is_target_reachable():
 			var destinationNext := navigationAgent.get_next_path_position()
 
-			velocity = position.direction_to(destinationNext).normalized() * SPEED
+			velocity = position.direction_to(destinationNext).normalized() * attributes.speed
 			navigationAgent.set_velocity(velocity)
 
 			var followRange := getEquippedWeapon().attackRange if getEquippedWeapon() else 50
@@ -194,14 +210,14 @@ func damage(_attack: Attack) -> void:
 	if _attack.isHealing:
 		var healthBefore := health
 		health += _attack.damage
-		health = clampf(health, 0, HEALTH_MAX)
+		health = clampf(health, 0, attributes.maxHealth)
 		if is_instance_valid(_attack.attackingUnit):
 			var healingReceived := health - healthBefore
 			var awareEnemyUnits: Array[Unit] = _attack.attackingUnit.getAllAwareEnemyUnits()
 			for enemyUnit in awareEnemyUnits:
 				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
 	else:
-		health -= _attack.damage
+		health -= _attack.damage * damageReduction  # addThreat uses raw damage before damageReduction.
 		addThreat(_attack.attackingUnit, _attack.damage)
 		damageSound.play()
 
@@ -269,15 +285,15 @@ func _on_attack_timer_timeout() -> void:
 func giveItem(itemType: Global.Items) -> bool:
 	# This method is called normally only on the server, which calls it again on the clients with rpc.
 	var item := load("res://resources/items/%s.tres" % Global.Items.find_key(itemType)) as Item
-	
+
 	if not item is Weapon:  # Only support for Weapon type so far
 		return false
 	if weapons.size() >= 4:  # Inventory is full
 		return false
-	
+
 	if multiplayer.is_server():
 		giveItem.rpc(itemType)
-	
+
 	weapons.append(item)
 	update.rpc()
 	return true
