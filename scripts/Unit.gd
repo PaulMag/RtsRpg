@@ -91,12 +91,19 @@ func _ready() -> void:
 		aiController.queue_free()
 		remove_child(aiController)
 
+	var nodeIndex := 0
 	for node in talentTreeAttributeButtons.get_children():
 		if node is TalentAttributeButton:
 			var talentAttributeButton := node as TalentAttributeButton
-			talentAttributeButton.pressed.connect(learnTalentAttribute.bind(talentAttributeButton))
+			talentAttributeButton.pressed.connect(learnTalentAttributeOnClients.bind(nodeIndex))
+		nodeIndex += 1
 
-func learnTalentAttribute(talentAttributeButton: TalentAttributeButton) -> void:
+func learnTalentAttributeOnClients(nodeIndex: int) -> void:
+	learnTalentAttribute.rpc(nodeIndex)
+
+@rpc("any_peer", "call_local")
+func learnTalentAttribute(nodeIndex: int) -> void:
+	var talentAttributeButton := talentTreeAttributeButtons.get_children()[nodeIndex] as TalentAttributeButton
 	addAttributes(talentAttributeButton.attributes)
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
