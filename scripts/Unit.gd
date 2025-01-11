@@ -39,6 +39,7 @@ enum states {
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var selectedCircle: Sprite2D = $SelectedCircle
+@onready var targetCircle: Sprite2D = $TargetCircle
 @onready var healthBar: EnergyBar  = $ProgressBars/HealthBar
 @onready var manaBar: EnergyBar  = $ProgressBars/ManaBar
 @onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
@@ -119,7 +120,6 @@ func addAttributes(newAttributes: Attributes) -> void:
 	updateAttributes()
 
 func setSelected(flag: bool) -> void:
-	selectedCircle.modulate = Color.GREEN
 	selectedCircle.visible = flag
 	if flag and getEquippedWeapon():
 		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
@@ -130,8 +130,11 @@ func setSelected(flag: bool) -> void:
 		talentTreeButton.button_pressed = false
 
 func setTargeted(flag: bool) -> void:
-	selectedCircle.modulate = Color.RED
-	selectedCircle.visible = flag
+	if faction == Global.Faction.PLAYERS:
+		targetCircle.modulate = Color.GREEN
+	elif faction == Global.Faction.ENEMIES:
+		targetCircle.modulate = Color.RED
+	targetCircle.visible = flag
 
 func _process(_delta: float) -> void:
 	healthBar.setValue(health)

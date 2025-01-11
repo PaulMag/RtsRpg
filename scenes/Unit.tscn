@@ -718,6 +718,11 @@ shape = SubResource("11")
 
 [node name="SelectedCircle" type="Sprite2D" parent="."]
 visible = false
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("7_rybnc")
+
+[node name="TargetCircle" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_f7eal")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -12,6 +12,8 @@ class_name LocalPlayer
 @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 @onready var canvasLayer: CanvasLayer = $CanvasLayer
+@onready var playerList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/PlayerList
+@onready var unitList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/UnitList
 
 var selectedUnitId: int
 
@@ -52,6 +54,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("select_slot_4"):
 		issueEquipOrder.rpc_id(1, 4)
 
+	for unitIndex in range(0, 6):
+		if event.is_action_pressed("select_unit_%s" % (unitIndex + 1)):
+			var playerUnits := Global.getAllUnitsInFaction(Global.Faction.PLAYERS)
+			if unitIndex < playerUnits.size():
+				selectUnitByIndex(unitIndex)
+			break
 
 @rpc("call_local")
 func issueMoveOrder(destination: Vector2) -> void:
@@ -81,6 +89,7 @@ func _process(_delta: float) -> void:
 			else:
 				unitUpdateCountdown -= 1
 			unit.isBeingUpdated = 0
+		updatePlayerStats()  #TODO: Should not happen every frame.
 
 	if multiplayer.is_server():
 		if isIssuingMoveOrder != Vector2.INF:  # INF represents no value
@@ -111,6 +120,11 @@ func moveTo(destination: Vector2) -> void:
 	if getSelectedUnit():
 		issueMoveOrder.rpc_id(1, destination)
 		destinationMarker.markMove(destination)
+
+func selectUnitByIndex(unitIndex: int) -> void:
+	var playerUnits := Global.getAllUnitsInFaction(Global.Faction.PLAYERS)
+	selectUnit(playerUnits[unitIndex])
+	updateUnitList(unitIndex)
 
 func selectUnit(unit: Unit) -> void:
 	if unit  == null:
@@ -160,3 +174,33 @@ func drawUnitInventory(unit: Unit) -> void:
 		inventory.update(unit)
 		inventory.set_process(true)
 		inventory.set_process_input(true)
+
+func updatePlayerStats() -> void:
+	for node in playerList.get_children():
+		node.queue_free()
+	for player in Global.getPlayers():
+		var playerLabelNode := PlayerLabel.init()
+		playerLabelNode.playerId = player.playerId
+		playerLabelNode.playerName = player.name
+		playerLabelNode.playerColor = player.playerColor
+		playerList.add_child(playerLabelNode, true)
+
+func updateUnitList(selectedUnitIndex: int = -1) -> void:
+	for node in unitList.get_children():
+		node.queue_free()
+
+	var unitIndex := 0
+
+	for unit in Global.getAllUnitsInFaction(Global.Faction.PLAYERS):
+		var unitSelectButton: Button = Button.new()
+		unitSelectButton.text = "[F%s]  %s" % [unitIndex+1, unit.unitName]
+		unitSelectButton.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		unitSelectButton.connect("pressed", selectUnitByIndex.bind(unitIndex))
+
+		if unitIndex == selectedUnitIndex:
+			unitSelectButton.modulate = Color.GREEN
+		else:
+			unitSelectButton.modulate = Color.WHITE
+
+		unitList.add_child(unitSelectButton, true)
+		unitIndex += 1

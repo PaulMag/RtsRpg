@@ -1,7 +1,6 @@
 extends Node
 
 const LOCAL_PLAYER = preload("res://scenes/LocalPlayer.tscn")
-const PLAYER_LABEL = preload("res://scenes/PlayerLabel.tscn")
 const DUNGEON = preload("res://scenes/Dungeon.tscn")
 
 const PORT = 4433
@@ -9,7 +8,6 @@ const PORT = 4433
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
-@onready var playerList: VBoxContainer = $UI/GameHud/VBoxContainer/PlayerList
 
 
 func _ready() -> void:
@@ -20,9 +18,6 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
-
-func _process(_delta: float) -> void:
-	updatePlayerStats()  #TODO: Should not happen every frame.
 
 func _on_host_pressed() -> void:
 	# Start game as server
@@ -74,18 +69,8 @@ func start_game() -> void:
 	for player in Global.getPlayers():
 		player.playerId = player.name.to_int()   #TODO: Why is this necessary???
 
+	Global.getPlayerCurrent().updateUnitList()
 	Global.getPlayerCurrent().canvasLayer.visible = true
-
-func updatePlayerStats() -> void:
-	for node in playerList.get_children():
-		node.queue_free()
-	for player in Global.getPlayers():
-		var playerLabelNode: PlayerLabel = PLAYER_LABEL.instantiate()
-		playerLabelNode.playerId = player.playerId
-		playerLabelNode.playerName = player.name
-		playerLabelNode.playerColor = player.playerColor
-		playerList.add_child(playerLabelNode, true)
-
 
 func _on_start_game_pressed() -> void:
 	start_game()

@@ -55,6 +55,11 @@ func deleteUnit(unit: Unit) -> void:
 	if unit == getPlayerCurrent().getSelectedUnit():
 		getPlayerCurrent().selectUnit(null)
 	for u in getAllUnits():
+		if u.targetUnit == unit:
+			u.targetUnit = null
 		if unit in u.threatTable:
 			u.threatTable.erase(unit)
 	unit.queue_free()
+
+	var timer := get_tree().create_timer(0.2)
+	timer.connect("timeout", getPlayerCurrent().updateUnitList)  #TODO Temporary ugly way to remove from UnitList

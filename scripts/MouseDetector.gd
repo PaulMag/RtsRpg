@@ -50,7 +50,7 @@ func selectArea(start: Vector2, end: Vector2) -> void:
 
 	var unitsInDetector := getUnitsInDetector(center, selectorShape)
 	var selectedUnit := pickSelectedUnit(unitsInDetector)
-	playerInput.selectUnit(selectedUnit)
+	#playerInput.selectUnit(selectedUnit)
 
 func targetMousePoint() -> void:
 	var point := get_global_mouse_position()
