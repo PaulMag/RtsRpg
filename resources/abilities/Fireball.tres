@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://csi0odxr0r80r"]
+
+[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_1aj02"]
+[ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="2_ymo3a"]
+
+[resource]
+script = ExtResource("1_1aj02")
+name = "Fireball"
+texture = ExtResource("2_ymo3a")
+damage = 25
+targetRange = 400
+manaCost = 10
+isHealing = false
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true

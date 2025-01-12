@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://dvixwcti6forv"]
+
+[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_hclkh"]
+[ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="2_0sria"]
+
+[resource]
+script = ExtResource("1_hclkh")
+name = "Healing Word"
+texture = ExtResource("2_0sria")
+damage = 25
+targetRange = 200
+manaCost = 25
+isHealing = true
+canTargetSelf = true
+canTargetFriend = true
+canTargetEnemy = false

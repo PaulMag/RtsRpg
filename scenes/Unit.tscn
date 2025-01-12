@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=103 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -8,8 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
 [ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
+[ext_resource type="PackedScene" uid="uid://d2sb2u58buhx4" path="res://scenes/TalentAbilityButton.tscn" id="9_rio8d"]
 [ext_resource type="PackedScene" uid="uid://p2g5dfrrbk41" path="res://scenes/TalentAttributeButton.tscn" id="9_srmse"]
+[ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="10_1ssdg"]
 [ext_resource type="Script" path="res://scripts/Attributes.gd" id="10_ovit6"]
+[ext_resource type="Resource" uid="uid://daqg1br2ouhnm" path="res://resources/abilities/MeleeAttack.tres" id="10_telu4"]
+[ext_resource type="Resource" uid="uid://dvixwcti6forv" path="res://resources/abilities/HealingWord.tres" id="12_5usyn"]
+[ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="13_05g4s"]
+[ext_resource type="Resource" uid="uid://csi0odxr0r80r" path="res://resources/abilities/Fireball.tres" id="14_bipdo"]
+[ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="14_ofk60"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0
@@ -829,16 +836,11 @@ texture = ExtResource("7_rybnc")
 visible = false
 
 [node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud"]
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -80.0
-offset_top = -60.0
-offset_right = 80.0
-offset_bottom = -10.0
-grow_horizontal = 2
+offset_top = -50.0
+offset_right = 160.0
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
@@ -888,6 +890,41 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 text = "Next talent costs 0 xp"
 metadata/_edit_use_anchors_ = true
+
+[node name="TalentAbilityButtons" type="Control" parent="UnitHud/TalentTree"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MeleeAttack" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+layout_mode = 0
+offset_left = 167.0
+offset_top = 82.0
+offset_right = 216.0
+offset_bottom = 131.0
+texture_normal = ExtResource("10_1ssdg")
+ability = ExtResource("10_telu4")
+talentName = "Melee Attack"
+
+[node name="HealingWord" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 165.0
+offset_right = 226.0
+offset_bottom = 214.0
+texture_normal = ExtResource("13_05g4s")
+ability = ExtResource("12_5usyn")
+talentName = "Healing Word"
+
+[node name="FireBall" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 263.0
+offset_right = 218.0
+offset_bottom = 312.0
+texture_normal = ExtResource("14_ofk60")
+ability = ExtResource("14_bipdo")
+talentName = "Fireball"
 
 [node name="TalentAttributeButtons" type="Control" parent="UnitHud/TalentTree"]
 anchors_preset = 0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://daqg1br2ouhnm"]
+
+[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_nq82w"]
+[ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="2_8ahld"]
+
+[resource]
+script = ExtResource("1_nq82w")
+name = "Melee Attack"
+texture = ExtResource("2_8ahld")
+damage = 25
+targetRange = 50
+manaCost = 0
+isHealing = false
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true

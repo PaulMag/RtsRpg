@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2sb2u58buhx4"]
+
+[ext_resource type="PackedScene" uid="uid://ccoallcn4va30" path="res://scenes/TalentBaseButton.tscn" id="1_5x6sr"]
+[ext_resource type="Script" path="res://scripts/TalentAbilityButton.gd" id="2_4oaad"]
+
+[node name="TalentAbilityButton" instance=ExtResource("1_5x6sr")]
+script = ExtResource("2_4oaad")
+ability = null
+maxRank = 1
+rank = 0
+talentName = "Ability Name"
+
+[node name="RankLabel" parent="MarginContainer" index="0"]
+text = "0/1"
+
+[node name="NameLabel" parent="." index="1"]
+text = "Ability Name"

@@ -53,6 +53,8 @@ enum states {
 @onready var talentTree: Panel = $UnitHud/TalentTree
 @onready var talentTreeButton: Button = $UnitHud/TalentTreeButton
 @onready var talentTreeAttributeButtons: Control = $UnitHud/TalentTree/TalentAttributeButtons
+@onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
+@onready var abilityButtonsContainer: HBoxContainer = $UnitHud/AbilityButtonsContainer
 
 @onready var destination : Vector2 = position
 
@@ -99,8 +101,18 @@ func _ready() -> void:
 			talentAttributeButton.pressed.connect(learnTalentAttributeOnClients.bind(nodeIndex))
 		nodeIndex += 1
 
+	nodeIndex = 0
+	for node in talentTreeAbilityButtons.get_children():
+		if node is TalentAbilityButton:
+			var talentAbilityButton := node as TalentAbilityButton
+			talentAbilityButton.pressed.connect(learnTalentAbilityOnClients.bind(nodeIndex))
+		nodeIndex += 1
+
 func learnTalentAttributeOnClients(nodeIndex: int) -> void:
 	learnTalentAttribute.rpc(nodeIndex)
+
+func learnTalentAbilityOnClients(nodeIndex: int) -> void:
+	learnTalentAbility.rpc(nodeIndex)
 
 @rpc("any_peer", "call_local")
 func learnTalentAttribute(nodeIndex: int) -> void:
@@ -108,6 +120,22 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 	addAttributes(talentAttributeButton.attributes)
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
+
+@rpc("any_peer", "call_local")
+func learnTalentAbility(nodeIndex: int) -> void:
+	var talentAbilityButton := talentTreeAbilityButtons.get_children()[nodeIndex] as TalentAbilityButton
+
+	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability, nodeIndex)
+	newAbilityButton.pressed.connect(useAbility.bind(newAbilityButton.ability))
+	abilityButtonsContainer.add_child(newAbilityButton)
+
+	talentAbilityButton.rankUp()
+	print("Learned '%s' rank %s" % [talentAbilityButton.talentName, talentAbilityButton.rank])
+
+func useAbility(ability: Ability) -> void:
+	var success := ability.use(self, targetUnit)
+	print("Unit %s %s ability %s on unit %s"
+		% [unitName, "used" if success else "failed to use", ability.name, targetUnit.unitName if targetUnit else "NULL"])
 
 func updateAttributes() -> void:
 	attributes = Attributes.sum(attributesList)
