@@ -18,7 +18,6 @@ class_name LocalPlayer
 var selectedUnitId: int
 
 var isIssuingMoveOrder := Vector2.INF  # INF represents no value
-var isIssuingAttackOrder := 0
 var isIssuingEquipOrder := 0
 
 #var hud: Hud
@@ -40,10 +39,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("mouse_left_click"):
-		mouseDetector.startMouseSelection()
-		mouseDetector.finishMouseSelection()
+		mouseDetector.targetMousePoint(false)
 	elif event.is_action_pressed("mouse_right_click"):
-		mouseDetector.targetMousePoint()
+		mouseDetector.targetMousePoint(true)
 
 	elif event.is_action_pressed("select_slot_1"):
 		issueEquipOrder.rpc_id(1, 1)
@@ -64,10 +62,6 @@ func _unhandled_input(event: InputEvent) -> void:
 @rpc("call_local")
 func issueMoveOrder(destination: Vector2) -> void:
 	isIssuingMoveOrder = destination
-
-@rpc("call_local")
-func issueAttackOrder(unitId: int) -> void:
-	isIssuingAttackOrder = unitId
 
 @rpc("call_local")
 func issueEquipOrder(slot: int) -> void:
@@ -99,14 +93,6 @@ func _process(_delta: float) -> void:
 				unit.orderMove(isIssuingMoveOrder)
 			isIssuingMoveOrder = Vector2.INF
 
-		if isIssuingAttackOrder != 0:
-			var unit := getSelectedUnit()
-			if unit and (unit.faction == Global.Faction.PLAYERS):
-				var targetUnit := Global.getUnitFromUnitId(isIssuingAttackOrder) as Unit
-				if targetUnit != unit:
-					unit.orderAttack(targetUnit)
-				isIssuingAttackOrder = 0
-
 		if isIssuingEquipOrder != 0:
 			var unit: Unit = getSelectedUnit()
 			if unit and (unit.faction == Global.Faction.PLAYERS):
@@ -127,34 +113,26 @@ func selectUnitByIndex(unitIndex: int) -> void:
 	updateUnitList(unitIndex)
 
 func selectUnit(unit: Unit) -> void:
+	var selectedUnit := getSelectedUnit()
 	if unit  == null:
-		if getSelectedUnit():
-			getSelectedUnit().setSelected(false)
-			if is_instance_valid(getSelectedUnit().targetUnit):
-				getSelectedUnit().targetUnit.setTargeted(false)
+		if selectedUnit:
+			selectedUnit.setSelected(false)
 			setSelectedUnitId.rpc_id(1, 0)
 		resetUnitInventories()
 		return
-	if getSelectedUnit():
-		getSelectedUnit().setSelected(false)
-		if is_instance_valid(getSelectedUnit().targetUnit):
-			getSelectedUnit().targetUnit.setTargeted(false)
+	if selectedUnit:
+		selectedUnit.setSelected(false)
 	unit.setSelected(true)
 	selectedUnitId = unit.unitId
 	setSelectedUnitId.rpc_id(1, unit.unitId)
-	if is_instance_valid(getSelectedUnit().targetUnit):
-		getSelectedUnit().targetUnit.setTargeted(true)
 	resetUnitInventories()
 	drawUnitInventory(unit)
 
-func setTargetUnit(unit: Unit) -> void:
-	if unit == null or getSelectedUnit() == null:
+func setTargetUnit(unit: Unit, follow: bool) -> void:
+	var selectedUnit := getSelectedUnit()
+	if unit == null or selectedUnit == null:
 		return
-	issueAttackOrder.rpc_id(1, unit.unitId)
-	if is_instance_valid(getSelectedUnit().targetUnit):
-		getSelectedUnit().targetUnit.setTargeted(false)
-	unit.setTargeted(true)
-	destinationMarker.markAttack(unit)
+	selectedUnit.setTargetUnit.rpc(unit.unitId, follow)
 
 func resetUnitInventories() -> void:
 	for unit: Unit in unitInventories:

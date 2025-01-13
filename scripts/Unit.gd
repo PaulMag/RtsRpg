@@ -147,22 +147,36 @@ func addAttributes(newAttributes: Attributes) -> void:
 	attributesList.append(newAttributes)
 	updateAttributes()
 
-func setSelected(flag: bool) -> void:
-	selectedCircle.visible = flag
-	if flag and getEquippedWeapon():
+func setSelected(toggleOn: bool) -> void:
+	selectedCircle.visible = toggleOn
+	if toggleOn and getEquippedWeapon():
 		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
 	else:
 		hideRangeField()
-	unitHud.visible = flag
-	if not flag:
+	unitHud.visible = toggleOn
+	if not toggleOn:
 		talentTreeButton.button_pressed = false
+	if targetUnit:
+		targetUnit.setTargeted(toggleOn)
 
-func setTargeted(flag: bool) -> void:
-	if faction == Global.Faction.PLAYERS:
-		targetCircle.modulate = Color.GREEN
-	elif faction == Global.Faction.ENEMIES:
-		targetCircle.modulate = Color.RED
-	targetCircle.visible = flag
+@rpc("any_peer", "call_local")
+func setTargetUnit(targetUnitId: int, follow: bool = false) -> void:
+	if selectedCircle.visible and targetUnit:  # If is selected and has previous target
+		targetUnit.setTargeted(false)  # Remove targetCircle from previous target
+	targetUnit = Global.getUnitFromUnitId(targetUnitId)
+	if follow:
+		followTarget = true
+		followCursor = false
+	if selectedCircle.visible:
+		targetUnit.setTargeted(true)  # Display targetCircle on new target
+
+func setTargeted(toggleOn: bool) -> void:  # Display/hide TargetCircle. This is only visual.
+	if toggleOn:
+		if faction == Global.Faction.PLAYERS:
+			targetCircle.modulate = Color.GREEN
+		elif faction == Global.Faction.ENEMIES:
+			targetCircle.modulate = Color.RED
+	targetCircle.visible = toggleOn
 
 func _process(_delta: float) -> void:
 	healthBar.setValue(health)
