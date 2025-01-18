@@ -7,6 +7,7 @@
 script = ExtResource("1_hclkh")
 name = "Healing Word"
 texture = ExtResource("2_0sria")
+abilityId = 2
 damage = 25
 targetRange = 200
 manaCost = 25

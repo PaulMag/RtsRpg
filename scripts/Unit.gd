@@ -128,7 +128,7 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	var talentAbilityButton := talentTreeAbilityButtons.get_children()[nodeIndex] as TalentAbilityButton
 
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability, nodeIndex)
-	newAbilityButton.pressed.connect(useAbility.bind(newAbilityButton.ability))
+	newAbilityButton.pressed.connect(useAbilityOnClients.bind(newAbilityButton.ability.abilityId))
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -141,10 +141,16 @@ func getAbilityButtons() -> Array[AbilityButton]:
 			abilityButtons.append(node as AbilityButton)
 	return abilityButtons
 
-func useAbility(ability: Ability) -> void:
+func useAbilityOnClients(abilityId: Global.AbilityIds) -> void:
+	useAbility.rpc(abilityId)
+
+@rpc("any_peer", "call_local")
+func useAbility(abilityId: Global.AbilityIds) -> void:
 	if isRecovering:
 		print("Unit %s is recovering" % [unitName])
 		return
+
+	var ability := Global.getAbility[abilityId]
 
 	var success := ability.use(self, targetUnit)
 	print("Unit %s %s ability %s on unit %s"

@@ -3,6 +3,7 @@ class_name Ability
 
 @export var name: String
 @export var texture: Texture
+@export var abilityId: Global.AbilityIds
 
 @export var damage: int
 @export var targetRange: int

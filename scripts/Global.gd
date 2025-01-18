@@ -12,6 +12,19 @@ enum Items {
 	Sword,
 }
 
+# AbilityIds and getAbility array MUST be in the same order
+enum AbilityIds {
+	MeleeAttack,
+	Fireball,
+	HealingWord,
+}
+var getAbility: Array[Ability] = [
+	load("res://resources/abilities/MeleeAttack.tres"),
+	load("res://resources/abilities/Fireball.tres"),
+	load("res://resources/abilities/HealingWord.tres"),
+]
+
+
 func getPlayers() -> Array[LocalPlayer]:
 	var players: Array[LocalPlayer] = []
 	for player in get_tree().get_nodes_in_group("players"):
