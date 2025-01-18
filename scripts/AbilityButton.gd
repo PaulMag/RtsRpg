@@ -1,6 +1,8 @@
 extends TextureButton
 class_name AbilityButton
 
+@onready var cooldownProgressBar: TextureProgressBar = $CooldownProgressBar
+
 var ability: Ability
 var nodeIndex: int
 
@@ -12,3 +14,7 @@ static func init(_ability: Ability, _nodeIndex: int) -> AbilityButton:
 	scene.nodeIndex = _nodeIndex
 	scene.texture_normal = _ability.texture
 	return scene
+
+func _ready() -> void:
+	cooldownProgressBar.value = 0
+

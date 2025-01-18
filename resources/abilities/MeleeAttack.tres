@@ -11,6 +11,7 @@ damage = 25
 targetRange = 50
 manaCost = 0
 isHealing = false
+recoveryTime = 1.0
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true

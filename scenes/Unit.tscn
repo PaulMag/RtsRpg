@@ -788,6 +788,9 @@ shape = SubResource("CapsuleShape2D_hlkcu")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_bwudf")
 
+[node name="RecoveryTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true

@@ -9,6 +9,8 @@ class_name Ability
 @export var manaCost: int
 @export var isHealing: bool = false
 
+@export var recoveryTime: float = 1
+
 @export var canTargetSelf: bool = false
 @export var canTargetFriend: bool = false
 @export var canTargetEnemy: bool = false

@@ -47,6 +47,7 @@ enum states {
 @onready var rangeField: Area2D = $RangeField
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
+@onready var recoveryTimer: Timer = $RecoveryTimer
 @onready var attackTimer: Timer = $AttackTimer
 @onready var regenTimer: Timer = $RegenTimer
 @onready var unitHud: CanvasLayer = $UnitHud
@@ -62,6 +63,7 @@ enum states {
 
 var followCursor := false
 var followTarget := false
+var isRecovering := false
 
 var threatTable: Dictionary = {}
 
@@ -132,10 +134,28 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	talentAbilityButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAbilityButton.talentName, talentAbilityButton.rank])
 
+func getAbilityButtons() -> Array[AbilityButton]:
+	var abilityButtons: Array[AbilityButton] = []
+	for node in abilityButtonsContainer.get_children():
+		if node is AbilityButton:
+			abilityButtons.append(node as AbilityButton)
+	return abilityButtons
+
 func useAbility(ability: Ability) -> void:
+	if isRecovering:
+		print("Unit %s is recovering" % [unitName])
+		return
+
 	var success := ability.use(self, targetUnit)
 	print("Unit %s %s ability %s on unit %s"
 		% [unitName, "used" if success else "failed to use", ability.name, targetUnit.unitName if targetUnit else "NULL"])
+
+	if success:
+		isRecovering = true
+		for abilityButton in getAbilityButtons():
+			abilityButton.cooldownProgressBar.max_value = ability.recoveryTime
+			abilityButton.cooldownProgressBar.value = ability.recoveryTime
+		recoveryTimer.start(ability.recoveryTime)
 
 func updateAttributes() -> void:
 	attributes = Attributes.sum(attributesList)
@@ -181,6 +201,12 @@ func setTargeted(toggleOn: bool) -> void:  # Display/hide TargetCircle. This is 
 func _process(_delta: float) -> void:
 	healthBar.setValue(health)
 	manaBar.setValue(mana)
+
+	if isRecovering:
+		for abilityButton in getAbilityButtons():
+			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
+		if recoveryTimer.is_stopped():
+			isRecovering = false
 
 	if multiplayer.is_server():
 		if state == states.ATTACKING:
