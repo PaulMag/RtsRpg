@@ -64,6 +64,8 @@ enum states {
 var followCursor := false
 var followTarget := false
 var isRecovering := false
+var isAutocasting := false
+var autocastAbilityId: Global.AbilityIds
 
 var threatTable: Dictionary = {}
 
@@ -127,8 +129,9 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 func learnTalentAbility(nodeIndex: int) -> void:
 	var talentAbilityButton := talentTreeAbilityButtons.get_children()[nodeIndex] as TalentAbilityButton
 
-	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability, nodeIndex)
+	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
 	newAbilityButton.pressed.connect(useAbilityOnClients.bind(newAbilityButton.ability.abilityId))
+	newAbilityButton.toggle_autocast.connect(toggleAutocastOnClients.bind(newAbilityButton.ability.abilityId))
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -140,6 +143,12 @@ func getAbilityButtons() -> Array[AbilityButton]:
 		if node is AbilityButton:
 			abilityButtons.append(node as AbilityButton)
 	return abilityButtons
+
+func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
+	for abilityButton in getAbilityButtons():
+		if abilityButton.ability.abilityId == abilityId:
+			return abilityButton
+	return null
 
 func useAbilityOnClients(abilityId: Global.AbilityIds) -> void:
 	useAbility.rpc(abilityId)
@@ -162,6 +171,27 @@ func useAbility(abilityId: Global.AbilityIds) -> void:
 			abilityButton.cooldownProgressBar.max_value = ability.recoveryTime
 			abilityButton.cooldownProgressBar.value = ability.recoveryTime
 		recoveryTimer.start(ability.recoveryTime)
+
+func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
+	toggleAutocast.rpc(abilityId)
+
+@rpc("any_peer", "call_local")
+func toggleAutocast(abilityId: Global.AbilityIds) -> void:
+	if not isAutocasting:
+		getAbilityButton(abilityId).setAutocast(true)
+		autocastAbilityId = abilityId
+		isAutocasting = true
+	elif autocastAbilityId == abilityId:
+		getAbilityButton(abilityId).setAutocast(false)
+		isAutocasting = false
+	else:
+		for abilityButton in getAbilityButtons():
+			if abilityButton.ability.abilityId == abilityId:
+				abilityButton.setAutocast(true)
+				autocastAbilityId = abilityId
+				isAutocasting = true
+			else:
+				abilityButton.setAutocast(false)  # Un-toggle all the other abilities
 
 func updateAttributes() -> void:
 	attributes = Attributes.sum(attributesList)
@@ -213,6 +243,8 @@ func _process(_delta: float) -> void:
 			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
 		if recoveryTimer.is_stopped():
 			isRecovering = false
+	elif multiplayer.is_server() and isAutocasting:
+		useAbilityOnClients(autocastAbilityId)
 
 	if multiplayer.is_server():
 		if state == states.ATTACKING:
