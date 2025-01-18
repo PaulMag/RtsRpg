@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccoallcn4va30"]
+[gd_scene load_steps=4 format=3 uid="uid://ccoallcn4va30"]
 
 [ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/projectiles/sword.png" id="1_n2vqn"]
 [ext_resource type="Script" path="res://scripts/TalentBaseButton.gd" id="2_8p1pd"]
+[ext_resource type="Texture2D" uid="uid://3fl6g0678hws" path="res://sprites/ui/black_square.png" id="3_aojgu"]
 
 [node name="TalentButton" type="TextureButton"]
 offset_left = 370.0
@@ -30,6 +31,13 @@ theme_override_constants/outline_size = 7
 text = "0/1"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="DisableTexture" type="TextureRect" parent="MarginContainer"]
+visible = false
+modulate = Color(1, 1, 1, 0.333333)
+layout_mode = 2
+texture = ExtResource("3_aojgu")
+expand_mode = 1
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 1

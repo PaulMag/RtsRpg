@@ -8,7 +8,6 @@ tooltip_text = "Increase attributes."
 script = ExtResource("2_iod4t")
 attributes = null
 maxRank = 10
-rank = 0
 
 [node name="RankLabel" parent="MarginContainer" index="0"]
 text = "0/10"

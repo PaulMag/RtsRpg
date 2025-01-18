@@ -6,8 +6,6 @@
 [node name="TalentAbilityButton" instance=ExtResource("1_5x6sr")]
 script = ExtResource("2_4oaad")
 ability = null
-maxRank = 1
-rank = 0
 talentName = "Ability Name"
 
 [node name="RankLabel" parent="MarginContainer" index="0"]
