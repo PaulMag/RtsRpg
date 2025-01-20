@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://daqg1br2ouhnm"]
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://daqg1br2ouhnm"]
 
+[ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/projectiles/sword.png" id="1_dkul2"]
 [ext_resource type="Script" path="res://scripts/Ability.gd" id="1_nq82w"]
 [ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="2_8ahld"]
 
@@ -9,10 +10,12 @@ name = "Melee Attack"
 texture = ExtResource("2_8ahld")
 abilityId = 0
 damage = 25
-targetRange = 50
+targetRange = 75
 manaCost = 0
 isHealing = false
 recoveryTime = 1.0
+projectileSpeed = 500.0
+projectileTexture = ExtResource("1_dkul2")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true

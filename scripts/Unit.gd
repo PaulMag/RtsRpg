@@ -3,7 +3,6 @@ extends CharacterBody2D
 class_name Unit
 
 
-var PROJECTILE := preload("res://scenes/Bullet.tscn")
 var CORPSE := preload("res://scenes/Corpse.tscn")
 
 @export var unitId : int
@@ -48,7 +47,6 @@ enum states {
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var recoveryTimer: Timer = $RecoveryTimer
-@onready var attackTimer: Timer = $AttackTimer
 @onready var regenTimer: Timer = $RegenTimer
 @onready var unitHud: CanvasLayer = $UnitHud
 @onready var talentTree: Panel = $UnitHud/TalentTree
@@ -331,14 +329,6 @@ func _physics_process(_delta: float) -> void:
 
 		move_and_slide()
 
-		if (state == states.IDLE
-			and getEquippedWeapon() != null
-			and targetUnit != null
-			and targetUnit != self
-			and position.distance_to(targetUnit.position) <= getEquippedWeapon().attackRange
-		):
-			attack()
-
 func damage(_attack: Attack) -> void:
 	if not multiplayer.is_server():
 		return
@@ -386,36 +376,8 @@ func die() -> void:
 	get_parent().add_child(corpse)
 	Global.deleteUnit(self)
 
-func attack() -> void:
-	if getEquippedWeapon() == null:
-		return
-	if position.distance_to(targetUnit.position) > getEquippedWeapon().attackRange:
-		return
-	if getEquippedWeapon().manaCost > mana:
-		return
-	if not ((getEquippedWeapon().canTargetFriendly and targetUnit.faction == faction)
-			or (getEquippedWeapon().canTargetEnemy and targetUnit.faction != faction)
-		):
-		return
-	state = states.ATTACKING
-	spendMana(getEquippedWeapon().manaCost)
-	attackTimer.start()
-	#var newProjectile := PROJECTILE.instantiate() as Bullet
-	var newProjectile := PROJECTILE.instantiate() as Bullet
-	newProjectile.position = position
-	newProjectile.attackingUnit = self
-	newProjectile.target = targetUnit
-	newProjectile.damage = getEquippedWeapon().damage
-	newProjectile.isHealing = getEquippedWeapon().isHealing
-	newProjectile.speed = getEquippedWeapon().bulletSpeed
-	get_parent().get_parent().add_child(newProjectile, true)
-	newProjectile.sprite.set_texture(getEquippedWeapon().bulletTexture)
-
 func spendMana(amount: int) -> void:
 	mana -= amount
-
-func _on_attack_timer_timeout() -> void:
-	state = states.IDLE
 
 @rpc("call_remote")
 func giveItem(itemType: Global.Items) -> bool:

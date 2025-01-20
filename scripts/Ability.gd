@@ -12,6 +12,9 @@ class_name Ability
 
 @export var recoveryTime: float = 1
 
+@export var projectileSpeed: float = 500
+@export var projectileTexture: Texture
+
 @export var canTargetSelf: bool = false
 @export var canTargetFriend: bool = false
 @export var canTargetEnemy: bool = false
@@ -37,6 +40,7 @@ func use(user: Unit, target: Unit) -> bool:
 	attack.damage = damage
 	attack.isHealing = isHealing
 
-	target.damage(attack)
+	var newProjectile := Projectile.init(attack, target, projectileTexture, projectileSpeed)
+	user.add_sibling(newProjectile, true)
 
 	return true

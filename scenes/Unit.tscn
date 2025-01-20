@@ -791,10 +791,6 @@ replication_config = SubResource("SceneReplicationConfig_bwudf")
 [node name="RecoveryTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.6
-one_shot = true
-
 [node name="RegenTimer" type="Timer" parent="."]
 
 [node name="Label" type="Label" parent="."]
@@ -1057,7 +1053,6 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
 [connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]
-[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
 [connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
 [connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
