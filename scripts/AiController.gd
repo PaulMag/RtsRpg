@@ -3,23 +3,25 @@ extends Node
 class_name AiController
 
 
-@onready var unit: Unit = $".."
+@export var unit: Unit
 
-var flag := false
+# Which abilities the AI will use, in prioritized order.
+var abilityIdsPrioritized: Array[Global.AbilityIds] = [Global.AbilityIds.MeleeAttack, Global.AbilityIds.Fireball]
 
 
 func _process(_delta: float) -> void:
-	if not unit.targetUnit:
+	if not multiplayer.is_server():
 		return
-	if not unit.getEquippedWeapon():
-		unit.orderMove(unit.targetUnit.position)
-	elif unit.position.distance_to(unit.targetUnit.position) < unit.getEquippedWeapon().attackRange:
-		unit.orderMove(unit.position)  # Stop moving
-	elif unit.position.distance_to(unit.targetUnit.position) > unit.getEquippedWeapon().attackRange:
-		unit.orderMove(unit.targetUnit.position)
+
+	# Use the first viable ability
+	if unit.targetUnit and not unit.isRecovering:
+		for abilityId in abilityIdsPrioritized:
+			if unit.canUseAbility(abilityId):
+				unit.useAbilityOnClients(abilityId)
+				return
 
 func recalculateTarget() -> void:
-	unit.targetUnit = getMostThreateningUnit()
+	unit.orderFollowUnit(getMostThreateningUnit())
 
 func getMostThreateningUnit() -> Unit:
 	var mostThreateningUnit: Unit = null
@@ -32,24 +34,6 @@ func getMostThreateningUnit() -> Unit:
 			mostThreateningUnit = u
 			highestThreat = unit.threatTable[u]
 	return mostThreateningUnit
-
-func getClosestUnit() -> Unit:
-	var units := getAllEnemyUnits()
-	var minDistance := 1e9
-	var closestUnit: Unit
-	for u in units:
-		var distance := u.position.distance_to(unit.position)
-		if distance < minDistance:
-			minDistance = distance
-			closestUnit = u
-	return closestUnit
-
-func getAllEnemyUnits() -> Array[Unit]:
-	var units: Array[Unit] = []
-	for u in Global.getAllUnits():
-		if u.faction != unit.faction:
-			units.append(u)
-	return units
 
 func _on_range_field_body_entered(body: Object) -> void:
 	if body is Unit:
