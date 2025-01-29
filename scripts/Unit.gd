@@ -148,20 +148,25 @@ func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
 			return abilityButton
 	return null
 
-func useAbilityOnClients(abilityId: Global.AbilityIds) -> void:
-	useAbility.rpc(abilityId)
+func useAbilityOnClients(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
+	if _targetUnit == null:
+		_targetUnit = targetUnit
+	useAbility.rpc(abilityId, _targetUnit.unitId)
 
 @rpc("any_peer", "call_local")
-func useAbility(abilityId: Global.AbilityIds) -> void:
+func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	if isRecovering:
 		print("Unit %s is recovering" % [unitName])
 		return
 
+	var _targetUnit := Global.getUnitFromUnitId(targetUnitId)
+
 	var ability := Global.getAbility[abilityId]
 
-	var success := ability.use(self, targetUnit)
-	print("Unit %s %s ability %s on unit %s"
-		% [unitName, "used" if success else "failed to use", ability.name, targetUnit.unitName if targetUnit else "NULL"])
+	var success := ability.use(self, _targetUnit)
+	if faction == Global.Faction.ENEMIES:
+		print("Unit %s %s ability %s on unit %s"
+			% [unitName, "used" if success else "failed to use", ability.name, _targetUnit.unitName if _targetUnit else "NULL"])
 
 	if success:
 		isRecovering = true
@@ -169,6 +174,10 @@ func useAbility(abilityId: Global.AbilityIds) -> void:
 			abilityButton.cooldownProgressBar.max_value = ability.recoveryTime
 			abilityButton.cooldownProgressBar.value = ability.recoveryTime
 		recoveryTimer.start(ability.recoveryTime)
+
+func canUseAbility(abilityId: Global.AbilityIds) -> bool:
+	var ability := Global.getAbility[abilityId]
+	return ability.canUse(self, targetUnit)
 
 func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
 	toggleAutocast.rpc(abilityId)
@@ -291,17 +300,13 @@ func orderMove(_destination: Vector2) -> void:
 	followTarget = false
 	followCursor = true
 
-func orderAttack(unit: Unit) -> void:
+func orderFollowUnit(unit: Unit) -> void:
 	targetUnit = unit
 	followCursor = false
 	followTarget = true
 
-	destination = targetUnit.position
-
 func _physics_process(_delta: float) -> void:
-
 	if multiplayer.is_server():
-
 		if followCursor:
 			navigationAgent.target_position = destination
 		elif followTarget:
@@ -316,16 +321,15 @@ func _physics_process(_delta: float) -> void:
 			velocity = position.direction_to(destinationNext).normalized() * attributes.speed
 			navigationAgent.set_velocity(velocity)
 
-			var followRange := getEquippedWeapon().attackRange if getEquippedWeapon() else 50
+			var followRange := 50
 
 			if followCursor and position.distance_to(destination) < 15:
 				velocity = Vector2.ZERO
 				followCursor = false
 			elif followTarget and position.distance_to(targetUnit.position) < followRange:
 				velocity = Vector2.ZERO
-				followTarget = false
 		else:
-			pass
+			velocity = Vector2.ZERO
 
 		move_and_slide()
 

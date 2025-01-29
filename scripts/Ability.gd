@@ -19,7 +19,8 @@ class_name Ability
 @export var canTargetFriend: bool = false
 @export var canTargetEnemy: bool = false
 
-func use(user: Unit, target: Unit) -> bool:
+
+func canUse(user: Unit, target: Unit) -> bool:
 	if target == null:
 		return false
 	if user == target and !canTargetSelf:
@@ -31,6 +32,11 @@ func use(user: Unit, target: Unit) -> bool:
 	if user != target and user.position.distance_to(target.position) > targetRange:
 		return false
 	if user.mana < manaCost:
+		return false
+	return true
+
+func use(user: Unit, target: Unit) -> bool:
+	if !canUse(user, target):
 		return false
 
 	user.mana -= manaCost

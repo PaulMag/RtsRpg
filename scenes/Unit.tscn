@@ -829,7 +829,8 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_rybnc")
 
-[node name="AiController" parent="." instance=ExtResource("7_jkhdm")]
+[node name="AiController" parent="." node_paths=PackedStringArray("unit") instance=ExtResource("7_jkhdm")]
+unit = NodePath("..")
 
 [node name="UnitHud" type="CanvasLayer" parent="."]
 visible = false

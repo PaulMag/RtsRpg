@@ -68,10 +68,12 @@ func deleteUnit(unit: Unit) -> void:
 	if unit == getPlayerCurrent().getSelectedUnit():
 		getPlayerCurrent().selectUnit(null)
 	for u in getAllUnits():
-		if u.targetUnit == unit:
-			u.targetUnit = null
 		if unit in u.threatTable:
 			u.threatTable.erase(unit)
+		if u.targetUnit == unit:
+			u.targetUnit = null
+			if u.isAi:
+				u.aiController.recalculateTarget()
 	unit.queue_free()
 
 	var timer := get_tree().create_timer(0.2)
