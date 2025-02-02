@@ -151,6 +151,8 @@ func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
 func useAbilityOnClients(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
 	if _targetUnit == null:
 		_targetUnit = targetUnit
+	if _targetUnit == null:
+		return
 	useAbility.rpc(abilityId, _targetUnit.unitId)
 
 @rpc("any_peer", "call_local")
