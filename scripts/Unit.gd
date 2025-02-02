@@ -56,6 +56,7 @@ enum states {
 @onready var abilityButtonsContainer: HBoxContainer = $UnitHud/AbilityButtonsContainer
 
 @onready var destination : Vector2 = position
+var moveDirection := Vector2.ZERO
 
 @export var targetUnit: Unit = null
 
@@ -309,6 +310,13 @@ func orderFollowUnit(unit: Unit) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server():
+		if moveDirection != Vector2.ZERO:
+			velocity = moveDirection.normalized() * attributes.speed
+			navigationAgent.set_velocity(velocity)
+			followCursor = false
+			followTarget = false
+			print(velocity)
+
 		if followCursor:
 			navigationAgent.target_position = destination
 		elif followTarget:
@@ -330,7 +338,7 @@ func _physics_process(_delta: float) -> void:
 				followCursor = false
 			elif followTarget and position.distance_to(targetUnit.position) < followRange:
 				velocity = Vector2.ZERO
-		else:
+		elif moveDirection == Vector2.ZERO:
 			velocity = Vector2.ZERO
 
 		move_and_slide()

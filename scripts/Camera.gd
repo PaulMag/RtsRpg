@@ -1,8 +1,7 @@
 extends Camera2D
 
-const SPEED := 200
 
-func _process(delta: float) -> void:
-
-	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	position += direction * delta * SPEED
+func _process(_delta: float) -> void:
+	var selectedUnit := Global.getUnitFromUnitId(Global.getPlayerCurrent().selectedUnitId)
+	if selectedUnit:
+		position = selectedUnit.position

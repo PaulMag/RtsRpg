@@ -19,6 +19,7 @@ var selectedUnitId: int
 
 var isIssuingMoveOrder := Vector2.INF  # INF represents no value
 var isIssuingEquipOrder := 0
+@export var moveDirection := Vector2.ZERO
 
 #var hud: Hud
 @onready var inventoryHud: VBoxContainer = $CanvasLayer/Inventories
@@ -72,6 +73,11 @@ func setSelectedUnitId(unitId: int) -> void:
 	selectedUnitId = unitId
 
 var unitUpdateCountdown := 0  # Necessary because there is some delay in the syncing. (TODO)
+
+func _physics_process(_delta: float) -> void:
+	moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if multiplayer.is_server() and getSelectedUnit():
+		getSelectedUnit().moveDirection = moveDirection
 
 func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
