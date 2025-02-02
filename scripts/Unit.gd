@@ -339,9 +339,9 @@ func damage(_attack: Attack) -> void:
 	if not multiplayer.is_server():
 		return
 
-	if _attack.isHealing:
+	if _attack.isHealing:  #TODO: With healing and damage separated, this should be reworked.
 		var healthBefore := health
-		health += _attack.damage
+		health += _attack.healingAmount
 		health = clampf(health, 0, attributes.maxHealth)
 		if is_instance_valid(_attack.attackingUnit):
 			var healingReceived := health - healthBefore
@@ -349,8 +349,9 @@ func damage(_attack: Attack) -> void:
 			for enemyUnit in awareEnemyUnits:
 				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
 	else:
-		health -= _attack.damage * damageReduction  # addThreat uses raw damage before damageReduction.
-		addThreat(_attack.attackingUnit, _attack.damage)
+		health -= _attack.damagePhysical * damageReduction
+		health -= _attack.damageMagical * damageReduction
+		addThreat(_attack.attackingUnit, _attack.threat)
 		damageSound.play()
 
 	if health <= 0:
