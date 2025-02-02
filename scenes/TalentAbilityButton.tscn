@@ -8,8 +8,5 @@ script = ExtResource("2_4oaad")
 ability = null
 talentName = "Ability Name"
 
-[node name="RankLabel" parent="MarginContainer" index="0"]
-text = "0/1"
-
 [node name="NameLabel" parent="." index="1"]
 text = "Ability Name"
