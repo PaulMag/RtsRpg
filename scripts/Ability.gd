@@ -5,7 +5,10 @@ class_name Ability
 @export var texture: Texture
 @export var abilityId: Global.AbilityIds
 
-@export var damage: int
+@export var damagePhysical: int
+@export var damageMagical: int
+@export var healingAmount: int
+@export var threatAmount: int
 @export var targetRange: int
 @export var manaCost: int
 @export var isHealing: bool = false
@@ -43,7 +46,10 @@ func use(user: Unit, target: Unit) -> bool:
 
 	var attack := Attack.new()
 	attack.attackingUnit = user
-	attack.damage = damage
+	attack.damagePhysical = damagePhysical * (1 + user.attributes.attackSkill * 0.01)
+	attack.damageMagical = damageMagical * (1 + user.attributes.magicSkill * 0.01)
+	attack.healingAmount = healingAmount * (1 + user.attributes.healSkill * 0.01)
+	attack.threat = (attack.damagePhysical + attack.damageMagical + threatAmount) * (1 + user.attributes.threatSkill * 0.01)
 	attack.isHealing = isHealing
 
 	var newProjectile := Projectile.init(attack, target, projectileTexture, projectileSpeed)

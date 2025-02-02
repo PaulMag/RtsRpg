@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://vfj7qpv0rm26"]
+
+[ext_resource type="Texture2D" uid="uid://co6qt4ld0e4gp" path="res://sprites/projectiles/taunt_projectile.png" id="1_7ygt1"]
+[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_jkwt6"]
+[ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="1_pyvia"]
+
+[resource]
+script = ExtResource("1_jkwt6")
+name = "Taunt"
+texture = ExtResource("1_pyvia")
+abilityId = 3
+damagePhysical = 0
+damageMagical = 0
+healingAmount = 0
+threatAmount = 30
+targetRange = 200
+manaCost = 0
+isHealing = false
+recoveryTime = 1.0
+projectileSpeed = 500.0
+projectileTexture = ExtResource("1_7ygt1")
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true
