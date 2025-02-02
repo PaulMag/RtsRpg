@@ -604,7 +604,7 @@ properties/6/spawn = true
 properties/6/replication_mode = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
-radius = 320.0
+radius = 550.0
 
 [sub_resource type="InputEventAction" id="InputEventAction_kkuhh"]
 action = &"talent_tree"
@@ -869,10 +869,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -320.0
-offset_right = 320.0
-offset_bottom = 320.0
+offset_left = -550.0
+offset_top = -550.0
+offset_right = 550.0
+offset_bottom = 550.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_rybnc")

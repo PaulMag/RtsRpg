@@ -11,6 +11,7 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
 @export var loot := Global.Items.Bow
+@export var playerColor := Color.WHITE
 
 # Attributes
 var damageReduction: float = 0
@@ -70,6 +71,7 @@ var threatTable: Dictionary = {}
 
 
 func _ready() -> void:
+	sprite.self_modulate = playerColor
 	if multiplayer.is_server():
 		unitId = randi()
 		regenTimer.start()
@@ -79,17 +81,22 @@ func _ready() -> void:
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
 
-	attributesList = []
-	var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
-	a.maxHealth = 100
-	a.maxMana = 100
-	a.armorSkill = 100
-	a.speed = 150
-	addAttributes(a)
+	if isAi:
+		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
+		a.speed = 150
+		addAttributes(a)
+	else:
+		attributesList = []
+		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
+		a.maxHealth = 10
+		# a.maxMana = 100
+		a.armorSkill = 100
+		a.speed = 150
+		addAttributes(a)
 	updateAttributes()
 
-	health = attributes.maxHealth / 2.  #TODO: A temp solution to test healing etc.
-	mana = attributes.maxMana / 2.
+	health = attributes.maxHealth
+	mana = attributes.maxMana
 
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
