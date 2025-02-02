@@ -75,7 +75,8 @@ func setSelectedUnitId(unitId: int) -> void:
 var unitUpdateCountdown := 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _physics_process(_delta: float) -> void:
-	moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if playerId == multiplayer.get_unique_id():
+		moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if multiplayer.is_server() and getSelectedUnit():
 		getSelectedUnit().moveDirection = moveDirection
 
@@ -92,15 +93,19 @@ func _process(_delta: float) -> void:
 		updatePlayerStats()  #TODO: Should not happen every frame.
 
 	if multiplayer.is_server():
+		var unit := getSelectedUnit()
+		if unit == null:
+			return
+
 		if isIssuingMoveOrder != Vector2.INF:  # INF represents no value
-			var unit := getSelectedUnit()
+			unit = getSelectedUnit()
 			print("isIssuingMoveOrder  player %s  unit %s  unitId %s" % [playerId, unit, unit.unitId])
 			if unit and (unit.faction == Global.Faction.PLAYERS):
 				unit.orderMove(isIssuingMoveOrder)
 			isIssuingMoveOrder = Vector2.INF
 
 		if isIssuingEquipOrder != 0:
-			var unit: Unit = getSelectedUnit()
+			unit = getSelectedUnit()
 			if unit and (unit.faction == Global.Faction.PLAYERS):
 				unit.equip(isIssuingEquipOrder)
 				isIssuingEquipOrder = 0
