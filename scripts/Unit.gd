@@ -354,6 +354,8 @@ func damage(_attack: Attack) -> void:
 	if not multiplayer.is_server():
 		return
 
+	var HEALING_THREAT_FACTOR := 0.25
+
 	if _attack.isHealing:  #TODO: With healing and damage separated, this should be reworked.
 		var healthBefore := health
 		health += _attack.healingAmount
@@ -362,7 +364,7 @@ func damage(_attack: Attack) -> void:
 			var healingReceived := health - healthBefore
 			var awareEnemyUnits: Array[Unit] = _attack.attackingUnit.getAllAwareEnemyUnits()
 			for enemyUnit in awareEnemyUnits:
-				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived) / awareEnemyUnits.size())
+				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived * HEALING_THREAT_FACTOR) / awareEnemyUnits.size())
 	else:
 		health -= _attack.damagePhysical * damageReduction
 		health -= _attack.damageMagical * damageReduction
