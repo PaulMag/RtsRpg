@@ -446,7 +446,8 @@ func damage(_attack: Attack) -> void:
 	else:
 		health -= _attack.damagePhysical * damageReduction
 		health -= _attack.damageMagical * damageReduction
-		addThreat(_attack.attackingUnit, _attack.threat)
+		if is_instance_valid(_attack.attackingUnit):
+			addThreat(_attack.attackingUnit, _attack.threat)
 		damageSound.play()
 
 	if health <= 0:
