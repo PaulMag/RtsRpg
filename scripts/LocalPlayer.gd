@@ -143,7 +143,7 @@ func setTargetUnit(unit: Unit, follow: bool) -> void:
 	var selectedUnit := getSelectedUnit()
 	if unit == null or selectedUnit == null:
 		return
-	selectedUnit.setTargetUnit.rpc(unit.unitId, follow)
+	selectedUnit.setTargetUnitOnClients.rpc(unit.unitId, follow)
 
 func resetUnitInventories() -> void:
 	for unit: Unit in unitInventories:

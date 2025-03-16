@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 	if unit.targetUnit and not unit.isRecovering:
 		for abilityId in abilityIdsPrioritized:
 			if unit.canUseAbility(abilityId):
-				unit.useAbilityOnClients(abilityId)
+				unit.useAbilityOnServer(abilityId)
 				return
 
 func recalculateTarget() -> void:

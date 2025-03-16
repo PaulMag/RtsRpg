@@ -108,36 +108,46 @@ func _ready() -> void:
 	for node in talentTreeAttributeButtons.get_children():
 		if node is TalentAttributeButton:
 			var talentAttributeButton := node as TalentAttributeButton
-			talentAttributeButton.pressed.connect(learnTalentAttributeOnClients.bind(nodeIndex))
+			talentAttributeButton.pressed.connect(learnTalentAttributeOnServer.bind(nodeIndex))
 		nodeIndex += 1
 
 	nodeIndex = 0
 	for node in talentTreeAbilityButtons.get_children():
 		if node is TalentAbilityButton:
 			var talentAbilityButton := node as TalentAbilityButton
-			talentAbilityButton.pressed.connect(learnTalentAbilityOnClients.bind(nodeIndex))
+			talentAbilityButton.pressed.connect(learnTalentAbilityOnServer.bind(nodeIndex))
 		nodeIndex += 1
 
-func learnTalentAttributeOnClients(nodeIndex: int) -> void:
-	learnTalentAttribute.rpc(nodeIndex)
+func learnTalentAttributeOnServer(nodeIndex: int) -> void:
+	learnTalentAttributeOnClients.rpc(nodeIndex)
 
-func learnTalentAbilityOnClients(nodeIndex: int) -> void:
-	learnTalentAbility.rpc(nodeIndex)
+func learnTalentAbilityOnServer(nodeIndex: int) -> void:
+	learnTalentAbilityOnClients.rpc(nodeIndex)
 
 @rpc("any_peer", "call_local")
+func learnTalentAttributeOnClients(nodeIndex: int) -> void:
+	if multiplayer.is_server():
+		learnTalentAttribute.rpc(nodeIndex)
+
+@rpc("any_peer", "call_local")
+func learnTalentAbilityOnClients(nodeIndex: int) -> void:
+	if multiplayer.is_server():
+		learnTalentAbility.rpc(nodeIndex)
+
+@rpc("authority", "call_local")
 func learnTalentAttribute(nodeIndex: int) -> void:
 	var talentAttributeButton := talentTreeAttributeButtons.get_children()[nodeIndex] as TalentAttributeButton
 	addAttributes(talentAttributeButton.attributes)
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func learnTalentAbility(nodeIndex: int) -> void:
 	var talentAbilityButton := talentTreeAbilityButtons.get_children()[nodeIndex] as TalentAbilityButton
 
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
-	newAbilityButton.pressed.connect(useAbilityOnClients.bind(newAbilityButton.ability.abilityId))
-	newAbilityButton.toggle_autocast.connect(toggleAutocastOnClients.bind(newAbilityButton.ability.abilityId))
+	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
+	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -156,14 +166,19 @@ func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
 			return abilityButton
 	return null
 
-func useAbilityOnClients(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
+func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
 	if _targetUnit == null:
 		_targetUnit = targetUnit
 	if _targetUnit == null:
 		return
-	useAbility.rpc(abilityId, _targetUnit.unitId)
+	useAbilityOnClients.rpc(abilityId, _targetUnit.unitId)
 
 @rpc("any_peer", "call_local")
+func useAbilityOnClients(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
+	if multiplayer.is_server():
+		useAbility.rpc(abilityId, targetUnitId)
+
+@rpc("authority", "call_local")
 func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	if isRecovering:
 		print("Unit %s is recovering" % [unitName])
@@ -189,10 +204,15 @@ func canUseAbility(abilityId: Global.AbilityIds) -> bool:
 	var ability := Global.getAbility[abilityId]
 	return ability.canUse(self, targetUnit)
 
-func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
-	toggleAutocast.rpc(abilityId)
+func toggleAutocastOnServer(abilityId: Global.AbilityIds) -> void:
+	toggleAutocastOnClients.rpc(abilityId)
 
 @rpc("any_peer", "call_local")
+func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
+	if multiplayer.is_server():
+		toggleAutocast.rpc(abilityId)
+
+@rpc("authority", "call_local")
 func toggleAutocast(abilityId: Global.AbilityIds) -> void:
 	if not isAutocasting:
 		getAbilityButton(abilityId).setAutocast(true)
@@ -233,6 +253,11 @@ func setSelected(toggleOn: bool) -> void:
 		targetUnit.setTargeted(toggleOn)
 
 @rpc("any_peer", "call_local")
+func setTargetUnitOnClients(targetUnitId: int, follow: bool = false) -> void:
+	if multiplayer.is_server():
+		setTargetUnit.rpc(targetUnitId, follow)
+
+@rpc("authority", "call_local")
 func setTargetUnit(targetUnitId: int, follow: bool = false) -> void:
 	if selectedCircle.visible and targetUnit:  # If is selected and has previous target
 		targetUnit.setTargeted(false)  # Remove targetCircle from previous target
@@ -261,7 +286,7 @@ func _process(_delta: float) -> void:
 		if recoveryTimer.is_stopped():
 			isRecovering = false
 	elif multiplayer.is_server() and isAutocasting:
-		useAbilityOnClients(autocastAbilityId)
+		useAbilityOnServer(autocastAbilityId)
 
 	if multiplayer.is_server():
 		if state == states.ATTACKING:
