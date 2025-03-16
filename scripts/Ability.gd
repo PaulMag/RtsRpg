@@ -13,7 +13,7 @@ class_name Ability
 @export var manaCost: int
 @export var isHealing: bool = false
 
-@export var recoveryTime: float = 1
+@export var recoveryTime: float = 2  # Time in seconds before Unit can use an ability again.
 
 @export var projectileSpeed: float = 500
 @export var projectileTexture: Texture
