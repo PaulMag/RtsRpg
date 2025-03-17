@@ -8,6 +8,9 @@ const PORT = 4433
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
+@onready var restartGameButton: Button = $UI/RestartGameButton
+
+var dungeon: Node2D
 
 
 func _ready() -> void:
@@ -63,7 +66,7 @@ func start_game() -> void:
 			add_player(1)
 			print("Not dedicated server. Added player 1.")
 
-		var dungeon := DUNGEON.instantiate()
+		dungeon = DUNGEON.instantiate()
 		add_sibling(dungeon, true)
 
 	for player in Global.getPlayers():
@@ -71,6 +74,9 @@ func start_game() -> void:
 
 	Global.getPlayerCurrent().updateUnitList()
 	Global.getPlayerCurrent().canvasLayer.visible = true
+
+	if multiplayer.is_server():
+		restartGameButton.show()
 
 func _on_start_game_pressed() -> void:
 	start_game()
@@ -80,3 +86,9 @@ func add_player(id: int) -> void:
 	localPLayer.playerId = id  #TODO: Why does this not work???
 	localPLayer.name = str(id)
 	players.add_child(localPLayer, true)
+
+
+func _on_restart_game_button_pressed() -> void:
+	dungeon.queue_free()
+	dungeon = DUNGEON.instantiate()
+	add_sibling(dungeon, true)
