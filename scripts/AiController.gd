@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 		return
 
 	# Use the first viable ability
-	if unit.targetUnit and not unit.isRecovering:
+	if unit.targetUnit and not unit.isCasting and not unit.isRecovering:
 		for abilityId in abilityIdsPrioritized:
 			if unit.canUseAbility(abilityId):
 				unit.useAbilityOnServer(abilityId)

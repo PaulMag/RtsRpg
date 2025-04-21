@@ -13,7 +13,9 @@ class_name Ability
 @export var manaCost: int
 @export var isHealing: bool = false
 
+@export var castTime: float = 2  # Time in seconds to cast the ability.
 @export var recoveryTime: float = 2  # Time in seconds before Unit can use an ability again.
+@export var speedFactorWhileCasting: float = 0.5
 
 @export var projectileSpeed: float = 500
 @export var projectileTexture: Texture
@@ -38,11 +40,16 @@ func canUse(user: Unit, target: Unit) -> bool:
 		return false
 	return true
 
+func payCost(user: Unit) -> void:
+	user.mana -= manaCost
+
+func refundCost(user: Unit) -> void:
+	user.mana += manaCost
+	user.mana = clampf(user.mana, 0, user.attributes.maxMana)
+
 func use(user: Unit, target: Unit) -> bool:
 	if !canUse(user, target):
 		return false
-
-	user.mana -= manaCost
 
 	var attack := Attack.new()
 	attack.attackingUnit = user

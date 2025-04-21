@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=108 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d0fw4g13ycw6o" path="res://sprites/units/skeleton/skeleton_walk.png" id="4_myvs8"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
+[ext_resource type="PackedScene" uid="uid://dhj6n5k8ewb2v" path="res://scenes/CastBar.tscn" id="7_me7gl"]
 [ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
 [ext_resource type="PackedScene" uid="uid://d2sb2u58buhx4" path="res://scenes/TalentAbilityButton.tscn" id="9_rio8d"]
@@ -820,6 +821,13 @@ tint_progress = Color(1, 0, 0, 1)
 layout_mode = 2
 tint_progress = Color(0, 0, 1, 1)
 
+[node name="CastBar" parent="." instance=ExtResource("7_me7gl")]
+visible = false
+offset_left = -64.0
+offset_top = 18.0
+offset_right = 64.0
+offset_bottom = 34.0
+
 [node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_i8enp")
 volume_db = -35.0
@@ -837,6 +845,9 @@ shape = SubResource("CapsuleShape2D_hlkcu")
 replication_config = SubResource("SceneReplicationConfig_bwudf")
 
 [node name="RecoveryTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CastTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="RegenTimer" type="Timer" parent="."]
@@ -1143,6 +1154,7 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
 [connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]
+[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
 [connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
 [connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]

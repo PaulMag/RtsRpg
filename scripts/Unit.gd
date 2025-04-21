@@ -42,11 +42,13 @@ enum states {
 @onready var targetCircle: Sprite2D = $TargetCircle
 @onready var healthBar: EnergyBar  = $ProgressBars/HealthBar
 @onready var manaBar: EnergyBar  = $ProgressBars/ManaBar
+@onready var castBar: CastBar  = $CastBar
 @onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
 @onready var aiController: AiController = $AiController
 @onready var rangeField: Area2D = $RangeField
 @onready var label: Label = $Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
+@onready var castTimer: Timer = $CastTimer
 @onready var recoveryTimer: Timer = $RecoveryTimer
 @onready var regenTimer: Timer = $RegenTimer
 @onready var unitHud: CanvasLayer = $UnitHud
@@ -63,6 +65,8 @@ var moveDirection := Vector2.ZERO
 
 var followCursor := false
 var followTarget := false
+var isCasting := false
+var castingAbilityId: Global.AbilityIds
 var isRecovering := false
 var isAutocasting := false
 var autocastAbilityId: Global.AbilityIds
@@ -180,6 +184,9 @@ func useAbilityOnClients(abilityId: Global.AbilityIds, targetUnitId: int) -> voi
 
 @rpc("authority", "call_local")
 func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
+	if isCasting:
+		print("Unit %s is already casting" % [unitName])
+		return
 	if isRecovering:
 		print("Unit %s is recovering" % [unitName])
 		return
@@ -188,10 +195,25 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 
 	var ability := Global.getAbility[abilityId]
 
-	var success := ability.use(self, _targetUnit)
-	if faction == Global.Faction.ENEMIES:
-		print("Unit %s %s ability %s on unit %s"
-			% [unitName, "used" if success else "failed to use", ability.name, _targetUnit.unitName if _targetUnit else "NULL"])
+	if not ability.canUse(self, _targetUnit):
+		print("Unit %s cannot use ability %s on unit %s" % [unitName, ability.name, _targetUnit.unitName if _targetUnit else "NULL"])
+		return
+
+	ability.payCost(self)
+
+	isCasting = true
+	castingAbilityId = abilityId
+	castBar.max_value = ability.castTime
+	castBar.label.text = ability.name
+	castTimer.start(ability.castTime)
+	castBar.visible = true
+
+func _on_cast_timer_timeout() -> void:
+	castBar.visible = false
+	isCasting = false
+
+	var ability := Global.getAbility[castingAbilityId]
+	var success := ability.use(self, targetUnit)
 
 	if success:
 		isRecovering = true
@@ -199,6 +221,10 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 			abilityButton.cooldownProgressBar.max_value = ability.recoveryTime
 			abilityButton.cooldownProgressBar.value = ability.recoveryTime
 		recoveryTimer.start(ability.recoveryTime)
+		print("Unit %s ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
+	else:
+		ability.refundCost(self)
+		print("Unit %s failed to use ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
 
 func canUseAbility(abilityId: Global.AbilityIds) -> bool:
 	var ability := Global.getAbility[abilityId]
@@ -280,7 +306,9 @@ func _process(_delta: float) -> void:
 	healthBar.setValue(health)
 	manaBar.setValue(mana)
 
-	if isRecovering:
+	if isCasting:
+		castBar.value = castTimer.wait_time - castTimer.time_left
+	elif isRecovering:
 		for abilityButton in getAbilityButtons():
 			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
 		if recoveryTimer.is_stopped():
@@ -372,6 +400,9 @@ func _physics_process(_delta: float) -> void:
 				velocity = Vector2.ZERO
 		elif moveDirection == Vector2.ZERO:
 			velocity = Vector2.ZERO
+
+		if isCasting:
+			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
 
 		move_and_slide()
 
