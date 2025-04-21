@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=111 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d2sb2u58buhx4" path="res://scenes/TalentAbilityButton.tscn" id="9_rio8d"]
 [ext_resource type="PackedScene" uid="uid://p2g5dfrrbk41" path="res://scenes/TalentAttributeButton.tscn" id="9_srmse"]
 [ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="10_1ssdg"]
+[ext_resource type="Texture2D" uid="uid://bokvb7vxeo53t" path="res://sprites/abilities/cancel.png" id="10_lf2p5"]
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="10_ovit6"]
 [ext_resource type="Resource" uid="uid://daqg1br2ouhnm" path="res://resources/abilities/MeleeAttack.tres" id="10_telu4"]
 [ext_resource type="Resource" uid="uid://dvixwcti6forv" path="res://resources/abilities/HealingWord.tres" id="12_5usyn"]
@@ -607,6 +608,12 @@ properties/6/replication_mode = 2
 [sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
 radius = 550.0
 
+[sub_resource type="InputEventAction" id="InputEventAction_me7gl"]
+action = &"cancel_cast"
+
+[sub_resource type="Shortcut" id="Shortcut_lf2p5"]
+events = [SubResource("InputEventAction_me7gl")]
+
 [sub_resource type="InputEventAction" id="InputEventAction_kkuhh"]
 action = &"talent_tree"
 
@@ -894,13 +901,29 @@ unit = NodePath("..")
 [node name="UnitHud" type="CanvasLayer" parent="."]
 visible = false
 
-[node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitHud"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -50.0
-offset_right = 160.0
+offset_top = -104.0
+offset_right = 50.0
 grow_vertical = 0
+alignment = 2
+
+[node name="CancelCastButton" type="TextureButton" parent="UnitHud/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Cancel casting ability"
+shortcut = SubResource("Shortcut_lf2p5")
+texture_normal = ExtResource("10_lf2p5")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="TalentTreeButton" type="Button" parent="UnitHud"]
@@ -1157,6 +1180,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
 [connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
+[connection signal="pressed" from="UnitHud/VBoxContainer/CancelCastButton" to="." method="_on_cancel_cast_button_pressed"]
 [connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/Threat" to="UnitHud/TalentTree/TalentAttributeButtons/Threat" method="_on_pressed"]

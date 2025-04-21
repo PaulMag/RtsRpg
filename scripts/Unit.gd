@@ -56,7 +56,8 @@ enum states {
 @onready var talentTreeButton: Button = $UnitHud/TalentTreeButton
 @onready var talentTreeAttributeButtons: Control = $UnitHud/TalentTree/TalentAttributeButtons
 @onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
-@onready var abilityButtonsContainer: HBoxContainer = $UnitHud/AbilityButtonsContainer
+@onready var cancelCastButton: TextureButton = %CancelCastButton
+@onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
 
 @onready var destination : Vector2 = position
 var moveDirection := Vector2.ZERO
@@ -152,6 +153,7 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
 	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
 	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
+	newAbilityButton.tooltip_text = "Cast %s" % newAbilityButton.ability.name
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -202,6 +204,7 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	ability.payCost(self)
 
 	isCasting = true
+	cancelCastButton.visible = true
 	castingAbilityId = abilityId
 	castBar.max_value = ability.castTime
 	castBar.label.text = ability.name
@@ -211,6 +214,7 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 func _on_cast_timer_timeout() -> void:
 	castBar.visible = false
 	isCasting = false
+	cancelCastButton.visible = false
 
 	var ability := Global.getAbility[castingAbilityId]
 	var success := ability.use(self, targetUnit)
@@ -375,7 +379,6 @@ func _physics_process(_delta: float) -> void:
 			navigationAgent.set_velocity(velocity)
 			followCursor = false
 			followTarget = false
-			print(velocity)
 
 		if followCursor:
 			navigationAgent.target_position = destination
@@ -521,3 +524,12 @@ func _on_regen_timer_timeout() -> void:
 	health = clampf(health, 0, attributes.maxHealth)
 	mana += attributes.manaRegen * regenTimer.wait_time
 	mana = clampf(mana, 0, attributes.maxMana)
+
+func _on_cancel_cast_button_pressed() -> void:
+	print("Cancel cast")
+	if isCasting:
+		castTimer.stop()
+		castBar.visible = false
+		isCasting = false
+		cancelCastButton.visible = false
+		Global.getAbility[castingAbilityId].refundCost(self)

@@ -53,6 +53,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	# elif event.is_action_pressed("select_slot_4"):
 	# 	issueEquipOrder.rpc_id(1, 4)
 
+	if getSelectedUnit():
+		for abilityButtonIndex in range(0, 4):
+			if event.is_action_pressed("cast_%s" % (abilityButtonIndex + 1)):
+				if getSelectedUnit().getAbilityButtons().size() < abilityButtonIndex + 1:
+					print("No ability assigned to button %s." % (abilityButtonIndex + 1))
+					return
+				var ability := getSelectedUnit().getAbilityButtons()[abilityButtonIndex].ability
+				getSelectedUnit().useAbilityOnServer(ability.abilityId)
+				return
+
 	for unitIndex in range(0, 6):
 		if event.is_action_pressed("select_unit_%s" % (unitIndex + 1)):
 			var playerUnits := Global.getAllUnitsInFaction(Global.Faction.PLAYERS)
