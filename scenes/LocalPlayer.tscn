@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bi4frn2cgm5la"]
 
-[ext_resource type="Script" path="res://scripts/LocalPlayer.gd" id="1_3qyin"]
-[ext_resource type="Script" path="res://scripts/MouseDetector.gd" id="2_0fwk0"]
-[ext_resource type="Script" path="res://scripts/DestinationMarker.gd" id="3_a7lnd"]
+[ext_resource type="Script" uid="uid://cxwm82wh0rmt6" path="res://scripts/LocalPlayer.gd" id="1_3qyin"]
+[ext_resource type="Script" uid="uid://chdmvdux87eko" path="res://scripts/MouseDetector.gd" id="2_0fwk0"]
+[ext_resource type="Script" uid="uid://dybeie7mrnd8w" path="res://scripts/DestinationMarker.gd" id="3_a7lnd"]
 [ext_resource type="Texture2D" uid="uid://dojwaff2ox3jq" path="res://sprites/units/target_marker.png" id="4_src20"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x4fsh"]

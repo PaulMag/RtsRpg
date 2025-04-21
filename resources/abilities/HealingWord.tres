@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://dvixwcti6forv"]
 
 [ext_resource type="Texture2D" uid="uid://b4rassm0bdg8r" path="res://sprites/projectiles/healing_bullet.png" id="1_5qc0g"]
-[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_hclkh"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_hclkh"]
 [ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="2_0sria"]
 
 [resource]

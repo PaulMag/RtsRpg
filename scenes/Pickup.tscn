@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbln30dr8vpci"]
 
-[ext_resource type="Script" path="res://scripts/Pickup.gd" id="1_08on1"]
+[ext_resource type="Script" uid="uid://xdcdxu1s1k2f" path="res://scripts/Pickup.gd" id="1_08on1"]
 [ext_resource type="Texture2D" uid="uid://shm2auty0h2a" path="res://sprites/projectiles/bow.png" id="2_uv5qr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_73j80"]

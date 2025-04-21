@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://tp1r3bfqfsfu"]
 
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="1_qcfja"]
-[ext_resource type="Script" path="res://scripts/EnergyBar.gd" id="2_ysrby"]
+[ext_resource type="Script" uid="uid://btxn578ib2toa" path="res://scripts/EnergyBar.gd" id="2_ysrby"]
 
 [node name="EnergyBar" type="TextureProgressBar"]
 self_modulate = Color(1, 1, 1, 0.498039)

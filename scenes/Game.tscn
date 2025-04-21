@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b38hn31i1vg4d"]
 
-[ext_resource type="Script" path="res://scripts/Multiplayer.gd" id="1_xw4tb"]
+[ext_resource type="Script" uid="uid://dtqd7xhmj7oj6" path="res://scripts/Multiplayer.gd" id="1_xw4tb"]
 
 [node name="Game" type="Node"]
 
@@ -71,13 +71,13 @@ grow_horizontal = 0
 text = "Restart Game"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
-_spawnable_scenes = PackedStringArray("res://scenes/LocalPlayer.tscn")
+_spawnable_scenes = PackedStringArray("uid://bi4frn2cgm5la")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/Dungeon.tscn")
+_spawnable_scenes = PackedStringArray("uid://dee70bilaqhd2")
 spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]

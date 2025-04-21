@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://vfj7qpv0rm26"]
 
 [ext_resource type="Texture2D" uid="uid://co6qt4ld0e4gp" path="res://sprites/projectiles/taunt_projectile.png" id="1_7ygt1"]
-[ext_resource type="Script" path="res://scripts/Ability.gd" id="1_jkwt6"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_jkwt6"]
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="1_pyvia"]
 
 [resource]

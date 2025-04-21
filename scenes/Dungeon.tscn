@@ -1,14 +1,14 @@
 [gd_scene load_steps=16 format=3 uid="uid://dee70bilaqhd2"]
 
 [ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="1_5pkd6"]
-[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_ip03w"]
+[ext_resource type="Script" uid="uid://bsnk0chumvcxi" path="res://scripts/Camera.gd" id="2_ip03w"]
 [ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="3_g615f"]
-[ext_resource type="Script" path="res://scripts/items/Weapon.gd" id="4_3m5wx"]
+[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="4_3m5wx"]
 [ext_resource type="Resource" uid="uid://ba1frpch73a7f" path="res://resources/items/Bow.tres" id="5_2um4g"]
 [ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://resources/items/Sword.tres" id="6_ac1dv"]
 [ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://resources/items/HealingStaff.tres" id="7_g66xv"]
 [ext_resource type="PackedScene" uid="uid://dbln30dr8vpci" path="res://scenes/Pickup.tscn" id="8_3ij0n"]
-[ext_resource type="Script" path="res://scripts/Attributes.gd" id="8_elfrr"]
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="8_elfrr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_y4bko"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -347,5 +347,5 @@ position = Vector2(-100, 0)
 itemType = 2
 
 [node name="PickupSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/Pickup.tscn")
+_spawnable_scenes = PackedStringArray("uid://dbln30dr8vpci")
 spawn_path = NodePath("../Units")

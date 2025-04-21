@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://kocsghk8ql1o"]
 
-[ext_resource type="Script" path="res://scripts/Projectile.gd" id="1_r56g8"]
+[ext_resource type="Script" uid="uid://w2dluhohlg2u" path="res://scripts/Projectile.gd" id="1_r56g8"]
 [ext_resource type="Texture2D" uid="uid://bij67depbbb8n" path="res://sprites/projectiles/arrow.png" id="2_68esi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dmawe"]

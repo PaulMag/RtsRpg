@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bswonwd367dt8"]
 
 [ext_resource type="Texture2D" uid="uid://b11wyrmcs5xv7" path="res://sprites/hud/inventory_slots.png" id="1_srf5n"]
-[ext_resource type="Script" path="res://scripts/InventorySlots.gd" id="2_shcct"]
+[ext_resource type="Script" uid="uid://bo6kcdbnyhp2c" path="res://scripts/InventorySlots.gd" id="2_shcct"]
 
 [node name="InventorySlots" type="TextureRect"]
 offset_left = 496.0
