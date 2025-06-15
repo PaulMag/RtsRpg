@@ -14,8 +14,12 @@ class_name Attributes
 @export var speed: int = 0
 @export var threatSkill: int = 0
 
+@export var speedRatio: float = 1.0
+
+
 func add(other: Attributes) -> Attributes:
 	var total := Attributes.new()
+
 	total.maxHealth = maxHealth + other.maxHealth
 	total.healthRegen = healthRegen + other.healthRegen
 	total.maxMana = maxMana + other.maxMana
@@ -28,6 +32,9 @@ func add(other: Attributes) -> Attributes:
 	total.healSkill = healSkill + other.healSkill
 	total.speed = speed + other.speed
 	total.threatSkill = threatSkill + other.threatSkill
+
+	total.speedRatio = speedRatio * other.speedRatio
+
 	return total
 
 static func sum(attributesList: Array[Attributes]) -> Attributes:

@@ -13,6 +13,9 @@ class_name Ability
 @export var manaCost: int
 @export var isHealing: bool = false
 
+@export var buffDuration: float
+@export var buffAttributes: Attributes = null
+
 @export var castTime: float = 2  # Time in seconds to cast the ability.
 @export var recoveryTime: float = 2  # Time in seconds before Unit can use an ability again.
 @export var speedFactorWhileCasting: float = 0.5
@@ -58,6 +61,14 @@ func use(user: Unit, target: Unit) -> bool:
 	attack.healingAmount = healingAmount * (1 + user.attributes.healSkill * 0.01)
 	attack.threat = (attack.damagePhysical + attack.damageMagical + threatAmount) * (1 + user.attributes.threatSkill * 0.01)
 	attack.isHealing = isHealing
+
+	if buffAttributes:
+		var buff := Buff.new()
+		buff.attributes = buffAttributes
+		buff.duration = buffDuration
+		buff.texture = texture
+		var buffs: Array[Buff] = [buff]
+		attack.buffs = buffs
 
 	var newProjectile := Projectile.init(attack, target, projectileTexture, projectileSpeed)
 	user.add_sibling(newProjectile, true)

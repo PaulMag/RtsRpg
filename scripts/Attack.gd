@@ -6,3 +6,5 @@ var healingAmount: float
 var threat: float  # Threat from healing is separate.
 var isHealing := false
 var attackingUnit: Unit
+
+var buffs: Array[Buff] = []

@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=113 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="14_ofk60"]
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="16_rwbbu"]
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
+[ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
+[ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 
 [sub_resource type="CircleShape2D" id="11"]
 radius = 3.0
@@ -634,6 +636,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_gbr36"]
 script = ExtResource("10_ovit6")
@@ -649,6 +652,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 10
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_dpt6o"]
 script = ExtResource("10_ovit6")
@@ -664,6 +668,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_niwlv"]
 script = ExtResource("10_ovit6")
@@ -679,6 +684,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_pdeq4"]
 script = ExtResource("10_ovit6")
@@ -694,6 +700,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_jr5p1"]
 script = ExtResource("10_ovit6")
@@ -709,6 +716,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_h1o0j"]
 script = ExtResource("10_ovit6")
@@ -724,6 +732,7 @@ magicSkill = 10
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_bhwvf"]
 script = ExtResource("10_ovit6")
@@ -739,6 +748,7 @@ magicSkill = 0
 healSkill = 5
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_flww1"]
 script = ExtResource("10_ovit6")
@@ -754,6 +764,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_16wc6"]
 script = ExtResource("10_ovit6")
@@ -769,6 +780,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0
 threatSkill = 0
+speedRatio = 1.0
 
 [node name="Unit" type="CharacterBody2D"]
 collision_mask = 3
@@ -827,6 +839,12 @@ tint_progress = Color(1, 0, 0, 1)
 [node name="ManaBar" parent="ProgressBars" instance=ExtResource("7_n4dth")]
 layout_mode = 2
 tint_progress = Color(0, 0, 1, 1)
+
+[node name="BuffIcons" type="HBoxContainer" parent="."]
+offset_left = 32.0
+offset_top = -75.0
+offset_right = 100.0
+offset_bottom = -43.0
 
 [node name="CastBar" parent="." instance=ExtResource("7_me7gl")]
 visible = false
@@ -1017,6 +1035,16 @@ offset_bottom = 373.0
 texture_normal = ExtResource("16_rwbbu")
 ability = ExtResource("17_c54xi")
 talentName = "Taunt  (30 threat, 200 range)"
+
+[node name="Slow" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 109.0
+offset_right = 401.0
+offset_bottom = 158.0
+texture_normal = ExtResource("20_cp300")
+ability = ExtResource("21_5dcda")
+talentName = "Slow (50%, 10s, 10 mana, 400 range)"
 
 [node name="TalentAttributeButtons" type="Control" parent="UnitHud/TalentTree"]
 anchors_preset = 0

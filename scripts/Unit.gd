@@ -58,6 +58,7 @@ enum states {
 @onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
+@onready var buffIcons: HBoxContainer = $BuffIcons
 
 @onready var destination : Vector2 = position
 var moveDirection := Vector2.ZERO
@@ -73,6 +74,7 @@ var isAutocasting := false
 var autocastAbilityId: Global.AbilityIds
 
 var threatTable: Dictionary = {}
+var buffs: Array[Buff] = []
 
 
 func _ready() -> void:
@@ -93,8 +95,10 @@ func _ready() -> void:
 	else:
 		attributesList = []
 		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
-		a.maxHealth = 10
-		# a.maxMana = 100
+		a.maxHealth = 10 + 100
+		a.maxMana = 100
+		a.healthRegen = 1.0
+		a.manaRegen = 5
 		a.armorSkill = 100
 		a.speed = 150
 		addAttributes(a)
@@ -262,6 +266,15 @@ func toggleAutocast(abilityId: Global.AbilityIds) -> void:
 
 func updateAttributes() -> void:
 	attributes = Attributes.sum(attributesList)
+
+	var buffAttributesList: Array[Attributes]
+	buffAttributesList.assign(buffs.map(  # This is a workaround because map doesn't support proper typing.
+		func(buff: Buff) -> Attributes: return buff.attributes
+	))
+
+	var buffAttributes := Attributes.sum(buffAttributesList)
+	attributes = attributes.add(buffAttributes)
+
 	healthBar.setMaxValue(attributes.maxHealth)
 	manaBar.setMaxValue(attributes.maxMana)
 	damageReduction = 10_000. / (10_000. + attributes.armorPoints * attributes.armorSkill)
@@ -375,7 +388,7 @@ func orderFollowUnit(unit: Unit) -> void:
 func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server():
 		if moveDirection != Vector2.ZERO:
-			velocity = moveDirection.normalized() * attributes.speed
+			velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
 			navigationAgent.set_velocity(velocity)
 			followCursor = false
 			followTarget = false
@@ -391,7 +404,7 @@ func _physics_process(_delta: float) -> void:
 		if (followCursor or followTarget) and navigationAgent.is_target_reachable():
 			var destinationNext := navigationAgent.get_next_path_position()
 
-			velocity = position.direction_to(destinationNext).normalized() * attributes.speed
+			velocity = position.direction_to(destinationNext).normalized() * attributes.speed * attributes.speedRatio
 			navigationAgent.set_velocity(velocity)
 
 			var followRange := 50
@@ -410,6 +423,19 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 
 func damage(_attack: Attack) -> void:
+	if _attack.buffs:
+		for buff in _attack.buffs:
+			var buffIcon := BuffIcon.init(buff)
+			buffIcons.add_child(buffIcon)
+			buffs.append(buff)
+			buff.timer = get_tree().create_timer(buff.duration)
+			buff.timer.timeout.connect(func() -> void:
+				buffIcons.remove_child(buffIcon)
+				buffs.erase(buff)
+				updateAttributes()
+			)
+		updateAttributes()
+
 	if not multiplayer.is_server():
 		return
 

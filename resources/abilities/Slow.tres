@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=6 format=3 uid="uid://ci1xy610j6cqf"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_1pynn"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_b5cck"]
+[ext_resource type="Texture2D" uid="uid://cnv4tuoni3tr4" path="res://sprites/projectiles/slow_projectile.png" id="2_0td4m"]
+[ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="3_1pynn"]
+
+[sub_resource type="Resource" id="Resource_0td4m"]
+script = ExtResource("1_1pynn")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+attackSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0
+threatSkill = 0
+speedRatio = 0.5
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("1_b5cck")
+name = "Slow"
+texture = ExtResource("3_1pynn")
+abilityId = 4
+damagePhysical = 0
+damageMagical = 0
+healingAmount = 0
+threatAmount = 0
+targetRange = 400
+manaCost = 10
+isHealing = false
+buffDuration = 10.0
+buffAttributes = SubResource("Resource_0td4m")
+castTime = 2.0
+recoveryTime = 2.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 200.0
+projectileTexture = ExtResource("2_0td4m")
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true
