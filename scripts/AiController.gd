@@ -1,4 +1,4 @@
-extends Node
+extends Area3D
 
 class_name AiController
 
@@ -35,7 +35,8 @@ func getMostThreateningUnit() -> Unit:
 			highestThreat = unit.threatTable[u]
 	return mostThreateningUnit
 
-func _on_range_field_body_entered(body: Object) -> void:
+
+func _on_body_entered(body: Node3D) -> void:
 	if body is Unit:
 		var u := body as Unit
 		if u.faction != unit.faction:

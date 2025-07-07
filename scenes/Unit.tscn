@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=40 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -52,9 +52,6 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath(".:unitId")
 properties/6/spawn = true
 properties/6/replication_mode = 2
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_7arjd"]
-radius = 550.0
 
 [sub_resource type="InputEventAction" id="InputEventAction_me7gl"]
 action = &"cancel_cast"
@@ -330,28 +327,8 @@ one_shot = true
 
 [node name="RegenTimer" type="Timer" parent="."]
 
-[node name="RangeField" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeField"]
-shape = SubResource("CircleShape2D_7arjd")
-
-[node name="TextureRect" type="TextureRect" parent="RangeField"]
-modulate = Color(1, 1, 1, 0.0980392)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -550.0
-offset_right = 550.0
-offset_bottom = 550.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("7_rybnc")
-
 [node name="AiController" parent="." node_paths=PackedStringArray("unit") instance=ExtResource("7_jkhdm")]
+visible = false
 unit = NodePath("..")
 
 [node name="UnitHud" type="CanvasLayer" parent="."]
@@ -642,9 +619,10 @@ talentName = "Armor skill  +5%"
 metadata/_edit_use_anchors_ = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
-[connection signal="body_entered" from="RangeField" to="AiController" method="_on_range_field_body_entered"]
 [connection signal="pressed" from="UnitHud/VBoxContainer/CancelCastButton" to="." method="_on_cancel_cast_button_pressed"]
 [connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" method="_on_pressed"]

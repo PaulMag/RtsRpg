@@ -1,6 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://vcjsjj5mi5sv"]
+[gd_scene load_steps=5 format=3 uid="uid://vcjsjj5mi5sv"]
 
 [ext_resource type="Script" uid="uid://wr35xlfk6fxj" path="res://scripts/AiController.gd" id="1_v5lwr"]
 
-[node name="AiController" type="Node"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_2l7rt"]
+radius = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2l7rt"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.117647)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6mv76"]
+material = SubResource("StandardMaterial3D_2l7rt")
+radius = 10.0
+height = 0.001
+is_hemisphere = true
+
+[node name="AiController" type="Area3D"]
+input_ray_pickable = false
 script = ExtResource("1_v5lwr")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_2l7rt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_6mv76")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

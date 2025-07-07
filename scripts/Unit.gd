@@ -45,7 +45,6 @@ enum states {
 @onready var castBar: CastBar  = %CastBar
 @onready var navigationAgent: NavigationAgent3D = $NavigationAgent
 @onready var aiController: AiController = $AiController
-@onready var rangeField: Area2D = $RangeField
 @onready var label: Label = %Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var castTimer: Timer = $CastTimer
@@ -126,6 +125,11 @@ func _ready() -> void:
 			var talentAbilityButton := node as TalentAbilityButton
 			talentAbilityButton.pressed.connect(learnTalentAbilityOnServer.bind(nodeIndex))
 		nodeIndex += 1
+
+	if faction == Global.Faction.PLAYERS:
+		sprite.modulate = Color.BLUE
+	else:
+		sprite.modulate = Color.RED
 
 func learnTalentAttributeOnServer(nodeIndex: int) -> void:
 	learnTalentAttributeOnClients.rpc(nodeIndex)
@@ -285,10 +289,6 @@ func addAttributes(newAttributes: Attributes) -> void:
 
 func setSelected(toggleOn: bool) -> void:
 	selectedCircle.visible = toggleOn
-	if toggleOn and getEquippedWeapon():
-		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
-	else:
-		hideRangeField()
 	unitHud.visible = toggleOn
 	if not toggleOn:
 		talentTreeButton.button_pressed = false
@@ -367,13 +367,6 @@ func _process(_delta: float) -> void:
 		]
 	)
 
-func viewRangeField(radius: float, color: Color) -> void:
-	rangeField.scale = float(radius) / 320. * Vector2.ONE
-	rangeField.modulate = color
-	rangeField.visible = true
-
-func hideRangeField() -> void:
-	rangeField.visible = false
 
 func orderMove(_destination: Vector3) -> void:
 	destination = _destination
@@ -508,8 +501,7 @@ func giveItem(itemType: Global.Items) -> bool:
 func equip(slot: int) -> void:
 	weaponSlotEquipped = slot
 	update.rpc()
-	if getEquippedWeapon():
-		viewRangeField(getEquippedWeapon().attackRange, Color(0, 0.5, 1))
+
 
 func get_weapon(slot: int) -> Weapon:
 	if slot == 0:
@@ -528,19 +520,6 @@ var isBeingUpdated := false
 func update() -> void:
 	isBeingUpdated = true
 
-
-func _on_selection_area_mouse_entered() -> void:
-	if faction == Global.Faction.PLAYERS:
-		sprite.modulate = Color.GREEN
-	else:
-		sprite.modulate = Color.RED
-		if isAi:
-			viewRangeField(320, Color.RED)
-
-func _on_selection_area_mouse_exited() -> void:
-	sprite.modulate = Color.WHITE
-	if faction != Global.Faction.PLAYERS:
-		hideRangeField()
 
 func _on_talent_tree_button_toggled(toggled_on: bool) -> void:
 	talentTree.visible = toggled_on
@@ -566,3 +545,22 @@ func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3,
 		Global.getPlayerCurrent().setTargetUnit(self, false)
 	elif event.is_action_pressed("mouse_right_click"):
 		Global.getPlayerCurrent().setTargetUnit(self, true)
+
+
+func _on_mouse_entered() -> void:
+	if faction == Global.Faction.PLAYERS:
+		sprite.modulate = Color.CYAN
+	else:
+		sprite.modulate = Color.PINK
+
+	if aiController:
+		aiController.visible = true
+
+func _on_mouse_exited() -> void:
+	if faction == Global.Faction.PLAYERS:
+		sprite.modulate = Color.BLUE
+	else:
+		sprite.modulate = Color.RED
+
+	if aiController:
+		aiController.visible = false
