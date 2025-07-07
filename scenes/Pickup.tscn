@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://xdcdxu1s1k2f" path="res://scripts/Pickup.gd" id="1_08on1"]
 [ext_resource type="Texture2D" uid="uid://shm2auty0h2a" path="res://sprites/projectiles/bow.png" id="2_uv5qr"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_73j80"]
-radius = 20.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_u187m"]
+radius = 0.3
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eoid5"]
 properties/0/path = NodePath(".:itemType")
@@ -14,15 +14,17 @@ properties/1/path = NodePath(".:position")
 properties/1/spawn = true
 properties/1/replication_mode = 0
 
-[node name="Pickup" type="Area2D"]
-collision_layer = 0
+[node name="Pickup" type="Area3D"]
 script = ExtResource("1_08on1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+pixel_size = 0.015
 texture = ExtResource("2_uv5qr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_73j80")
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("SphereShape3D_u187m")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_eoid5")

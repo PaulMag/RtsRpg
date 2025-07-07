@@ -5,7 +5,7 @@ class_name Pickup
 
 @export var itemType: int
 var itemResource: Item
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite3D = $Sprite
 
 const SCENE := preload("res://scenes/Pickup.tscn")
 static func init(_itemType: Global.Items) -> Pickup:
@@ -16,6 +16,11 @@ static func init(_itemType: Global.Items) -> Pickup:
 func _ready() -> void:
 	itemResource = load("res://resources/items/%s.tres" % Global.Items.find_key(itemType))
 	sprite.texture = itemResource.texture
+
+
+func _process(delta: float) -> void:
+	rotation.y += delta * PI
+
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Unit and multiplayer.is_server():

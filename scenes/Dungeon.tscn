@@ -133,6 +133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.26975, 0, -3.3229)
 isAi = true
 weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
+loot = 1
 attributesList = Array[ExtResource("8_elfrr")]([SubResource("Resource_uvbsm")])
 
 [node name="EnemyUnit_03" parent="Node3D" instance=ExtResource("3_g615f")]
@@ -140,6 +141,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.48339, 0, -0.54899)
 isAi = true
 weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
 weaponSlotEquipped = 3
+loot = 2
 attributesList = Array[ExtResource("8_elfrr")]([SubResource("Resource_17mqc")])
 
 [connection signal="input_event" from="NavigationRegion3D/Floor/StaticBody" to="NavigationRegion3D/Floor/StaticBody" method="_on_input_event"]
