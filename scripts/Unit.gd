@@ -473,9 +473,9 @@ func die() -> void:
 		var pickup := Pickup.init(loot)
 		pickup.position = position
 		call_deferred("add_sibling", pickup, true)
-	var corpse: Corpse = CORPSE.instantiate()
-	corpse.position = position
-	get_parent().add_child(corpse)
+	# var corpse: Corpse = CORPSE.instantiate()
+	# corpse.position = position
+	# get_parent().add_child(corpse)
 	Global.deleteUnit(self)
 
 func spendMana(amount: int) -> void:
