@@ -10,7 +10,7 @@ const PORT = 4433
 @onready var players: Node = $Players
 @onready var restartGameButton: Button = $UI/RestartGameButton
 
-var dungeon: Node2D
+var dungeon: Node3D
 
 
 func _ready() -> void:

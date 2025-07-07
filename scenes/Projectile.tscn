@@ -1,18 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://kocsghk8ql1o"]
 
 [ext_resource type="Script" uid="uid://w2dluhohlg2u" path="res://scripts/Projectile.gd" id="1_r56g8"]
-[ext_resource type="Texture2D" uid="uid://bij67depbbb8n" path="res://sprites/projectiles/arrow.png" id="2_68esi"]
+[ext_resource type="PackedScene" uid="uid://cghp7io1e7ivd" path="res://models/projectiles/arrow.gltf" id="3_kdm4f"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dmawe"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13obt"]
+radius = 0.05
+height = 0.7
 
-[node name="Projectile" type="Area2D"]
-collision_layer = 2
+[node name="Projectile" type="Area3D"]
 script = ExtResource("1_r56g8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dmawe")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_13obt")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_68esi")
+[node name="arrow2" parent="." instance=ExtResource("3_kdm4f")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

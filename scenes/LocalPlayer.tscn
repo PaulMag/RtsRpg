@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bi4frn2cgm5la"]
+[gd_scene load_steps=6 format=3 uid="uid://bi4frn2cgm5la"]
 
 [ext_resource type="Script" uid="uid://cxwm82wh0rmt6" path="res://scripts/LocalPlayer.gd" id="1_3qyin"]
-[ext_resource type="Script" uid="uid://chdmvdux87eko" path="res://scripts/MouseDetector.gd" id="2_0fwk0"]
 [ext_resource type="Script" uid="uid://dybeie7mrnd8w" path="res://scripts/DestinationMarker.gd" id="3_a7lnd"]
 [ext_resource type="Texture2D" uid="uid://dojwaff2ox3jq" path="res://sprites/units/target_marker.png" id="4_src20"]
 
@@ -18,10 +17,6 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath(".:moveDirection")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i42r7"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sq0v5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)
@@ -40,26 +35,17 @@ root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
 script = ExtResource("1_3qyin")
 
-[node name="MouseDetector" type="ShapeCast2D" parent="."]
-material = SubResource("CanvasItemMaterial_i42r7")
-enabled = false
-shape = SubResource("RectangleShape2D_sq0v5")
-target_position = Vector2(0, 0)
-collision_mask = 4
-collide_with_areas = true
-script = ExtResource("2_0fwk0")
-
 [node name="SelectionPanel" type="Panel" parent="."]
 theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
 
-[node name="DestinationMarker" type="Node2D" parent="."]
+[node name="DestinationMarker" type="Node3D" parent="."]
 visible = false
-z_index = 1
 script = ExtResource("3_a7lnd")
 
-[node name="Sprite2D" type="Sprite2D" parent="DestinationMarker"]
+[node name="Sprite" type="Sprite3D" parent="DestinationMarker"]
+offset = Vector2(0, 16)
+billboard = 2
 texture = ExtResource("4_src20")
-offset = Vector2(0, -16)
 
 [node name="Timer" type="Timer" parent="DestinationMarker"]
 wait_time = 1.75
@@ -106,5 +92,3 @@ horizontal_alignment = 1
 
 [node name="UnitList" type="VBoxContainer" parent="CanvasLayer/GameHud/VBoxContainer"]
 layout_mode = 2
-
-[connection signal="timeout" from="DestinationMarker/Timer" to="DestinationMarker" method="_on_timer_timeout"]

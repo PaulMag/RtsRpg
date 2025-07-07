@@ -7,4 +7,6 @@
 *.exe
 *.pck
 
+models/
+
 default_env.tres

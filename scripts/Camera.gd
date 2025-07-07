@@ -1,4 +1,4 @@
-extends Camera2D
+extends Node3D
 
 
 func _process(_delta: float) -> void:

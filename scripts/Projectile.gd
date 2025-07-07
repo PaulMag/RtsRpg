@@ -1,9 +1,9 @@
-extends Area2D
+extends Area3D
 
 class_name Projectile
 
 
-@onready var sprite: Sprite2D = $Sprite2D
+# @onready var sprite: Sprite2D = $Sprite2D  #TODO: Replace with MeshInstance3D or similar for 3D
 
 var attack: Attack
 var target: Unit
@@ -19,20 +19,24 @@ static func init(_attack: Attack, _target: Unit, _texture: Texture = null, _spee
 	scene.texture = _texture
 	scene.speed = _speed
 	scene.position = _attack.attackingUnit.position
+	print(_speed)
 	return scene
 
 func _ready() -> void:
-	if texture:
-		sprite.set_texture(texture as Texture2D)
+	pass
+	#TODO: Teplace this with mesh
+	#if texture:
+		#sprite.set_texture(texture as Texture2D)
 
 func _physics_process(delta: float) -> void:
 	if target and is_instance_valid(target):
-		rotation = position.angle_to_point(target.position)
+		if target.position != position:
+			look_at(Vector3(target.position.x, position.y, target.position.z))
 		position += position.direction_to(target.position) * speed * delta
 	else:
-		position += Vector2.from_angle(rotation) * speed * delta
+		position += -transform.basis.z * speed * delta
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(body: Node3D) -> void:
 	if body == target:
 		target.damage(attack)
 		queue_free()

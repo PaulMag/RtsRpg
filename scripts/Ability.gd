@@ -20,7 +20,7 @@ class_name Ability
 @export var recoveryTime: float = 2  # Time in seconds before Unit can use an ability again.
 @export var speedFactorWhileCasting: float = 0.5
 
-@export var projectileSpeed: float = 500
+@export var projectileSpeed: float = 20
 @export var projectileTexture: Texture
 
 @export var canTargetSelf: bool = false

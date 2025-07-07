@@ -1,14 +1,14 @@
-extends Node2D
+extends Node3D
 
 class_name DestinationMarker
 
 
-const AMPLITUDE := 10.0
+const AMPLITUDE := -0.5
 const SPEED := 2 * PI
 const COLOR_MOVE := Color.GREEN
 const COLOR_ATTACK := Color.RED
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite3D = $Sprite
 @onready var timer: Timer = $Timer
 
 var markerMotion: float
@@ -18,15 +18,15 @@ var offset: float
 
 func _process(delta: float) -> void:
 	if visible:
-		if is_instance_valid(targetUnit):
-			position = targetUnit.position
+		# if is_instance_valid(targetUnit):
+		# 	position = targetUnit.position
 		sprite.position.y = offset + sin(markerMotion * SPEED) * AMPLITUDE - AMPLITUDE
 		markerMotion += delta
 
-func markMove(pos: Vector2) -> void:
+func markMove(pos: Vector3) -> void:
 	targetUnit = null
 	position = pos
-	modulate = COLOR_MOVE
+	# modulate = COLOR_MOVE
 	markerMotion = - SPEED / 2
 	offset = 0
 	visible = true
@@ -34,7 +34,7 @@ func markMove(pos: Vector2) -> void:
 
 func markAttack(unit: Unit) -> void:
 	targetUnit = unit
-	modulate = COLOR_ATTACK
+	# modulate = COLOR_ATTACK
 	markerMotion = - SPEED / 2
 	offset = - 64
 	visible = true

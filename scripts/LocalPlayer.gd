@@ -9,7 +9,7 @@ class_name LocalPlayer
 @export var playerName: String
 @export var playerColor: Color
 
-@onready var mouseDetector: MouseDetector = $MouseDetector
+# @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 @onready var canvasLayer: CanvasLayer = $CanvasLayer
 @onready var playerList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/PlayerList
@@ -17,7 +17,7 @@ class_name LocalPlayer
 
 var selectedUnitId: int
 
-var isIssuingMoveOrder := Vector2.INF  # INF represents no value
+var isIssuingMoveOrder := Vector3.INF  # INF represents no value
 var isIssuingEquipOrder := 0
 @export var moveDirection := Vector2.ZERO
 
@@ -38,11 +38,6 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
 		return
-
-	if event.is_action_pressed("mouse_left_click"):
-		mouseDetector.targetMousePoint(false)
-	elif event.is_action_pressed("mouse_right_click"):
-		mouseDetector.targetMousePoint(true)
 
 	# elif event.is_action_pressed("select_slot_1"):
 	# 	issueEquipOrder.rpc_id(1, 1)
@@ -71,7 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			break
 
 @rpc("call_local")
-func issueMoveOrder(destination: Vector2) -> void:
+func issueMoveOrder(destination: Vector3) -> void:
 	isIssuingMoveOrder = destination
 
 @rpc("call_local")
@@ -88,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 	if playerId == multiplayer.get_unique_id():
 		moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if multiplayer.is_server() and getSelectedUnit():
-		getSelectedUnit().moveDirection = moveDirection
+		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
 func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
@@ -107,12 +102,12 @@ func _process(_delta: float) -> void:
 		if unit == null:
 			return
 
-		if isIssuingMoveOrder != Vector2.INF:  # INF represents no value
+		if isIssuingMoveOrder != Vector3.INF:  # INF represents no value
 			unit = getSelectedUnit()
 			print("isIssuingMoveOrder  player %s  unit %s  unitId %s" % [playerId, unit, unit.unitId])
 			if unit and (unit.faction == Global.Faction.PLAYERS):
 				unit.orderMove(isIssuingMoveOrder)
-			isIssuingMoveOrder = Vector2.INF
+			isIssuingMoveOrder = Vector3.INF
 
 		if isIssuingEquipOrder != 0:
 			unit = getSelectedUnit()
@@ -123,7 +118,7 @@ func _process(_delta: float) -> void:
 func getSelectedUnit() -> Unit:
 	return Global.getUnitFromUnitId(selectedUnitId)
 
-func moveTo(destination: Vector2) -> void:
+func moveTo(destination: Vector3) -> void:
 	if getSelectedUnit():
 		issueMoveOrder.rpc_id(1, destination)
 		destinationMarker.markMove(destination)

@@ -1,4 +1,4 @@
-extends Area2D
+extends Area3D
 
 class_name Pickup
 
@@ -17,7 +17,7 @@ func _ready() -> void:
 	itemResource = load("res://resources/items/%s.tres" % Global.Items.find_key(itemType))
 	sprite.texture = itemResource.texture
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(body: Node3D) -> void:
 	if body is Unit and multiplayer.is_server():
 		var unit := body as Unit
 		if unit.faction == Global.Faction.PLAYERS:

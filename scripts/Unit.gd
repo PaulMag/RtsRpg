@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends CharacterBody3D
 
 class_name Unit
 
@@ -37,16 +37,16 @@ enum states {
 @export var facing := 2;
 @export var state := states.IDLE
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var selectedCircle: Sprite2D = $SelectedCircle
-@onready var targetCircle: Sprite2D = $TargetCircle
-@onready var healthBar: EnergyBar  = $ProgressBars/HealthBar
-@onready var manaBar: EnergyBar  = $ProgressBars/ManaBar
-@onready var castBar: CastBar  = $CastBar
-@onready var navigationAgent: NavigationAgent2D = $NavigationAgent2D
+@onready var sprite: AnimatedSprite3D = $AnimatedSprite
+@onready var selectedCircle: Sprite3D = $SelectedCircle
+@onready var targetCircle: Sprite3D = $TargetCircle
+@onready var healthBar: EnergyBar  = %HealthBar
+@onready var manaBar: EnergyBar  = %ManaBar
+@onready var castBar: CastBar  = %CastBar
+@onready var navigationAgent: NavigationAgent3D = $NavigationAgent
 @onready var aiController: AiController = $AiController
 @onready var rangeField: Area2D = $RangeField
-@onready var label: Label = $Label
+@onready var label: Label = %Label
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var castTimer: Timer = $CastTimer
 @onready var recoveryTimer: Timer = $RecoveryTimer
@@ -58,10 +58,10 @@ enum states {
 @onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
-@onready var buffIcons: HBoxContainer = $BuffIcons
+@onready var buffIcons: HBoxContainer = %BuffIcons
 
-@onready var destination : Vector2 = position
-var moveDirection := Vector2.ZERO
+@onready var destination : Vector3 = position
+var moveDirection := Vector3.ZERO
 
 @export var targetUnit: Unit = null
 
@@ -78,7 +78,7 @@ var buffs: Array[Buff] = []
 
 
 func _ready() -> void:
-	sprite.self_modulate = playerColor
+	sprite.modulate = playerColor
 	if multiplayer.is_server():
 		unitId = randi()
 		regenTimer.start()
@@ -90,7 +90,7 @@ func _ready() -> void:
 
 	if isAi:
 		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
-		a.speed = 150
+		a.speed = 5
 		addAttributes(a)
 	else:
 		attributesList = []
@@ -100,7 +100,7 @@ func _ready() -> void:
 		a.healthRegen = 1.0
 		a.manaRegen = 5
 		a.armorSkill = 100
-		a.speed = 150
+		a.speed = 5
 		addAttributes(a)
 	updateAttributes()
 
@@ -375,7 +375,7 @@ func viewRangeField(radius: float, color: Color) -> void:
 func hideRangeField() -> void:
 	rangeField.visible = false
 
-func orderMove(_destination: Vector2) -> void:
+func orderMove(_destination: Vector3) -> void:
 	destination = _destination
 	followTarget = false
 	followCursor = true
@@ -387,7 +387,7 @@ func orderFollowUnit(unit: Unit) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server():
-		if moveDirection != Vector2.ZERO:
+		if moveDirection != Vector3.ZERO:
 			velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
 			navigationAgent.set_velocity(velocity)
 			followCursor = false
@@ -407,15 +407,15 @@ func _physics_process(_delta: float) -> void:
 			velocity = position.direction_to(destinationNext).normalized() * attributes.speed * attributes.speedRatio
 			navigationAgent.set_velocity(velocity)
 
-			var followRange := 50
+			var followRange := 1.5
 
-			if followCursor and position.distance_to(destination) < 15:
-				velocity = Vector2.ZERO
+			if followCursor and Vector2(position.x, position.z).distance_to(Vector2(destination.x, destination.z)) < 0.05:  # Close enough to stop
+				velocity = Vector3.ZERO
 				followCursor = false
 			elif followTarget and position.distance_to(targetUnit.position) < followRange:
-				velocity = Vector2.ZERO
-		elif moveDirection == Vector2.ZERO:
-			velocity = Vector2.ZERO
+				velocity = Vector3.ZERO
+		elif moveDirection == Vector3.ZERO:
+			velocity = Vector3.ZERO
 
 		if isCasting:
 			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
@@ -559,3 +559,10 @@ func _on_cancel_cast_button_pressed() -> void:
 		isCasting = false
 		cancelCastButton.visible = false
 		Global.getAbility[castingAbilityId].refundCost(self)
+
+
+func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if event.is_action_pressed("mouse_left_click"):
+		Global.getPlayerCurrent().setTargetUnit(self, false)
+	elif event.is_action_pressed("mouse_right_click"):
+		Global.getPlayerCurrent().setTargetUnit(self, true)

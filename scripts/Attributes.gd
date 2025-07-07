@@ -11,7 +11,7 @@ class_name Attributes
 @export var attackSkill: int = 0
 @export var magicSkill: int = 0
 @export var healSkill: int = 0
-@export var speed: int = 0
+@export var speed: float = 0
 @export var threatSkill: int = 0
 
 @export var speedRatio: float = 1.0

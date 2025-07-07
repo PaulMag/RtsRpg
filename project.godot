@@ -39,6 +39,7 @@ project/assembly_name="RtsRpg"
 [file_customization]
 
 folder_colors={
+"res://models/": "purple",
 "res://resources/": "green",
 "res://scenes/": "red",
 "res://scripts/": "blue",
