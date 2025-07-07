@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
-[ext_resource type="SpriteFrames" uid="uid://2qg0a661u12v" path="res://resources/2d_animations/skeleton_animation.tres" id="4_tlt4j"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
 [ext_resource type="PackedScene" uid="uid://dhj6n5k8ewb2v" path="res://scenes/CastBar.tscn" id="7_me7gl"]
@@ -22,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
+[ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/character_models/Mage.tscn" id="23_cp300"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cp300"]
 radius = 0.3
@@ -34,24 +34,24 @@ viewport_path = NodePath("SpriteHud/SubViewport")
 properties/0/path = NodePath(".:position")
 properties/0/spawn = false
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:facing")
+properties/1/path = NodePath(".:state")
 properties/1/spawn = false
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:state")
-properties/2/spawn = false
+properties/2/path = NodePath(".:weaponSlotEquipped")
+properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:weaponSlotEquipped")
+properties/3/path = NodePath(".:health")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:health")
+properties/4/path = NodePath(".:mana")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:mana")
+properties/5/path = NodePath(".:unitId")
 properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath(".:unitId")
-properties/6/spawn = true
-properties/6/replication_mode = 2
+properties/5/replication_mode = 2
+properties/6/path = NodePath(".:rotation")
+properties/6/spawn = false
+properties/6/replication_mode = 1
 
 [sub_resource type="InputEventAction" id="InputEventAction_me7gl"]
 action = &"cancel_cast"
@@ -232,6 +232,8 @@ script = ExtResource("1_m0gx0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_cp300")
 
+[node name="CharacterModel" parent="." instance=ExtResource("23_cp300")]
+
 [node name="SelectedCircle" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.05, 0)
 visible = false
@@ -243,14 +245,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0
 visible = false
 pixel_size = 0.04
 texture = ExtResource("2_f7eal")
-
-[node name="AnimatedSprite" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.969255, 0)
-pixel_size = 0.03
-billboard = 2
-texture_filter = 0
-sprite_frames = ExtResource("4_tlt4j")
-animation = &"attack_down"
 
 [node name="NavigationAgent" type="NavigationAgent3D" parent="."]
 debug_enabled = true

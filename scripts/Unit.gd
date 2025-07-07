@@ -3,6 +3,7 @@ extends CharacterBody3D
 class_name Unit
 
 
+const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
 var CORPSE := preload("res://scenes/Corpse.tscn")
 
 @export var unitId : int
@@ -18,26 +19,21 @@ var damageReduction: float = 0
 var attributes: Attributes
 @export var attributesList: Array[Attributes]
 
-const FACING_MAPPING = {
-	1: "right",
-	2: "down",
-	3: "left",
-	4: "up",
-}
 enum states {
 	IDLE,
 	WALKING,
 	ATTACKING,
+	SPELLCASTING,
 }
 
 @export var unitName: String = ""
 
 @export var health: float = 75
 @export var mana: float = 40
-@export var facing := 2;
 @export var state := states.IDLE
 
-@onready var sprite: AnimatedSprite3D = $AnimatedSprite
+@onready var characterModel: CharacterModel = $CharacterModel
+@onready var animationPlayer: AnimationPlayer = characterModel.animationPlayer
 @onready var selectedCircle: Sprite3D = $SelectedCircle
 @onready var targetCircle: Sprite3D = $TargetCircle
 @onready var healthBar: EnergyBar  = %HealthBar
@@ -77,7 +73,6 @@ var buffs: Array[Buff] = []
 
 
 func _ready() -> void:
-	sprite.modulate = playerColor
 	if multiplayer.is_server():
 		unitId = randi()
 		regenTimer.start()
@@ -86,6 +81,14 @@ func _ready() -> void:
 	self.add_to_group("units")
 	if faction != Global.Faction.PLAYERS:
 		isAi = true
+
+	if faction == Global.Faction.ENEMIES:
+		var barbarianScene: CharacterModel = BARBARIAN_SCENE.instantiate()
+		var characterModelOld := characterModel
+		add_child(barbarianScene)
+		characterModel = barbarianScene
+		animationPlayer = characterModel.animationPlayer
+		characterModelOld.queue_free()
 
 	if isAi:
 		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
@@ -220,6 +223,8 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	castBar.visible = true
 
 func _on_cast_timer_timeout() -> void:
+	animationPlayer.play("Spellcast_Shoot")
+
 	castBar.visible = false
 	isCasting = false
 	cancelCastButton.visible = false
@@ -334,30 +339,24 @@ func _process(_delta: float) -> void:
 		useAbilityOnServer(autocastAbilityId)
 
 	if multiplayer.is_server():
-		if state == states.ATTACKING:
-			pass
+		if isCasting:
+			state = states.SPELLCASTING
 		elif velocity:
 			state = states.WALKING
 		else:
 			state = states.IDLE
 
-	if abs(velocity.x) >= abs(velocity.y):
-		if velocity.x > 0:
-			facing = 1
-		elif velocity.x < 0:
-			facing = 3
-	elif abs(velocity.y) > abs(velocity.x):
-		if velocity.y < 0:
-			facing = 4
-		elif velocity.y > 0:
-			facing = 2
+	if velocity:
+		rotation.y = - Vector2(velocity.x, velocity.z).angle() + PI / 2
 
-	if state == states.ATTACKING:
-		sprite.animation = "attack_" + FACING_MAPPING[facing]
+	if animationPlayer.current_animation == "Spellcast_Shoot" and animationPlayer.is_playing():
+		pass
+	elif state == states.SPELLCASTING:
+		animationPlayer.play("Spellcasting")
 	elif state == states.WALKING:
-		sprite.animation = "walk_" + FACING_MAPPING[facing]
+		animationPlayer.play("Walking_A")
 	elif state == states.IDLE:
-		sprite.animation = "idle_" + FACING_MAPPING[facing]
+		animationPlayer.play("Idle")
 
 	label.text = (
 		"Player: %s\n%s\n%s\n" % [
