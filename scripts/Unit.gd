@@ -12,7 +12,7 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 @export var weapons: Array[Weapon]
 @export var weaponSlotEquipped := 0
 @export var loot := Global.Items.Bow
-@export var playerColor := Color.WHITE
+@export var playerColor := Color.DIM_GRAY
 
 # Attributes
 var damageReduction: float = 0
@@ -60,6 +60,7 @@ var moveDirection := Vector3.ZERO
 
 @export var targetUnit: Unit = null
 
+var isSelected := false
 var followCursor := false
 var followTarget := false
 var isCasting := false
@@ -129,10 +130,8 @@ func _ready() -> void:
 			talentAbilityButton.pressed.connect(learnTalentAbilityOnServer.bind(nodeIndex))
 		nodeIndex += 1
 
-	if faction == Global.Faction.PLAYERS:
-		sprite.modulate = Color.BLUE
-	else:
-		sprite.modulate = Color.RED
+	selectedCircle.modulate = playerColor
+
 
 func learnTalentAttributeOnServer(nodeIndex: int) -> void:
 	learnTalentAttributeOnClients.rpc(nodeIndex)
@@ -293,7 +292,9 @@ func addAttributes(newAttributes: Attributes) -> void:
 	updateAttributes()
 
 func setSelected(toggleOn: bool) -> void:
-	selectedCircle.visible = toggleOn
+	isSelected = toggleOn
+	# selectedCircle.modulate.a = 1.0 if isSelected else 0.2
+	# selectedCircle.modulate = (playerColor+Color.WHITE)*0.5 if isSelected else playerColor
 	unitHud.visible = toggleOn
 	if not toggleOn:
 		talentTreeButton.button_pressed = false
@@ -307,13 +308,13 @@ func setTargetUnitOnClients(targetUnitId: int, follow: bool = false) -> void:
 
 @rpc("authority", "call_local")
 func setTargetUnit(targetUnitId: int, follow: bool = false) -> void:
-	if selectedCircle.visible and targetUnit:  # If is selected and has previous target
+	if isSelected and targetUnit:  # If is selected and has previous target
 		targetUnit.setTargeted(false)  # Remove targetCircle from previous target
 	targetUnit = Global.getUnitFromUnitId(targetUnitId)
 	if follow:
 		followTarget = true
 		followCursor = false
-	if selectedCircle.visible:
+	if isSelected:
 		targetUnit.setTargeted(true)  # Display targetCircle on new target
 
 func setTargeted(toggleOn: bool) -> void:  # Display/hide TargetCircle. This is only visual.
@@ -547,19 +548,11 @@ func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3,
 
 
 func _on_mouse_entered() -> void:
-	if faction == Global.Faction.PLAYERS:
-		sprite.modulate = Color.CYAN
-	else:
-		sprite.modulate = Color.PINK
-
+	selectedCircle.modulate = (playerColor + 2*Color.WHITE) / 3
 	if aiController:
 		aiController.visible = true
 
 func _on_mouse_exited() -> void:
-	if faction == Global.Faction.PLAYERS:
-		sprite.modulate = Color.BLUE
-	else:
-		sprite.modulate = Color.RED
-
+	selectedCircle.modulate = playerColor
 	if aiController:
 		aiController.visible = false
