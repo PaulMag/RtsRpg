@@ -9,8 +9,6 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES
 @export var isAi := false
-@export var weapons: Array[Weapon]
-@export var weaponSlotEquipped := 0
 @export var loot := Global.Items.Bow
 @export var playerColor := Color.DIM_GRAY
 
@@ -360,10 +358,9 @@ func _process(_delta: float) -> void:
 		animationPlayer.play("Idle")
 
 	label.text = (
-		"Player: %s\n%s\n%s\n" % [
+		"Player: %s\n%s" % [
 			unitName,
 			str(state),
-			(getEquippedWeapon().name if getEquippedWeapon() else "no weapon")
 		]
 	)
 
@@ -487,39 +484,13 @@ func giveItem(itemType: Global.Items) -> bool:
 	# This method is called normally only on the server, which calls it again on the clients with rpc.
 	var item := load("res://resources/items/%s.tres" % Global.Items.find_key(itemType)) as Item
 
-	if not item is Weapon:  # Only support for Weapon type so far
-		return false
-	if weapons.size() >= 4:  # Inventory is full
-		return false
-
 	if multiplayer.is_server():
 		giveItem.rpc(itemType)
 
-	weapons.append(item)
-	update.rpc()
 	return true
 
-func equip(slot: int) -> void:
-	weaponSlotEquipped = slot
-	update.rpc()
 
 
-func get_weapon(slot: int) -> Weapon:
-	if slot == 0:
-		return null
-	elif slot > weapons.size():
-		return null
-	else:
-		return weapons[slot - 1]
-
-func getEquippedWeapon() -> Weapon:
-	return get_weapon(weaponSlotEquipped)
-
-var isBeingUpdated := false
-
-@rpc("call_local")
-func update() -> void:
-	isBeingUpdated = true
 
 
 func _on_talent_tree_button_toggled(toggled_on: bool) -> void:
