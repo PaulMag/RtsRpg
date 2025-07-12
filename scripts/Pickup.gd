@@ -3,9 +3,9 @@ extends Area3D
 class_name Pickup
 
 
-@export var itemType: int
+@export var itemType: Global.Items
 var itemResource: Item
-@onready var sprite: Sprite3D = $Sprite
+@onready var meshInstance: MeshInstance3D = $MeshInstance
 
 const SCENE := preload("res://scenes/Pickup.tscn")
 static func init(_itemType: Global.Items) -> Pickup:
@@ -15,7 +15,11 @@ static func init(_itemType: Global.Items) -> Pickup:
 
 func _ready() -> void:
 	itemResource = load("res://resources/items/%s.tres" % Global.Items.find_key(itemType))
-	sprite.texture = itemResource.texture
+	meshInstance.mesh = itemResource.mesh
+	var aabb := meshInstance.get_aabb()
+	meshInstance.position = -aabb.get_center()
+	meshInstance.position.y += aabb.size.y * 0.5
+
 
 
 func _process(delta: float) -> void:
