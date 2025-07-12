@@ -81,7 +81,7 @@ var unitUpdateCountdown := 0  # Necessary because there is some delay in the syn
 
 func _physics_process(_delta: float) -> void:
 	if playerId == multiplayer.get_unique_id():
-		moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").rotated(-Global.cameraArm.rotation.y)
 	if multiplayer.is_server() and getSelectedUnit():
 		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 

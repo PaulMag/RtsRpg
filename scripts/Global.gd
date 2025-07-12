@@ -29,6 +29,9 @@ var getAbility: Array[Ability] = [
 ]
 
 
+var cameraArm: Node3D
+
+
 func getPlayers() -> Array[LocalPlayer]:
 	var players: Array[LocalPlayer] = []
 	for player in get_tree().get_nodes_in_group("players"):
