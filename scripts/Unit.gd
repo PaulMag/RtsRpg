@@ -46,13 +46,15 @@ enum states {
 @onready var regenTimer: Timer = $RegenTimer
 @onready var unitHud: CanvasLayer = $UnitHud
 @onready var talentTree: Panel = $UnitHud/TalentTree
-@onready var talentTreeButton: Button = $UnitHud/TalentTreeButton
+@onready var talentTreeButton: Button = %TalentTreeButton
 @onready var talentTreeAttributeButtons: Control = $UnitHud/TalentTree/TalentAttributeButtons
 @onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
 @onready var buffIcons: HBoxContainer = %BuffIcons
-@onready var inventoryContainer: GridContainer = %InventoryGrid
+@onready var inventoryButton: Button = %InventoryButton
+@onready var inventoryPanel: Panel = %InventoryPanel
+@onready var inventoryContainer: GridContainer = %InventoryContainer
 
 @onready var destination : Vector3 = position
 var moveDirection := Vector3.ZERO
@@ -297,6 +299,7 @@ func setSelected(toggleOn: bool) -> void:
 	unitHud.visible = toggleOn
 	if not toggleOn:
 		talentTreeButton.button_pressed = false
+		inventoryButton.button_pressed = false
 	if targetUnit:
 		targetUnit.setTargeted(toggleOn)
 
@@ -520,8 +523,15 @@ func dropItem(nodeIndex: int) -> void:
 		call_deferred("add_sibling", pickup, true)
 
 
-func _on_talent_tree_button_toggled(toggled_on: bool) -> void:
-	talentTree.visible = toggled_on
+func _on_talent_tree_button_toggled(toggledOn: bool) -> void:
+	talentTree.visible = toggledOn
+	if toggledOn and inventoryButton.button_pressed:
+		inventoryButton.button_pressed = false
+
+func _on_inventory_button_toggled(toggledOn: bool) -> void:
+	inventoryPanel.visible = toggledOn
+	if toggledOn and talentTreeButton.button_pressed:
+		talentTreeButton.button_pressed = false
 
 func _on_regen_timer_timeout() -> void:
 	health += attributes.healthRegen * regenTimer.wait_time

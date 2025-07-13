@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=42 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -56,11 +56,17 @@ action = &"cancel_cast"
 [sub_resource type="Shortcut" id="Shortcut_lf2p5"]
 events = [SubResource("InputEventAction_me7gl")]
 
-[sub_resource type="InputEventAction" id="InputEventAction_kkuhh"]
+[sub_resource type="InputEventAction" id="InputEventAction_5dcda"]
+action = &"inventory"
+
+[sub_resource type="Shortcut" id="Shortcut_ipap1"]
+events = [SubResource("InputEventAction_5dcda")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_cp300"]
 action = &"talent_tree"
 
 [sub_resource type="Shortcut" id="Shortcut_i6fgt"]
-events = [SubResource("InputEventAction_kkuhh")]
+events = [SubResource("InputEventAction_cp300")]
 
 [sub_resource type="Resource" id="Resource_sa48e"]
 script = ExtResource("10_ovit6")
@@ -349,16 +355,29 @@ unique_name_in_owner = true
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TalentTreeButton" type="Button" parent="UnitHud"]
+[node name="CharacterPanelButtons" type="VBoxContainer" parent="UnitHud"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -129.0
-offset_top = -31.0
+offset_left = -96.0
+offset_top = -66.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="InventoryButton" type="Button" parent="UnitHud/CharacterPanelButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+shortcut = SubResource("Shortcut_ipap1")
+text = "Inventory"
+metadata/_edit_use_anchors_ = true
+
+[node name="TalentTreeButton" type="Button" parent="UnitHud/CharacterPanelButtons"]
+unique_name_in_owner = true
+layout_mode = 2
 focus_mode = 0
 toggle_mode = true
 shortcut = SubResource("Shortcut_i6fgt")
@@ -608,13 +627,44 @@ attributes = SubResource("Resource_16wc6")
 talentName = "Armor skill  +5%"
 metadata/_edit_use_anchors_ = true
 
-[node name="InventoryGrid" type="GridContainer" parent="."]
+[node name="InventoryPanel" type="Panel" parent="UnitHud"]
 unique_name_in_owner = true
-offset_left = 296.0
-offset_top = 184.0
-offset_right = 296.0
-offset_bottom = 184.0
-columns = 3
+visible = false
+offset_left = 130.0
+offset_top = 119.0
+offset_right = 1003.0
+offset_bottom = 546.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UnitHud/InventoryPanel"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 11.0
+offset_right = 496.0
+offset_bottom = 83.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 50
+text = "Inventory"
+
+[node name="LabelInventoryInstructions" type="Label" parent="UnitHud/InventoryPanel"]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 75.0
+offset_right = 650.0
+offset_bottom = 123.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+text = "Left-click to equip item. Right-click to drop."
+
+[node name="InventoryContainer" type="GridContainer" parent="UnitHud/InventoryPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 97.0
+offset_top = 119.0
+offset_right = 773.0
+offset_bottom = 387.0
+columns = 10
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
@@ -622,7 +672,8 @@ columns = 3
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
 [connection signal="pressed" from="UnitHud/VBoxContainer/CancelCastButton" to="." method="_on_cancel_cast_button_pressed"]
-[connection signal="toggled" from="UnitHud/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
+[connection signal="toggled" from="UnitHud/CharacterPanelButtons/InventoryButton" to="." method="_on_inventory_button_toggled"]
+[connection signal="toggled" from="UnitHud/CharacterPanelButtons/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/TalentAttributeButtons/HealthMax" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/Threat" to="UnitHud/TalentTree/TalentAttributeButtons/Threat" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" to="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" method="_on_pressed"]
