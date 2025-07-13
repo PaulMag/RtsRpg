@@ -52,6 +52,7 @@ enum states {
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
 @onready var buffIcons: HBoxContainer = %BuffIcons
+@onready var inventoryContainer: GridContainer = %InventoryGrid
 
 @onready var destination : Vector3 = position
 var moveDirection := Vector3.ZERO
@@ -487,10 +488,36 @@ func giveItem(itemType: Global.Items) -> bool:
 	if multiplayer.is_server():
 		giveItem.rpc(itemType)
 
+	var itemButton := ItemButton.init(item, 0)
+	inventoryContainer.add_child(itemButton)
+	itemButton.drop_item.connect(dropItemOnServer.bind(itemButton))
+
 	return true
 
+func dropItemOnServer(itemButton: ItemButton) -> void:
+	var nodeIndex := 0
+	for node in inventoryContainer.get_children():
+		if node == itemButton:
+			break
+		nodeIndex += 1
 
+	dropItemOnClients.rpc(nodeIndex)
 
+@rpc("any_peer", "call_local")
+func dropItemOnClients(nodeIndex: int) -> void:
+	if multiplayer.is_server():
+		dropItem.rpc(nodeIndex)
+
+@rpc("authority", "call_local")
+func dropItem(nodeIndex: int) -> void:
+	var itemButton := inventoryContainer.get_children()[nodeIndex] as ItemButton
+	var item := itemButton.item
+	inventoryContainer.remove_child(itemButton)
+
+	if multiplayer.is_server():
+		var pickup := Pickup.init(item.itemType)
+		pickup.position = position + Vector3(2, 0, 0)  # Just a small offset to avoid collision with the unit
+		call_deferred("add_sibling", pickup, true)
 
 
 func _on_talent_tree_button_toggled(toggled_on: bool) -> void:

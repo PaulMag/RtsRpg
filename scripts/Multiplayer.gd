@@ -1,7 +1,6 @@
 extends Node
 
 const LOCAL_PLAYER = preload("res://scenes/LocalPlayer.tscn")
-const DUNGEON = preload("res://scenes/Dungeon.tscn")
 
 const PORT = 4433
 
@@ -9,8 +8,9 @@ const PORT = 4433
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
 @onready var restartGameButton: Button = $UI/RestartGameButton
+@onready var pickupSpawner: MultiplayerSpawner = %PickupSpawner
 
-var dungeon: Node3D
+var dungeon: Dungeon
 
 
 func _ready() -> void:
@@ -48,6 +48,13 @@ func _on_connect_pressed() -> void:
 #	start_game()
 
 
+func spawn_dungeon() -> void:
+	dungeon = Dungeon.init()
+	add_sibling(dungeon, true)
+	print("Spawned dungeon %s" % dungeon)
+	pickupSpawner.spawn_path = dungeon.get_path()
+
+
 func start_game() -> void:
 
 	multiplayerOptions.hide()
@@ -66,8 +73,7 @@ func start_game() -> void:
 			add_player(1)
 			print("Not dedicated server. Added player 1.")
 
-		dungeon = DUNGEON.instantiate()
-		add_sibling(dungeon, true)
+		spawn_dungeon()
 
 	for player in Global.getPlayers():
 		player.playerId = player.name.to_int()   #TODO: Why is this necessary???
@@ -90,5 +96,4 @@ func add_player(id: int) -> void:
 
 func _on_restart_game_button_pressed() -> void:
 	dungeon.queue_free()
-	dungeon = DUNGEON.instantiate()
-	add_sibling(dungeon, true)
+	spawn_dungeon()

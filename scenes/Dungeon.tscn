@@ -1,32 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://dee70bilaqhd2"]
+[gd_scene load_steps=10 format=3 uid="uid://dee70bilaqhd2"]
 
-[ext_resource type="Texture2D" uid="uid://ceijsok3fk1yc" path="res://sprites/floortileset.png" id="1_5pkd6"]
+[ext_resource type="Script" uid="uid://c0fu8mb2jag8k" path="res://scripts/Dungeon.gd" id="1_gajge"]
 [ext_resource type="Script" uid="uid://bsnk0chumvcxi" path="res://scripts/Camera.gd" id="2_ip03w"]
-[ext_resource type="Script" uid="uid://3kglb8hjt8hc" path="res://scripts/Floor.gd" id="2_kco37"]
 [ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="3_g615f"]
-[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="4_3m5wx"]
-[ext_resource type="Resource" uid="uid://ba1frpch73a7f" path="res://resources/items/Bow.tres" id="5_2um4g"]
-[ext_resource type="Resource" uid="uid://b04axgdw1niu8" path="res://resources/items/Sword.tres" id="6_ac1dv"]
-[ext_resource type="Resource" uid="uid://rh6mh3jn2sgk" path="res://resources/items/HealingStaff.tres" id="7_g66xv"]
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="8_elfrr"]
+[ext_resource type="PackedScene" uid="uid://c6lg6agymr1b" path="res://models/dungeon/floor_tile_large.gltf" id="12_88po7"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ykok4"]
-vertices = PackedVector3Array(-9.5, 0.5, -9.5, -9.5, 0.5, 9.5, 9.5, 0.5, 9.5, 9.5, 0.5, -9.5)
+vertices = PackedVector3Array(-11.5, 0.4, -11.5, -11.5, 0.4, 11.5, 11.5, 0.4, 11.5, 11.5, 0.4, -11.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kco37"]
-albedo_texture = ExtResource("1_5pkd6")
-
-[sub_resource type="QuadMesh" id="QuadMesh_kco37"]
-material = SubResource("StandardMaterial3D_kco37")
-size = Vector2(20, 20)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ykok4"]
-size = Vector3(20, 20, 0.2)
+[sub_resource type="Environment" id="Environment_ykok4"]
+background_energy_multiplier = 0.5
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Resource" id="Resource_uvbsm"]
 script = ExtResource("8_elfrr")
-maxHealth = 100
+maxHealth = 10
 healthRegen = 0.0
 maxMana = 30
 manaRegen = 3.0
@@ -42,7 +33,7 @@ speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_17mqc"]
 script = ExtResource("8_elfrr")
-maxHealth = 200
+maxHealth = 10
 healthRegen = 0.0
 maxMana = 80
 manaRegen = 5.0
@@ -57,91 +48,174 @@ threatSkill = 0
 speedRatio = 1.0
 
 [node name="Dungeon" type="Node3D"]
+script = ExtResource("1_gajge")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_ykok4")
 
-[node name="Floor" type="MeshInstance3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-mesh = SubResource("QuadMesh_kco37")
-skeleton = NodePath("../..")
+[node name="floors" type="Node3D" parent="NavigationRegion3D"]
 
-[node name="StaticBody" type="StaticBody3D" parent="NavigationRegion3D/Floor"]
-script = ExtResource("2_kco37")
+[node name="floor_tile_large001" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="CollisionShape" type="CollisionShape3D" parent="NavigationRegion3D/Floor/StaticBody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
-shape = SubResource("BoxShape3D_ykok4")
+[node name="floor_tile_large002" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="floor_tile_large003" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="floor_tile_large004" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="floor_tile_large005" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 6)
+
+[node name="floor_tile_large006" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+
+[node name="floor_tile_large007" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 10)
+
+[node name="floor_tile_large008" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 10)
+
+[node name="floor_tile_large009" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 6)
+
+[node name="floor_tile_large010" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="floor_tile_large011" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 10)
+
+[node name="floor_tile_large012" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+
+[node name="floor_tile_large013" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -2)
+
+[node name="floor_tile_large014" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+
+[node name="floor_tile_large015" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
+
+[node name="floor_tile_large016" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 2)
+
+[node name="floor_tile_large017" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+
+[node name="floor_tile_large018" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -10)
+
+[node name="floor_tile_large019" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="floor_tile_large020" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -6)
+
+[node name="floor_tile_large021" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -10)
+
+[node name="floor_tile_large022" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -10)
+
+[node name="floor_tile_large023" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -6)
+
+[node name="floor_tile_large024" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -6)
+
+[node name="floor_tile_large025" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -10)
+
+[node name="floor_tile_large026" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
+
+[node name="floor_tile_large027" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -6)
+
+[node name="floor_tile_large028" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="floor_tile_large029" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
+
+[node name="floor_tile_large030" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -2)
+
+[node name="floor_tile_large031" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 2)
+
+[node name="floor_tile_large032" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+
+[node name="floor_tile_large033" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+
+[node name="floor_tile_large034" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 6)
+
+[node name="floor_tile_large035" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+
+[node name="floor_tile_large036" parent="NavigationRegion3D/floors" instance=ExtResource("12_88po7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 10)
 
 [node name="CameraArm" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 script = ExtResource("2_ip03w")
 
 [node name="Camera" type="Camera3D" parent="CameraArm"]
-transform = Transform3D(1, 0, 0, 0, 0.682866, 0.730544, 0, -0.730544, 0.682866, 0, 5.23449, 7.57344)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ykok4")
 
-[node name="PlayerUnit_01" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62579, 0, -7.87104)
+[node name="PlayerUnit_01" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.62579, 0.01, -7.87104)
 faction = 0
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("5_2um4g"), ExtResource("6_ac1dv"), ExtResource("7_g66xv")])
-weaponSlotEquipped = 1
 playerColor = Color(1, 1, 0, 1)
 unitName = "PaulMag"
 
-[node name="PlayerUnit_02" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8053, 0, -5.42313)
+[node name="PlayerUnit_02" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8053, 0.01, -5.42313)
 faction = 0
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("6_ac1dv"), ExtResource("7_g66xv")])
-weaponSlotEquipped = 2
 playerColor = Color(1, 0, 0, 1)
 unitName = "Fax"
 
-[node name="PlayerUnit_03" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.13429, 0, -3.18973)
+[node name="PlayerUnit_03" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.13429, 0.01, -3.18973)
 faction = 0
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 playerColor = Color(0, 1, 0, 1)
 unitName = "Tarkilth"
 
-[node name="PlayerUnit_04" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.38648, 0, -1.26598)
+[node name="PlayerUnit_04" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.38648, 0.01, -1.26598)
 faction = 0
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 playerColor = Color(1, 0, 1, 1)
 unitName = "Naughty Shrimp"
 
-[node name="PlayerUnit_05" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59164, 0, 0.458393)
+[node name="PlayerUnit_05" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.592, 0.01, 0.458)
 faction = 0
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 playerColor = Color(0, 0, 1, 1)
 unitName = "Slow"
 
-[node name="EnemyUnit_01" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49381, -1.90735e-06, -6.43989)
+[node name="EnemyUnit_01" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49381, 0.01, -6.43989)
 isAi = true
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 attributesList = Array[ExtResource("8_elfrr")]([SubResource("Resource_uvbsm")])
 
-[node name="EnemyUnit_02" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.26975, 0, -3.3229)
+[node name="EnemyUnit_02" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.26975, 0.01, -3.3229)
 isAi = true
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 loot = 1
 attributesList = Array[ExtResource("8_elfrr")]([SubResource("Resource_uvbsm")])
 
-[node name="EnemyUnit_03" parent="Node3D" instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.48339, 0, -0.54899)
+[node name="EnemyUnit_03" parent="." instance=ExtResource("3_g615f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.48339, 0.01, -0.54899)
 isAi = true
-weapons = Array[ExtResource("4_3m5wx")]([ExtResource("6_ac1dv"), ExtResource("5_2um4g"), ExtResource("5_2um4g")])
-weaponSlotEquipped = 3
 loot = 2
 attributesList = Array[ExtResource("8_elfrr")]([SubResource("Resource_17mqc")])
-
-[connection signal="input_event" from="NavigationRegion3D/Floor/StaticBody" to="NavigationRegion3D/Floor/StaticBody" method="_on_input_event"]
