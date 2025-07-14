@@ -7,3 +7,4 @@ class_name Item
 @export var texture: Texture2D
 @export var mesh: Mesh
 @export var slot: Global.ItemSlots
+@export var attributes: Attributes

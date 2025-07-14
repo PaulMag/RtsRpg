@@ -13,6 +13,7 @@ enum Items {
 	IronHelmet,
 	PointyHat,
 	FireWand,
+	IronCuirass,
 }
 
 enum ItemSlots {

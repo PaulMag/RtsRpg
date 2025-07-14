@@ -290,8 +290,17 @@ func updateAttributes() -> void:
 		func(buff: Buff) -> Attributes: return buff.attributes
 	))
 
+	var itemAttributesList: Array[Attributes]
+	itemAttributesList.assign(equippedItemButtons.values().map(  # This is a workaround because map doesn't support proper typing.
+		func(itemButton: ItemButton) -> Attributes:
+			return itemButton.item.attributes if itemButton and itemButton.item and itemButton.item.attributes else Attributes.new()
+	))
+
 	var buffAttributes := Attributes.sum(buffAttributesList)
+	var itemAttributes := Attributes.sum(itemAttributesList)
+
 	attributes = attributes.add(buffAttributes)
+	attributes = attributes.add(itemAttributes)
 
 	healthBar.setMaxValue(attributes.maxHealth)
 	manaBar.setMaxValue(attributes.maxMana)
@@ -510,6 +519,7 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 			oldItemButton.setEquipped(false)
 			equippedItemButtons[unEquipSlot] = null
 			print("Unequipped item %s in slot %s" % [oldItemButton.item.name, unEquipSlot])
+			updateAttributes()
 		return
 
 	var itemButton := inventoryContainer.get_children()[nodeIndex] as ItemButton
@@ -526,6 +536,7 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 		equippedItemButtons[item.slot] = null
 		itemButton.setEquipped(false)
 		print("Unequipped item %s in slot %s" % [item.name, item.slot])
+	updateAttributes()
 
 
 @rpc("call_remote")
