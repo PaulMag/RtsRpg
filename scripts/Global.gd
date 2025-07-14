@@ -10,6 +10,17 @@ enum Items {
 	Bow,
 	HealingStaff,
 	Sword,
+	IronHelmet,
+	PointyHat,
+	FireWand,
+}
+
+enum ItemSlots {
+	None, # For items that don't fit in a slot
+	MainHand,
+	Offhand,
+	Head,
+	Torso,
 }
 
 # AbilityIds and getAbility array MUST be in the same order

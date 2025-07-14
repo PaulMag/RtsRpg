@@ -73,6 +73,13 @@ var autocastAbilityId: Global.AbilityIds
 var threatTable: Dictionary = {}
 var buffs: Array[Buff] = []
 
+var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
+	Global.ItemSlots.MainHand: null,
+	Global.ItemSlots.Offhand: null,
+	Global.ItemSlots.Head: null,
+	Global.ItemSlots.Torso: null,
+}
+
 
 func _ready() -> void:
 	if multiplayer.is_server():
@@ -483,6 +490,47 @@ func die() -> void:
 func spendMana(amount: int) -> void:
 	mana -= amount
 
+
+func equipItemOnServer(itemButton: ItemButton, unEquipSlot: Global.ItemSlots = Global.ItemSlots.None) -> void:
+	var nodeIndex := 0
+	for node in inventoryContainer.get_children():
+		if node == itemButton:
+			break
+		nodeIndex += 1
+	var toggledOn := (false if itemButton.equippedBorder.visible else true)
+	equipItemOnClients.rpc(nodeIndex, toggledOn, unEquipSlot)
+
+@rpc("any_peer", "call_local")
+func equipItemOnClients(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -> void:
+	if multiplayer.is_server():
+		equipItem.rpc(nodeIndex, toggledOn, unEquipSlot)
+
+@rpc("authority", "call_local")
+func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -> void:
+	if unEquipSlot != Global.ItemSlots.None:
+		var oldItemButton := equippedItemButtons[unEquipSlot]
+		if oldItemButton:
+			oldItemButton.setEquipped(false)
+			equippedItemButtons[unEquipSlot] = null
+			print("Unequipped item %s in slot %s" % [oldItemButton.item.name, unEquipSlot])
+		return
+
+	var itemButton := inventoryContainer.get_children()[nodeIndex] as ItemButton
+	var item := itemButton.item
+
+	if toggledOn:
+		var oldItemButton := equippedItemButtons[item.slot]
+		if oldItemButton:
+			oldItemButton.setEquipped(false)
+		equippedItemButtons[item.slot] = itemButton
+		itemButton.setEquipped(true)
+		print("Equipped item %s in slot %s" % [item.name, item.slot])
+	elif equippedItemButtons[item.slot] == itemButton:
+		equippedItemButtons[item.slot] = null
+		itemButton.setEquipped(false)
+		print("Unequipped item %s in slot %s" % [item.name, item.slot])
+
+
 @rpc("call_remote")
 func giveItem(itemType: Global.Items) -> bool:
 	# This method is called normally only on the server, which calls it again on the clients with rpc.
@@ -494,8 +542,11 @@ func giveItem(itemType: Global.Items) -> bool:
 	var itemButton := ItemButton.init(item, 0)
 	inventoryContainer.add_child(itemButton)
 	itemButton.drop_item.connect(dropItemOnServer.bind(itemButton))
+	itemButton.pressed.connect(equipItemOnServer.bind(itemButton))
 
+	print("Picked up item %s" % item.name)
 	return true
+
 
 func dropItemOnServer(itemButton: ItemButton) -> void:
 	var nodeIndex := 0
@@ -503,6 +554,9 @@ func dropItemOnServer(itemButton: ItemButton) -> void:
 		if node == itemButton:
 			break
 		nodeIndex += 1
+
+	if equippedItemButtons[itemButton.item.slot] == itemButton:
+		equipItemOnClients.rpc(0, false, itemButton.item.slot)
 
 	dropItemOnClients.rpc(nodeIndex)
 
@@ -521,6 +575,7 @@ func dropItem(nodeIndex: int) -> void:
 		var pickup := Pickup.init(item.itemType)
 		pickup.position = position + Vector3(2, 0, 0)  # Just a small offset to avoid collision with the unit
 		call_deferred("add_sibling", pickup, true)
+		print("Dropped item %s" % item.name)
 
 
 func _on_talent_tree_button_toggled(toggledOn: bool) -> void:

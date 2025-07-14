@@ -2,6 +2,8 @@ extends TextureButton
 class_name ItemButton
 
 
+@onready var equippedBorder: Sprite2D = %EquippedBorder
+
 var item: Item
 var nodeIndex: int
 
@@ -20,3 +22,7 @@ static func init(_item: Item, _nodeIndex: int) -> ItemButton:
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("mouse_right_click"):
 		drop_item.emit()
+
+
+func setEquipped(toggledOn: bool) -> void:
+	equippedBorder.visible = toggledOn

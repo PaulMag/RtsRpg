@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bij67depbbb8n" path="res://sprites/projectiles/arrow.png" id="1_4utxn"]
 [ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="1_j0nsh"]
-[ext_resource type="ArrayMesh" uid="uid://1a17lnd1rnqn" path="res://models/weapons/heavy_crossbow.tres" id="2_m0jqe"]
+[ext_resource type="ArrayMesh" uid="uid://1a17lnd1rnqn" path="res://models/items/heavy_crossbow.tres" id="2_m0jqe"]
 [ext_resource type="Texture2D" uid="uid://shm2auty0h2a" path="res://sprites/projectiles/bow.png" id="3_uhge6"]
 
 [resource]
@@ -15,6 +15,8 @@ canTargetFriendly = false
 canTargetEnemy = true
 bulletSpeed = 500.0
 bulletTexture = ExtResource("1_4utxn")
+itemType = 0
 name = "Bow"
 texture = ExtResource("3_uhge6")
 mesh = ExtResource("2_m0jqe")
+slot = 1

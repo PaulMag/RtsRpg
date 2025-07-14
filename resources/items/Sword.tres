@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="1_3ey63"]
 [ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/projectiles/sword.png" id="1_63vgf"]
-[ext_resource type="ArrayMesh" uid="uid://c1ea0dd4d4vv8" path="res://models/weapons/longsword.tres" id="2_rhrbt"]
+[ext_resource type="ArrayMesh" uid="uid://c1ea0dd4d4vv8" path="res://models/items/longsword.tres" id="2_rhrbt"]
 
 [resource]
 script = ExtResource("1_3ey63")
@@ -18,3 +18,4 @@ itemType = 2
 name = "Sword"
 texture = ExtResource("1_63vgf")
 mesh = ExtResource("2_rhrbt")
+slot = 1

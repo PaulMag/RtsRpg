@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=5 format=3 uid="uid://c6fbpcoxcdgy3"]
+
+[ext_resource type="Texture2D" uid="uid://bdj3q6hl811p0" path="res://sprites/projectiles/fireball_projectile.png" id="1_glh4n"]
+[ext_resource type="ArrayMesh" uid="uid://1wt63f77jhgc" path="res://models/items/FireWand.tres" id="2_glh4n"]
+[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="3_npu3w"]
+[ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="4_glh4n"]
+
+[resource]
+script = ExtResource("3_npu3w")
+damage = 0
+attackRange = 0
+manaCost = 0
+isHealing = false
+canTargetFriendly = true
+canTargetEnemy = true
+bulletSpeed = 0.0
+bulletTexture = ExtResource("1_glh4n")
+itemType = 5
+name = "Wand of Fire"
+texture = ExtResource("4_glh4n")
+mesh = ExtResource("2_glh4n")
+slot = 1

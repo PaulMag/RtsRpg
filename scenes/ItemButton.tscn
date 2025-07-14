@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvxwufk3f5u5r"]
+[gd_scene load_steps=3 format=3 uid="uid://cvxwufk3f5u5r"]
 
 [ext_resource type="Script" uid="uid://cqvisvioxr6er" path="res://scripts/ItemButton.gd" id="1_hhgsf"]
+[ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="2_ps3q3"]
 
 [node name="ItemButton" type="TextureButton"]
 custom_minimum_size = Vector2(64, 64)
@@ -9,5 +10,11 @@ offset_bottom = 64.0
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_hhgsf")
+
+[node name="EquippedBorder" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(32, 32)
+texture = ExtResource("2_ps3q3")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

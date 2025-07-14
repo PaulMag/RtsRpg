@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://1h8xqpj2e1n6"]
+
+[ext_resource type="ArrayMesh" uid="uid://ce20tcedu5ubx" path="res://models/items/pointy_hat.tres" id="1_onxnp"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="2_h1uel"]
+[ext_resource type="Texture2D" uid="uid://mlhgmiaetnyh" path="res://sprites/projectiles/pointy_hat.png" id="3_h1uel"]
+
+[resource]
+script = ExtResource("2_h1uel")
+itemType = 4
+name = "Pointy Hat"
+texture = ExtResource("3_h1uel")
+mesh = ExtResource("1_onxnp")
+slot = 3
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"
