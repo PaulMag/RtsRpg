@@ -40,6 +40,7 @@ enum states {
 @onready var navigationAgent: NavigationAgent3D = $NavigationAgent
 @onready var aiController: AiController = $AiController
 @onready var label: Label = %Label
+@onready var armorLabel: Label = %ArmorLabel
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var castTimer: Timer = $CastTimer
 @onready var recoveryTimer: Timer = $RecoveryTimer
@@ -123,6 +124,7 @@ func _ready() -> void:
 	if not isAi:
 		aiController.queue_free()
 		remove_child(aiController)
+	label.text = unitName
 
 	var nodeIndex := 0
 	for node in talentTreeAttributeButtons.get_children():
@@ -293,7 +295,9 @@ func updateAttributes() -> void:
 
 	healthBar.setMaxValue(attributes.maxHealth)
 	manaBar.setMaxValue(attributes.maxMana)
+
 	damageReduction = 10_000. / (10_000. + attributes.armorPoints * attributes.armorSkill)
+	armorLabel.text = str(roundi((1 - damageReduction) * 100))
 
 func addAttributes(newAttributes: Attributes) -> void:
 	attributesList.append(newAttributes)
@@ -367,13 +371,6 @@ func _process(_delta: float) -> void:
 		animationPlayer.play("Walking_A")
 	elif state == states.IDLE:
 		animationPlayer.play("Idle")
-
-	label.text = (
-		"Player: %s\n%s" % [
-			unitName,
-			str(state),
-		]
-	)
 
 
 func orderMove(_destination: Vector3) -> void:

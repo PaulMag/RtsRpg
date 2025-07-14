@@ -6,8 +6,7 @@ class_name EnergyBar
 
 func setValue(amount: float) -> void:
 	energyBar.value = amount
-	label.text = "%s/%s" % [energyBar.value, energyBar.max_value]
+	label.text = "%s" % roundi(energyBar.value)
 
 func setMaxValue(amount: int) -> void:
 	energyBar.max_value = amount
-	label.text = "%s/%s" % [energyBar.value, energyBar.max_value]

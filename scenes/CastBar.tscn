@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhj6n5k8ewb2v"]
+[gd_scene load_steps=4 format=3 uid="uid://dhj6n5k8ewb2v"]
 
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="1_588on"]
 [ext_resource type="Script" uid="uid://bispccejqtrp4" path="res://scripts/CastBar.gd" id="2_588on"]
+[ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="3_ed0al"]
 
 [node name="CastBar" type="TextureProgressBar"]
-self_modulate = Color(1, 1, 1, 0.498039)
+self_modulate = Color(1, 1, 1, 0.74902)
 custom_minimum_size = Vector2(128, 16)
 offset_right = 128.0
 offset_bottom = 16.0
@@ -20,13 +21,29 @@ tint_progress = Color(1, 1, 0, 1)
 script = ExtResource("2_588on")
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(128, 16)
+custom_minimum_size = Vector2(128, 14)
 layout_mode = 0
-offset_right = 64.0
-offset_bottom = 16.0
+offset_top = -2.0
+offset_right = 128.0
+offset_bottom = 18.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 12
 text = "Ability Name"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ed0al")
+region_rect = Rect2(3, 3, 58, 58)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
