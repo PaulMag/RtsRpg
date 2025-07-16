@@ -392,13 +392,39 @@ func orderFollowUnit(unit: Unit) -> void:
 	followCursor = false
 	followTarget = true
 
-func _physics_process(_delta: float) -> void:
+
+func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
 		if moveDirection != Vector3.ZERO:
-			velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
-			navigationAgent.set_velocity(velocity)
-			followCursor = false
-			followTarget = false
+			for i in range(5):
+				# This is a hack that allows sliding along the edges of the navigation mesh
+				var intended_velocity: Vector3
+				if i == 0:
+					intended_velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
+				elif i == 1:
+					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, PI/8) * attributes.speed * attributes.speedRatio
+				elif i == 2:
+					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, -PI/8) * attributes.speed * attributes.speedRatio
+				elif i == 3:
+					intended_velocity = Vector3(moveDirection.normalized().x, 0, 0) * attributes.speed * attributes.speedRatio
+				elif i == 4:
+					intended_velocity = Vector3(0, 0, moveDirection.normalized().z) * attributes.speed * attributes.speedRatio
+
+				var intended_position := position + intended_velocity * delta
+
+				var closest_point := NavigationServer3D.map_get_closest_point(navigationAgent.get_navigation_map(), intended_position)
+
+				if intended_position.distance_to(closest_point) < 0.4:
+					velocity = intended_velocity
+					followCursor = false
+					followTarget = false
+					break
+				else:
+					velocity = Vector3.ZERO
+
+		else:
+			velocity = Vector3.ZERO
+
 
 		if followCursor:
 			navigationAgent.target_position = destination
@@ -428,6 +454,7 @@ func _physics_process(_delta: float) -> void:
 			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
 
 		move_and_slide()
+
 
 func damage(_attack: Attack) -> void:
 	if _attack.buffs:
