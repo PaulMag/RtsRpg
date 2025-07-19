@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://csi0odxr0r80r"]
 
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_1aj02"]
-[ext_resource type="Texture2D" uid="uid://bdj3q6hl811p0" path="res://sprites/projectiles/fireball_projectile.png" id="1_wa51c"]
+[ext_resource type="SphereMesh" uid="uid://c5an3tjuvetq4" path="res://models/projectiles/fireball.tres" id="1_pnn4p"]
 [ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="2_ymo3a"]
 
 [resource]
@@ -21,7 +21,7 @@ castTime = 2.0
 recoveryTime = 2.0
 speedFactorWhileCasting = 0.5
 projectileSpeed = 20.0
-projectileTexture = ExtResource("1_wa51c")
+projectileMesh = ExtResource("1_pnn4p")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true

@@ -21,7 +21,7 @@ class_name Ability
 @export var speedFactorWhileCasting: float = 0.5
 
 @export var projectileSpeed: float = 20
-@export var projectileTexture: Texture
+@export var projectileMesh: Mesh
 
 @export var canTargetSelf: bool = false
 @export var canTargetFriend: bool = false
@@ -70,7 +70,7 @@ func use(user: Unit, target: Unit) -> bool:
 		var buffs: Array[Buff] = [buff]
 		attack.buffs = buffs
 
-	var newProjectile := Projectile.init(attack, target, projectileTexture, projectileSpeed)
+	var newProjectile := Projectile.init(attack, target, projectileMesh, projectileSpeed)
 	user.add_sibling(newProjectile, true)
 
 	return true
