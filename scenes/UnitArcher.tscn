@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://depa35a7vr4uf"]
+
+[ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="1_grh4b"]
+[ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="2_3yftl"]
+[ext_resource type="Script" uid="uid://bi8oox0y3l0iu" path="res://scripts/AiControllerArcher.gd" id="3_gn7mc"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3yftl"]
+viewport_path = NodePath("SpriteHud/SubViewport")
+
+[node name="UnitArcher" node_paths=PackedStringArray("aiController") instance=ExtResource("1_grh4b")]
+aiController = NodePath("AiController")
+
+[node name="SpriteHud" parent="." index="6"]
+texture = SubResource("ViewportTexture_3yftl")
+
+[node name="AiController" parent="." index="13" node_paths=PackedStringArray("unit") instance=ExtResource("2_3yftl")]
+visible = false
+script = ExtResource("3_gn7mc")
+unit = NodePath("..")

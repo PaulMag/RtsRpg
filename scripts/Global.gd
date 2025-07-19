@@ -93,7 +93,7 @@ func deleteUnit(unit: Unit) -> void:
 			u.threatTable.erase(unit)
 		if u.targetUnit == unit:
 			u.targetUnit = null
-			if u.isAi:
+			if u.aiController:
 				u.aiController.recalculateTarget()
 	unit.queue_free()
 

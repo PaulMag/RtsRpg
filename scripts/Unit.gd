@@ -4,11 +4,12 @@ class_name Unit
 
 
 const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
+const ROGUE_SCENE := preload("res://scenes/character_models/RogueHooded.tscn")
+
 var CORPSE := preload("res://scenes/Corpse.tscn")
 
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES
-@export var isAi := false
 @export var loot := Global.Items.Bow
 @export var playerColor := Color.DIM_GRAY
 
@@ -29,6 +30,7 @@ enum states {
 @export var health: float = 75
 @export var mana: float = 40
 @export var state := states.IDLE
+@export var aiController: AiController
 
 @onready var characterModel: CharacterModel = $CharacterModel
 @onready var animationPlayer: AnimationPlayer = characterModel.animationPlayer
@@ -38,7 +40,6 @@ enum states {
 @onready var manaBar: EnergyBar  = %ManaBar
 @onready var castBar: CastBar  = %CastBar
 @onready var navigationAgent: NavigationAgent3D = $NavigationAgent
-@onready var aiController: AiController = $AiController
 @onready var label: Label = %Label
 @onready var armorLabel: Label = %ArmorLabel
 @onready var damageSound: AudioStreamPlayer2D = $DamageSound
@@ -89,18 +90,20 @@ func _ready() -> void:
 	print("unit _ready   player %s  unit %s  unitId %s" % [multiplayer.get_unique_id(), get_instance_id(), unitId])
 
 	self.add_to_group("units")
-	if faction != Global.Faction.PLAYERS:
-		isAi = true
 
-	if faction == Global.Faction.ENEMIES:
-		var barbarianScene: CharacterModel = BARBARIAN_SCENE.instantiate()
+	if aiController:
+		var characterModelScene: CharacterModel
+		if aiController is AiControllerArcher:
+			characterModelScene = ROGUE_SCENE.instantiate()
+		else:
+			characterModelScene = BARBARIAN_SCENE.instantiate()
 		var characterModelOld := characterModel
-		add_child(barbarianScene)
-		characterModel = barbarianScene
+		add_child(characterModelScene)
+		characterModel = characterModelScene
 		animationPlayer = characterModel.animationPlayer
 		characterModelOld.queue_free()
 
-	if isAi:
+	if aiController:
 		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
 		a.speed = 5
 		addAttributes(a)
@@ -121,9 +124,6 @@ func _ready() -> void:
 
 	if unitName == "":
 		unitName = "Unit #" + str(randi_range(1, 99))
-	if not isAi:
-		aiController.queue_free()
-		remove_child(aiController)
 	label.text = unitName
 
 	var nodeIndex := 0
@@ -498,7 +498,7 @@ func addThreat(unit: Unit, amount: float = 0) -> void:
 	if not unit in threatTable:
 		threatTable[unit] = 0
 	threatTable[unit] += amount
-	if isAi:
+	if aiController:
 		aiController.recalculateTarget()
 
 func getAllAwareEnemyUnits() -> Array[Unit]:

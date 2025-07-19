@@ -1,10 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=44 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
 [ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="Texture2D" uid="uid://do1er5brgwyb6" path="res://sprites/ui/armor-badge.png" id="7_cp300"]
-[ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="7_jkhdm"]
 [ext_resource type="PackedScene" uid="uid://dhj6n5k8ewb2v" path="res://scenes/CastBar.tscn" id="7_me7gl"]
 [ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
 [ext_resource type="Texture2D" uid="uid://ysqrrkulfvii" path="res://sprites/units/range_vision.png" id="7_rybnc"]
@@ -16,7 +15,9 @@
 [ext_resource type="Resource" uid="uid://daqg1br2ouhnm" path="res://resources/abilities/MeleeAttack.tres" id="10_telu4"]
 [ext_resource type="Resource" uid="uid://dvixwcti6forv" path="res://resources/abilities/HealingWord.tres" id="12_5usyn"]
 [ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="13_05g4s"]
+[ext_resource type="Texture2D" uid="uid://np8lsmjupvri" path="res://sprites/abilities/ranged_attack.png" id="13_ipap1"]
 [ext_resource type="Resource" uid="uid://csi0odxr0r80r" path="res://resources/abilities/Fireball.tres" id="14_bipdo"]
+[ext_resource type="Resource" uid="uid://b5k3kpp886qi2" path="res://resources/abilities/RangedAttack.tres" id="14_cg3ic"]
 [ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="14_ofk60"]
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="16_rwbbu"]
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
@@ -346,10 +347,6 @@ one_shot = true
 
 [node name="RegenTimer" type="Timer" parent="."]
 
-[node name="AiController" parent="." node_paths=PackedStringArray("unit") instance=ExtResource("7_jkhdm")]
-visible = false
-unit = NodePath("..")
-
 [node name="UnitHud" type="CanvasLayer" parent="."]
 visible = false
 
@@ -452,6 +449,16 @@ offset_bottom = 125.0
 texture_normal = ExtResource("10_1ssdg")
 ability = ExtResource("10_telu4")
 talentName = "Melee Attack  (10 dmg, 75 range)"
+
+[node name="RangedAttack" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 7.0
+offset_right = 210.0
+offset_bottom = 56.0
+texture_normal = ExtResource("13_ipap1")
+ability = ExtResource("14_cg3ic")
+talentName = "Ranged Attack (15 dmg, 15 range)"
 
 [node name="HealingWord" parent="UnitHud/TalentTree/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 layout_mode = 0
@@ -653,10 +660,10 @@ metadata/_edit_use_anchors_ = true
 [node name="InventoryPanel" type="Panel" parent="UnitHud"]
 unique_name_in_owner = true
 visible = false
-offset_left = 130.0
-offset_top = 119.0
-offset_right = 1003.0
-offset_bottom = 546.0
+offset_left = 200.0
+offset_top = 200.0
+offset_right = 1720.0
+offset_bottom = 880.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UnitHud/InventoryPanel"]

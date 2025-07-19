@@ -6,12 +6,24 @@ class_name AiController
 @export var unit: Unit
 
 # Which abilities the AI will use, in prioritized order.
-var abilityIdsPrioritized: Array[Global.AbilityIds] = [Global.AbilityIds.MeleeAttack, Global.AbilityIds.Fireball]
+var abilityIdsPrioritized: Array[Global.AbilityIds] = [Global.AbilityIds.MeleeAttack]
+
+
+func _ready() -> void:
+	pass
 
 
 func _process(_delta: float) -> void:
 	if not multiplayer.is_server():
 		return
+
+	if unit.targetUnit:
+		unit.followTarget = unit.position.distance_to(unit.targetUnit.position) > Global.getAbility[abilityIdsPrioritized[0]].targetRange
+		if not unit.followTarget:
+			var target_pos := unit.targetUnit.position
+			target_pos.y = unit.position.y  # Ignore vertical difference
+			unit.look_at(target_pos, Vector3.UP)
+			unit.rotate_y(PI)  # Mesh is rotated the wrong way.
 
 	# Use the first viable ability
 	if unit.targetUnit and not unit.isCasting and not unit.isRecovering:
