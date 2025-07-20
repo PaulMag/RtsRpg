@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgos8ct8r7n8c"]
 
-[ext_resource type="PackedScene" uid="uid://2xdnloxr5atq" path="res://models/characters/Barbarian.glb" id="1_gy4ix"]
+[ext_resource type="PackedScene" uid="uid://2xdnloxr5atq" path="res://models/characters_imports/Barbarian.glb" id="1_gy4ix"]
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="2_37pd0"]
 
 [node name="Barbarian" instance=ExtResource("1_gy4ix")]

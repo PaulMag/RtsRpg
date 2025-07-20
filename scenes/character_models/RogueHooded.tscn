@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dt1fld2ddv6p"]
 
-[ext_resource type="PackedScene" uid="uid://ljyhthba2koa" path="res://models/characters/Rogue_Hooded.glb" id="1_2361v"]
+[ext_resource type="PackedScene" uid="uid://ljyhthba2koa" path="res://models/characters_imports/Rogue_Hooded.glb" id="1_2361v"]
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="2_k7dsi"]
 
 [node name="Rogue_Hooded" instance=ExtResource("1_2361v")]
