@@ -1,3 +1,4 @@
+@tool  # Necessary for TalaentAbilityButton button to not complain
 extends Resource
 class_name Ability
 
@@ -76,3 +77,25 @@ func use(user: Unit, target: Unit) -> bool:
 	user.add_sibling(newProjectile, true)
 
 	return true
+
+
+func getDescription() -> String:
+	var description := ""
+	if damageMelee != 0:
+		description += "Melee damage:   %d\n" % damageMelee
+	if damageRanged != 0:
+		description += "Ranged damage:  %d\n" % damageRanged
+	if damageMagical != 0:
+		description += "Fire damage:    %d\n" % damageMagical
+	if healingAmount != 0:
+		description += "Healing amount: %d\n" % healingAmount
+	if threatAmount != 0:
+		description += "Threat amount:  %d\n" % threatAmount
+	description += "Range:          %d m\n" % targetRange
+	if manaCost > 0:
+		description += "Mana cost:      %d\n" % manaCost
+	if buffAttributes:
+		description += "Duration:       %d s\n\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
+		description += buffAttributes.getDescriptionNoZero()
+
+	return description.trim_suffix("\n")

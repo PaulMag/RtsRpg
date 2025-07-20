@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://406flp665rc" path="res://scripts/TalentAttributeButton.gd" id="2_iod4t"]
 
 [node name="TalentAttributeButton" instance=ExtResource("1_67xqx")]
-tooltip_text = "Increase attributes."
 script = ExtResource("2_iod4t")
 attributes = null
 maxRank = 100

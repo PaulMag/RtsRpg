@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://co8rc3ud7cm5v"]
+[gd_scene load_steps=15 format=3 uid="uid://co8rc3ud7cm5v"]
 
 [ext_resource type="Script" uid="uid://efn3ilkascdg" path="res://scripts/AbilityButton.gd" id="1_a5wtt"]
 [ext_resource type="Texture2D" uid="uid://3fl6g0678hws" path="res://sprites/ui/black_square.png" id="2_ixn6s"]
 [ext_resource type="Texture2D" uid="uid://chlqkwpjy3h6b" path="res://sprites/ui/autocast_border.png" id="3_kvj1r"]
+[ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="4_01oq8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwbhe"]
 atlas = ExtResource("3_kvj1r")
@@ -68,6 +69,8 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0mw2"]
+
 [node name="AbilityButton" type="TextureButton"]
 custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0
@@ -97,4 +100,35 @@ sprite_frames = SubResource("SpriteFrames_nssm6")
 autoplay = "default"
 frame_progress = 0.446563
 
+[node name="DescriptionPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -100.0
+offset_right = 213.0
+offset_bottom = -70.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b0mw2")
+
+[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("4_01oq8")
+text = "Ability description"
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

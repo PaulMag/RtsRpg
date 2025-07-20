@@ -49,14 +49,15 @@ enum states {
 @onready var unitHud: CanvasLayer = $UnitHud
 @onready var talentTree: Panel = $UnitHud/TalentTree
 @onready var talentTreeButton: Button = %TalentTreeButton
-@onready var talentTreeAttributeButtons: Control = $UnitHud/TalentTree/TalentAttributeButtons
-@onready var talentTreeAbilityButtons: Control = $UnitHud/TalentTree/TalentAbilityButtons
+@onready var talentTreeAttributeButtons: Control = %TalentAttributeButtons
+@onready var talentTreeAbilityButtons: Control = %TalentAbilityButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
 @onready var buffIcons: HBoxContainer = %BuffIcons
 @onready var inventoryButton: Button = %InventoryButton
 @onready var inventoryPanel: Panel = %InventoryPanel
 @onready var inventoryContainer: GridContainer = %InventoryContainer
+@onready var attributesLabel: Label = %AttributesLabel
 
 @onready var destination : Vector3 = position
 var moveDirection := Vector3.ZERO
@@ -141,6 +142,10 @@ func _ready() -> void:
 
 	selectedCircle.modulate = playerColor
 
+	unitHud.visible = isSelected
+	talentTree.visible = talentTreeButton.button_pressed
+	inventoryPanel.visible = inventoryButton.button_pressed
+
 
 func learnTalentAttributeOnServer(nodeIndex: int) -> void:
 	learnTalentAttributeOnClients.rpc(nodeIndex)
@@ -172,7 +177,6 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
 	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
 	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
-	newAbilityButton.tooltip_text = "Cast %s" % newAbilityButton.ability.name
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -306,6 +310,8 @@ func updateAttributes() -> void:
 
 	damageReduction = 10_000. / (10_000. + attributes.armorPoints * (100 + attributes.armorSkill))
 	armorLabel.text = str(roundi((1 - damageReduction) * 100))
+	attributesLabel.text = attributes.getDescription()
+
 
 func addAttributes(newAttributes: Attributes) -> void:
 	attributesList.append(newAttributes)
@@ -615,13 +621,14 @@ func dropItem(nodeIndex: int) -> void:
 
 func _on_talent_tree_button_toggled(toggledOn: bool) -> void:
 	talentTree.visible = toggledOn
-	if toggledOn and inventoryButton.button_pressed:
-		inventoryButton.button_pressed = false
+	inventoryPanel.visible = toggledOn
+	inventoryButton.button_pressed = toggledOn
 
 func _on_inventory_button_toggled(toggledOn: bool) -> void:
+	talentTree.visible = toggledOn
 	inventoryPanel.visible = toggledOn
-	if toggledOn and talentTreeButton.button_pressed:
-		talentTreeButton.button_pressed = false
+	talentTreeButton.button_pressed = toggledOn
+
 
 func _on_regen_timer_timeout() -> void:
 	health += attributes.healthRegen * regenTimer.wait_time

@@ -8,3 +8,13 @@ class_name Item
 @export var mesh: Mesh
 @export var slot: Global.ItemSlots
 @export var attributes: Attributes
+
+
+
+func getDescription() -> String:
+	var description := "  %s\n" % name
+	if slot != Global.ItemSlots.None:
+		description += "Slot:          %s\n" % Global.ItemSlots.find_key(slot)
+	if attributes:
+		description += attributes.getDescriptionNoZero()
+	return description.trim_suffix("\n")

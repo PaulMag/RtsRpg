@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbln30dr8vpci"]
+[gd_scene load_steps=8 format=3 uid="uid://dbln30dr8vpci"]
 
 [ext_resource type="Script" uid="uid://xdcdxu1s1k2f" path="res://scripts/Pickup.gd" id="1_08on1"]
 [ext_resource type="ArrayMesh" uid="uid://dh1s25v8136jo" path="res://models/items/shortsword.tres" id="3_3bp0e"]
+[ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="3_axj2u"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_u187m"]
-radius = 0.3
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_axj2u"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eoid5"]
 properties/0/path = NodePath(".:itemType")
@@ -14,6 +14,17 @@ properties/1/path = NodePath(".:position")
 properties/1/spawn = true
 properties/1/replication_mode = 0
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_7gm55"]
+viewport_path = NodePath("SpriteTooltip/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2gyh"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.172833, 0.172833, 0.172833, 1)
+border_blend = true
+
 [node name="Pickup" type="Area3D"]
 script = ExtResource("1_08on1")
 
@@ -22,9 +33,46 @@ mesh = ExtResource("3_3bp0e")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-shape = SubResource("SphereShape3D_u187m")
+shape = SubResource("CylinderShape3D_axj2u")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_eoid5")
 
+[node name="SpriteTooltip" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28, 2.28, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_7gm55")
+
+[node name="SubViewport" type="SubViewport" parent="SpriteTooltip"]
+transparent_bg = true
+size = Vector2i(256, 256)
+
+[node name="DescriptionPanel" type="PanelContainer" parent="SpriteTooltip/SubViewport"]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_right = 197.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_j2gyh")
+
+[node name="MarginContainer" type="MarginContainer" parent="SpriteTooltip/SubViewport/DescriptionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="DescriptionLabel" type="Label" parent="SpriteTooltip/SubViewport/DescriptionPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("3_axj2u")
+text = "Item description"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

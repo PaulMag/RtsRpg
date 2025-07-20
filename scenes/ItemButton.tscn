@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvxwufk3f5u5r"]
+[gd_scene load_steps=5 format=3 uid="uid://cvxwufk3f5u5r"]
 
 [ext_resource type="Script" uid="uid://cqvisvioxr6er" path="res://scripts/ItemButton.gd" id="1_hhgsf"]
 [ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="2_ps3q3"]
+[ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="3_hhgsf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o8vh"]
 
 [node name="ItemButton" type="TextureButton"]
 custom_minimum_size = Vector2(64, 64)
@@ -17,4 +20,35 @@ visible = false
 position = Vector2(32, 32)
 texture = ExtResource("2_ps3q3")
 
+[node name="DescriptionPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.5
+offset_top = 76.0
+offset_right = 188.5
+offset_bottom = 106.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2o8vh")
+
+[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("3_hhgsf")
+text = "Item description"
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
