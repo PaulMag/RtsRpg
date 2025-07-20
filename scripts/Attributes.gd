@@ -8,7 +8,8 @@ class_name Attributes
 @export var armorPoints: int = 0
 @export var carryCapacity: int = 0
 @export var armorSkill: int = 0
-@export var attackSkill: int = 0
+@export var meleeSkill: int = 0
+@export var rangedSkill: int = 0
 @export var magicSkill: int = 0
 @export var healSkill: int = 0
 @export var speed: float = 0
@@ -27,7 +28,8 @@ func add(other: Attributes) -> Attributes:
 	total.armorPoints = armorPoints + other.armorPoints
 	total.carryCapacity = carryCapacity + other.carryCapacity
 	total.armorSkill = armorSkill + other.armorSkill
-	total.attackSkill = attackSkill + other.attackSkill
+	total.meleeSkill = meleeSkill + other.meleeSkill
+	total.rangedSkill = rangedSkill + other.rangedSkill
 	total.magicSkill = magicSkill + other.magicSkill
 	total.healSkill = healSkill + other.healSkill
 	total.speed = speed + other.speed

@@ -1,6 +1,7 @@
 class_name Attack
 
-var damagePhysical: float
+var damageMelee: float
+var damageRanged: float
 var damageMagical: float
 var healingAmount: float
 var threat: float  # Threat from healing is separate.

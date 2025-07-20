@@ -485,7 +485,8 @@ func damage(_attack: Attack) -> void:
 			for enemyUnit in awareEnemyUnits:
 				enemyUnit.addThreat(_attack.attackingUnit, float(healingReceived * HEALING_THREAT_FACTOR) / awareEnemyUnits.size())
 	else:
-		health -= _attack.damagePhysical * damageReduction
+		health -= _attack.damageMelee * damageReduction
+		health -= _attack.damageRanged * damageReduction
 		health -= _attack.damageMagical * damageReduction
 		if is_instance_valid(_attack.attackingUnit):
 			addThreat(_attack.attackingUnit, _attack.threat)

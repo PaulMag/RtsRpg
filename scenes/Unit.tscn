@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=45 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -79,7 +79,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -95,7 +96,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -111,7 +113,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -127,7 +130,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -143,7 +147,8 @@ manaRegen = 1.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -159,7 +164,25 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 5
+meleeSkill = 10
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+
+[sub_resource type="Resource" id="Resource_5dcda"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 10
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -175,7 +198,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 10
 healSkill = 0
 speed = 0.0
@@ -191,7 +215,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 5
 speed = 0.0
@@ -207,7 +232,8 @@ manaRegen = 0.0
 armorPoints = 10
 carryCapacity = 0
 armorSkill = 0
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -223,7 +249,8 @@ manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 5
-attackSkill = 0
+meleeSkill = 0
+rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
@@ -582,7 +609,7 @@ attributes = SubResource("Resource_pdeq4")
 talentName = "Mana regen  +1/s"
 metadata/_edit_use_anchors_ = true
 
-[node name="AttackSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -6.05
@@ -594,7 +621,22 @@ offset_top = 317.0
 offset_right = 703.0
 offset_bottom = 366.0
 attributes = SubResource("Resource_jr5p1")
-talentName = "Melee power  +5%"
+talentName = "Melee power  +10%"
+metadata/_edit_use_anchors_ = true
+
+[node name="RangedSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -6.05
+anchor_top = 0.8
+anchor_right = -6.05
+anchor_bottom = 0.8
+offset_left = 654.0
+offset_top = 318.0
+offset_right = 703.0
+offset_bottom = 367.0
+attributes = SubResource("Resource_5dcda")
+talentName = "Ranged power +10%"
 metadata/_edit_use_anchors_ = true
 
 [node name="FireSkill" parent="UnitHud/TalentTree/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -709,7 +751,8 @@ columns = 10
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" to="UnitHud/TalentTree/TalentAttributeButtons/HealthRegen" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ManaMax" to="UnitHud/TalentTree/TalentAttributeButtons/ManaMax" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ManaRegen" to="UnitHud/TalentTree/TalentAttributeButtons/ManaRegen" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/AttackSkill" to="UnitHud/TalentTree/TalentAttributeButtons/AttackSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/MeleeSkill" to="UnitHud/TalentTree/TalentAttributeButtons/MeleeSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/RangedSkill" to="UnitHud/TalentTree/TalentAttributeButtons/RangedSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/FireSkill" to="UnitHud/TalentTree/TalentAttributeButtons/FireSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/HealSkill" to="UnitHud/TalentTree/TalentAttributeButtons/HealSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/TalentAttributeButtons/ArmorPoints" to="UnitHud/TalentTree/TalentAttributeButtons/ArmorPoints" method="_on_pressed"]
