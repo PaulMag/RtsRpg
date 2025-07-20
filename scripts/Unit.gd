@@ -114,7 +114,6 @@ func _ready() -> void:
 		a.maxMana = 100
 		a.healthRegen = 1.0
 		a.manaRegen = 5
-		a.armorSkill = 100
 		a.speed = 5
 		addAttributes(a)
 	updateAttributes()
@@ -305,7 +304,7 @@ func updateAttributes() -> void:
 	healthBar.setMaxValue(attributes.maxHealth)
 	manaBar.setMaxValue(attributes.maxMana)
 
-	damageReduction = 10_000. / (10_000. + attributes.armorPoints * attributes.armorSkill)
+	damageReduction = 10_000. / (10_000. + attributes.armorPoints * (100 + attributes.armorSkill))
 	armorLabel.text = str(roundi((1 - damageReduction) * 100))
 
 func addAttributes(newAttributes: Attributes) -> void:
