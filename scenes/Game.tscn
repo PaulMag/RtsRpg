@@ -70,6 +70,16 @@ offset_bottom = 31.0
 grow_horizontal = 0
 text = "Restart Game"
 
+[node name="GameVersionLabel" type="Label" parent="Multiplayer/UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_right = 22.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Version 0.2.0"
+
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
 _spawnable_scenes = PackedStringArray("uid://bi4frn2cgm5la")
 spawn_path = NodePath("../Players")
