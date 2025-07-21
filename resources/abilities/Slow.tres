@@ -36,6 +36,7 @@ threatAmount = 0
 targetRange = 15
 manaCost = 10
 isHealing = false
+aoeRadius = 0.0
 buffDuration = 10.0
 buffAttributes = SubResource("Resource_0td4m")
 castTime = 2.0

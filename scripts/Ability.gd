@@ -14,6 +14,7 @@ class_name Ability
 @export var targetRange: int
 @export var manaCost: int
 @export var isHealing: bool = false
+@export var aoeRadius: float = 0
 
 @export var buffDuration: float
 @export var buffAttributes: Attributes = null
@@ -73,8 +74,22 @@ func use(user: Unit, target: Unit) -> bool:
 		var buffs: Array[Buff] = [buff]
 		attack.buffs = buffs
 
-	var newProjectile := Projectile.init(attack, target, projectileMesh, projectileSpeed)
-	user.add_sibling(newProjectile, true)
+	if aoeRadius > 0:
+		var _targets := Global.getAllUnits().filter(
+			func(u: Unit) -> bool:
+				return (
+					(target.position.distance_to(u.position) <= aoeRadius)
+					and !(user == u and !canTargetSelf)
+					and !(user.faction == u.faction and !canTargetFriend)
+					and !(user.faction != u.faction and !canTargetEnemy)
+				)
+		) as Array[Unit]
+		for _target in _targets:
+			var newProjectile := Projectile.init(attack, _target, projectileMesh, projectileSpeed)
+			user.add_sibling(newProjectile, true)
+	else:
+		var newProjectile := Projectile.init(attack, target, projectileMesh, projectileSpeed)
+		user.add_sibling(newProjectile, true)
 
 	return true
 
@@ -92,6 +107,8 @@ func getDescription() -> String:
 	if threatAmount != 0:
 		description += "Threat amount:  %d\n" % threatAmount
 	description += "Range:          %d m\n" % targetRange
+	if aoeRadius > 0:
+		description += "AoE radius:     %d m\n" % aoeRadius
 	if manaCost > 0:
 		description += "Mana cost:      %d\n" % manaCost
 	if buffAttributes:

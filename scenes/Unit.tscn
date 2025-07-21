@@ -519,9 +519,10 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 texture_normal = ExtResource("14_ofk60")
 ability = ExtResource("14_bipdo")
-talentName = "Firebolt"
+talentName = "Fireball"
 talentDescription = "Fire damage:    20
 Range:          15 m
+AoE radius:     5 m
 Mana cost:      10"
 
 [node name="HealingWord" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
