@@ -16,7 +16,7 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 # Attributes
 var damageReduction: float = 0
 var attributes: Attributes
-@export var attributesList: Array[Attributes]
+@export var baseAttributes: Attributes
 
 enum states {
 	IDLE,
@@ -104,19 +104,6 @@ func _ready() -> void:
 		animationPlayer = characterModel.animationPlayer
 		characterModelOld.queue_free()
 
-	if aiController:
-		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
-		a.speed = 5
-		addAttributes(a)
-	else:
-		attributesList = []
-		var a := Attributes.new()  #TODO: This is just here until proper starting attributes are defined.
-		a.maxHealth = 10 + 100
-		a.maxMana = 100
-		a.healthRegen = 1.0
-		a.manaRegen = 5
-		a.speed = 5
-		addAttributes(a)
 	updateAttributes()
 
 	health = attributes.maxHealth
@@ -286,8 +273,6 @@ func toggleAutocast(abilityId: Global.AbilityIds) -> void:
 				abilityButton.setAutocast(false)  # Un-toggle all the other abilities
 
 func updateAttributes() -> void:
-	attributes = Attributes.sum(attributesList)
-
 	var buffAttributesList: Array[Attributes]
 	buffAttributesList.assign(buffs.map(  # This is a workaround because map doesn't support proper typing.
 		func(buff: Buff) -> Attributes: return buff.attributes
@@ -302,8 +287,7 @@ func updateAttributes() -> void:
 	var buffAttributes := Attributes.sum(buffAttributesList)
 	var itemAttributes := Attributes.sum(itemAttributesList)
 
-	attributes = attributes.add(buffAttributes)
-	attributes = attributes.add(itemAttributes)
+	attributes = Attributes.sum([baseAttributes, buffAttributes, itemAttributes])
 
 	healthBar.setMaxValue(attributes.maxHealth)
 	manaBar.setMaxValue(attributes.maxMana)
@@ -314,7 +298,7 @@ func updateAttributes() -> void:
 
 
 func addAttributes(newAttributes: Attributes) -> void:
-	attributesList.append(newAttributes)
+	baseAttributes = baseAttributes.add(newAttributes)
 	updateAttributes()
 
 func setSelected(toggleOn: bool) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=47 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -25,6 +25,24 @@
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 [ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/character_models/Mage.tscn" id="23_cp300"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="25_ipap1"]
+
+[sub_resource type="Resource" id="Resource_oyts4"]
+script = ExtResource("10_ovit6")
+maxHealth = 100
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 5.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cp300"]
 radius = 0.3
@@ -250,6 +268,7 @@ border_width_bottom = 5
 
 [node name="Unit" type="CharacterBody3D"]
 script = ExtResource("1_m0gx0")
+baseAttributes = SubResource("Resource_oyts4")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
