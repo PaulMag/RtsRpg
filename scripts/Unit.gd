@@ -73,7 +73,7 @@ var isRecovering := false
 var isAutocasting := false
 var autocastAbilityId: Global.AbilityIds
 
-var threatTable: Dictionary = {}
+var threatTable: Dictionary[Unit, float] = {}
 var buffs: Array[Buff] = []
 
 var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
@@ -639,7 +639,8 @@ func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3,
 
 func _on_mouse_entered() -> void:
 	selectedCircle.modulate = (playerColor + 2*Color.WHITE) / 3
-	if aiController:
+	if aiController and Global.getPlayerCurrent().getSelectedUnit() not in threatTable.keys():
+		# Show the AI detection area only if the AI is not already aware of the player unit.
 		aiController.visible = true
 
 func _on_mouse_exited() -> void:
