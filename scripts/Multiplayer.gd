@@ -8,7 +8,7 @@ const PORT = 4433
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
 @onready var restartGameButton: Button = $UI/RestartGameButton
-@onready var pickupSpawner: MultiplayerSpawner = %PickupSpawner
+@onready var unitAndItemSpawner: MultiplayerSpawner = %UnitAndItemSpawner
 
 var dungeon: Dungeon
 
@@ -52,7 +52,7 @@ func spawn_dungeon() -> void:
 	dungeon = Dungeon.init()
 	add_sibling(dungeon, true)
 	print("Spawned dungeon %s" % dungeon)
-	pickupSpawner.spawn_path = dungeon.get_path()
+	unitAndItemSpawner.spawn_path = dungeon.get_path()
 
 
 func start_game() -> void:

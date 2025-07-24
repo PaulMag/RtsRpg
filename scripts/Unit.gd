@@ -1,6 +1,8 @@
 extends CharacterBody3D
-
 class_name Unit
+
+
+signal died
 
 
 const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
@@ -59,7 +61,7 @@ enum states {
 @onready var inventoryContainer: GridContainer = %InventoryContainer
 @onready var attributesLabel: Label = %AttributesLabel
 
-@onready var destination : Vector3 = position
+@onready var destination : Vector3
 var moveDirection := Vector3.ZERO
 
 @export var targetUnit: Unit = null
@@ -501,6 +503,7 @@ func getAllAwareEnemyUnits() -> Array[Unit]:
 
 @rpc("call_local")
 func die() -> void:
+	died.emit()
 	if multiplayer.is_server():
 		var pickup := Pickup.init(loot)
 		pickup.position = position

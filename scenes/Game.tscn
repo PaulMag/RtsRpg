@@ -86,13 +86,13 @@ spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="Multiplayer"]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="DungeonSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dee70bilaqhd2")
 spawn_path = NodePath("..")
 
-[node name="PickupSpawner" type="MultiplayerSpawner" parent="."]
+[node name="UnitAndItemSpawner" type="MultiplayerSpawner" parent="."]
 unique_name_in_owner = true
-_spawnable_scenes = PackedStringArray("uid://dbln30dr8vpci")
+_spawnable_scenes = PackedStringArray("uid://dbln30dr8vpci", "uid://c0cy3pn7up1o0", "uid://bn8e3enlkea5w", "uid://depa35a7vr4uf")
 spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]
