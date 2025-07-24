@@ -28,7 +28,7 @@ enum states {
 }
 
 @export var unitName: String = ""
-
+@export var level: int = 1  # Only relevant for enemies for now
 @export var health: float = 75
 @export var mana: float = 40
 @export var state := states.IDLE

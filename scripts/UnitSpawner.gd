@@ -1,6 +1,8 @@
 extends Node3D
 class_name UnitSpawner
 
+
+@export var level: int = 1
 @export var afterSpawnTarget: Node3D
 @export var numberOfBarbarians: int
 @export var numberOfArchers: int
@@ -38,6 +40,7 @@ func _ready() -> void:
 
 func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 	var newUnit := UNIT_SCENE.instantiate() as Unit
+	newUnit.level = level
 
 	var offset := Vector3(randf_range(-SPAWN_RADIUS, SPAWN_RADIUS), 0, randf_range(-SPAWN_RADIUS, SPAWN_RADIUS))
 	newUnit.position = position + offset

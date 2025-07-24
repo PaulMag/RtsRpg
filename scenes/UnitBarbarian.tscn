@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn8e3enlkea5w"]
+[gd_scene load_steps=5 format=3 uid="uid://bn8e3enlkea5w"]
 
 [ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="1_usceq"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="2_gxgwg"]
+[ext_resource type="Script" uid="uid://d0hsl6hkt0ovm" path="res://scripts/UnitBarbarian.gd" id="2_ns5fy"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gxgwg"]
 viewport_path = NodePath("SpriteHud/SubViewport")
 
 [node name="UnitBarbarian" node_paths=PackedStringArray("aiController") instance=ExtResource("1_usceq")]
+script = ExtResource("2_ns5fy")
 aiController = NodePath("AiController")
 
 [node name="SpriteHud" parent="." index="6"]
