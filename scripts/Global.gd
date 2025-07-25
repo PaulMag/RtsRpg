@@ -99,3 +99,10 @@ func deleteUnit(unit: Unit) -> void:
 
 	var timer := get_tree().create_timer(0.2)
 	timer.connect("timeout", getPlayerCurrent().updateUnitList)  #TODO Temporary ugly way to remove from UnitList
+
+
+func vec3_to_vec2(vector3: Vector3) -> Vector2:
+	return Vector2(vector3.x, vector3.z)
+
+func vec2_to_vec3(vector2: Vector2, y: float = 0.0) -> Vector3:
+	return Vector3(vector2.x, y, vector2.y)

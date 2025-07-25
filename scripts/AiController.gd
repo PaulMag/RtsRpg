@@ -1,12 +1,11 @@
 extends Area3D
-
 class_name AiController
 
 
 @export var unit: Unit
 
 # Which abilities the AI will use, in prioritized order.
-var abilityIdsPrioritized: Array[Global.AbilityIds] = [Global.AbilityIds.MeleeAttack]
+var abilityIdsPrioritized: Array[Global.AbilityIds] = []
 
 
 func _ready() -> void:

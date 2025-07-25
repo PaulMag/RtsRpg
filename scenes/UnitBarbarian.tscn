@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn8e3enlkea5w"]
+[gd_scene load_steps=6 format=3 uid="uid://bn8e3enlkea5w"]
 
 [ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="1_usceq"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="2_gxgwg"]
 [ext_resource type="Script" uid="uid://d0hsl6hkt0ovm" path="res://scripts/UnitBarbarian.gd" id="2_ns5fy"]
+[ext_resource type="Script" uid="uid://cpjsxhjrb2jwr" path="res://scripts/AiControllerMelee.gd" id="4_yrmmf"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gxgwg"]
 viewport_path = NodePath("SpriteHud/SubViewport")
@@ -16,4 +17,5 @@ texture = SubResource("ViewportTexture_gxgwg")
 
 [node name="AiController" parent="." index="13" node_paths=PackedStringArray("unit") instance=ExtResource("2_gxgwg")]
 visible = false
+script = ExtResource("4_yrmmf")
 unit = NodePath("..")
