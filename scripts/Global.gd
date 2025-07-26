@@ -7,19 +7,31 @@ enum Faction {
 }
 
 enum Items {
-	Bow,
-	HealingStaff,
-	Sword,
-	IronHelmet,
-	PointyHat,
-	FireWand,
-	IronCuirass,
+	NONE,
+	dagger,
+	sword_short,
+	sword_long,
+	crossbow_light,
+	crossbow_heavy,
+	staff_healing,
+	wand_fire,
+	cuirass_iron,
+	robe_mage,
+	tunic_leather,
+	helmet_iron,
+	hat_pointy,
+	hat_bear,
+	shield_round,
+	shield_kite,
+	shield_kite_spiked,
+	shield_tower,
+	spellbook,
 }
 
 enum ItemSlots {
 	None, # For items that don't fit in a slot
 	MainHand,
-	Offhand,
+	OffHand,
 	Head,
 	Torso,
 }

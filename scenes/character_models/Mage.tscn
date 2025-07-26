@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://b4k2pv63ifay8" path="res://models/characters_imports/Mage.glb" id="1_yg777"]
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="2_kfl3c"]
-[ext_resource type="ArrayMesh" uid="uid://1wt63f77jhgc" path="res://models/items/FireWand.tres" id="3_536on"]
+[ext_resource type="ArrayMesh" uid="uid://1wt63f77jhgc" path="res://models/items/wand_fire.tres" id="3_536on"]
 [ext_resource type="ArrayMesh" uid="uid://ce20tcedu5ubx" path="res://models/items/pointy_hat.tres" id="3_krrhh"]
-[ext_resource type="ArrayMesh" uid="uid://bafyxxc3jlrbj" path="res://models/items/HealingStaff.tres" id="3_w2rhq"]
+[ext_resource type="ArrayMesh" uid="uid://bafyxxc3jlrbj" path="res://models/items/staff_healing.tres" id="3_w2rhq"]
 
 [node name="Mage" instance=ExtResource("1_yg777")]
 script = ExtResource("2_kfl3c")

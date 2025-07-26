@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dbln30dr8vpci"]
 
 [ext_resource type="Script" uid="uid://xdcdxu1s1k2f" path="res://scripts/Pickup.gd" id="1_08on1"]
-[ext_resource type="ArrayMesh" uid="uid://dh1s25v8136jo" path="res://models/items/shortsword.tres" id="3_3bp0e"]
+[ext_resource type="ArrayMesh" uid="uid://b2sd0hjgswynt" path="res://models/items/helmet_iton.tres" id="2_3bp0e"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="3_axj2u"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_axj2u"]
@@ -29,7 +29,7 @@ border_blend = true
 script = ExtResource("1_08on1")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
-mesh = ExtResource("3_3bp0e")
+mesh = ExtResource("2_3bp0e")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)

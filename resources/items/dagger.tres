@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://hjpri2ip78aj"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_luexb"]
+[ext_resource type="ArrayMesh" uid="uid://dub3fnatmi3b0" path="res://models/items/dagger.tres" id="2_c25pr"]
+[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="3_6jfau"]
+[ext_resource type="Texture2D" uid="uid://bsv8j3sjtr17e" path="res://sprites/items/dagger.png" id="4_luexb"]
+
+[sub_resource type="Resource" id="Resource_0ar00"]
+script = ExtResource("1_luexb")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 25
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.1
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_6jfau")
+itemType = 1
+name = "Dagger"
+texture = ExtResource("4_luexb")
+mesh = ExtResource("2_c25pr")
+slot = 1
+attributes = SubResource("Resource_0ar00")

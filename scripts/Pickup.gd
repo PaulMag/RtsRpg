@@ -19,6 +19,10 @@ static func init(_itemType: Global.Items) -> Pickup:
 
 
 func _ready() -> void:
+	if itemType == Global.Items.NONE:
+		queue_free()
+		return
+
 	itemResource = load("res://resources/items/%s.tres" % Global.Items.find_key(itemType))
 	meshInstance.mesh = itemResource.mesh
 

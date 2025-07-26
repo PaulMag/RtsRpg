@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://nl2ufacxby04"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_265x1"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="2_265x1"]
+[ext_resource type="ArrayMesh" uid="uid://byi77ibnulm56" path="res://models/items/shield_kite.tres" id="2_m1h3j"]
+[ext_resource type="Texture2D" uid="uid://ccig5o70v4d" path="res://sprites/items/shield_kite.png" id="4_m1h3j"]
+
+[sub_resource type="Resource" id="Resource_utpj5"]
+script = ExtResource("1_265x1")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 25
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("2_265x1")
+itemType = 15
+name = "Kite Shield"
+texture = ExtResource("4_m1h3j")
+mesh = ExtResource("2_m1h3j")
+slot = 2
+attributes = SubResource("Resource_utpj5")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

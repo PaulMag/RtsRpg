@@ -12,7 +12,7 @@ var CORPSE := preload("res://scenes/Corpse.tscn")
 
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES
-@export var loot := Global.Items.Bow
+@export var loot: Array[Global.Items]
 @export var playerColor := Color.DIM_GRAY
 
 # Attributes
@@ -80,7 +80,7 @@ var buffs: Array[Buff] = []
 
 var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
 	Global.ItemSlots.MainHand: null,
-	Global.ItemSlots.Offhand: null,
+	Global.ItemSlots.OffHand: null,
 	Global.ItemSlots.Head: null,
 	Global.ItemSlots.Torso: null,
 }
@@ -504,10 +504,13 @@ func getAllAwareEnemyUnits() -> Array[Unit]:
 @rpc("call_local")
 func die() -> void:
 	died.emit()
+
 	if multiplayer.is_server():
-		var pickup := Pickup.init(loot)
-		pickup.position = position
-		call_deferred("add_sibling", pickup, true)
+		for item in loot:
+			var pickup := Pickup.init(item)
+			pickup.position = position
+			call_deferred("add_sibling", pickup, true)
+
 	# var corpse: Corpse = CORPSE.instantiate()
 	# corpse.position = position
 	# get_parent().add_child(corpse)

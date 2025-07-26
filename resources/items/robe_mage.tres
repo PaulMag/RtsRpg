@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://m7j8w03fhcul"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_khcq8"]
+[ext_resource type="ArrayMesh" uid="uid://cylyasyfg5f6y" path="res://models/items/robe_mage.tres" id="2_v2ss4"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="3_i858r"]
+[ext_resource type="Texture2D" uid="uid://hryskdqjlbgm" path="res://sprites/items/robe_mage.png" id="4_khcq8"]
+
+[sub_resource type="Resource" id="Resource_q0l2m"]
+script = ExtResource("1_khcq8")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 10
+manaRegen = 0.5
+armorPoints = 5
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_i858r")
+itemType = 9
+name = "Mage's Robe"
+texture = ExtResource("4_khcq8")
+mesh = ExtResource("2_v2ss4")
+slot = 4
+attributes = SubResource("Resource_q0l2m")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

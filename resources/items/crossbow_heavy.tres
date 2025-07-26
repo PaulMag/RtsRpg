@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://dwgeul2aael1p"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_4fm7w"]
+[ext_resource type="ArrayMesh" uid="uid://dg4e7svp6qt2c" path="res://models/items/crossbow_light.tres" id="2_01q6a"]
+[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="3_kr7lp"]
+[ext_resource type="Texture2D" uid="uid://78mpmahnj6e7" path="res://sprites/items/crossbow_heavy.png" id="4_01q6a"]
+
+[sub_resource type="Resource" id="Resource_us7d3"]
+script = ExtResource("1_4fm7w")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 75
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 0.95
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_kr7lp")
+itemType = 5
+name = "Heavy Crossbow"
+texture = ExtResource("4_01q6a")
+mesh = ExtResource("2_01q6a")
+slot = 1
+attributes = SubResource("Resource_us7d3")

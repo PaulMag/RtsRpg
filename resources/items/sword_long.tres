@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://b04axgdw1niu8"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_dn3ro"]
+[ext_resource type="ArrayMesh" uid="uid://c1ea0dd4d4vv8" path="res://models/items/sword_long.tres" id="2_nqtow"]
+[ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="3_wpys3"]
+[ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/projectiles/sword.png" id="4_ire6w"]
+
+[sub_resource type="Resource" id="Resource_y15e3"]
+script = ExtResource("1_dn3ro")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = -10
+meleeSkill = 75
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_wpys3")
+itemType = 3
+name = "Longsword"
+texture = ExtResource("4_ire6w")
+mesh = ExtResource("2_nqtow")
+slot = 1
+attributes = SubResource("Resource_y15e3")

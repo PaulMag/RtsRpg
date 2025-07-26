@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://edaaav5y8dfu"]
+
+[ext_resource type="ArrayMesh" uid="uid://bun2bwdknk4iy" path="res://models/items/spellbook.tres" id="1_6ep0h"]
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_aebjh"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="2_aebjh"]
+[ext_resource type="Texture2D" uid="uid://bd5hoakmngw8v" path="res://sprites/items/spellbook.png" id="4_op6ac"]
+
+[sub_resource type="Resource" id="Resource_op6ac"]
+script = ExtResource("1_aebjh")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.5
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 15
+healSkill = 15
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("2_aebjh")
+itemType = 18
+name = "Spellbook"
+texture = ExtResource("4_op6ac")
+mesh = ExtResource("1_6ep0h")
+slot = 2
+attributes = SubResource("Resource_op6ac")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

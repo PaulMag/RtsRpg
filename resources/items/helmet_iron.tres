@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://3j5to0rdhl80"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_akm7p"]
+[ext_resource type="ArrayMesh" uid="uid://b2sd0hjgswynt" path="res://models/items/helmet_iton.tres" id="2_k65sg"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="3_npgbj"]
+[ext_resource type="Texture2D" uid="uid://csfuj4y5644qm" path="res://sprites/items/helmet_iron.png" id="4_akm7p"]
+
+[sub_resource type="Resource" id="Resource_ufawb"]
+script = ExtResource("1_akm7p")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 25
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 0.97
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_npgbj")
+itemType = 11
+name = "Iron Helmet"
+texture = ExtResource("4_akm7p")
+mesh = ExtResource("2_k65sg")
+slot = 3
+attributes = SubResource("Resource_ufawb")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

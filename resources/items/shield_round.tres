@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://iux42oqwjloa"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_g0nyt"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="2_g0nyt"]
+[ext_resource type="ArrayMesh" uid="uid://bbom8i78eksdt" path="res://models/items/shield_round.tres" id="2_tdoru"]
+[ext_resource type="Texture2D" uid="uid://bm5ki67o6hu8q" path="res://sprites/items/shield_round.png" id="4_tdoru"]
+
+[sub_resource type="Resource" id="Resource_jjw1k"]
+script = ExtResource("1_g0nyt")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 15
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("2_g0nyt")
+itemType = 14
+name = "Round Shield"
+texture = ExtResource("4_tdoru")
+mesh = ExtResource("2_tdoru")
+slot = 2
+attributes = SubResource("Resource_jjw1k")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

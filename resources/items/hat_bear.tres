@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://28qpr7enouip"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_0vd60"]
+[ext_resource type="ArrayMesh" uid="uid://cgm0mjabf2vck" path="res://models/items/hat_bear.tres" id="2_rn1qv"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="3_21sya"]
+[ext_resource type="Texture2D" uid="uid://cjqb3grqhwslb" path="res://sprites/items/hat_bear.png" id="4_vjbfs"]
+
+[sub_resource type="Resource" id="Resource_fqv2f"]
+script = ExtResource("1_0vd60")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 5
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 10
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.05
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_21sya")
+itemType = 13
+name = "Bear Heat"
+texture = ExtResource("4_vjbfs")
+mesh = ExtResource("2_rn1qv")
+slot = 3
+attributes = SubResource("Resource_fqv2f")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

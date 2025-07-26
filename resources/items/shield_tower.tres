@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://fsniq536qf2i"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_2t37f"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="2_2t37f"]
+[ext_resource type="ArrayMesh" uid="uid://cksw4yfdv1wen" path="res://models/items/shield_tower.tres" id="2_6gfhd"]
+[ext_resource type="Texture2D" uid="uid://dndmqh2j0ig2q" path="res://sprites/items/shield_tower.png" id="4_6gfhd"]
+
+[sub_resource type="Resource" id="Resource_gbxim"]
+script = ExtResource("1_2t37f")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 35
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 0.97
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("2_2t37f")
+itemType = 17
+name = "Tower Shield"
+texture = ExtResource("4_6gfhd")
+mesh = ExtResource("2_6gfhd")
+slot = 2
+attributes = SubResource("Resource_gbxim")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"

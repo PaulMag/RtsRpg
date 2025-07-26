@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://w00b4fdna4no"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_4b5y8"]
+[ext_resource type="ArrayMesh" uid="uid://dpg3gm7686ct4" path="res://models/items/tunic_leather.tres" id="2_yjcpe"]
+[ext_resource type="Script" uid="uid://dp0s8x6phjuay" path="res://scripts/items/Item.gd" id="3_08so1"]
+[ext_resource type="Texture2D" uid="uid://cqo1sknxhnu86" path="res://sprites/items/tunic_leather.png" id="4_4b5y8"]
+
+[sub_resource type="Resource" id="Resource_q0l2m"]
+script = ExtResource("1_4b5y8")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 15
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.05
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("3_08so1")
+itemType = 10
+name = "Leather Tunic"
+texture = ExtResource("4_4b5y8")
+mesh = ExtResource("2_yjcpe")
+slot = 4
+attributes = SubResource("Resource_q0l2m")
+metadata/_custom_type_script = "uid://dp0s8x6phjuay"
