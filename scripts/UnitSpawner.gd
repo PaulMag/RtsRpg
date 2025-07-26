@@ -8,25 +8,22 @@ class_name UnitSpawner
 @export var numberOfArchers: int
 @export var numberOfAdditionalBarbarians: int
 @export var numberOfAdditionalArchers: int
+@export var numberOfLoot: int = 0
 
+@onready var label: Label = %Label
 
 const BARBARIAN_SCENE := preload("res://scenes/UnitBarbarian.tscn")
 const ARCHER_SCENE := preload("res://scenes/UnitArcher.tscn")
 
 const SPAWN_RADIUS: float = 3
 
+var numberOfLivingUnits: int = 0
 var remainingSpawns: Array[PackedScene] = []
 
 
 func _ready() -> void:
 	if not multiplayer.is_server():
 		return
-
-	for i in range(numberOfBarbarians):
-		spawnUnit(BARBARIAN_SCENE)
-
-	for i in range(numberOfArchers):
-		spawnUnit(ARCHER_SCENE)
 
 	for i in range(numberOfAdditionalBarbarians):
 		remainingSpawns.append(BARBARIAN_SCENE)
@@ -36,6 +33,11 @@ func _ready() -> void:
 
 	remainingSpawns.shuffle()
 
+	for i in range(numberOfBarbarians):
+		spawnUnit(BARBARIAN_SCENE)
+
+	for i in range(numberOfArchers):
+		spawnUnit(ARCHER_SCENE)
 
 
 func spawnUnit(UNIT_SCENE: PackedScene) -> void:
@@ -46,15 +48,32 @@ func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 	newUnit.position = position + offset
 	add_sibling.call_deferred(newUnit, true)
 
+	numberOfLivingUnits += 1
+	label.text = "Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size())
+
 	if afterSpawnTarget:
 		newUnit.destination = afterSpawnTarget.global_position + offset
 		newUnit.followCursor = true
 
-	newUnit.died.connect(spawnAdditionalUnit)
+	newUnit.died.connect(onUnitDied)
 
+func onUnitDied() -> void:
+	numberOfLivingUnits -= 1
+	label.text = "Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size())
 
-func spawnAdditionalUnit() -> void:
 	if not remainingSpawns.is_empty():
 		print("%s spawns additional unit" % self)
 		var newScene := remainingSpawns.pop_back() as PackedScene
 		spawnUnit(newScene)
+
+	elif numberOfLivingUnits == 0:
+		for i in range(numberOfLoot):
+			var angleDiff := 2 * PI / numberOfLoot
+			var positionOffset := Vector3(cos(angleDiff * i), 0, sin(angleDiff * i)) * numberOfLoot / PI
+
+			var item := Global.dungeon.getNextLoot()
+			var pickup := Pickup.init(item)
+			pickup.position = position + positionOffset
+			call_deferred("add_sibling", pickup, true)
+
+		label.text = "Encounter\ndefeated!"

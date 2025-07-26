@@ -56,6 +56,7 @@ var getAbility: Array[Ability] = [
 
 
 var cameraArm: Node3D
+var dungeon: Dungeon
 
 
 func getPlayers() -> Array[LocalPlayer]:

@@ -1,6 +1,54 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsyghmbk5vvlg"]
+[gd_scene load_steps=5 format=3 uid="uid://dsyghmbk5vvlg"]
 
 [ext_resource type="Script" uid="uid://bpx0sfepqvm3p" path="res://scripts/UnitSpawner.gd" id="1_eg8l7"]
+[ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="2_j6120"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_j6120"]
+viewport_path = NodePath("Sprite/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yosiq"]
+bg_color = Color(0.756863, 0.6, 0.6, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.172833, 0.172833, 0.172833, 1)
+border_blend = true
 
 [node name="UnitSpawner" type="Node3D"]
 script = ExtResource("1_eg8l7")
+
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_j6120")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite"]
+transparent_bg = true
+size = Vector2i(200, 100)
+
+[node name="Panel" type="PanelContainer" parent="Sprite/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yosiq")
+
+[node name="MarginContainer" type="MarginContainer" parent="Sprite/SubViewport/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="Label" type="Label" parent="Sprite/SubViewport/Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_j6120")
+theme_override_font_sizes/font_size = 24
+text = "Enemies: 99"
+horizontal_alignment = 1
+vertical_alignment = 1
