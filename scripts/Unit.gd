@@ -60,6 +60,7 @@ enum states {
 @onready var inventoryPanel: Panel = %InventoryPanel
 @onready var inventoryContainer: GridContainer = %InventoryContainer
 @onready var attributesLabel: Label = %AttributesLabel
+@onready var labelTalentPoints: Label = %LabelTalentPoints
 
 @onready var destination : Vector3
 var moveDirection := Vector3.ZERO
@@ -85,6 +86,7 @@ var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
 	Global.ItemSlots.Head: null,
 	Global.ItemSlots.Torso: null,
 }
+var talentPoints: float = 0
 
 
 func _ready() -> void:
@@ -138,10 +140,12 @@ func _ready() -> void:
 
 
 func learnTalentAttributeOnServer(nodeIndex: int) -> void:
-	learnTalentAttributeOnClients.rpc(nodeIndex)
+	if talentPoints >= 1:
+		learnTalentAttributeOnClients.rpc(nodeIndex)
 
 func learnTalentAbilityOnServer(nodeIndex: int) -> void:
-	learnTalentAbilityOnClients.rpc(nodeIndex)
+	if talentPoints >= 1:
+		learnTalentAbilityOnClients.rpc(nodeIndex)
 
 @rpc("any_peer", "call_local")
 func learnTalentAttributeOnClients(nodeIndex: int) -> void:
@@ -159,6 +163,7 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 	addAttributes(talentAttributeButton.attributes)
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
+	giveTalentPoints(-1)
 
 @rpc("authority", "call_local")
 func learnTalentAbility(nodeIndex: int) -> void:
@@ -171,6 +176,7 @@ func learnTalentAbility(nodeIndex: int) -> void:
 
 	talentAbilityButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAbilityButton.talentName, talentAbilityButton.rank])
+	giveTalentPoints(-1)
 
 func getAbilityButtons() -> Array[AbilityButton]:
 	var abilityButtons: Array[AbilityButton] = []
@@ -659,3 +665,17 @@ func _on_mouse_exited() -> void:
 	selectedCircle.modulate = playerColor
 	if aiController:
 		aiController.visible = false
+
+
+func giveTalentPointsOnServer(amount: float) -> void:
+	giveTalentPointsOnClients.rpc(amount)
+
+@rpc("any_peer", "call_local")
+func giveTalentPointsOnClients(amount: float) -> void:
+	if multiplayer.is_server():
+		giveTalentPoints.rpc(amount)
+
+@rpc("authority", "call_local")
+func giveTalentPoints(amount: float) -> void:
+	talentPoints += amount
+	labelTalentPoints.text = "Talent Points: %d" % talentPoints

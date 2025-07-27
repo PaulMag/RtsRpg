@@ -8,7 +8,8 @@ class_name UnitSpawner
 @export var numberOfArchers: int
 @export var numberOfAdditionalBarbarians: int
 @export var numberOfAdditionalArchers: int
-@export var numberOfLoot: int = 0
+@export var numberOfLoot: int = 3
+@export var talentPointsReward: float = 10
 
 @onready var label: Label = %Label
 
@@ -77,3 +78,4 @@ func onUnitDied() -> void:
 			call_deferred("add_sibling", pickup, true)
 
 		label.text = "Encounter\ndefeated!"
+		Global.dungeon.distributeTalentPoints(talentPointsReward)
