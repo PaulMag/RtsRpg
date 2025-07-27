@@ -64,7 +64,8 @@ enum states {
 @onready var destination : Vector3
 var moveDirection := Vector3.ZERO
 
-@export var targetUnit: Unit = null
+var targetUnit: Unit = null
+var castTargetUnit: Unit = null
 
 var isSelected := false
 var followCursor := false
@@ -220,6 +221,7 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	castingAbilityId = abilityId
 	castBar.max_value = ability.castTime
 	castBar.label.text = ability.name
+	castTargetUnit = _targetUnit
 	castTimer.start(ability.castTime)
 	castBar.visible = true
 
@@ -231,7 +233,7 @@ func _on_cast_timer_timeout() -> void:
 	cancelCastButton.visible = false
 
 	var ability := Global.getAbility[castingAbilityId]
-	var success := ability.use(self, targetUnit)
+	var success := false if (castTargetUnit == null or not is_instance_valid(castTargetUnit)) else ability.use(self, castTargetUnit)
 
 	if success:
 		isRecovering = true

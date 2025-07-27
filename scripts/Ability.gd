@@ -54,9 +54,6 @@ func refundCost(user: Unit) -> void:
 	user.mana = clampf(user.mana, 0, user.attributes.maxMana)
 
 func use(user: Unit, target: Unit) -> bool:
-	if !canUse(user, target):
-		return false
-
 	var attack := Attack.new()
 	attack.attackingUnit = user
 	attack.damageMelee = damageMelee * (1 + user.attributes.meleeSkill * 0.01)
