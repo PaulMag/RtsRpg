@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=52 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -45,6 +45,7 @@ magicSkill = 0
 healSkill = 0
 speed = 5.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
@@ -95,7 +96,7 @@ events = [SubResource("InputEventAction_cp300")]
 
 [sub_resource type="Resource" id="Resource_sa48e"]
 script = ExtResource("10_ovit6")
-maxHealth = 10
+maxHealth = 20
 healthRegen = 0.0
 maxMana = 0
 manaRegen = 0.0
@@ -108,13 +109,14 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_niwlv"]
 script = ExtResource("10_ovit6")
 maxHealth = 0
 healthRegen = 0.0
-maxMana = 10
+maxMana = 20
 manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
@@ -125,6 +127,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_pdeq4"]
@@ -142,6 +145,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_jr5p1"]
@@ -159,6 +163,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_5dcda"]
@@ -176,6 +181,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_h1o0j"]
@@ -189,10 +195,11 @@ carryCapacity = 0
 armorSkill = 0
 meleeSkill = 0
 rangedSkill = 0
-magicSkill = 10
+magicSkill = 15
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_bhwvf"]
@@ -207,9 +214,10 @@ armorSkill = 0
 meleeSkill = 0
 rangedSkill = 0
 magicSkill = 0
-healSkill = 5
+healSkill = 15
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_gbr36"]
@@ -226,7 +234,26 @@ rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
-threatSkill = 10
+threatSkill = 15
+durationSkill = 0
+speedRatio = 1.0
+
+[sub_resource type="Resource" id="Resource_87hrl"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+durationSkill = 20
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_16wc6"]
@@ -237,13 +264,14 @@ maxMana = 0
 manaRegen = 0.0
 armorPoints = 0
 carryCapacity = 0
-armorSkill = 5
+armorSkill = 15
 meleeSkill = 0
 rangedSkill = 0
 magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_cg3ic"]
@@ -261,6 +289,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.5
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cg3ic"]
@@ -571,8 +600,8 @@ Cast time:      1.5 + 1 s
 Mana cost:      10
 Duration:       10 s
 
-  Debuff effect
-Speed ratio:   -50 %"
+  Buff effect
+Speed:         4.0 m/s"
 
 [node name="Prowess" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -585,8 +614,9 @@ Cast time:      2.0 + 1 s
 Mana cost:      10
 Duration:       10 s
 
-  Debuff effect
-Speed ratio:   -50 %"
+  Buff effect
+Melee skill:   60 %
+Ranged skill:  60 %"
 
 [node name="AttributeTalentHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer"]
 layout_mode = 2
@@ -609,7 +639,7 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_sa48e")
 talentName = "Max Health"
-talentDescription = "Max Health:    10"
+talentDescription = "Max Health:    20"
 metadata/_edit_use_anchors_ = true
 
 [node name="ManaMax" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -617,7 +647,7 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_niwlv")
 talentName = "Max Mana"
-talentDescription = "Max Mana:      10"
+talentDescription = "Max Mana:      20"
 metadata/_edit_use_anchors_ = true
 
 [node name="ManaRegen" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -649,7 +679,7 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_h1o0j")
 talentName = "Fire skill"
-talentDescription = "Fire skill:    10 %"
+talentDescription = "Fire skill:    15 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="HealSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -657,15 +687,23 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_bhwvf")
 talentName = "Healing skill"
-talentDescription = "Healing skill: 5 %"
+talentDescription = "Healing skill: 15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="Threat" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="ThreatSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_gbr36")
 talentName = "Threat skill"
-talentDescription = "Threat skill:  10 %"
+talentDescription = "Threat skill:  15 %"
+metadata/_edit_use_anchors_ = true
+
+[node name="DurationSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+attributes = SubResource("Resource_87hrl")
+talentName = "Duration skill"
+talentDescription = "Duration skill: 20 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="ArmorSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -673,7 +711,7 @@ custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 attributes = SubResource("Resource_16wc6")
 talentName = "Armor skill"
-talentDescription = "Armor skill:   5 %"
+talentDescription = "Armor skill:   15 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="Speed" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -767,6 +805,7 @@ columns = 5
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/RangedSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/RangedSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/FireSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/FireSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Threat" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Threat" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Speed" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Speed" method="_on_pressed"]

@@ -66,7 +66,7 @@ func use(user: Unit, target: Unit) -> bool:
 	if buffAttributes:
 		var buff := Buff.new()
 		buff.attributes = buffAttributes
-		buff.duration = buffDuration
+		buff.duration = buffDuration * (1 + user.attributes.durationSkill * 0.01)
 		buff.texture = texture
 		var buffs: Array[Buff] = [buff]
 		attack.buffs = buffs

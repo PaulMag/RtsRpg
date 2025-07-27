@@ -10,7 +10,7 @@ script = ExtResource("1_khcq8")
 maxHealth = 0
 healthRegen = 0.0
 maxMana = 10
-manaRegen = 0.5
+manaRegen = 1.0
 armorPoints = 5
 carryCapacity = 0
 armorSkill = 0
@@ -20,6 +20,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.0
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 

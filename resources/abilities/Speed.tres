@@ -17,9 +17,10 @@ meleeSkill = 0
 rangedSkill = 0
 magicSkill = 0
 healSkill = 0
-speed = 0.0
+speed = 4.0
 threatSkill = 0
-speedRatio = 1.75
+durationSkill = 0
+speedRatio = 1.0
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3n8bs"]

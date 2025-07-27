@@ -15,6 +15,7 @@ class_name Attributes
 @export var healSkill: int = 0
 @export var speed: float = 0
 @export var threatSkill: int = 0
+@export var durationSkill: int = 0
 
 @export var speedRatio: float = 1.0
 
@@ -35,6 +36,7 @@ func add(other: Attributes) -> Attributes:
 	total.healSkill = healSkill + other.healSkill
 	total.speed = speed + other.speed
 	total.threatSkill = threatSkill + other.threatSkill
+	total.durationSkill = durationSkill + other.durationSkill
 
 	total.speedRatio = speedRatio * other.speedRatio
 
@@ -57,6 +59,7 @@ Ranged skill:     %d %%
 Fire skill:       %d %%
 Healing skill:    %d %%
 Threat skill:     %d %%
+Duration skill:   %d %%
 
 Armor Points:     %d
 Armor skill:      %d %%
@@ -66,7 +69,7 @@ Damage Reduction: %.2f %%
 Speed:            %.1f m/s
 Speed ratio:      %d %%
 Eff. Speed:       %.1f m/s
-""" % [
+""".trim_prefix("\n") % [
 	maxHealth,
 	maxMana,
 	healthRegen,
@@ -76,6 +79,7 @@ Eff. Speed:       %.1f m/s
 	magicSkill,
 	healSkill,
 	threatSkill,
+	durationSkill,
 	armorPoints,
 	armorSkill,
 	effectiveArmorPoints * 0.01,
@@ -105,6 +109,8 @@ func getDescriptionNoZero() -> String:
 		lines.append("Healing skill: %d %%" % healSkill)
 	if threatSkill != 0:
 		lines.append("Threat skill:  %d %%" % threatSkill)
+	if durationSkill != 0:
+		lines.append("Duration skill: %d %%" % durationSkill)
 	if armorPoints != 0:
 		lines.append("Armor Points:  %d" % armorPoints)
 	if armorSkill != 0:

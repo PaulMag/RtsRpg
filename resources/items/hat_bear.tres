@@ -20,6 +20,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 1.05
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
