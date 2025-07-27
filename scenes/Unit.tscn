@@ -387,6 +387,7 @@ one_shot = true
 one_shot = true
 
 [node name="RegenTimer" type="Timer" parent="."]
+wait_time = 0.1
 
 [node name="UnitHud" type="CanvasLayer" parent="."]
 

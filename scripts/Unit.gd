@@ -625,7 +625,11 @@ func _on_inventory_button_toggled(toggledOn: bool) -> void:
 func _on_regen_timer_timeout() -> void:
 	health += attributes.healthRegen * regenTimer.wait_time
 	health = clampf(health, 0, attributes.maxHealth)
-	mana += attributes.manaRegen * regenTimer.wait_time
+
+	if isCasting and Global.getAbility[castingAbilityId].manaCost > 0:
+		pass  # Don't regenerate mana while casting
+	else:
+		mana += attributes.manaRegen * regenTimer.wait_time
 	mana = clampf(mana, 0, attributes.maxMana)
 
 func _on_cancel_cast_button_pressed() -> void:
