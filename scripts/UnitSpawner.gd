@@ -40,6 +40,9 @@ func _ready() -> void:
 	for i in range(numberOfArchers):
 		spawnUnit(ARCHER_SCENE)
 
+	await get_tree().create_timer(1.0).timeout  # TODO: This is very ugly, but it works for now
+	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
+
 
 func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 	var newUnit := UNIT_SCENE.instantiate() as Unit
@@ -50,7 +53,7 @@ func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 	add_sibling.call_deferred(newUnit, true)
 
 	numberOfLivingUnits += 1
-	label.text = "Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size())
+	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 	if afterSpawnTarget:
 		newUnit.destination = afterSpawnTarget.global_position + offset
@@ -60,7 +63,7 @@ func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 
 func onUnitDied() -> void:
 	numberOfLivingUnits -= 1
-	label.text = "Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size())
+	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 	if not remainingSpawns.is_empty():
 		print("%s spawns additional unit" % self)
@@ -77,5 +80,9 @@ func onUnitDied() -> void:
 			pickup.position = position + positionOffset
 			call_deferred("add_sibling", pickup, true)
 
-		label.text = "Encounter\ndefeated!"
+		setLabel.rpc("Encounter\ndefeated!")
 		Global.dungeon.distributeTalentPoints(talentPointsReward * Global.dungeon.xpRewardMultiplier)
+
+@rpc("authority", "call_local")
+func setLabel(text: String) -> void:
+	label.text = text
