@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cc1f6nb3jwwpc"]
 
-[ext_resource type="ArrayMesh" uid="uid://cl0iex5o13pfi" path="res://models/dungeon/floor_tile_large.tres" id="1_hsws6"]
 [ext_resource type="Script" uid="uid://3kglb8hjt8hc" path="res://scripts/Floor.gd" id="1_o2187"]
+[ext_resource type="ArrayMesh" uid="uid://dg43wx8surutp" path="res://models/dungeon/floor_wood_large_dark.tres" id="2_1fy7r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o2187"]
-size = Vector3(4, 0.1, 4)
+size = Vector3(16, 0.1, 16)
 
 [node name="Floor" type="StaticBody3D"]
 script = ExtResource("1_o2187")
@@ -13,6 +13,7 @@ script = ExtResource("1_o2187")
 shape = SubResource("BoxShape3D_o2187")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_hsws6")
+transform = Transform3D(4, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0)
+mesh = ExtResource("2_1fy7r")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
