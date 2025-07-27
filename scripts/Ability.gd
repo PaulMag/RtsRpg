@@ -20,7 +20,7 @@ class_name Ability
 @export var buffAttributes: Attributes = null
 
 @export var castTime: float = 2  # Time in seconds to cast the ability.
-@export var recoveryTime: float = 2  # Time in seconds before Unit can use an ability again.
+@export var recoveryTime: float = 1  # Time in seconds before Unit can use an ability again.
 @export var speedFactorWhileCasting: float = 0.5
 
 @export var projectileSpeed: float = 20
@@ -107,6 +107,7 @@ func getDescription() -> String:
 	if threatAmount != 0:
 		description += "Threat amount:  %d\n" % threatAmount
 	description += "Range:          %d m\n" % targetRange
+	description += "Cast time:      %.1f + %d s\n" % [castTime, recoveryTime]
 	if aoeRadius > 0:
 		description += "AoE radius:     %d m\n" % aoeRadius
 	if manaCost > 0:

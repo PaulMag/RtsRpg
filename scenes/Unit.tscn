@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=51 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -24,7 +24,11 @@
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 [ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/character_models/Mage.tscn" id="23_cp300"]
+[ext_resource type="Texture2D" uid="uid://ciri42xpna2il" path="res://sprites/abilities/speed.png" id="24_oyts4"]
+[ext_resource type="Resource" uid="uid://dhqv26bjo4n2q" path="res://resources/abilities/Speed.tres" id="25_8eod5"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="25_ipap1"]
+[ext_resource type="Texture2D" uid="uid://4gbnuvj66nyp" path="res://sprites/abilities/prowess.png" id="26_87hrl"]
+[ext_resource type="Resource" uid="uid://c8ugwhkxpyevu" path="res://resources/abilities/Prowess.tres" id="27_cnuss"]
 
 [sub_resource type="Resource" id="Resource_oyts4"]
 script = ExtResource("10_ovit6")
@@ -494,7 +498,8 @@ texture_normal = ExtResource("10_1ssdg")
 ability = ExtResource("10_telu4")
 talentName = "Melee Attack"
 talentDescription = "Melee damage:   10
-Range:          2 m"
+Range:          2 m
+Cast time:      1.0 + 1 s"
 
 [node name="RangedAttack" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -503,7 +508,8 @@ texture_normal = ExtResource("13_ipap1")
 ability = ExtResource("14_cg3ic")
 talentName = "Ranged Attack"
 talentDescription = "Ranged damage:  10
-Range:          15 m"
+Range:          15 m
+Cast time:      1.5 + 1 s"
 
 [node name="Taunt" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -511,8 +517,10 @@ layout_mode = 2
 texture_normal = ExtResource("16_rwbbu")
 ability = ExtResource("17_c54xi")
 talentName = "Taunt"
-talentDescription = "Threat amount:  30
-Range:          5 m"
+talentDescription = "Threat amount:  20
+Range:          5 m
+Cast time:      1.5 + 1 s
+AoE radius:     3 m"
 
 [node name="FireBall" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -522,8 +530,9 @@ ability = ExtResource("14_bipdo")
 talentName = "Fireball"
 talentDescription = "Fire damage:    20
 Range:          15 m
+Cast time:      3.0 + 1 s
 AoE radius:     5 m
-Mana cost:      10"
+Mana cost:      15"
 
 [node name="HealingWord" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -533,6 +542,7 @@ ability = ExtResource("12_5usyn")
 talentName = "Healing Word"
 talentDescription = "Healing amount: 25
 Range:          10 m
+Cast time:      3.0 + 1 s
 Mana cost:      10"
 
 [node name="Slow" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
@@ -542,6 +552,35 @@ texture_normal = ExtResource("20_cp300")
 ability = ExtResource("21_5dcda")
 talentName = "Slow"
 talentDescription = "Range:          15 m
+Cast time:      1.5 + 1 s
+Mana cost:      10
+Duration:       10 s
+
+  Debuff effect
+Speed ratio:   -50 %"
+
+[node name="Speed" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+texture_normal = ExtResource("24_oyts4")
+ability = ExtResource("25_8eod5")
+talentName = "Speed"
+talentDescription = "Range:          15 m
+Cast time:      1.5 + 1 s
+Mana cost:      10
+Duration:       10 s
+
+  Debuff effect
+Speed ratio:   -50 %"
+
+[node name="Prowess" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+texture_normal = ExtResource("26_87hrl")
+ability = ExtResource("27_cnuss")
+talentName = "Prowess"
+talentDescription = "Range:          15 m
+Cast time:      2.0 + 1 s
 Mana cost:      10
 Duration:       10 s
 

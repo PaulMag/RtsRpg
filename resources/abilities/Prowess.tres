@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://c8ugwhkxpyevu"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_fn6xr"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_njlln"]
+[ext_resource type="Texture2D" uid="uid://4gbnuvj66nyp" path="res://sprites/abilities/prowess.png" id="3_og4gn"]
+
+[sub_resource type="Resource" id="Resource_0yucp"]
+script = ExtResource("1_fn6xr")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 60
+rangedSkill = 60
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fn6xr"]
+albedo_texture = ExtResource("3_og4gn")
+
+[sub_resource type="SphereMesh" id="SphereMesh_og4gn"]
+material = SubResource("StandardMaterial3D_fn6xr")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 18
+
+[resource]
+script = ExtResource("1_njlln")
+name = "Prowess"
+texture = ExtResource("3_og4gn")
+abilityId = 7
+damageMelee = 0
+damageRanged = 0
+damageMagical = 0
+healingAmount = 0
+threatAmount = 0
+targetRange = 15
+manaCost = 10
+isHealing = false
+aoeRadius = 0.0
+buffDuration = 10.0
+buffAttributes = SubResource("Resource_0yucp")
+castTime = 2.0
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 20.0
+projectileMesh = SubResource("SphereMesh_og4gn")
+canTargetSelf = true
+canTargetFriend = true
+canTargetEnemy = false
+metadata/_custom_type_script = "uid://csw5vmahp3gxr"
