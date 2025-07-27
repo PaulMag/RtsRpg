@@ -60,15 +60,73 @@ caret_blink = true
 layout_mode = 2
 text = "Start Game"
 
-[node name="RestartGameButton" type="Button" parent="Multiplayer/UI"]
+[node name="HostOptions" type="VBoxContainer" parent="Multiplayer/UI"]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -114.0
-offset_bottom = 31.0
+offset_bottom = 40.0
 grow_horizontal = 0
+
+[node name="RestartGameButton" type="Button" parent="Multiplayer/UI/HostOptions"]
+layout_mode = 2
 text = "Restart Game"
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
+layout_mode = 2
+text = "XP start"
+
+[node name="XpStartMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "20"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
+layout_mode = 2
+text = "XP multiplier"
+
+[node name="XpRewardMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
+layout_mode = 2
+text = "Enemy start multiplier"
+
+[node name="EnemyStartMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
+layout_mode = 2
+text = "Enemy lvl. multiplier"
+
+[node name="EnemyLevelMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
 
 [node name="GameVersionLabel" type="Label" parent="Multiplayer/UI"]
 anchors_preset = 5
@@ -98,4 +156,4 @@ spawn_path = NodePath("..")
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Joining/Connect" to="Multiplayer" method="_on_connect_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Starting/StartGame" to="Multiplayer" method="_on_start_game_pressed"]
-[connection signal="pressed" from="Multiplayer/UI/RestartGameButton" to="Multiplayer" method="_on_restart_game_button_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/HostOptions/RestartGameButton" to="Multiplayer" method="_on_restart_game_button_pressed"]

@@ -2,6 +2,11 @@ extends Node3D
 class_name Dungeon
 
 
+var xpStart: float = 1.0
+var xpRewardMultiplier: float = 1.0
+var enemyStartMultiplier: float = 1.0
+var enemyLevelMultiplier: float = 1.0
+
 var remainingLoot: Array[Global.Items] = []
 
 
@@ -15,7 +20,7 @@ static func init() -> Dungeon:
 func _ready() -> void:
 	if multiplayer.is_server():
 		await get_tree().create_timer(1.0).timeout  # TODO: This is very ugly, but it works for now
-		distributeTalentPoints(20)
+		distributeTalentPoints(xpStart)
 
 
 func distributeTalentPoints(amount: float) -> void:

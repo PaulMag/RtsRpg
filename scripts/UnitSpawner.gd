@@ -78,4 +78,4 @@ func onUnitDied() -> void:
 			call_deferred("add_sibling", pickup, true)
 
 		label.text = "Encounter\ndefeated!"
-		Global.dungeon.distributeTalentPoints(talentPointsReward)
+		Global.dungeon.distributeTalentPoints(talentPointsReward * Global.dungeon.xpRewardMultiplier)

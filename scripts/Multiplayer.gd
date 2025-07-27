@@ -7,8 +7,12 @@ const PORT = 4433
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
-@onready var restartGameButton: Button = $UI/RestartGameButton
 @onready var unitAndItemSpawner: MultiplayerSpawner = %UnitAndItemSpawner
+@onready var hostOptions: Container = %HostOptions
+@onready var xpStartMultiplierInput: LineEdit = %XpStartMultiplier
+@onready var xpRewardMultiplierInput: LineEdit = %XpRewardMultiplier
+@onready var enemyStartMultiplierInput: LineEdit = %EnemyStartMultiplier
+@onready var enemyLevelMultiplierInput: LineEdit = %EnemyLevelMultiplier
 
 var dungeon: Dungeon
 
@@ -50,6 +54,17 @@ func _on_connect_pressed() -> void:
 
 func spawn_dungeon() -> void:
 	dungeon = Dungeon.init()
+
+	var xpStartMultiplier := xpStartMultiplierInput.text.to_float()
+	var xpRewardMultiplier := xpRewardMultiplierInput.text.to_float()
+	var enemyStartMultiplier := enemyStartMultiplierInput.text.to_float()
+	var enemyLevelMultiplier := enemyLevelMultiplierInput.text.to_float()
+
+	dungeon.xpStart = xpStartMultiplier
+	dungeon.xpRewardMultiplier = xpRewardMultiplier
+	dungeon.enemyStartMultiplier = enemyStartMultiplier
+	dungeon.enemyLevelMultiplier = enemyLevelMultiplier
+
 	add_sibling(dungeon, true)
 	print("Spawned dungeon %s" % dungeon)
 	unitAndItemSpawner.spawn_path = dungeon.get_path()
@@ -82,7 +97,7 @@ func start_game() -> void:
 	Global.getPlayerCurrent().canvasLayer.visible = true
 
 	if multiplayer.is_server():
-		restartGameButton.show()
+		hostOptions.show()
 
 func _on_start_game_pressed() -> void:
 	start_game()
