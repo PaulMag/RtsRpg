@@ -20,6 +20,7 @@ const SPAWN_RADIUS: float = 3
 
 var numberOfLivingUnits: int = 0
 var remainingSpawns: Array[PackedScene] = []
+var livingUnits: Array[Unit] = []
 
 
 func _ready() -> void:
@@ -44,7 +45,7 @@ func _ready() -> void:
 	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 
-func spawnUnit(UNIT_SCENE: PackedScene) -> void:
+func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> void:
 	var newUnit := UNIT_SCENE.instantiate() as Unit
 	newUnit.level = level
 
@@ -53,22 +54,28 @@ func spawnUnit(UNIT_SCENE: PackedScene) -> void:
 	add_sibling.call_deferred(newUnit, true)
 
 	numberOfLivingUnits += 1
+	livingUnits.append(newUnit)
 	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
-	if afterSpawnTarget:
+	if joiningExistingUnits:
+		var randomExistingUnit := livingUnits[randi() % livingUnits.size()]
+		newUnit.destination = randomExistingUnit.global_position + offset
+		newUnit.followCursor = true
+	elif afterSpawnTarget:
 		newUnit.destination = afterSpawnTarget.global_position + offset
 		newUnit.followCursor = true
 
-	newUnit.died.connect(onUnitDied)
+	newUnit.died.connect(onUnitDied.bind(newUnit))
 
-func onUnitDied() -> void:
+func onUnitDied(deadUnit: Unit) -> void:
 	numberOfLivingUnits -= 1
+	livingUnits.erase(deadUnit)
 	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 	if not remainingSpawns.is_empty():
 		print("%s spawns additional unit" % self)
 		var newScene := remainingSpawns.pop_back() as PackedScene
-		spawnUnit(newScene)
+		spawnUnit(newScene, true)
 
 	elif numberOfLivingUnits == 0:
 		for i in range(numberOfLoot):
