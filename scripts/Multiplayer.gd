@@ -111,4 +111,5 @@ func add_player(id: int) -> void:
 
 func _on_restart_game_button_pressed() -> void:
 	dungeon.queue_free()
+	await dungeon.tree_exited
 	spawn_dungeon()

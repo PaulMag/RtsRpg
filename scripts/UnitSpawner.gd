@@ -27,6 +27,8 @@ func _ready() -> void:
 	if not multiplayer.is_server():
 		return
 
+	await Global.dungeon.ready
+
 	for i in range(numberOfAdditionalBarbarians):
 		remainingSpawns.append(BARBARIAN_SCENE)
 
@@ -40,9 +42,6 @@ func _ready() -> void:
 
 	for i in range(numberOfArchers):
 		spawnUnit(ARCHER_SCENE)
-
-	await get_tree().create_timer(1.0).timeout  # TODO: This is very ugly, but it works for now
-	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 
 func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> void:
