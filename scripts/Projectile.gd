@@ -29,7 +29,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if target and is_instance_valid(target):
-		if target.position != position:
+		if Global.vec3_to_vec2(target.position) != Global.vec3_to_vec2(position):
 			look_at(Vector3(target.position.x, position.y, target.position.z))
 		position += position.direction_to(target.position + heightAboveGround) * speed * delta
 	else:
