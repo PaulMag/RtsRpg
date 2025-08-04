@@ -19,8 +19,10 @@ ambient_light_color = Color(1, 1, 1, 1)
 [node name="Dungeon" type="Node3D"]
 script = ExtResource("1_gajge")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.413, 0.01, 3.521)
+[node name="UnitAndItemSpawner" type="MultiplayerSpawner" parent="."]
+unique_name_in_owner = true
+_spawnable_scenes = PackedStringArray("uid://dbln30dr8vpci", "uid://c0cy3pn7up1o0", "uid://bn8e3enlkea5w", "uid://depa35a7vr4uf")
+spawn_path = NodePath("..")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_ykok4")

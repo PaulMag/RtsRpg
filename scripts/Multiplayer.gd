@@ -7,7 +7,6 @@ const PORT = 4433
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
-@onready var unitAndItemSpawner: MultiplayerSpawner = %UnitAndItemSpawner
 @onready var hostOptions: Container = %HostOptions
 @onready var xpStartMultiplierInput: LineEdit = %XpStartMultiplier
 @onready var xpRewardMultiplierInput: LineEdit = %XpRewardMultiplier
@@ -67,7 +66,6 @@ func spawn_dungeon() -> void:
 
 	add_sibling(dungeon, true)
 	print("Spawned dungeon %s" % dungeon)
-	unitAndItemSpawner.spawn_path = dungeon.get_path()
 
 
 func start_game() -> void:
