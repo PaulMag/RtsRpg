@@ -1,8 +1,28 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://b5k3kpp886qi2"]
+[gd_resource type="Resource" script_class="Ability" load_steps=11 format=3 uid="uid://b5k3kpp886qi2"]
 
 [ext_resource type="ArrayMesh" uid="uid://qtm3fcff04ya" path="res://models/projectiles/arrow.tres" id="1_iy8fy"]
+[ext_resource type="AudioStream" uid="uid://b3dlwthbvdhuc" path="res://audio/effects/13_human_jump_land_1.wav" id="1_ugg8o"]
+[ext_resource type="AudioStream" uid="uid://cpj636pcqw5q4" path="res://audio/effects/13_human_jump_land_2.wav" id="2_brl7b"]
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="2_p07s7"]
 [ext_resource type="Texture2D" uid="uid://np8lsmjupvri" path="res://sprites/abilities/ranged_attack.png" id="3_iy8fy"]
+[ext_resource type="AudioStream" uid="uid://cg6dq5h1jtnrl" path="res://audio/effects/12_human_jump_1.wav" id="4_0sqx0"]
+[ext_resource type="AudioStream" uid="uid://bk8ifcev7na30" path="res://audio/effects/12_human_jump_2.wav" id="5_xa5h0"]
+[ext_resource type="AudioStream" uid="uid://dd6w8u60plhp7" path="res://audio/effects/12_human_jump_3.wav" id="6_le88i"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xa5h0"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 2
+stream_0/stream = ExtResource("1_ugg8o")
+stream_1/stream = ExtResource("2_brl7b")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yl5wn"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("4_0sqx0")
+stream_1/stream = ExtResource("5_xa5h0")
+stream_2/stream = ExtResource("6_le88i")
 
 [resource]
 script = ExtResource("2_p07s7")
@@ -24,6 +44,8 @@ recoveryTime = 1.0
 speedFactorWhileCasting = 0.5
 projectileSpeed = 20.0
 projectileMesh = ExtResource("1_iy8fy")
+projectileShootAudio = SubResource("AudioStreamRandomizer_yl5wn")
+projectileHitAudio = SubResource("AudioStreamRandomizer_xa5h0")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true

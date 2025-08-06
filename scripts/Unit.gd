@@ -44,7 +44,6 @@ enum states {
 @onready var navigationAgent: NavigationAgent3D = $NavigationAgent
 @onready var label: Label = %Label
 @onready var armorLabel: Label = %ArmorLabel
-@onready var damageSound: AudioStreamPlayer2D = $DamageSound
 @onready var castTimer: Timer = $CastTimer
 @onready var recoveryTimer: Timer = $RecoveryTimer
 @onready var regenTimer: Timer = $RegenTimer
@@ -61,6 +60,10 @@ enum states {
 @onready var inventoryContainer: GridContainer = %InventoryContainer
 @onready var attributesLabel: Label = %AttributesLabel
 @onready var labelTalentPoints: Label = %LabelTalentPoints
+
+# Audio
+@onready var audioPlayerWalking: AudioStreamPlayer3D = $AudioPlayerWalking
+@onready var audioPlayerCasting: AudioStreamPlayer3D = $AudioPlayerCasting
 
 @onready var destination : Vector3
 var moveDirection := Vector3.ZERO
@@ -223,6 +226,8 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	ability.payCost(self)
 
 	isCasting = true
+	audioPlayerCasting.stream = ability.castingAudio
+	audioPlayerCasting.play()
 	cancelCastButton.visible = true
 	castingAbilityId = abilityId
 	castBar.max_value = ability.castTime
@@ -236,6 +241,7 @@ func _on_cast_timer_timeout() -> void:
 
 	castBar.visible = false
 	isCasting = false
+	audioPlayerCasting.stop()
 	cancelCastButton.visible = false
 
 	var ability := Global.getAbility[castingAbilityId]
@@ -370,6 +376,8 @@ func _process(_delta: float) -> void:
 
 	if velocity:
 		rotation.y = - Vector2(velocity.x, velocity.z).angle() + PI / 2
+		if not audioPlayerWalking.is_playing():
+			audioPlayerWalking.play()
 
 	if animationPlayer.current_animation == "Spellcast_Shoot" and animationPlayer.is_playing():
 		pass
@@ -489,7 +497,6 @@ func damage(_attack: Attack) -> void:
 		health -= _attack.damageMagical * damageReduction
 		if is_instance_valid(_attack.attackingUnit):
 			addThreat(_attack.attackingUnit, _attack.threat)
-		damageSound.play()
 
 	if health <= 0:
 		die.rpc()
@@ -644,6 +651,7 @@ func _on_cancel_cast_button_pressed() -> void:
 		castTimer.stop()
 		castBar.visible = false
 		isCasting = false
+		audioPlayerCasting.stop()
 		cancelCastButton.visible = false
 		Global.getAbility[castingAbilityId].refundCost(self)
 

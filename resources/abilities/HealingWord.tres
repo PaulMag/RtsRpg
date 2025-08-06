@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://dvixwcti6forv"]
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://dvixwcti6forv"]
 
+[ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="1_66pvt"]
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_hclkh"]
+[ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="1_lcpo2"]
 [ext_resource type="SphereMesh" uid="uid://dn568oe8vvl2p" path="res://models/projectiles/healing_ball.tres" id="1_lqfas"]
 [ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="2_0sria"]
+[ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="3_p7jpg"]
 
 [resource]
 script = ExtResource("1_hclkh")
@@ -24,6 +27,9 @@ recoveryTime = 1.0
 speedFactorWhileCasting = 0.5
 projectileSpeed = 20.0
 projectileMesh = ExtResource("1_lqfas")
+projectileShootAudio = ExtResource("3_p7jpg")
+projectileHitAudio = ExtResource("1_66pvt")
+castingAudio = ExtResource("1_lcpo2")
 canTargetSelf = true
 canTargetFriend = true
 canTargetEnemy = false

@@ -162,6 +162,8 @@ script = ExtResource("2_ip03w")
 [node name="Camera" type="Camera3D" parent="CameraArm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
+[node name="AudioListener" type="AudioListener3D" parent="CameraArm"]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ykok4")
 

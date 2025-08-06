@@ -25,6 +25,9 @@ class_name Ability
 
 @export var projectileSpeed: float = 20
 @export var projectileMesh: Mesh
+@export var projectileShootAudio: AudioStream
+@export var projectileHitAudio: AudioStream
+@export var castingAudio: AudioStream
 
 @export var canTargetSelf: bool = false
 @export var canTargetFriend: bool = false
@@ -82,10 +85,10 @@ func use(user: Unit, target: Unit) -> bool:
 				)
 		) as Array[Unit]
 		for _target in _targets:
-			var newProjectile := Projectile.init(attack, _target, projectileMesh, projectileSpeed)
+			var newProjectile := Projectile.init(attack, _target, projectileMesh, projectileHitAudio, projectileShootAudio, projectileSpeed)
 			user.add_sibling(newProjectile, true)
 	else:
-		var newProjectile := Projectile.init(attack, target, projectileMesh, projectileSpeed)
+		var newProjectile := Projectile.init(attack, target, projectileMesh, projectileHitAudio, projectileShootAudio, projectileSpeed)
 		user.add_sibling(newProjectile, true)
 
 	return true

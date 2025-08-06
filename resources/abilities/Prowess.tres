@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://c8ugwhkxpyevu"]
+[gd_resource type="Resource" script_class="Ability" load_steps=10 format=3 uid="uid://c8ugwhkxpyevu"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_fn6xr"]
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_njlln"]
+[ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="2_c5qjk"]
+[ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="2_og4gn"]
 [ext_resource type="Texture2D" uid="uid://4gbnuvj66nyp" path="res://sprites/abilities/prowess.png" id="3_og4gn"]
+[ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="4_0yucp"]
 
 [sub_resource type="Resource" id="Resource_0yucp"]
 script = ExtResource("1_fn6xr")
@@ -54,6 +57,9 @@ recoveryTime = 1.0
 speedFactorWhileCasting = 0.5
 projectileSpeed = 20.0
 projectileMesh = SubResource("SphereMesh_og4gn")
+projectileShootAudio = ExtResource("4_0yucp")
+projectileHitAudio = ExtResource("2_og4gn")
+castingAudio = ExtResource("2_c5qjk")
 canTargetSelf = true
 canTargetFriend = true
 canTargetEnemy = false

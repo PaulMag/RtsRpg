@@ -11,4 +11,6 @@ sprites/
 models/
 fonts/
 
+*.wav
+
 default_env.tres

@@ -1,8 +1,7 @@
-[gd_scene load_steps=52 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=55 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
-[ext_resource type="AudioStream" uid="uid://o0vcjctt6ej8" path="res://sounds/Hit damage 1.wav" id="5_i8enp"]
 [ext_resource type="Texture2D" uid="uid://do1er5brgwyb6" path="res://sprites/ui/armor-badge.png" id="7_cp300"]
 [ext_resource type="PackedScene" uid="uid://dhj6n5k8ewb2v" path="res://scenes/CastBar.tscn" id="7_me7gl"]
 [ext_resource type="PackedScene" uid="uid://tp1r3bfqfsfu" path="res://scenes/EnergyBar.tscn" id="7_n4dth"]
@@ -29,6 +28,9 @@
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="25_ipap1"]
 [ext_resource type="Texture2D" uid="uid://4gbnuvj66nyp" path="res://sprites/abilities/prowess.png" id="26_87hrl"]
 [ext_resource type="Resource" uid="uid://c8ugwhkxpyevu" path="res://resources/abilities/Prowess.tres" id="27_cnuss"]
+[ext_resource type="AudioStream" uid="uid://cbup8lxrwer40" path="res://audio/effects/16_human_walk_stone_1.wav" id="30_xnap6"]
+[ext_resource type="AudioStream" uid="uid://xcwrs77wc25i" path="res://audio/effects/16_human_walk_stone_2.wav" id="31_itqay"]
+[ext_resource type="AudioStream" uid="uid://05ejwt7wgink" path="res://audio/effects/16_human_walk_stone_3.wav" id="32_d4n80"]
 
 [sub_resource type="Resource" id="Resource_oyts4"]
 script = ExtResource("10_ovit6")
@@ -299,6 +301,14 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_04y5r"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("30_xnap6")
+stream_1/stream = ExtResource("31_itqay")
+stream_2/stream = ExtResource("32_d4n80")
+
 [node name="Unit" type="CharacterBody3D"]
 script = ExtResource("1_m0gx0")
 baseAttributes = SubResource("Resource_oyts4")
@@ -401,10 +411,6 @@ theme_override_font_sizes/font_size = 68
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_i8enp")
-volume_db = -35.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_bwudf")
@@ -790,6 +796,21 @@ layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
+
+[node name="AudioPlayerWalking" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_04y5r")
+attenuation_model = 1
+max_distance = 50.0
+panning_strength = 3.0
+
+[node name="AudioPlayerCasting" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+attenuation_model = 3
+volume_db = -15.0
+max_distance = 30.0
+panning_strength = 3.0
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

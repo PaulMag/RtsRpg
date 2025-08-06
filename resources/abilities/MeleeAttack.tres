@@ -1,7 +1,18 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://daqg1br2ouhnm"]
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://daqg1br2ouhnm"]
 
+[ext_resource type="AudioStream" uid="uid://c2qhcq0cco88t" path="res://audio/effects/07_human_atk_sword_1.wav" id="1_a04w3"]
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_nq82w"]
 [ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="2_8ahld"]
+[ext_resource type="AudioStream" uid="uid://bejqibvj3xan6" path="res://audio/effects/07_human_atk_sword_2.wav" id="2_skud7"]
+[ext_resource type="AudioStream" uid="uid://diejgckfoupai" path="res://audio/effects/07_human_atk_sword_3.wav" id="3_tup2o"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e8v6u"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("1_a04w3")
+stream_1/stream = ExtResource("2_skud7")
+stream_2/stream = ExtResource("3_tup2o")
 
 [resource]
 script = ExtResource("1_nq82w")
@@ -22,6 +33,7 @@ castTime = 1.0
 recoveryTime = 1.0
 speedFactorWhileCasting = 0.5
 projectileSpeed = 20.0
+projectileHitAudio = SubResource("AudioStreamRandomizer_e8v6u")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true
