@@ -38,6 +38,8 @@ enum states {
 @onready var animationPlayer: AnimationPlayer = characterModel.animationPlayer
 @onready var selectedCircle: Sprite3D = $SelectedCircle
 @onready var targetCircle: Sprite3D = $TargetCircle
+@onready var rangeCircle: MeshInstance3D = $RangeCircle
+@onready var rangeCircleMesh: SphereMesh = rangeCircle.mesh
 @onready var healthBar: EnergyBar  = %HealthBar
 @onready var manaBar: EnergyBar  = %ManaBar
 @onready var castBar: CastBar  = %CastBar
@@ -133,6 +135,8 @@ func _ready() -> void:
 		if node is TalentAbilityButton:
 			var talentAbilityButton := node as TalentAbilityButton
 			talentAbilityButton.pressed.connect(learnTalentAbilityOnServer.bind(nodeIndex))
+			talentAbilityButton.mouse_entered.connect(setRangeCircle.bind(talentAbilityButton.ability.targetRange))
+			talentAbilityButton.mouse_exited.connect(setRangeCircle.bind(0))
 		nodeIndex += 1
 
 	selectedCircle.modulate = playerColor
@@ -175,6 +179,8 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
 	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
 	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
+	newAbilityButton.mouse_entered.connect(setRangeCircle.bind(newAbilityButton.ability.targetRange))
+	newAbilityButton.mouse_exited.connect(setRangeCircle.bind(0))
 	abilityButtonsContainer.add_child(newAbilityButton)
 
 	talentAbilityButton.rankUp()
@@ -287,6 +293,15 @@ func toggleAutocast(abilityId: Global.AbilityIds) -> void:
 				isAutocasting = true
 			else:
 				abilityButton.setAutocast(false)  # Un-toggle all the other abilities
+
+
+func setRangeCircle(radius: float) -> void:
+	if radius > 0:
+		rangeCircleMesh.radius = radius
+		rangeCircle.visible = true
+	else:
+		rangeCircle.visible = false
+
 
 func updateAttributes() -> void:
 	var buffAttributesList: Array[Attributes]

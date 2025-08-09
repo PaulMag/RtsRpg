@@ -39,7 +39,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					return
 				var ability := getSelectedUnit().getAbilityButtons()[abilityButtonIndex].ability
 				getSelectedUnit().useAbilityOnServer(ability.abilityId)
+				getSelectedUnit().setRangeCircle(ability.targetRange)
 				return
+			elif event.is_action_released("cast_%s" % (abilityButtonIndex + 1)):
+				getSelectedUnit().setRangeCircle(0)
 
 	for unitIndex in range(0, 6):
 		if event.is_action_pressed("select_unit_%s" % (unitIndex + 1)):
