@@ -204,7 +204,12 @@ func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) 
 	if _targetUnit == null:
 		_targetUnit = targetUnit
 	if _targetUnit == null:
-		return
+		var ability := Global.getAbility[abilityId]
+		if ability.canTargetSelf:
+			_targetUnit = self  # Default to targeting self if valid
+		else:
+			return
+
 	useAbilityOnClients.rpc(abilityId, _targetUnit.unitId)
 
 @rpc("any_peer", "call_local")
@@ -224,6 +229,13 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	var _targetUnit := Global.getUnitFromUnitId(targetUnitId)
 
 	var ability := Global.getAbility[abilityId]
+
+	# Self-Abilities default to targeting self when no other valid target
+	if self != _targetUnit and ability.canTargetSelf:
+		if self.faction != _targetUnit.faction and !ability.canTargetEnemy:
+			_targetUnit = self
+		elif self.faction == _targetUnit.faction and !ability.canTargetFriend:
+			_targetUnit = self
 
 	if not ability.canUse(self, _targetUnit):
 		print("Unit %s cannot use ability %s on unit %s" % [unitName, ability.name, _targetUnit.unitName if _targetUnit else "NULL"])
