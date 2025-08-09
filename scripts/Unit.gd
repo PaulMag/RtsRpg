@@ -79,6 +79,7 @@ var followTarget := false
 var isCasting := false
 var castingAbilityId: Global.AbilityIds
 var isRecovering := false
+var canRegenMana := true
 var isAutocasting := false
 var autocastAbilityId: Global.AbilityIds
 
@@ -253,6 +254,10 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	castTargetUnit = _targetUnit
 	castTimer.start(ability.castTime)
 	castBar.visible = true
+	if ability.manaCost > 0:  # Can not regenerate mana while casting Ability with mana cost
+		canRegenMana = false
+		manaBar.modulate = Color.DARK_GRAY
+
 
 func _on_cast_timer_timeout() -> void:
 	animationPlayer.play("Spellcast_Shoot")
@@ -390,6 +395,8 @@ func _process(_delta: float) -> void:
 			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
 		if recoveryTimer.is_stopped():
 			isRecovering = false
+			canRegenMana = true
+			manaBar.modulate = Color.WHITE
 	elif multiplayer.is_server() and isAutocasting:
 		useAbilityOnServer(autocastAbilityId)
 
@@ -666,9 +673,7 @@ func _on_regen_timer_timeout() -> void:
 	health += attributes.healthRegen * regenTimer.wait_time
 	health = clampf(health, 0, attributes.maxHealth)
 
-	if isCasting and Global.getAbility[castingAbilityId].manaCost > 0:
-		pass  # Don't regenerate mana while casting
-	else:
+	if canRegenMana:
 		mana += attributes.manaRegen * regenTimer.wait_time
 	mana = clampf(mana, 0, attributes.maxMana)
 
@@ -691,6 +696,8 @@ func cancelCast() -> void:
 		audioPlayerCasting.stop()
 		cancelCastButton.visible = false
 		Global.getAbility[castingAbilityId].refundCost(self)
+		canRegenMana = true
+		manaBar.modulate = Color.WHITE
 
 
 func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
