@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://bq3rcj3hehc0q"]
+
+[ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="1_e6bfs"]
+[ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="2_bov08"]
+[ext_resource type="SphereMesh" uid="uid://dn568oe8vvl2p" path="res://models/projectiles/healing_ball.tres" id="3_dsanm"]
+[ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="4_nih6m"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="5_5dunh"]
+[ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="6_e6bfs"]
+
+[resource]
+script = ExtResource("5_5dunh")
+name = "Cure Wounds"
+texture = ExtResource("6_e6bfs")
+abilityId = 8
+damageMelee = 0
+damageRanged = 0
+damageMagical = 0
+healingAmount = 25
+threatAmount = 0
+targetRange = 5
+manaCost = 10
+isHealing = true
+aoeRadius = 0.0
+buffDuration = 0.0
+castTime = 3.0
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 20.0
+projectileMesh = ExtResource("3_dsanm")
+projectileShootAudio = ExtResource("4_nih6m")
+projectileHitAudio = ExtResource("2_bov08")
+castingAudio = ExtResource("1_e6bfs")
+canTargetSelf = true
+canTargetFriend = true
+canTargetEnemy = false

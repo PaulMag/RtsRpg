@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=58 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -22,9 +22,11 @@
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
+[ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="21_itqay"]
+[ext_resource type="Resource" uid="uid://bq3rcj3hehc0q" path="res://resources/abilities/CureWounds.tres" id="22_d4n80"]
 [ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/character_models/Mage.tscn" id="23_cp300"]
 [ext_resource type="Texture2D" uid="uid://ciri42xpna2il" path="res://sprites/abilities/speed.png" id="24_oyts4"]
-[ext_resource type="Resource" uid="uid://dhqv26bjo4n2q" path="res://resources/abilities/Speed.tres" id="25_8eod5"]
+[ext_resource type="Resource" uid="uid://dhqv26bjo4n2q" path="res://resources/abilities/Haste.tres" id="25_8eod5"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="25_ipap1"]
 [ext_resource type="Texture2D" uid="uid://4gbnuvj66nyp" path="res://sprites/abilities/prowess.png" id="26_87hrl"]
 [ext_resource type="Resource" uid="uid://c8ugwhkxpyevu" path="res://resources/abilities/Prowess.tres" id="27_cnuss"]
@@ -45,7 +47,7 @@ meleeSkill = 0
 rangedSkill = 0
 magicSkill = 0
 healSkill = 0
-speed = 5.0
+speed = 4.0
 threatSkill = 0
 durationSkill = 0
 speedRatio = 1.0
@@ -286,24 +288,6 @@ threatSkill = 0
 durationSkill = 0
 speedRatio = 1.0
 
-[sub_resource type="Resource" id="Resource_cg3ic"]
-script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.5
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cg3ic"]
 draw_center = false
 border_width_left = 5
@@ -540,7 +524,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 50
+theme_override_constants/v_separation = 30
 columns = 4
 
 [node name="MeleeAttack" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
@@ -592,8 +576,19 @@ layout_mode = 2
 texture_normal = ExtResource("13_05g4s")
 ability = ExtResource("12_5usyn")
 talentName = "Healing Word"
-talentDescription = "Healing amount: 25
+talentDescription = "Healing amount: 10
 Range:          10 m
+Cast time:      1.0 + 1 s
+Mana cost:      5"
+
+[node name="CureWounds" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+texture_normal = ExtResource("21_itqay")
+ability = ExtResource("22_d4n80")
+talentName = "Cure Wounds"
+talentDescription = "Healing amount: 25
+Range:          5 m
 Cast time:      3.0 + 1 s
 Mana cost:      10"
 
@@ -604,26 +599,26 @@ texture_normal = ExtResource("20_cp300")
 ability = ExtResource("21_5dcda")
 talentName = "Slow"
 talentDescription = "Range:          15 m
-Cast time:      1.5 + 1 s
+Cast time:      0.5 + 1 s
 Mana cost:      10
 Duration:       10 s
 
   Debuff effect
 Speed ratio:   -50 %"
 
-[node name="Speed" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="Haste" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
 texture_normal = ExtResource("24_oyts4")
 ability = ExtResource("25_8eod5")
-talentName = "Speed"
+talentName = "Haste"
 talentDescription = "Range:          15 m
-Cast time:      1.5 + 1 s
+Cast time:      0.5 + 1 s
 Mana cost:      10
 Duration:       10 s
 
   Buff effect
-Speed:         4.0 m/s"
+Speed:         3.0 m/s"
 
 [node name="Prowess" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -653,7 +648,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 50
+theme_override_constants/v_separation = 30
 columns = 4
 
 [node name="HealthMax" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
@@ -734,14 +729,6 @@ layout_mode = 2
 attributes = SubResource("Resource_16wc6")
 talentName = "Armor skill"
 talentDescription = "Armor skill:   15 %"
-metadata/_edit_use_anchors_ = true
-
-[node name="Speed" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
-custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
-attributes = SubResource("Resource_cg3ic")
-talentName = "Speed"
-talentDescription = "Speed:         0.5 m/s"
 metadata/_edit_use_anchors_ = true
 
 [node name="InventoryPanel" type="Panel" parent="UnitHud"]
@@ -845,4 +832,3 @@ panning_strength = 3.0
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" method="_on_pressed"]
 [connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Speed" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/Speed" method="_on_pressed"]

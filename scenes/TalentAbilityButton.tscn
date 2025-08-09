@@ -10,3 +10,9 @@ talentName = "Ability Name"
 
 [node name="NameLabel" parent="." index="1"]
 text = "Ability Name"
+
+[node name="DescriptionPanel" parent="." index="2"]
+visible = false
+
+[node name="DescriptionLabel" parent="DescriptionPanel/MarginContainer" index="0"]
+text = "Talent Description"
