@@ -661,7 +661,17 @@ func _on_regen_timer_timeout() -> void:
 	mana = clampf(mana, 0, attributes.maxMana)
 
 func _on_cancel_cast_button_pressed() -> void:
-	print("Cancel cast")
+	print("Canceled cast for unit %s" % unitName)
+	if isCasting:
+		cancelCastOnClients.rpc_id(1)
+
+@rpc("any_peer", "call_local")
+func cancelCastOnClients() -> void:
+	if multiplayer.is_server():
+		cancelCast.rpc()
+
+@rpc("authority", "call_local")
+func cancelCast() -> void:
 	if isCasting:
 		castTimer.stop()
 		castBar.visible = false
