@@ -249,11 +249,9 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 	audioPlayerCasting.play()
 	cancelCastButton.visible = true
 	castingAbilityId = abilityId
-	castBar.max_value = ability.castTime
-	castBar.label.text = ability.name
 	castTargetUnit = _targetUnit
 	castTimer.start(ability.castTime)
-	castBar.visible = true
+	castBar.setToCastMode(ability.name, ability.castTime)
 	if ability.manaCost > 0:  # Can not regenerate mana while casting Ability with mana cost
 		canRegenMana = false
 		manaBar.modulate = Color.DARK_GRAY
@@ -261,8 +259,6 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 
 func _on_cast_timer_timeout() -> void:
 	animationPlayer.play("Spellcast_Shoot")
-
-	castBar.visible = false
 	isCasting = false
 	audioPlayerCasting.stop()
 	cancelCastButton.visible = false
@@ -277,9 +273,20 @@ func _on_cast_timer_timeout() -> void:
 			abilityButton.cooldownProgressBar.value = ability.recoveryTime
 		recoveryTimer.start(ability.recoveryTime)
 		print("Unit %s ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
+		castBar.setToRecoveryMode(ability.recoveryTime)
 	else:
 		ability.refundCost(self)
 		print("Unit %s failed to use ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
+
+
+func _on_recovery_timer_timeout() -> void:
+	isRecovering = false
+	canRegenMana = true
+	manaBar.modulate = Color.WHITE
+	castBar.visible = false
+	for abilityButton in getAbilityButtons():
+		abilityButton.cooldownProgressBar.value = 0
+
 
 func canUseAbility(abilityId: Global.AbilityIds) -> bool:
 	var ability := Global.getAbility[abilityId]
@@ -391,12 +398,9 @@ func _process(_delta: float) -> void:
 	if isCasting:
 		castBar.value = castTimer.wait_time - castTimer.time_left
 	elif isRecovering:
+		castBar.value = recoveryTimer.time_left
 		for abilityButton in getAbilityButtons():
 			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
-		if recoveryTimer.is_stopped():
-			isRecovering = false
-			canRegenMana = true
-			manaBar.modulate = Color.WHITE
 	elif multiplayer.is_server() and isAutocasting:
 		useAbilityOnServer(autocastAbilityId)
 
