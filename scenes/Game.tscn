@@ -9,6 +9,25 @@ script = ExtResource("1_xw4tb")
 
 [node name="UI" type="CanvasLayer" parent="Multiplayer"]
 
+[node name="GameHud" type="PanelContainer" parent="Multiplayer/UI"]
+offset_right = 300.0
+offset_bottom = 27.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Multiplayer/UI/GameHud"]
+layout_mode = 2
+
+[node name="LabelPlayerList" type="Label" parent="Multiplayer/UI/GameHud/VBoxContainer"]
+modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "Players:"
+horizontal_alignment = 1
+
+[node name="PlayerLabelList" type="GridContainer" parent="Multiplayer/UI/GameHud/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+columns = 3
+
 [node name="MultiplayerOptions" type="VBoxContainer" parent="Multiplayer/UI"]
 offset_left = 172.0
 offset_top = 22.0
@@ -20,9 +39,10 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="Host" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Hosting"]
+[node name="HostButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Hosting"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Host new game"
+text = "Host new Multiplayer Game"
 
 [node name="Joining" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
 layout_mode = 2
@@ -38,15 +58,18 @@ expand_to_text_length = true
 clear_button_enabled = true
 caret_blink = true
 
-[node name="Connect" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Joining"]
+[node name="ConnectButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Joining"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Connect to existing game on IP"
 
-[node name="Starting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+[node name="Readying" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerName" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Starting"]
+[node name="PlayerName" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+unique_name_in_owner = true
 clip_contents = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -56,9 +79,44 @@ expand_to_text_length = true
 clear_button_enabled = true
 caret_blink = true
 
-[node name="StartGame" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Starting"]
+[node name="VSeparator1" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
-text = "Start Game"
+
+[node name="ColorPickerLabel" type="Label" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+layout_mode = 2
+text = "Pick your color:"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ColorPickerRect" type="ColorRect" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="ReadyButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Ready"
+
+[node name="Starting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+layout_mode = 2
+alignment = 1
+
+[node name="StartButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Starting"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start new Singleplayer Game"
 
 [node name="HostOptions" type="VBoxContainer" parent="Multiplayer/UI"]
 unique_name_in_owner = true
@@ -149,7 +207,9 @@ spawn_path = NodePath("../Players")
 _spawnable_scenes = PackedStringArray("uid://dee70bilaqhd2")
 spawn_path = NodePath("..")
 
-[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/Host" to="Multiplayer" method="_on_host_pressed"]
-[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Joining/Connect" to="Multiplayer" method="_on_connect_pressed"]
-[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Starting/StartGame" to="Multiplayer" method="_on_start_game_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Hosting/HostButton" to="Multiplayer" method="_on_host_pressed"]
+[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Joining/ConnectButton" to="Multiplayer" method="_on_connect_pressed"]
+[connection signal="text_changed" from="Multiplayer/UI/MultiplayerOptions/Readying/PlayerName" to="Multiplayer" method="_on_player_name_text_changed"]
+[connection signal="toggled" from="Multiplayer/UI/MultiplayerOptions/Readying/ReadyButton" to="Multiplayer" method="_on_ready_toggled"]
+[connection signal="pressed" from="Multiplayer/UI/MultiplayerOptions/Starting/StartButton" to="Multiplayer" method="_on_start_game_pressed"]
 [connection signal="pressed" from="Multiplayer/UI/HostOptions/RestartGameButton" to="Multiplayer" method="_on_restart_game_button_pressed"]

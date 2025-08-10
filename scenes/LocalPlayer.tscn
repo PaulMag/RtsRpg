@@ -17,6 +17,9 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath(".:moveDirection")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:isReady")
+properties/4/spawn = true
+properties/4/replication_mode = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x54he"]
 bg_color = Color(0.6, 1, 0.6, 0.196078)
@@ -34,6 +37,7 @@ corner_radius_bottom_left = 3
 root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
 script = ExtResource("1_3qyin")
+playerColor = Color(1, 1, 1, 1)
 
 [node name="SelectionPanel" type="Panel" parent="."]
 theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
@@ -55,19 +59,15 @@ one_shot = true
 visible = false
 
 [node name="GameHud" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -270.0
 offset_right = 61.0
-offset_bottom = 23.0
+offset_bottom = -243.0
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameHud"]
-layout_mode = 2
-
-[node name="LabelPlayerList" type="Label" parent="CanvasLayer/GameHud/VBoxContainer"]
-modulate = Color(0.75, 0.75, 0.75, 1)
-layout_mode = 2
-text = "Players:"
-horizontal_alignment = 1
-
-[node name="PlayerList" type="VBoxContainer" parent="CanvasLayer/GameHud/VBoxContainer"]
 layout_mode = 2
 
 [node name="LabelUnitList" type="Label" parent="CanvasLayer/GameHud/VBoxContainer"]

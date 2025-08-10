@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dee70bilaqhd2"]
+[gd_scene load_steps=7 format=3 uid="uid://dee70bilaqhd2"]
 
 [ext_resource type="Script" uid="uid://c0fu8mb2jag8k" path="res://scripts/Dungeon.gd" id="1_gajge"]
 [ext_resource type="PackedScene" uid="uid://cc1f6nb3jwwpc" path="res://scenes/structures/Floor.tscn" id="2_gajge"]
 [ext_resource type="Script" uid="uid://bsnk0chumvcxi" path="res://scripts/Camera.gd" id="2_ip03w"]
-[ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="3_g615f"]
 [ext_resource type="PackedScene" uid="uid://dsyghmbk5vvlg" path="res://scenes/UnitSpawner.tscn" id="5_gajge"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ykok4"]
@@ -166,36 +165,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ykok4")
-
-[node name="PlayerUnit_01" parent="." instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.01, -6)
-faction = 0
-playerColor = Color(1, 1, 0, 1)
-unitName = "PaulMag"
-
-[node name="PlayerUnit_02" parent="." instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.01, -3)
-faction = 0
-playerColor = Color(1, 0, 0, 1)
-unitName = "Fax"
-
-[node name="PlayerUnit_03" parent="." instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.01, 0)
-faction = 0
-playerColor = Color(0, 1, 0, 1)
-unitName = "Tarkilth"
-
-[node name="PlayerUnit_04" parent="." instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.01, 3)
-faction = 0
-playerColor = Color(1, 0, 1, 1)
-unitName = "Naughty Shrimp"
-
-[node name="PlayerUnit_05" parent="." instance=ExtResource("3_g615f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.01, 6)
-faction = 0
-playerColor = Color(0, 0, 1, 1)
-unitName = "Slow"
 
 [node name="UnitSpawner_01" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 0)

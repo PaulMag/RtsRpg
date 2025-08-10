@@ -89,6 +89,15 @@ properties/4/replication_mode = 2
 properties/5/path = NodePath(".:rotation")
 properties/5/spawn = false
 properties/5/replication_mode = 1
+properties/6/path = NodePath(".:faction")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath(".:unitName")
+properties/7/spawn = true
+properties/7/replication_mode = 2
+properties/8/path = NodePath(".:playerColor")
+properties/8/spawn = true
+properties/8/replication_mode = 2
 
 [sub_resource type="InputEventAction" id="InputEventAction_me7gl"]
 action = &"cancel_cast"

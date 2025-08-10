@@ -3,7 +3,7 @@ extends MultiplayerSynchronizer
 class_name LocalPlayer
 
 
-
+@export var isReady: bool = false
 @export var playerId: int
 @export var playerName: String
 @export var playerColor: Color
@@ -11,7 +11,6 @@ class_name LocalPlayer
 # @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 @onready var canvasLayer: CanvasLayer = $CanvasLayer
-@onready var playerList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/PlayerList
 @onready var unitList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/UnitList
 
 var selectedUnitId: int
@@ -22,10 +21,12 @@ var isIssuingMoveOrder := Vector3.INF  # INF represents no value
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	playerId = name.to_int()
 	add_to_group("players")
 
 func _ready() -> void:
-	playerColor = Color(randf(), randf(), randf())
+	# playerColor = Color(randf(), randf(), randf())
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -68,9 +69,6 @@ func _physics_process(_delta: float) -> void:
 		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
 func _process(_delta: float) -> void:
-	if is_multiplayer_authority():
-		updatePlayerStats()  #TODO: Should not happen every frame.
-
 	if multiplayer.is_server():
 		var unit := getSelectedUnit()
 		if unit == null:
@@ -97,6 +95,12 @@ func selectUnitByIndex(unitIndex: int) -> void:
 	selectUnit(playerUnits[unitIndex])
 	updateUnitList(unitIndex)
 
+
+# @rpc("any_peer", "call_local")
+# func selectUnitById(unitId: int) -> void:
+# 	var unit := Global.getUnitFromUnitId(unitId)
+# 	selectUnit(unit)
+
 func selectUnit(unit: Unit) -> void:
 	var selectedUnit := getSelectedUnit()
 	if unit  == null:
@@ -116,15 +120,21 @@ func setTargetUnit(unit: Unit, follow: bool) -> void:
 		return
 	selectedUnit.setTargetUnitOnClients.rpc(unit.unitId, follow)
 
-func updatePlayerStats() -> void:
-	for node in playerList.get_children():
-		node.queue_free()
-	for player in Global.getPlayers():
-		var playerLabelNode := PlayerLabel.init()
-		playerLabelNode.playerId = player.playerId
-		playerLabelNode.playerName = player.name
-		playerLabelNode.playerColor = player.playerColor
-		playerList.add_child(playerLabelNode, true)
+
+func setStatusOnServer(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
+	setStatusClients.rpc(_isReady, _playerName, _playerColor)
+
+@rpc("any_peer", "call_local")
+func setStatusClients(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
+	if multiplayer.is_server():
+		setStatus.rpc(_isReady, _playerName, _playerColor)
+
+@rpc("any_peer", "call_local")
+func setStatus(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
+	isReady = _isReady
+	playerName = _playerName
+	playerColor = _playerColor
+
 
 func updateUnitList(selectedUnitIndex: int = -1) -> void:
 	for node in unitList.get_children():
@@ -139,6 +149,8 @@ func updateUnitList(selectedUnitIndex: int = -1) -> void:
 		unitSelectButton.connect("pressed", selectUnitByIndex.bind(unitIndex))
 
 		if unitIndex == selectedUnitIndex:
+			unitSelectButton.modulate = Color.GREEN
+		elif unit.unitId == selectedUnitId:
 			unitSelectButton.modulate = Color.GREEN
 		else:
 			unitSelectButton.modulate = Color.WHITE
