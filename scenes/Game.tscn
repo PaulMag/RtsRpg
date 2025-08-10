@@ -129,6 +129,7 @@ layout_mode = 2
 text = "1.0"
 
 [node name="GameVersionLabel" type="Label" parent="Multiplayer/UI"]
+unique_name_in_owner = true
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -136,7 +137,7 @@ offset_left = -22.5
 offset_right = 22.5
 offset_bottom = 23.0
 grow_horizontal = 2
-text = "Version 0.2.0"
+text = "Version X.Y.Z"
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
 _spawnable_scenes = PackedStringArray("uid://bi4frn2cgm5la")

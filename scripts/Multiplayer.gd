@@ -4,6 +4,7 @@ const LOCAL_PLAYER = preload("res://scenes/LocalPlayer.tscn")
 
 const PORT = 4433
 
+@onready var gameVersionLabel: Label = %GameVersionLabel
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var remoteLineEdit: LineEdit = $UI/MultiplayerOptions/Joining/Remote
 @onready var players: Node = $Players
@@ -17,6 +18,11 @@ var dungeon: Dungeon
 
 
 func _ready() -> void:
+	var gameName: String = ProjectSettings.get_setting("application/config/name")
+	var gameVersion: String = ProjectSettings.get_setting("application/config/version")
+	print("%s version %s" % [gameName, gameVersion])
+	gameVersionLabel.text = "Version %s" % [gameVersion]
+
 #	get_tree().paused = true
 	var multiplayerScene := multiplayer as SceneMultiplayer
 	multiplayerScene.server_relay = false
