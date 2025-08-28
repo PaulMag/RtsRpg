@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=59 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -123,6 +123,24 @@ maxHealth = 20
 healthRegen = 0.0
 maxMana = 0
 manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+durationSkill = 0
+speedRatio = 1.0
+
+[sub_resource type="Resource" id="Resource_itqay"]
+script = ExtResource("10_ovit6")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 20
+manaRegen = 1.0
 armorPoints = 0
 carryCapacity = 0
 armorSkill = 0
@@ -526,19 +544,25 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 22
-text = "Learn new Abilities"
+text = "Learn new Abilities
+or increase passive Attributes"
 horizontal_alignment = 1
 
-[node name="TalentAbilityButtons" type="GridContainer" parent="UnitHud/TalentTree/VBoxContainer"]
+[node name="TalentButtons" type="Control" parent="UnitHud/TalentTree"]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 30
-columns = 4
+anchors_preset = 0
+offset_left = 92.0
+offset_top = 198.0
+offset_right = 588.0
+offset_bottom = 694.0
 
-[node name="MeleeAttack" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="MeleeAttack" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = -42.0
+offset_top = 52.0
+offset_right = 7.0
+offset_bottom = 101.0
 texture_normal = ExtResource("10_1ssdg")
 ability = ExtResource("10_telu4")
 talentName = "Melee Attack"
@@ -546,9 +570,13 @@ talentDescription = "Melee damage:   10
 Range:          2 m
 Cast time:      1.0 + 1 s"
 
-[node name="RangedAttack" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 83.0
+offset_top = 52.0
+offset_right = 132.0
+offset_bottom = 101.0
 texture_normal = ExtResource("13_ipap1")
 ability = ExtResource("14_cg3ic")
 talentName = "Ranged Attack"
@@ -556,9 +584,13 @@ talentDescription = "Ranged damage:  10
 Range:          15 m
 Cast time:      1.5 + 1 s"
 
-[node name="Taunt" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 208.0
+offset_top = 52.0
+offset_right = 257.0
+offset_bottom = 101.0
 texture_normal = ExtResource("16_rwbbu")
 ability = ExtResource("17_c54xi")
 talentName = "Taunt"
@@ -567,11 +599,17 @@ Range:          5 m
 Cast time:      1.5 + 1 s
 AoE radius:     3 m"
 
-[node name="FireBall" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = -42.0
+offset_top = 377.0
+offset_right = 7.0
+offset_bottom = 426.0
+disabled = true
 texture_normal = ExtResource("14_ofk60")
 ability = ExtResource("14_bipdo")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Fireball"
 talentDescription = "Fire damage:    20
 Range:          15 m
@@ -579,33 +617,51 @@ Cast time:      3.0 + 1 s
 AoE radius:     5 m
 Mana cost:      15"
 
-[node name="HealingWord" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="HealingWord" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 108.0
+offset_top = 378.0
+offset_right = 157.0
+offset_bottom = 427.0
+disabled = true
 texture_normal = ExtResource("13_05g4s")
 ability = ExtResource("12_5usyn")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Healing Word"
 talentDescription = "Healing amount: 10
 Range:          10 m
 Cast time:      1.0 + 1 s
 Mana cost:      5"
 
-[node name="CureWounds" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="CureWounds" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 233.0
+offset_top = 378.0
+offset_right = 282.0
+offset_bottom = 427.0
+disabled = true
 texture_normal = ExtResource("21_itqay")
 ability = ExtResource("22_d4n80")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Cure Wounds"
 talentDescription = "Healing amount: 25
 Range:          5 m
 Cast time:      3.0 + 1 s
 Mana cost:      10"
 
-[node name="Slow" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 333.0
+offset_top = 378.0
+offset_right = 382.0
+offset_bottom = 427.0
+disabled = true
 texture_normal = ExtResource("20_cp300")
 ability = ExtResource("21_5dcda")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Slow"
 talentDescription = "Range:          15 m
 Cast time:      0.5 + 1 s
@@ -615,11 +671,17 @@ Duration:       10 s
   Debuff effect
 Speed ratio:   -50 %"
 
-[node name="Haste" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 408.0
+offset_top = 378.0
+offset_right = 457.0
+offset_bottom = 427.0
+disabled = true
 texture_normal = ExtResource("24_oyts4")
 ability = ExtResource("25_8eod5")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Haste"
 talentDescription = "Range:          15 m
 Cast time:      0.5 + 1 s
@@ -629,11 +691,17 @@ Duration:       10 s
   Buff effect
 Speed:         3.0 m/s"
 
-[node name="Prowess" parent="UnitHud/TalentTree/VBoxContainer/TalentAbilityButtons" instance=ExtResource("9_rio8d")]
+[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+offset_left = 483.0
+offset_top = 378.0
+offset_right = 532.0
+offset_bottom = 427.0
+disabled = true
 texture_normal = ExtResource("26_87hrl")
 ability = ExtResource("27_cnuss")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Prowess"
 talentDescription = "Range:          15 m
 Cast time:      2.0 + 1 s
@@ -644,97 +712,192 @@ Duration:       10 s
 Melee skill:   60 %
 Ranged skill:  60 %"
 
-[node name="AttributeTalentHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 22
-text = "
-Increase passive Attributes"
-horizontal_alignment = 1
-
-[node name="TalentAttributeButtons" type="GridContainer" parent="UnitHud/TalentTree/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 30
-columns = 4
-
-[node name="HealthMax" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.733871
+anchor_top = -0.5
+anchor_right = 0.733871
+anchor_bottom = -0.5
+offset_left = -6.0
+offset_top = 300.0
+offset_right = 43.0
+offset_bottom = 349.0
 attributes = SubResource("Resource_sa48e")
 talentName = "Max Health"
 talentDescription = "Max Health:    20"
 metadata/_edit_use_anchors_ = true
 
-[node name="ManaMax" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.181452
+anchor_top = -0.0967742
+anchor_right = 0.181452
+anchor_bottom = -0.0967742
+offset_left = 143.0
+offset_top = 300.0
+offset_right = 192.0
+offset_bottom = 349.0
+attributes = SubResource("Resource_itqay")
+maxRank = 1
+talentName = "Magic"
+talentDescription = "Max Mana:      20
+Mana regen:    1.0/s"
+metadata/_edit_use_anchors_ = true
+
+[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+anchor_left = -0.0705645
+anchor_top = -0.046371
+anchor_right = -0.0705645
+anchor_bottom = -0.046371
+offset_left = 143.0
+offset_top = 300.0
+offset_right = 192.0
+offset_bottom = 349.0
+disabled = true
 attributes = SubResource("Resource_niwlv")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Max Mana"
 talentDescription = "Max Mana:      20"
 metadata/_edit_use_anchors_ = true
 
-[node name="ManaRegen" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.133065
+anchor_top = -0.046371
+anchor_right = 0.133065
+anchor_bottom = -0.046371
+offset_left = 292.0
+offset_top = 300.0
+offset_right = 341.0
+offset_bottom = 349.0
+disabled = true
 attributes = SubResource("Resource_pdeq4")
+requiredTalents = [NodePath("../Magic")]
 talentName = "Mana regen"
 talentDescription = "Mana regen:    1.0/s"
 metadata/_edit_use_anchors_ = true
 
-[node name="MeleeSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = -0.487903
+anchor_top = -0.298387
+anchor_right = -0.487903
+anchor_bottom = -0.298387
+offset_left = 200.0
+offset_top = 300.0
+offset_right = 249.0
+offset_bottom = 349.0
+disabled = true
 attributes = SubResource("Resource_jr5p1")
+requiredTalents = [NodePath("../MeleeAttack")]
 talentName = "Melee skill"
 talentDescription = "Melee skill:   10 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="RangedSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.179435
+anchor_top = -0.457661
+anchor_right = 0.179435
+anchor_bottom = -0.457661
+offset_left = -6.0
+offset_top = 379.0
+offset_right = 43.0
+offset_bottom = 428.0
+disabled = true
 attributes = SubResource("Resource_5dcda")
-talentName = "Ranged skill"
+requiredTalents = [NodePath("../RangedAttack")]
+talentName = "Ranged Skill"
 talentDescription = "Ranged skill:  10 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="FireSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.65121
+anchor_top = -0.497984
+anchor_right = 0.65121
+anchor_bottom = -0.497984
+offset_left = -365.0
+offset_top = 725.0
+offset_right = -316.0
+offset_bottom = 774.0
+disabled = true
 attributes = SubResource("Resource_h1o0j")
+requiredTalents = [NodePath("../FireBall")]
 talentName = "Fire skill"
 talentDescription = "Fire skill:    15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="HealSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.41129
+anchor_top = -0.0584677
+anchor_right = 0.41129
+anchor_bottom = -0.0584677
+offset_left = -21.0
+offset_top = 507.0
+offset_right = 28.0
+offset_bottom = 556.0
+disabled = true
 attributes = SubResource("Resource_bhwvf")
+requiredTalents = [NodePath("../HealingWord"), NodePath("../CureWounds")]
 talentName = "Healing skill"
 talentDescription = "Healing skill: 15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="ThreatSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = -0.167339
+anchor_top = -0.457661
+anchor_right = -0.167339
+anchor_bottom = -0.457661
+offset_left = 291.0
+offset_top = 379.0
+offset_right = 340.0
+offset_bottom = 428.0
 attributes = SubResource("Resource_gbr36")
 talentName = "Threat skill"
 talentDescription = "Threat skill:  15 %"
-metadata/_edit_use_anchors_ = true
 
-[node name="DurationSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.784274
+anchor_top = -0.504032
+anchor_right = 0.784274
+anchor_bottom = -0.504032
+offset_left = 19.0
+offset_top = 728.0
+offset_right = 68.0
+offset_bottom = 777.0
+disabled = true
 attributes = SubResource("Resource_87hrl")
+requiredTalents = [NodePath("../Slow"), NodePath("../Haste"), NodePath("../Prowess")]
 talentName = "Duration skill"
 talentDescription = "Duration skill: 20 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="ArmorSkill" parent="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons" instance=ExtResource("9_srmse")]
+[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
+anchor_left = 0.685484
+anchor_top = -0.818548
+anchor_right = 0.685484
+anchor_bottom = -0.818548
+offset_left = 143.0
+offset_top = 458.0
+offset_right = 192.0
+offset_bottom = 507.0
 attributes = SubResource("Resource_16wc6")
 talentName = "Armor skill"
 talentDescription = "Armor skill:   15 %"
@@ -823,6 +986,9 @@ volume_db = -15.0
 max_distance = 30.0
 panning_strength = 3.0
 
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(612, 420)
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
@@ -832,13 +998,14 @@ panning_strength = 3.0
 [connection signal="pressed" from="UnitHud/VBoxContainer/CancelCastButton" to="." method="_on_cancel_cast_button_pressed"]
 [connection signal="toggled" from="UnitHud/CharacterPanelButtons/InventoryButton" to="." method="_on_inventory_button_toggled"]
 [connection signal="toggled" from="UnitHud/CharacterPanelButtons/TalentTreeButton" to="." method="_on_talent_tree_button_toggled"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealthMax" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealthMax" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ManaMax" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ManaMax" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ManaRegen" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ManaRegen" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/MeleeSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/MeleeSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/RangedSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/RangedSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/FireSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/FireSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/HealSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ThreatSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/DurationSkill" method="_on_pressed"]
-[connection signal="pressed" from="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" to="UnitHud/TalentTree/VBoxContainer/TalentAttributeButtons/ArmorSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/HealthMax" to="UnitHud/TalentTree/TalentButtons/HealthMax" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/Magic" to="UnitHud/TalentTree/TalentButtons/Magic" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/ManaMax" to="UnitHud/TalentTree/TalentButtons/ManaMax" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/ManaRegen" to="UnitHud/TalentTree/TalentButtons/ManaRegen" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/MeleeSkill" to="UnitHud/TalentTree/TalentButtons/MeleeSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/RangedSkill" to="UnitHud/TalentTree/TalentButtons/RangedSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/FireSkill" to="UnitHud/TalentTree/TalentButtons/FireSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/HealSkill" to="UnitHud/TalentTree/TalentButtons/HealSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/ThreatSkill" to="UnitHud/TalentTree/TalentButtons/ThreatSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/DurationSkill" to="UnitHud/TalentTree/TalentButtons/DurationSkill" method="_on_pressed"]
+[connection signal="pressed" from="UnitHud/TalentTree/TalentButtons/ArmorSkill" to="UnitHud/TalentTree/TalentButtons/ArmorSkill" method="_on_pressed"]

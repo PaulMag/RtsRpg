@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://p2g5dfrrbk41"]
+[gd_scene load_steps=4 format=3 uid="uid://p2g5dfrrbk41"]
 
 [ext_resource type="PackedScene" uid="uid://ccoallcn4va30" path="res://scenes/TalentBaseButton.tscn" id="1_67xqx"]
 [ext_resource type="Script" uid="uid://406flp665rc" path="res://scripts/TalentAttributeButton.gd" id="2_iod4t"]
+[ext_resource type="Texture2D" uid="uid://b8x5pugwwbapf" path="res://sprites/ui/attribute_increase.png" id="2_lg63a"]
 
 [node name="TalentAttributeButton" instance=ExtResource("1_67xqx")]
+texture_normal = ExtResource("2_lg63a")
 script = ExtResource("2_iod4t")
 attributes = null
 maxRank = 100

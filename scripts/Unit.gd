@@ -52,8 +52,7 @@ enum states {
 @onready var unitHud: CanvasLayer = $UnitHud
 @onready var talentTree: Panel = $UnitHud/TalentTree
 @onready var talentTreeButton: Button = %TalentTreeButton
-@onready var talentTreeAttributeButtons: Control = %TalentAttributeButtons
-@onready var talentTreeAbilityButtons: Control = %TalentAbilityButtons
+@onready var talentTreeButtons: Control = %TalentButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
 @onready var buffIcons: HBoxContainer = %BuffIcons
@@ -125,14 +124,14 @@ func _ready() -> void:
 	label.text = unitName
 
 	var nodeIndex := 0
-	for node in talentTreeAttributeButtons.get_children():
+	for node in talentTreeButtons.get_children():
 		if node is TalentAttributeButton:
 			var talentAttributeButton := node as TalentAttributeButton
 			talentAttributeButton.pressed.connect(learnTalentAttributeOnServer.bind(nodeIndex))
 		nodeIndex += 1
 
 	nodeIndex = 0
-	for node in talentTreeAbilityButtons.get_children():
+	for node in talentTreeButtons.get_children():
 		if node is TalentAbilityButton:
 			var talentAbilityButton := node as TalentAbilityButton
 			talentAbilityButton.pressed.connect(learnTalentAbilityOnServer.bind(nodeIndex))
@@ -167,7 +166,7 @@ func learnTalentAbilityOnClients(nodeIndex: int) -> void:
 
 @rpc("authority", "call_local")
 func learnTalentAttribute(nodeIndex: int) -> void:
-	var talentAttributeButton := talentTreeAttributeButtons.get_children()[nodeIndex] as TalentAttributeButton
+	var talentAttributeButton := talentTreeButtons.get_children()[nodeIndex] as TalentAttributeButton
 	addAttributes(talentAttributeButton.attributes)
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
@@ -175,7 +174,7 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 
 @rpc("authority", "call_local")
 func learnTalentAbility(nodeIndex: int) -> void:
-	var talentAbilityButton := talentTreeAbilityButtons.get_children()[nodeIndex] as TalentAbilityButton
+	var talentAbilityButton := talentTreeButtons.get_children()[nodeIndex] as TalentAbilityButton
 
 	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
 	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
