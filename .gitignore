@@ -7,8 +7,6 @@
 *.exe
 *.pck
 
-sprites/
-models/
 fonts/
 
 *.wav
