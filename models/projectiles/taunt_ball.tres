@@ -1,0 +1,13 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://br7opdqquxsrg"]
+
+[ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="1_omue2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o00yy"]
+albedo_texture = ExtResource("1_omue2")
+
+[resource]
+material = SubResource("StandardMaterial3D_o00yy")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8

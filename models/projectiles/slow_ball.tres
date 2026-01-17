@@ -1,0 +1,13 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://bokh5ebmardex"]
+
+[ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="1_r0bwe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e21m3"]
+albedo_texture = ExtResource("1_r0bwe")
+
+[resource]
+material = SubResource("StandardMaterial3D_e21m3")
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8
