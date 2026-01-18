@@ -8,8 +8,6 @@ signal died
 const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
 const ROGUE_SCENE := preload("res://scenes/character_models/RogueHooded.tscn")
 
-var CORPSE := preload("res://scenes/Corpse.tscn")
-
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES
 @export var loot: Array[Global.Items]
@@ -81,6 +79,7 @@ var isRecovering := false
 var canRegenMana := true
 var isAutocasting := false
 var autocastAbilityId: Global.AbilityIds
+var isDead := false
 
 var threatTable: Dictionary[Unit, float] = {}
 var buffs: Array[Buff] = []
@@ -535,7 +534,7 @@ func damage(_attack: Attack) -> void:
 		if is_instance_valid(_attack.attackingUnit):
 			addThreat(_attack.attackingUnit, _attack.threat)
 
-	if health <= 0:
+	if health <= 0 and not isDead:
 		die.rpc()
 
 func addThreat(unit: Unit, amount: float = 0) -> void:
@@ -555,18 +554,24 @@ func getAllAwareEnemyUnits() -> Array[Unit]:
 
 @rpc("call_local")
 func die() -> void:
+	isDead = true
+	set_process(false)
+	set_physics_process(false)
+	healthBar.setValue(0)
+	if aiController:
+		aiController.set_process(false)
+
 	died.emit()
 
 	if multiplayer.is_server():
+		_on_cancel_cast_button_pressed()
 		for item in loot:
 			var pickup := Pickup.init(item)
 			pickup.position = position
 			call_deferred("add_sibling", pickup, true)
 
-	# var corpse: Corpse = CORPSE.instantiate()
-	# corpse.position = position
-	# get_parent().add_child(corpse)
-	Global.deleteUnit(self)
+	animationPlayer.play("Death_A")
+
 
 func spendMana(amount: int) -> void:
 	mana -= amount

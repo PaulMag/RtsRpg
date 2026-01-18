@@ -35,8 +35,11 @@ func _process(_delta: float) -> void:
 func recalculateTarget() -> void:
 	if not multiplayer.is_server():
 		return
-	unit.orderFollowUnit(getMostThreateningUnit())
-	alertAllies()
+	var targetUnit := getMostThreateningUnit()
+	unit.orderFollowUnit(targetUnit)
+	if targetUnit:
+		targetUnit.died.connect(recalculateTarget)
+		alertAllies()
 
 
 func getMostThreateningUnit() -> Unit:
@@ -46,7 +49,7 @@ func getMostThreateningUnit() -> Unit:
 	for u: Unit in threatTable:
 		if not is_instance_valid(u):
 			unit.threatTable.erase(u)  # Remove dead units from threat list.
-		elif unit.threatTable[u] > highestThreat:
+		elif not u.isDead and unit.threatTable[u] > highestThreat:
 			mostThreateningUnit = u
 			highestThreat = unit.threatTable[u]
 	return mostThreateningUnit
