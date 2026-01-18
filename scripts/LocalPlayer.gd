@@ -32,18 +32,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
 		return
 
-	if getSelectedUnit():
+	var select_unit := getSelectedUnit()
+
+	if select_unit and not select_unit.isDead:
 		for abilityButtonIndex in range(0, 4):
 			if event.is_action_pressed("cast_%s" % (abilityButtonIndex + 1)):
-				if getSelectedUnit().getAbilityButtons().size() < abilityButtonIndex + 1:
+				if select_unit.getAbilityButtons().size() < abilityButtonIndex + 1:
 					print("No ability assigned to button %s." % (abilityButtonIndex + 1))
 					return
-				var ability := getSelectedUnit().getAbilityButtons()[abilityButtonIndex].ability
-				getSelectedUnit().useAbilityOnServer(ability.abilityId)
-				getSelectedUnit().setRangeCircle(ability.targetRange)
+				var ability := select_unit.getAbilityButtons()[abilityButtonIndex].ability
+				select_unit.useAbilityOnServer(ability.abilityId)
+				select_unit.setRangeCircle(ability.targetRange)
 				return
 			elif event.is_action_released("cast_%s" % (abilityButtonIndex + 1)):
-				getSelectedUnit().setRangeCircle(0)
+				select_unit.setRangeCircle(0)
 
 	for unitIndex in range(0, 6):
 		if event.is_action_pressed("select_unit_%s" % (unitIndex + 1)):
