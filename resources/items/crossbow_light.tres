@@ -32,3 +32,5 @@ texture = ExtResource("4_6hhlr")
 mesh = ExtResource("2_f2c28")
 slot = 1
 attributes = SubResource("Resource_us7d3")
+position = Vector3(0, 0, 0)
+rotation = Vector3(-1.5708, 0, -1.5708)

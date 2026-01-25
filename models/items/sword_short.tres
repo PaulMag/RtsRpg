@@ -1,11 +1,11 @@
 [gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://dh1s25v8136jo"]
 
-[ext_resource type="Texture2D" uid="uid://dfoof3eh4nyu1" path="res://models/characters_imports/knight_texture.png" id="1_mblhh"]
+[ext_resource type="Texture2D" uid="uid://u32lgb1jbl7u" path="res://models/characters_imports/knight_texture.png" id="1_anqak"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5abrj"]
 resource_name = "knight_texture"
 cull_mode = 2
-albedo_texture = ExtResource("1_mblhh")
+albedo_texture = ExtResource("1_anqak")
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_wd7ae"]

@@ -32,4 +32,6 @@ texture = ExtResource("4_m1h3j")
 mesh = ExtResource("2_m1h3j")
 slot = 2
 attributes = SubResource("Resource_utpj5")
+position = Vector3(-2.98023e-07, 0.0266831, 0.167475)
+rotation = Vector3(-0.349066, 0, -1.5708)
 metadata/_custom_type_script = "uid://dp0s8x6phjuay"

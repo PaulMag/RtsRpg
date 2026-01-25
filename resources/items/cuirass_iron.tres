@@ -20,6 +20,7 @@ magicSkill = 0
 healSkill = 0
 speed = 0.0
 threatSkill = 0
+durationSkill = 0
 speedRatio = 0.97
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
@@ -31,4 +32,6 @@ texture = ExtResource("4_6v6rl")
 mesh = ExtResource("2_ehh5l")
 slot = 4
 attributes = SubResource("Resource_q0l2m")
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://dp0s8x6phjuay"
