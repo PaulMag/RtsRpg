@@ -3,6 +3,7 @@ class_name Unit
 
 
 signal died
+signal ressurected
 
 
 const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
@@ -557,6 +558,8 @@ func die() -> void:
 	isDead = true
 	set_process(false)
 	set_physics_process(false)
+	if aiController:
+		aiController.set_process(true)
 	healthBar.setValue(0)
 	if aiController:
 		aiController.set_process(false)
@@ -571,6 +574,17 @@ func die() -> void:
 			call_deferred("add_sibling", pickup, true)
 
 	animationPlayer.play("Death_A")
+
+
+@rpc("call_local")
+func ressurect() -> void:
+	isDead = false
+	set_process(true)
+	set_physics_process(true)
+	if aiController:
+		aiController.set_process(true)
+	ressurected.emit()
+	animationPlayer.play("Lie_StandUp")  #TODO: This is immediately overwritten by Idle in _process. Add a delay?
 
 
 func spendMana(amount: int) -> void:

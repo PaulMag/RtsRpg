@@ -1,4 +1,4 @@
-@tool  # Necessary for TalaentAbilityButton button to not complain
+@tool  # Necessary for TalentAbilityButton button to not complain
 extends Resource
 class_name Ability
 
@@ -32,6 +32,8 @@ class_name Ability
 @export var canTargetSelf: bool = false
 @export var canTargetFriend: bool = false
 @export var canTargetEnemy: bool = false
+@export var canTargetAlive: bool = true
+@export var canTargetDead: bool = false
 
 
 func canUse(user: Unit, target: Unit) -> bool:
@@ -42,6 +44,10 @@ func canUse(user: Unit, target: Unit) -> bool:
 	if user.faction == target.faction and !canTargetFriend:
 		return false
 	if user.faction != target.faction and !canTargetEnemy:
+		return false
+	if target.isDead and !canTargetDead:
+		return false
+	if !target.isDead and !canTargetAlive:
 		return false
 	if user != target and user.position.distance_to(target.position) > targetRange:
 		return false

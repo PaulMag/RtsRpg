@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Revive" load_steps=7 format=3 uid="uid://cjotrctw0c26l"]
+
+[ext_resource type="Script" uid="uid://c74fl0ck8ghve" path="res://scripts/Revive.gd" id="1_36yr5"]
+[ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="1_khnxn"]
+[ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="1_s1poe"]
+[ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="2_ncogc"]
+[ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="2_un6bf"]
+[ext_resource type="SphereMesh" uid="uid://dn568oe8vvl2p" path="res://models/projectiles/healing_ball.tres" id="3_u53y7"]
+
+[resource]
+script = ExtResource("1_36yr5")
+name = "Revive"
+texture = ExtResource("2_ncogc")
+abilityId = 9
+damageMelee = 0
+damageRanged = 0
+damageMagical = 0
+healingAmount = 1
+threatAmount = 0
+targetRange = 2
+manaCost = 0
+isHealing = true
+aoeRadius = 0.0
+buffDuration = 0.0
+castTime = 5.0
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.0
+projectileSpeed = 20.0
+projectileMesh = ExtResource("3_u53y7")
+projectileShootAudio = ExtResource("1_s1poe")
+projectileHitAudio = ExtResource("2_un6bf")
+castingAudio = ExtResource("1_khnxn")
+canTargetSelf = false
+canTargetFriend = true
+canTargetEnemy = false
+canTargetAlive = false
+canTargetDead = true
+metadata/_custom_type_script = "uid://c74fl0ck8ghve"

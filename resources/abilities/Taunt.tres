@@ -33,3 +33,5 @@ castingAudio = ExtResource("1_ljsek")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true
+canTargetAlive = true
+canTargetDead = false

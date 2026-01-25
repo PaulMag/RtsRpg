@@ -35,10 +35,14 @@ func _process(_delta: float) -> void:
 func recalculateTarget() -> void:
 	if not multiplayer.is_server():
 		return
+	var previousTargetUnit := unit.targetUnit
 	var targetUnit := getMostThreateningUnit()
 	unit.orderFollowUnit(targetUnit)
+	if previousTargetUnit and previousTargetUnit != targetUnit:
+		previousTargetUnit.died.disconnect(recalculateTarget)
 	if targetUnit:
-		targetUnit.died.connect(recalculateTarget)
+		if previousTargetUnit != targetUnit:
+			targetUnit.died.connect(recalculateTarget)
 		alertAllies()
 
 
@@ -61,10 +65,7 @@ func alertAllies() -> void:
 			var nearbyAlliedUnit := body as Unit
 			if nearbyAlliedUnit.aiController and nearbyAlliedUnit.faction == unit.faction:
 				for u in unit.threatTable.keys() as Array[Unit]:
-					if not u in nearbyAlliedUnit.threatTable:
-						print("%s alerts %s about unit %s" % [unit.unitName, nearbyAlliedUnit.unitName, u.unitName])
-						nearbyAlliedUnit.threatTable[u] = 0
-						nearbyAlliedUnit.aiController.recalculateTarget()
+					nearbyAlliedUnit.aiController.becomeAwareOfUnit(u)
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -73,7 +74,20 @@ func _on_body_entered(body: Node3D) -> void:
 	if body is Unit:
 		var u := body as Unit
 		if u.faction != unit.faction:
-			if not u in unit.threatTable:
-				print("%s is aware of unit %s" % [unit.unitName, u.unitName])
-				unit.threatTable[u] = 0
-				recalculateTarget()
+			becomeAwareOfUnit(u)
+
+
+func becomeAwareOfUnit(u: Unit) -> void:
+	if not u in unit.threatTable:
+		print("%s is aware of unit %s" % [unit.unitName, u.unitName])
+		unit.threatTable[u] = 0
+		recalculateTarget()
+		if !u.ressurected.is_connected(enemyRessurected.bind(u)):
+			u.ressurected.connect(enemyRessurected.bind(u))
+
+
+func enemyRessurected(ressurectedUnit: Unit) -> void:
+	if not multiplayer.is_server():
+		return
+	print("%s is aware of ressurected unit %s" % [unit.unitName, ressurectedUnit.unitName])
+	recalculateTarget()
