@@ -612,6 +612,7 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 		if oldItemButton:
 			oldItemButton.setEquipped(false)
 			equippedItemButtons[unEquipSlot] = null
+			characterModel.unEquipItemSlot(unEquipSlot)
 			print("Unequipped item %s in slot %s" % [oldItemButton.item.name, unEquipSlot])
 			updateAttributes()
 		return
@@ -625,10 +626,12 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 			oldItemButton.setEquipped(false)
 		equippedItemButtons[item.slot] = itemButton
 		itemButton.setEquipped(true)
+		characterModel.equipItem(item)
 		print("Equipped item %s in slot %s" % [item.name, item.slot])
 	elif equippedItemButtons[item.slot] == itemButton:
 		equippedItemButtons[item.slot] = null
 		itemButton.setEquipped(false)
+		characterModel.unEquipItemSlot(item.slot)
 		print("Unequipped item %s in slot %s" % [item.name, item.slot])
 	updateAttributes()
 

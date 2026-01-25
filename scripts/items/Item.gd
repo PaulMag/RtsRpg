@@ -8,7 +8,8 @@ class_name Item
 @export var mesh: Mesh
 @export var slot: Global.ItemSlots
 @export var attributes: Attributes
-
+@export var position: Vector3
+@export var rotation: Vector3
 
 
 func getDescription() -> String:

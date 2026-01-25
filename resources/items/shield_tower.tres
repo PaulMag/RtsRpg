@@ -32,4 +32,6 @@ texture = ExtResource("4_6gfhd")
 mesh = ExtResource("2_6gfhd")
 slot = 2
 attributes = SubResource("Resource_gbxim")
+position = Vector3(-5.96046e-08, 0.171319, -0.0796212)
+rotation = Vector3(-0.349066, 0, -1.5708)
 metadata/_custom_type_script = "uid://dp0s8x6phjuay"

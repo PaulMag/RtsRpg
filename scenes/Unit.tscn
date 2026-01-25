@@ -24,7 +24,7 @@
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 [ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="21_itqay"]
 [ext_resource type="Resource" uid="uid://bq3rcj3hehc0q" path="res://resources/abilities/CureWounds.tres" id="22_d4n80"]
-[ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/character_models/Mage.tscn" id="23_cp300"]
+[ext_resource type="PackedScene" uid="uid://cdg2siq8w8223" path="res://scenes/CharacterModel.tscn" id="23_cp300"]
 [ext_resource type="Resource" uid="uid://cjotrctw0c26l" path="res://resources/abilities/Revive.tres" id="23_d4n80"]
 [ext_resource type="Texture2D" uid="uid://ciri42xpna2il" path="res://sprites/abilities/speed.png" id="24_oyts4"]
 [ext_resource type="Resource" uid="uid://dhqv26bjo4n2q" path="res://resources/abilities/Haste.tres" id="25_8eod5"]
