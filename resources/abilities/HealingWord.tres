@@ -45,3 +45,5 @@ castingAudio = ExtResource("1_lcpo2")
 canTargetSelf = true
 canTargetFriend = true
 canTargetEnemy = false
+canTargetAlive = true
+canTargetDead = false

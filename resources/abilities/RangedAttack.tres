@@ -49,3 +49,5 @@ projectileHitAudio = SubResource("AudioStreamRandomizer_xa5h0")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true
+canTargetAlive = true
+canTargetDead = false

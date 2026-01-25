@@ -47,6 +47,7 @@ enum AbilityIds {
 	Haste,
 	Prowess,
 	CureWounds,
+	Revive,
 }
 var getAbility: Array[Ability] = [
 	load("res://resources/abilities/MeleeAttack.tres"),
@@ -58,6 +59,7 @@ var getAbility: Array[Ability] = [
 	load("res://resources/abilities/Haste.tres"),
 	load("res://resources/abilities/Prowess.tres"),
 	load("res://resources/abilities/CureWounds.tres"),
+	load("res://resources/abilities/Revive.tres"),
 ]
 
 

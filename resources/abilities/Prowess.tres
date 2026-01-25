@@ -63,4 +63,6 @@ castingAudio = ExtResource("2_c5qjk")
 canTargetSelf = true
 canTargetFriend = true
 canTargetEnemy = false
+canTargetAlive = true
+canTargetDead = false
 metadata/_custom_type_script = "uid://csw5vmahp3gxr"

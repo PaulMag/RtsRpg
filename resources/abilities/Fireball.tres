@@ -33,3 +33,5 @@ castingAudio = ExtResource("1_81ncp")
 canTargetSelf = false
 canTargetFriend = false
 canTargetEnemy = true
+canTargetAlive = true
+canTargetDead = false
