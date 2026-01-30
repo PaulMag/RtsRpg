@@ -51,10 +51,7 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 	var offset := Vector3(randf_range(-SPAWN_RADIUS, SPAWN_RADIUS), 0, randf_range(-SPAWN_RADIUS, SPAWN_RADIUS))
 	newUnit.position = position + offset
 	add_sibling.call_deferred(newUnit, true)
-
-	numberOfLivingUnits += 1
-	livingUnits.append(newUnit)
-	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
+	await newUnit.ready
 
 	if joiningExistingUnits:
 		var randomExistingUnit := livingUnits[randi() % livingUnits.size()]
@@ -63,6 +60,10 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 	elif afterSpawnTarget:
 		newUnit.destination = afterSpawnTarget.global_position + offset
 		newUnit.followCursor = true
+
+	numberOfLivingUnits += 1
+	livingUnits.append(newUnit)
+	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 	newUnit.died.connect(onUnitDied.bind(newUnit))
 
@@ -73,7 +74,8 @@ func onUnitDied(deadUnit: Unit) -> void:
 
 	if not remainingSpawns.is_empty():
 		print("%s spawns additional unit" % self)
-		var newScene := remainingSpawns.pop_back() as PackedScene
+		var newScene := remainingSpawns[~0]
+		remainingSpawns.pop_back()
 		spawnUnit(newScene, true)
 
 	elif numberOfLivingUnits == 0:
