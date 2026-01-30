@@ -1,5 +1,4 @@
-extends MultiplayerSynchronizer
-
+extends Node
 class_name LocalPlayer
 
 
@@ -24,9 +23,6 @@ func _enter_tree() -> void:
 	playerId = name.to_int()
 	add_to_group("players")
 
-func _ready() -> void:
-	# playerColor = Color(randf(), randf(), randf())
-	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():

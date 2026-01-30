@@ -36,8 +36,6 @@ func _ready() -> void:
 	gameVersionLabel.text = "Version %s" % [gameVersion]
 
 	readying.hide()
-	# playerNameInput.hide()
-	# colorPickerButton.hide()
 	colorPickerButton.color = Color(randf(), randf(), randf())
 	readyButton.hide()
 	readyButton.disabled = true
@@ -45,7 +43,6 @@ func _ready() -> void:
 
 	var multiplayerScene := multiplayer as SceneMultiplayer
 	multiplayerScene.server_relay = false
-	#multiplayer.server_relay = false
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
@@ -56,8 +53,6 @@ func _on_host_pressed() -> void:
 	remoteLineEdit.hide()
 	connectButton.hide()
 	readying.show()
-	# playerNameInput.show()
-	# colorPickerButton.show()
 	readyButton.show()
 	startButton.text = "Start Game"
 	startButton.show()
@@ -87,11 +82,10 @@ func _on_connect_pressed() -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 
+	hostButton.hide()
 	remoteLineEdit.hide()
 	connectButton.hide()
 	readying.show()
-	# playerNameInput.show()
-	# colorPickerButton.show()
 	readyButton.show()
 	startButton.hide()
 
@@ -141,16 +135,7 @@ func _on_start_game_pressed() -> void:
 	get_tree().paused = false
 
 	if multiplayer.is_server():
-		# if not OS.has_feature("dedicated_server"):
-		# 	add_player(1)
-		# 	print("Not dedicated server. Added player 1.")
-
 		spawn_dungeon()
-
-	for player in Global.getPlayers():
-		player.playerId = player.name.to_int()   #TODO: Why is this necessary???
-
-	if multiplayer.is_server():
 		hostOptions.show()
 
 
@@ -161,7 +146,6 @@ func hideMultiplayerOptions() -> void:
 
 func add_player(id: int) -> void:
 	var localPLayer: LocalPlayer = LOCAL_PLAYER.instantiate() as LocalPlayer
-	localPLayer.playerId = id  #TODO: Why does this not work???
 	localPLayer.name = str(id)
 	players.add_child(localPLayer, true)
 	print("Added player %s with id %s." % [localPLayer.name, localPLayer.playerId])
