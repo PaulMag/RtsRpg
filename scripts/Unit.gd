@@ -5,10 +5,6 @@ class_name Unit
 signal died
 signal ressurected
 
-
-const BARBARIAN_SCENE := preload("res://scenes/character_models/Barbarian.tscn")
-const ROGUE_SCENE := preload("res://scenes/character_models/RogueHooded.tscn")
-
 @export var unitId : int
 @export var faction := Global.Faction.ENEMIES
 @export var loot: Array[Global.Items]
@@ -101,18 +97,6 @@ func _ready() -> void:
 	print("unit _ready   player %s  unit %s  unitId %s" % [multiplayer.get_unique_id(), get_instance_id(), unitId])
 
 	self.add_to_group("units")
-
-	if aiController:
-		var characterModelScene: CharacterModel
-		if aiController is AiControllerArcher:
-			characterModelScene = ROGUE_SCENE.instantiate()
-		else:
-			characterModelScene = BARBARIAN_SCENE.instantiate()
-		var characterModelOld := characterModel
-		add_child(characterModelScene)
-		characterModel = characterModelScene
-		animationPlayer = characterModel.animationPlayer
-		characterModelOld.queue_free()
 
 	updateAttributes()
 
