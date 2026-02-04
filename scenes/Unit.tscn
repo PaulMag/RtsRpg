@@ -1001,9 +1001,6 @@ volume_db = -15.0
 max_distance = 30.0
 panning_strength = 3.0
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(612, 420)
-
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
