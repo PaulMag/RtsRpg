@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://bgcbnjtwwlwrc"]
 
-[ext_resource type="Texture2D" uid="uid://0cbo7dslrnbb" path="res://models/characters_imports/rogue_texture.png" id="1_gq35g"]
+[ext_resource type="Texture2D" uid="uid://0cbo7dslrnbb" path="res://models/textures/rogue_texture.png" id="1_gq35g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3grn"]
 resource_name = "rogue_texture"

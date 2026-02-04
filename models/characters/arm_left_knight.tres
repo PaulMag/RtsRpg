@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://640stt0appsm"]
 
-[ext_resource type="Texture2D" uid="uid://u32lgb1jbl7u" path="res://models/characters_imports/knight_texture.png" id="1_a0oh6"]
+[ext_resource type="Texture2D" uid="uid://u32lgb1jbl7u" path="res://models/textures/knight_texture.png" id="1_a0oh6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ov5jm"]
 resource_name = "knight_texture"

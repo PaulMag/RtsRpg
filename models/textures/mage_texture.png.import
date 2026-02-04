@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u32lgb1jbl7u"
-path.s3tc="res://.godot/imported/knight_texture.png-e57f7001e5eb5a8afa73134cacaf0063.s3tc.ctex"
+uid="uid://cdnbqhdglyuv4"
+path.s3tc="res://.godot/imported/mage_texture.png-725c5d4b5bbdfd1b333892a880293a83.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "af4707185c3e9844f7ed166c1a2e24f8"
+"md5": "4929e1d8419d602df7a7be89ce778863"
 }
 
 [deps]
 
-source_file="res://models/characters_imports/knight_texture.png"
-dest_files=["res://.godot/imported/knight_texture.png-e57f7001e5eb5a8afa73134cacaf0063.s3tc.ctex"]
+source_file="res://models/textures/mage_texture.png"
+dest_files=["res://.godot/imported/mage_texture.png-725c5d4b5bbdfd1b333892a880293a83.s3tc.ctex"]
 
 [params]
 
