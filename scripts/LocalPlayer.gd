@@ -7,7 +7,6 @@ class_name LocalPlayer
 @export var playerName: String
 @export var playerColor: Color
 
-# @onready var mouseDetector: MouseDetector = $MouseDetector
 @onready var destinationMarker: DestinationMarker = $DestinationMarker
 @onready var canvasLayer: CanvasLayer = $CanvasLayer
 @onready var unitList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/UnitList
