@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://dts8irtwpmj3e"]
 
-[ext_resource type="Texture2D" uid="uid://cdnbqhdglyuv4" path="res://models/characters_imports/mage_texture.png" id="1_fwydj"]
+[ext_resource type="Texture2D" uid="uid://cdnbqhdglyuv4" path="res://models/textures/mage_texture.png" id="1_fwydj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2uk1b"]
 resource_name = "mage_texture"

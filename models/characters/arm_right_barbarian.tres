@@ -1,6 +1,6 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://bf8fwn6mvf162"]
 
-[ext_resource type="Texture2D" uid="uid://bjfh8bwfn4380" path="res://models/characters_imports/barbarian_texture.png" id="1_0hoim"]
+[ext_resource type="Texture2D" uid="uid://bjfh8bwfn4380" path="res://models/textures/barbarian_texture.png" id="1_0hoim"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6umpq"]
 resource_name = "barbarian_texture"
