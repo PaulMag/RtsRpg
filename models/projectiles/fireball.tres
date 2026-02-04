@@ -1,6 +1,6 @@
 [gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://c5an3tjuvetq4"]
 
-[ext_resource type="Texture2D" uid="uid://bq1g276ht6vja" path="res://sprites/projectiles/fireball.png" id="1_01xjw"]
+[ext_resource type="Texture2D" uid="uid://bq1g276ht6vja" path="res://models/textures/fireball.png" id="1_01xjw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ymbno"]
 albedo_texture = ExtResource("1_01xjw")
