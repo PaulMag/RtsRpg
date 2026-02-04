@@ -2,26 +2,27 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdj3q6hl811p0"
-path="res://.godot/imported/fireball_projectile.png-ecf96859b0495e7220ee854c20d3bbdf.ctex"
+uid="uid://bq1g276ht6vja"
+path.s3tc="res://.godot/imported/fireball.png-de7e6da4e7ed2d13cd18c7d908cb7c68.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://sprites/projectiles/fireball_projectile.png"
-dest_files=["res://.godot/imported/fireball_projectile.png-ecf96859b0495e7220ee854c20d3bbdf.ctex"]
+source_file="res://models/textures/fireball.png"
+dest_files=["res://.godot/imported/fireball.png-de7e6da4e7ed2d13cd18c7d908cb7c68.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

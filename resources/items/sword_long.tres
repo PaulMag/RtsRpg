@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_dn3ro"]
 [ext_resource type="ArrayMesh" uid="uid://c1ea0dd4d4vv8" path="res://models/items/sword_long.tres" id="2_nqtow"]
 [ext_resource type="Script" uid="uid://cnch4j6034vgc" path="res://scripts/items/Weapon.gd" id="3_wpys3"]
-[ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/projectiles/sword.png" id="4_ire6w"]
+[ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/items/sword.png" id="4_ire6w"]
 
 [sub_resource type="Resource" id="Resource_y15e3"]
 script = ExtResource("1_dn3ro")

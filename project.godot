@@ -14,7 +14,7 @@ config/name="PaulMag's RPG"
 config/version="0.2.1"
 run/main_scene="res://scenes/Game.tscn"
 config/features=PackedStringArray("4.4")
-config/icon="res://sprites/projectiles/sword.png"
+config/icon="res://sprites/items/sword.png"
 
 [autoload]
 
