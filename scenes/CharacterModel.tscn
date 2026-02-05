@@ -497,7 +497,6 @@ bone_idx = 9
 
 [node name="LeftHandItem" type="MeshInstance3D" parent="Skeleton3D/LeftHandBone"]
 unique_name_in_owner = true
-transform = Transform3D(-4.19332e-08, 1.23415e-08, -1, 0.282341, 0.959313, -4.83169e-13, 0.959314, -0.282342, -4.37109e-08, -0.185885, -0.0338308, 0.0628547)
 skeleton = NodePath("")
 
 [node name="HeadBone" type="BoneAttachment3D" parent="Skeleton3D"]
