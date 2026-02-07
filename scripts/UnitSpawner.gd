@@ -18,6 +18,20 @@ const ARCHER_SCENE := preload("res://scenes/UnitArcher.tscn")
 
 const SPAWN_RADIUS: float = 3
 
+# Spawn with random items based on the unit type
+const ITEMS: Dictionary[PackedScene, Dictionary] = {
+	BARBARIAN_SCENE: {
+		Global.ItemSlots.MainHand: [Global.Items.sword_long, Global.Items.sword_short, Global.Items.dagger],
+		Global.ItemSlots.OffHand: [Global.Items.NONE, Global.Items.shield_kite, Global.Items.shield_kite_spiked, Global.Items.shield_round, Global.Items.shield_tower],
+		Global.ItemSlots.Torso: [Global.Items.NONE, Global.Items.cuirass_iron, Global.Items.tunic_leather],
+		Global.ItemSlots.Head: [Global.Items.NONE, Global.Items.helmet_iron, Global.Items.hat_bear],
+	},
+	ARCHER_SCENE: {
+		Global.ItemSlots.MainHand: [Global.Items.crossbow_heavy, Global.Items.crossbow_light],
+		Global.ItemSlots.Torso: [Global.Items.NONE, Global.Items.cuirass_iron, Global.Items.tunic_leather],
+	},
+}
+
 var numberOfLivingUnits: int = 0
 var remainingSpawns: Array[PackedScene] = []
 var livingUnits: Array[Unit] = []
@@ -52,6 +66,13 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 	newUnit.position = position + offset
 	add_sibling.call_deferred(newUnit, true)
 	await newUnit.ready
+
+	for itemSlot: Global.ItemSlots in ITEMS[UNIT_SCENE]:
+		var possibleItems: Array = ITEMS[UNIT_SCENE][itemSlot]
+		var randomItem: Global.Items = possibleItems[randi() % possibleItems.size()]
+		if randomItem != Global.Items.NONE:
+			newUnit.giveItem(randomItem)
+			newUnit.equipItemOnServer(newUnit.inventoryContainer.get_child(newUnit.inventoryContainer.get_child_count() - 1) as ItemButton)
 
 	if joiningExistingUnits:
 		var randomExistingUnit := livingUnits[randi() % livingUnits.size()]
