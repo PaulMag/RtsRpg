@@ -1,14 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdg2siq8w8223"]
+[gd_scene load_steps=21 format=3 uid="uid://cdg2siq8w8223"]
 
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="1_5ns42"]
 [ext_resource type="ArrayMesh" uid="uid://c1knu2357o3h0" path="res://models/items/barbarian_tunic.tres" id="2_vveyt"]
 [ext_resource type="ArrayMesh" uid="uid://cb56tgp2bwfn0" path="res://models/items/cape_barbarian.tres" id="3_8p1vu"]
+[ext_resource type="ArrayMesh" uid="uid://cdpcaxhabe7eu" path="res://models/characters/head_mage.tres" id="3_vsap7"]
 [ext_resource type="ArrayMesh" uid="uid://duuglst3owy8j" path="res://models/characters/arm_left_barbarian.tres" id="4_ecnjn"]
 [ext_resource type="AnimationLibrary" uid="uid://cwqc57fjl7fxy" path="res://models/animations/animation_library.tres" id="4_vveyt"]
 [ext_resource type="ArrayMesh" uid="uid://bf8fwn6mvf162" path="res://models/characters/arm_right_barbarian.tres" id="5_ecnjn"]
+[ext_resource type="ArrayMesh" uid="uid://bwwvee70ajuiv" path="res://models/characters/head_rogue.tres" id="5_llbey"]
+[ext_resource type="ArrayMesh" uid="uid://ugtgg0v4ltfx" path="res://models/characters/head_knight.tres" id="6_ea55e"]
 [ext_resource type="ArrayMesh" uid="uid://dd73ichf4htmc" path="res://models/characters/head_barbarian.tres" id="6_ivmjx"]
+[ext_resource type="Texture2D" uid="uid://bjfh8bwfn4380" path="res://models/textures/barbarian_texture.png" id="7_4nkgs"]
 [ext_resource type="ArrayMesh" uid="uid://brkn5msjbyvlt" path="res://models/characters/leg_left_barbarian.tres" id="7_vs5p2"]
 [ext_resource type="ArrayMesh" uid="uid://crpqdbvwn0d8c" path="res://models/characters/leg_right_barbarian.tres" id="8_8p1vu"]
+[ext_resource type="Texture2D" uid="uid://0cbo7dslrnbb" path="res://models/textures/rogue_texture.png" id="8_cjldq"]
+[ext_resource type="Texture2D" uid="uid://cdnbqhdglyuv4" path="res://models/textures/mage_texture.png" id="9_lgvmk"]
+[ext_resource type="Texture2D" uid="uid://u32lgb1jbl7u" path="res://models/textures/knight_texture.png" id="10_tf7p1"]
+[ext_resource type="ArrayMesh" uid="uid://c1ea0dd4d4vv8" path="res://models/items/sword_long.tres" id="11_tf7p1"]
+[ext_resource type="ArrayMesh" uid="uid://bafyxxc3jlrbj" path="res://models/items/staff_healing.tres" id="12_tf7p1"]
+[ext_resource type="ArrayMesh" uid="uid://cgm0mjabf2vck" path="res://models/items/hat_bear.tres" id="13_tf7p1"]
 
 [sub_resource type="Skin" id="Skin_iyxwi"]
 resource_name = "Skin"
@@ -142,6 +152,8 @@ script = ExtResource("1_5ns42")
 defaultMeshes = Dictionary[int, Mesh]({
 4: ExtResource("2_vveyt")
 })
+headMeshes = Array[Mesh]([ExtResource("3_vsap7"), ExtResource("6_ivmjx"), ExtResource("5_llbey"), ExtResource("6_ea55e")])
+textures = Array[Texture2D]([ExtResource("7_4nkgs"), ExtResource("8_cjldq"), ExtResource("9_lgvmk"), ExtResource("10_tf7p1")])
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
 bones/0/name = "root"
@@ -488,6 +500,7 @@ bone_idx = 16
 
 [node name="RightHandItem" type="MeshInstance3D" parent="Skeleton3D/RightHandBone"]
 unique_name_in_owner = true
+mesh = ExtResource("11_tf7p1")
 skeleton = NodePath("")
 
 [node name="LeftHandBone" type="BoneAttachment3D" parent="Skeleton3D"]
@@ -497,6 +510,7 @@ bone_idx = 9
 
 [node name="LeftHandItem" type="MeshInstance3D" parent="Skeleton3D/LeftHandBone"]
 unique_name_in_owner = true
+mesh = ExtResource("12_tf7p1")
 skeleton = NodePath("")
 
 [node name="HeadBone" type="BoneAttachment3D" parent="Skeleton3D"]
@@ -506,6 +520,7 @@ bone_idx = 20
 
 [node name="HeadItem" type="MeshInstance3D" parent="Skeleton3D/HeadBone"]
 unique_name_in_owner = true
+mesh = ExtResource("13_tf7p1")
 skeleton = NodePath("")
 
 [node name="BackBone" type="BoneAttachment3D" parent="Skeleton3D"]
@@ -514,14 +529,17 @@ bone_name = "Barbarian_Cape"
 bone_idx = 21
 
 [node name="BackItem" type="MeshInstance3D" parent="Skeleton3D/BackBone"]
+unique_name_in_owner = true
 mesh = ExtResource("3_8p1vu")
 skeleton = NodePath("")
 
 [node name="ArmLeft" type="MeshInstance3D" parent="Skeleton3D"]
+unique_name_in_owner = true
 mesh = ExtResource("4_ecnjn")
 skin = SubResource("Skin_iyxwi")
 
 [node name="ArmRight" type="MeshInstance3D" parent="Skeleton3D"]
+unique_name_in_owner = true
 mesh = ExtResource("5_ecnjn")
 skin = SubResource("Skin_iyxwi")
 
@@ -536,10 +554,12 @@ mesh = ExtResource("6_ivmjx")
 skin = SubResource("Skin_iyxwi")
 
 [node name="LegLeft" type="MeshInstance3D" parent="Skeleton3D"]
+unique_name_in_owner = true
 mesh = ExtResource("7_vs5p2")
 skin = SubResource("Skin_iyxwi")
 
 [node name="LegRight" type="MeshInstance3D" parent="Skeleton3D"]
+unique_name_in_owner = true
 mesh = ExtResource("8_8p1vu")
 skin = SubResource("Skin_iyxwi")
 
