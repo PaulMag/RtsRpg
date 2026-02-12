@@ -32,6 +32,6 @@ texture = ExtResource("4_r02ud")
 mesh = ExtResource("2_r02ud")
 slot = 2
 attributes = SubResource("Resource_hejmr")
-position = Vector3(-5.96046e-08, 0.171319, -0.0796212)
+position = Vector3(-2.98023e-07, 0.0266831, 0.167475)
 rotation = Vector3(-0.349066, 0, -1.5708)
 metadata/_custom_type_script = "uid://dp0s8x6phjuay"
