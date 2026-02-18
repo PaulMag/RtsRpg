@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://b20n1yb7j1i6s"]
+
+[ext_resource type="AudioStream" uid="uid://bsscd68wngloh" path="res://audio/effects/09_human_charging_1_loop.wav" id="1_t0ksq"]
+[ext_resource type="AudioStream" uid="uid://bji1ik5608aku" path="res://audio/effects/10_human_special_atk_1.wav" id="2_2a7ap"]
+[ext_resource type="SphereMesh" uid="uid://d4e1pyynrt6mq" path="res://models/projectiles/firebolt.tres" id="3_t0ksq"]
+[ext_resource type="AudioStream" uid="uid://camtkk3q13q6w" path="res://audio/effects/15_human_dash_1.wav" id="4_bsb2b"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="5_i51c7"]
+[ext_resource type="Texture2D" uid="uid://cjmcnk8tg4qpv" path="res://sprites/abilities/firebolt.png" id="6_t0ksq"]
+
+[resource]
+script = ExtResource("5_i51c7")
+name = "Firebolt"
+texture = ExtResource("6_t0ksq")
+abilityId = 10
+damageMelee = 0
+damageRanged = 0
+damageMagical = 20
+healingAmount = 0
+threatAmount = 0
+targetRange = 15
+manaCost = 15
+isHealing = false
+aoeRadius = 0.0
+buffDuration = 0.0
+castTime = 1.5
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 20.0
+projectileMesh = ExtResource("3_t0ksq")
+projectileShootAudio = ExtResource("4_bsb2b")
+projectileHitAudio = ExtResource("2_2a7ap")
+castingAudio = ExtResource("1_t0ksq")
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true
+canTargetAlive = true
+canTargetDead = false

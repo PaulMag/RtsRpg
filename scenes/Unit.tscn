@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=62 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -19,7 +19,9 @@
 [ext_resource type="Resource" uid="uid://b5k3kpp886qi2" path="res://resources/abilities/RangedAttack.tres" id="14_cg3ic"]
 [ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="14_ofk60"]
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="16_rwbbu"]
+[ext_resource type="Texture2D" uid="uid://cjmcnk8tg4qpv" path="res://sprites/abilities/firebolt.png" id="17_8pcfg"]
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
+[ext_resource type="Resource" uid="uid://b20n1yb7j1i6s" path="res://resources/abilities/Firebolt.tres" id="19_04y5r"]
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 [ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="21_itqay"]
@@ -600,12 +602,29 @@ Range:          5 m
 Cast time:      1.5 + 1 s
 AoE radius:     3 m"
 
+[node name="FireBolt" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 2
+offset_left = -76.0
+offset_top = 377.0
+offset_right = -27.0
+offset_bottom = 426.0
+disabled = true
+texture_normal = ExtResource("17_8pcfg")
+ability = ExtResource("19_04y5r")
+requiredTalents = [NodePath("../Magic")]
+talentName = "Firebolt"
+talentDescription = "Fire damage:    20
+Range:          15 m
+Cast time:      1.5 + 1 s
+Mana cost:      15"
+
 [node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 2
-offset_left = -42.0
+offset_left = -16.0
 offset_top = 377.0
-offset_right = 7.0
+offset_right = 33.0
 offset_bottom = 426.0
 disabled = true
 texture_normal = ExtResource("14_ofk60")
@@ -846,7 +865,7 @@ offset_right = -316.0
 offset_bottom = 774.0
 disabled = true
 attributes = SubResource("Resource_h1o0j")
-requiredTalents = [NodePath("../FireBall")]
+requiredTalents = [NodePath("../FireBolt"), NodePath("../FireBall")]
 talentName = "Fire skill"
 talentDescription = "Fire skill:    15 %"
 metadata/_edit_use_anchors_ = true
