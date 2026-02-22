@@ -38,9 +38,15 @@ func _unhandled_input(event: InputEvent) -> void:
 				var ability := select_unit.getAbilityButtons()[abilityButtonIndex].ability
 				select_unit.useAbilityOnServer(ability.abilityId)
 				select_unit.setRangeCircle(ability.targetRange)
+				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
+				abilityButton.self_modulate = Color.LIGHT_GREEN
 				return
 			elif event.is_action_released("cast_%s" % (abilityButtonIndex + 1)):
+				if select_unit.getAbilityButtons().size() < abilityButtonIndex + 1:
+					return
 				select_unit.setRangeCircle(0)
+				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
+				abilityButton.self_modulate = Color.WHITE
 
 	for unitIndex in range(0, 6):
 		if event.is_action_pressed("select_unit_%s" % (unitIndex + 1)):
