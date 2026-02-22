@@ -155,6 +155,8 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 	talentAttributeButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAttributeButton.talentName, talentAttributeButton.rank])
 	giveTalentPoints(-1)
+	health = attributes.maxHealth
+	mana = attributes.maxMana
 
 @rpc("authority", "call_local")
 func learnTalentAbility(nodeIndex: int) -> void:
@@ -170,6 +172,8 @@ func learnTalentAbility(nodeIndex: int) -> void:
 	talentAbilityButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAbilityButton.talentName, talentAbilityButton.rank])
 	giveTalentPoints(-1)
+	health = attributes.maxHealth
+	mana = attributes.maxMana
 
 func getAbilityButtons() -> Array[AbilityButton]:
 	var abilityButtons: Array[AbilityButton] = []
