@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene load_steps=65 format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -61,6 +61,10 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cp300"]
 radius = 0.3
 height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_opm2l"]
+radius = 0.55
+height = 2.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2l7rt"]
 transparency = 1
@@ -342,6 +346,12 @@ baseAttributes = SubResource("Resource_oyts4")
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_cp300")
+
+[node name="SelectionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape3D" parent="SelectionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("CapsuleShape3D_opm2l")
 
 [node name="CharacterModel" parent="." instance=ExtResource("23_cp300")]
 
@@ -1055,9 +1065,9 @@ volume_db = -15.0
 max_distance = 30.0
 panning_strength = 3.0
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="input_event" from="SelectionArea" to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="SelectionArea" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="SelectionArea" to="." method="_on_mouse_exited"]
 [connection signal="timeout" from="RecoveryTimer" to="." method="_on_recovery_timer_timeout"]
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_regen_timer_timeout"]
