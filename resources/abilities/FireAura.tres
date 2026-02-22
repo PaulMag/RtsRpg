@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=10 format=3 uid="uid://d3jogis3drbfw"]
+
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_bskat"]
+[ext_resource type="AudioStream" uid="uid://bsscd68wngloh" path="res://audio/effects/09_human_charging_1_loop.wav" id="1_f5fgx"]
+[ext_resource type="Resource" uid="uid://ca3ny1vbrgcab" path="res://resources/abilities/FireAuraEffect.tres" id="2_f5fgx"]
+[ext_resource type="AudioStream" uid="uid://bji1ik5608aku" path="res://audio/effects/10_human_special_atk_1.wav" id="3_c0ecg"]
+[ext_resource type="SphereMesh" uid="uid://d4e1pyynrt6mq" path="res://models/projectiles/firebolt.tres" id="4_f5fgx"]
+[ext_resource type="AudioStream" uid="uid://camtkk3q13q6w" path="res://audio/effects/15_human_dash_1.wav" id="5_kbsw5"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="6_5pkak"]
+[ext_resource type="Texture2D" uid="uid://byrr7adyvlirg" path="res://sprites/abilities/fire_aura.png" id="7_f5fgx"]
+
+[sub_resource type="Resource" id="Resource_bskat"]
+script = ExtResource("1_bskat")
+maxHealth = 0
+healthRegen = 0.0
+maxMana = 0
+manaRegen = 0.0
+armorPoints = 0
+carryCapacity = 0
+armorSkill = 0
+meleeSkill = 0
+rangedSkill = 0
+magicSkill = 0
+healSkill = 0
+speed = 0.0
+threatSkill = 0
+durationSkill = 0
+speedRatio = 1.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[resource]
+script = ExtResource("6_5pkak")
+name = "Fire Aura"
+texture = ExtResource("7_f5fgx")
+abilityId = 11
+damageMelee = 0
+damageRanged = 0
+damageMagical = 0
+healingAmount = 0
+threatAmount = 0
+targetRange = 10
+manaCost = 20
+isHealing = false
+aoeRadius = 0.0
+buffDuration = 3.0
+buffAttributes = SubResource("Resource_bskat")
+tickDuration = 0.2
+persistentEffectAbility = ExtResource("2_f5fgx")
+castTime = 3.0
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 20.0
+projectileMesh = ExtResource("4_f5fgx")
+projectileShootAudio = ExtResource("5_kbsw5")
+projectileHitAudio = ExtResource("3_c0ecg")
+castingAudio = ExtResource("1_f5fgx")
+canTargetSelf = true
+canTargetFriend = true
+canTargetEnemy = false
+canTargetAlive = true
+canTargetDead = false

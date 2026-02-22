@@ -49,6 +49,8 @@ enum AbilityIds {
 	CureWounds,
 	Revive,
 	Firebolt,
+	FireAura,
+	FireAuraEffect,
 }
 var getAbility: Array[Ability] = [
 	load("res://resources/abilities/MeleeAttack.tres"),
@@ -62,6 +64,8 @@ var getAbility: Array[Ability] = [
 	load("res://resources/abilities/CureWounds.tres"),
 	load("res://resources/abilities/Revive.tres"),
 	load("res://resources/abilities/Firebolt.tres"),
+	load("res://resources/abilities/FireAura.tres"),
+	load("res://resources/abilities/FireAuraEffect.tres"),
 ]
 
 

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://ca3ny1vbrgcab"]
+
+[ext_resource type="SphereMesh" uid="uid://d4e1pyynrt6mq" path="res://models/projectiles/firebolt.tres" id="3_5ul2q"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="5_p2da5"]
+
+[resource]
+script = ExtResource("5_p2da5")
+name = "Fire Aura Effect"
+abilityId = 12
+damageMelee = 0
+damageRanged = 0
+damageMagical = 2
+healingAmount = 0
+threatAmount = 0
+targetRange = 0
+manaCost = 0
+isHealing = false
+aoeRadius = 5.0
+buffDuration = 0.0
+tickDuration = 0.0
+castTime = 2.0
+recoveryTime = 1.0
+speedFactorWhileCasting = 0.5
+projectileSpeed = 20.0
+projectileMesh = ExtResource("3_5ul2q")
+canTargetSelf = false
+canTargetFriend = false
+canTargetEnemy = true
+canTargetAlive = true
+canTargetDead = false

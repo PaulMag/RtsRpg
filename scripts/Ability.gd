@@ -18,6 +18,8 @@ class_name Ability
 
 @export var buffDuration: float
 @export var buffAttributes: Attributes = null
+@export var tickDuration: float
+@export var persistentEffectAbility: Ability = null
 
 @export var castTime: float = 2  # Time in seconds to cast the ability.
 @export var recoveryTime: float = 1  # Time in seconds before Unit can use an ability again.
@@ -62,15 +64,17 @@ func refundCost(user: Unit) -> void:
 	user.mana += manaCost
 	user.mana = clampf(user.mana, 0, user.attributes.maxMana)
 
-func use(user: Unit, target: Unit) -> bool:
+func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 	var attack := Attack.new()
 	attack.attackingUnit = user
+	attack.sourceUnit = source
 	attack.damageMelee = damageMelee * (1 + user.attributes.meleeSkill * 0.01)
 	attack.damageRanged = damageRanged * (1 + user.attributes.rangedSkill * 0.01)
 	attack.damageMagical = damageMagical * (1 + user.attributes.magicSkill * 0.01)
 	attack.healingAmount = healingAmount * (1 + user.attributes.healSkill * 0.01)
 	attack.threat = (attack.damageMelee + attack.damageRanged + attack.damageMagical + threatAmount) * (1 + user.attributes.threatSkill * 0.01)
 	attack.isHealing = isHealing
+	attack.ability = self
 
 	if buffAttributes:
 		var buff := Buff.new()
@@ -118,8 +122,43 @@ func getDescription() -> String:
 		description += "AoE radius:     %d m\n" % aoeRadius
 	if manaCost > 0:
 		description += "Mana cost:      %d\n" % manaCost
-	if buffAttributes:
-		description += "Duration:       %d s\n\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
+	description += "Targets:        %s%s%s%s" % [
+		"self, " if canTargetSelf else "",
+		"friend, " if canTargetFriend else "",
+		"enemy, " if canTargetEnemy else "",
+		"dead, " if canTargetDead else "",
+	]
+	description = description.trim_suffix(", ") + "\n"
+	if persistentEffectAbility:
+		description += "Duration:       %d s\n" % buffDuration
+		description += persistentEffectAbility.getPersistentEffectDescription(tickDuration)
+	elif buffAttributes:
+		description += "Duration:       %d s\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
 		description += buffAttributes.getDescriptionNoZero()
+
+	return description.trim_suffix("\n")
+
+
+func getPersistentEffectDescription(_tickDuration: float) -> String:
+	var description := ""
+	#TODO: The friend/self here should consider tha sourceUnit
+	description += "  Effect on nearby %s%s%s" % [
+		"friends, " if canTargetFriend else "",
+		"enemies, " if canTargetEnemy else "",
+		"and self, " if canTargetSelf else "",
+	]
+	description = description.trim_suffix(", ") + "\n"
+	if damageMelee != 0:
+		description += "Melee damage:   %d/s\n" % (damageMelee/_tickDuration)
+	if damageRanged != 0:
+		description += "Ranged damage:  %d/s\n" % (damageRanged/_tickDuration)
+	if damageMagical != 0:
+		description += "Fire damage:    %d/s\n" % (damageMagical/_tickDuration)
+	if healingAmount != 0:
+		description += "Healing amount: %d/s\n" % (healingAmount/_tickDuration)
+	if threatAmount != 0:
+		description += "Threat amount:  %d/s\n" % (threatAmount/_tickDuration)
+	if aoeRadius > 0:
+		description += "AoE radius:     %d m\n" % aoeRadius
 
 	return description.trim_suffix("\n")

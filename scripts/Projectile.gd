@@ -34,7 +34,7 @@ static func init(
 	scene.audioStreamShoot = _audioStreamShoot
 	scene.audioStreamHit = _audioStreamHit
 	scene.speed = _speed
-	scene.position = _attack.attackingUnit.position + heightAboveGround
+	scene.position = (_attack.sourceUnit.position if _attack.sourceUnit else _attack.attackingUnit.position) + heightAboveGround
 	return scene
 
 func _ready() -> void:
@@ -57,6 +57,10 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body == target and isActive:
 		target.damage(attack)
+		if attack.ability.persistentEffectAbility:
+			var effect := PersistentEffect.init(attack.ability, attack.buffs[0], attack.attackingUnit, target)
+			#TODO: Need handle buff vs persistentEffectAbility better.
+			target.add_child(effect)
 		if audioPlayer.playing:
 			audioPlayer.stop()
 		if audioStreamHit:

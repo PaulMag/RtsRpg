@@ -52,6 +52,7 @@ isHealing = false
 aoeRadius = 0.0
 buffDuration = 10.0
 buffAttributes = SubResource("Resource_jw3ch")
+tickDuration = 0.0
 castTime = 0.5
 recoveryTime = 1.0
 speedFactorWhileCasting = 0.5

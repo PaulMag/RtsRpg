@@ -34,6 +34,7 @@ manaCost = 5
 isHealing = true
 aoeRadius = 0.0
 buffDuration = 0.0
+tickDuration = 0.0
 castTime = 1.0
 recoveryTime = 1.0
 speedFactorWhileCasting = 0.5
