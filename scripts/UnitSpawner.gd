@@ -78,7 +78,7 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 			newUnit.giveItem(randomItem)
 			newUnit.equipItemOnServer(newUnit.inventoryContainer.get_child(newUnit.inventoryContainer.get_child_count() - 1) as ItemButton)
 
-	if joiningExistingUnits:
+	if joiningExistingUnits and livingUnits.size() > 0:
 		var randomExistingUnit := livingUnits[randi() % livingUnits.size()]
 		newUnit.destination = randomExistingUnit.global_position + offset
 		newUnit.followCursor = true
