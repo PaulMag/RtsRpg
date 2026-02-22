@@ -100,6 +100,18 @@ sprite_frames = SubResource("SpriteFrames_nssm6")
 autoplay = "default"
 frame_progress = 0.446563
 
+[node name="HotkeyLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = -30.0
+offset_right = 64.0
+offset_bottom = 6.0
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("4_01oq8")
+theme_override_font_sizes/font_size = 24
+text = "12	"
+horizontal_alignment = 1
+
 [node name="DescriptionPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 z_index = 1
@@ -107,9 +119,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
+offset_left = 48.0
 offset_top = -100.0
-offset_right = 213.0
+offset_right = 255.0
 offset_bottom = -70.0
 grow_vertical = 0
 mouse_filter = 2

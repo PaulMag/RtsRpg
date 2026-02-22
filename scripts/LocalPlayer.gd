@@ -30,7 +30,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var select_unit := getSelectedUnit()
 
 	if select_unit and not select_unit.isDead:
-		for abilityButtonIndex in range(0, 4):
+		for abilityButtonIndex in range(0, 9):
 			if event.is_action_pressed("cast_%s" % (abilityButtonIndex + 1)):
 				if select_unit.getAbilityButtons().size() < abilityButtonIndex + 1:
 					print("No ability assigned to button %s." % (abilityButtonIndex + 1))

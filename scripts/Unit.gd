@@ -160,7 +160,7 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 func learnTalentAbility(nodeIndex: int) -> void:
 	var talentAbilityButton := talentTreeButtons.get_children()[nodeIndex] as TalentAbilityButton
 
-	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability)
+	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability, getAbilityButtons().size())
 	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
 	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
 	newAbilityButton.mouse_entered.connect(setRangeCircle.bind(newAbilityButton.ability.targetRange))
