@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cdg2siq8w8223"]
+[gd_scene load_steps=22 format=3 uid="uid://cdg2siq8w8223"]
 
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="1_5ns42"]
 [ext_resource type="ArrayMesh" uid="uid://c1knu2357o3h0" path="res://models/items/barbarian_tunic.tres" id="2_vveyt"]
@@ -146,6 +146,17 @@ bind/39/pose = Transform3D(1, 2.84217e-14, -3.25229e-08, -3.25229e-08, -4.2393e-
 bind/40/name = &"handIK.r"
 bind/40/bone = -1
 bind/40/pose = Transform3D(-2.84217e-14, 7.5498e-08, -1, -1, 3.78925e-15, 8.52651e-14, 2.14578e-21, 1, 7.5498e-08, 1.32019e-09, -0.713182, -1.10676)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tf7p1"]
+properties/0/path = NodePath(".:selectedHeadMeshId")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:selectedHeadTextureId")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:selectedClothesTextureId")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="CharacterModel" type="Node3D"]
 script = ExtResource("1_5ns42")
@@ -567,3 +578,8 @@ skin = SubResource("Skin_iyxwi")
 libraries = {
 &"": ExtResource("4_vveyt")
 }
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_tf7p1")
+
+[connection signal="delta_synchronized" from="MultiplayerSynchronizer" to="." method="setAppearance"]

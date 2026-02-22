@@ -3,6 +3,10 @@ extends Node3D
 
 class_name CharacterModel
 
+@export var selectedHeadMeshId: int
+@export var selectedHeadTextureId: int
+@export var selectedClothesTextureId: int
+
 @export var defaultMeshes: Dictionary[Global.ItemSlots, Mesh]
 @export var headMeshes: Array[Mesh]
 @export var textures: Array[Texture2D]
@@ -31,13 +35,22 @@ var clothesMaterial: StandardMaterial3D
 
 
 func _ready() -> void:
-	headMeshInstance.mesh = headMeshes.pick_random()
+	if multiplayer.is_server():
+		selectedHeadMeshId = randi_range(0, headMeshes.size() - 1)
+		selectedHeadTextureId = randi_range(0, textures.size() - 1)
+		selectedClothesTextureId = randi_range(0, textures.size() - 1)
+		setAppearance()
+
+
+func setAppearance() -> void:
+	# Is called by signal from MultiplayerSynchronizer on peers
+	headMeshInstance.mesh = headMeshes[selectedHeadMeshId]
 	var material := StandardMaterial3D.new()
-	material.albedo_texture = textures.pick_random()
+	material.albedo_texture = textures[selectedHeadTextureId]
 	headMeshInstance.set_surface_override_material(0, material)
 
 	clothesMaterial = StandardMaterial3D.new()
-	clothesMaterial.albedo_texture = textures.pick_random()
+	clothesMaterial.albedo_texture = textures[selectedClothesTextureId]
 	for meshInstance in meshInstances:
 		meshInstance.set_surface_override_material(0, clothesMaterial)
 	for meshInstance: MeshInstance3D in meshInstances.slice(6, 9):
