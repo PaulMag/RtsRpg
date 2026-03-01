@@ -50,6 +50,7 @@ enum states {
 @onready var talentTreeButtons: Control = %TalentButtons
 @onready var cancelCastButton: TextureButton = %CancelCastButton
 @onready var abilityButtonsContainer: HBoxContainer = %AbilityButtonsContainer
+@onready var queuedAbilitiesContainer: HBoxContainer = %QueuedAbilitiesContainer
 @onready var buffIcons: HBoxContainer = %BuffIcons
 @onready var inventoryButton: Button = %InventoryButton
 @onready var inventoryPanel: Panel = %InventoryPanel
@@ -72,6 +73,7 @@ var followCursor := false
 var followTarget := false
 var isCasting := false
 var castingAbilityId: Global.AbilityIds
+var queuedAbilityIds: Array[Global.AbilityIds] = []
 var isRecovering := false
 var canRegenMana := true
 var isAutocasting := false
@@ -244,6 +246,42 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 		manaBar.modulate = Color.DARK_GRAY
 
 
+func queueAbilityOnServer(abilityId: Global.AbilityIds) -> void:
+	queueAbilityOnClients.rpc(abilityId)
+
+@rpc("any_peer", "call_local")
+func queueAbilityOnClients(abilityId: Global.AbilityIds) -> void:
+	if multiplayer.is_server():
+		queueAbility.rpc(abilityId)
+
+@rpc("authority", "call_local")
+func queueAbility(abilityId: Global.AbilityIds) -> void:
+	queuedAbilityIds.append(abilityId)
+
+	const SCENE := preload("res://scenes/AbilityIcon.tscn")
+	var queuedAbilityIcon: AbilityIcon = SCENE.instantiate()
+	queuedAbilityIcon.abilityId = abilityId
+	queuedAbilitiesContainer.add_child(queuedAbilityIcon, true)
+	print("Unit %s queued ability %s" % [unitName, abilityId])
+
+
+func dequeueAbilityOnServer() -> void:
+	dequeueAbilityOnClients.rpc()
+
+@rpc("any_peer", "call_local")
+func dequeueAbilityOnClients() -> void:
+	if multiplayer.is_server() and not isCasting and not isRecovering:
+		dequeueAbility.rpc()
+
+@rpc("authority", "call_local")
+func dequeueAbility() -> void:
+	var queuedAbilityId := queuedAbilityIds[0]
+	queuedAbilityIds.pop_front()
+	queuedAbilitiesContainer.get_child(0).queue_free()
+	if multiplayer.is_server():
+		useAbilityOnServer(queuedAbilityId)
+
+
 func _on_cast_timer_timeout() -> void:
 	animationPlayer.play("Spellcast_Shoot")
 	isCasting = false
@@ -388,6 +426,8 @@ func _process(_delta: float) -> void:
 		castBar.value = recoveryTimer.time_left
 		for abilityButton in getAbilityButtons():
 			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
+	elif multiplayer.is_server() and queuedAbilityIds.size() > 0:
+		dequeueAbilityOnServer()
 	elif multiplayer.is_server() and isAutocasting:
 		useAbilityOnServer(autocastAbilityId)
 

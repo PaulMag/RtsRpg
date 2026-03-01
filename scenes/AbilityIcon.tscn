@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0l0rwkuyru7c"]
+
+[ext_resource type="Script" uid="uid://dv3qgm0lv4jq7" path="res://scripts/AbilityIcon.gd" id="1_k2bnl"]
+[ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="1_rrfua"]
+
+[node name="AbilityIcon" type="TextureRect"]
+custom_minimum_size = Vector2(50, 50)
+texture = ExtResource("1_rrfua")
+expand_mode = 1
+script = ExtResource("1_k2bnl")

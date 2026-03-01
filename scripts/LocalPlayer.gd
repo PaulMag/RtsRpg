@@ -36,7 +36,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					print("No ability assigned to button %s." % (abilityButtonIndex + 1))
 					return
 				var ability := select_unit.getAbilityButtons()[abilityButtonIndex].ability
-				select_unit.useAbilityOnServer(ability.abilityId)
+				if select_unit.isCasting or select_unit.isRecovering:
+					select_unit.queueAbilityOnServer(ability.abilityId)
+				else:
+					select_unit.useAbilityOnServer(ability.abilityId)
 				select_unit.setRangeCircle(ability.targetRange)
 				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
 				abilityButton.self_modulate = Color.LIGHT_GREEN
