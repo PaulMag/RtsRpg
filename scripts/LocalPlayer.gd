@@ -13,7 +13,6 @@ class_name LocalPlayer
 
 var selectedUnitId: int
 
-var isIssuingMoveOrder := Vector3.INF  # INF represents no value
 @export var moveDirection := Vector2.ZERO
 
 
@@ -37,9 +36,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					return
 				var ability := select_unit.getAbilityButtons()[abilityButtonIndex].ability
 				if select_unit.isCasting or select_unit.isRecovering:
-					select_unit.queueAbilityOnServer(ability.abilityId)
+					select_unit.queueAbilityOnServer.rpc_id(1, ability.abilityId)
 				else:
-					select_unit.useAbilityOnServer(ability.abilityId)
+					select_unit.useAbilityOnServer.rpc_id(1, ability.abilityId)
 				select_unit.setRangeCircle(ability.targetRange)
 				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
 				abilityButton.self_modulate = Color.LIGHT_GREEN
@@ -58,15 +57,18 @@ func _unhandled_input(event: InputEvent) -> void:
 				selectUnitByIndex(unitIndex)
 			break
 
-@rpc("call_local")
+
 func issueMoveOrder(destination: Vector3) -> void:
-	isIssuingMoveOrder = destination
+	var unit := getSelectedUnit()
+	if unit:
+		unit.orderMove.rpc_id(1, destination)
+		destinationMarker.markMove(destination)
+
 
 @rpc("call_local")
 func setSelectedUnitId(unitId: int) -> void:
 	selectedUnitId = unitId
 
-var unitUpdateCountdown := 0  # Necessary because there is some delay in the syncing. (TODO)
 
 func _physics_process(_delta: float) -> void:
 	if playerId == multiplayer.get_unique_id() and is_instance_valid(Global.cameraArm):
@@ -74,38 +76,16 @@ func _physics_process(_delta: float) -> void:
 	if multiplayer.is_server() and getSelectedUnit():
 		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
-func _process(_delta: float) -> void:
-	if multiplayer.is_server():
-		var unit := getSelectedUnit()
-		if unit == null:
-			return
-
-		if isIssuingMoveOrder != Vector3.INF:  # INF represents no value
-			unit = getSelectedUnit()
-			print("isIssuingMoveOrder  player %s  unit %s  unitId %s" % [playerId, unit, unit.unitId])
-			if unit and (unit.faction == Global.Faction.PLAYERS):
-				unit.orderMove(isIssuingMoveOrder)
-			isIssuingMoveOrder = Vector3.INF
-
 
 func getSelectedUnit() -> Unit:
 	return Global.getUnitFromUnitId(selectedUnitId)
 
-func moveTo(destination: Vector3) -> void:
-	if getSelectedUnit():
-		issueMoveOrder.rpc_id(1, destination)
-		destinationMarker.markMove(destination)
 
 func selectUnitByIndex(unitIndex: int) -> void:
 	var playerUnits := Global.getAllUnitsInFaction(Global.Faction.PLAYERS)
 	selectUnit(playerUnits[unitIndex])
 	updateUnitList(unitIndex)
 
-
-# @rpc("any_peer", "call_local")
-# func selectUnitById(unitId: int) -> void:
-# 	var unit := Global.getUnitFromUnitId(unitId)
-# 	selectUnit(unit)
 
 func selectUnit(unit: Unit) -> void:
 	var selectedUnit := getSelectedUnit()
@@ -128,7 +108,7 @@ func setTargetUnit(unit: Unit, follow: bool) -> void:
 
 
 func setStatusOnServer(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
-	setStatusClients.rpc(_isReady, _playerName, _playerColor)
+	setStatusClients.rpc_id(1,_isReady, _playerName, _playerColor)
 
 @rpc("any_peer", "call_local")
 func setStatusClients(_isReady: bool, _playerName: String, _playerColor: Color) -> void:

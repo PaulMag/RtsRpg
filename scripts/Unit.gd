@@ -190,6 +190,8 @@ func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
 			return abilityButton
 	return null
 
+
+@rpc("any_peer", "call_local")
 func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
 	if _targetUnit == null:
 		_targetUnit = targetUnit
@@ -199,13 +201,7 @@ func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) 
 			_targetUnit = self  # Default to targeting self if valid
 		else:
 			return
-
-	useAbilityOnClients.rpc(abilityId, _targetUnit.unitId)
-
-@rpc("any_peer", "call_local")
-func useAbilityOnClients(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
-	if multiplayer.is_server():
-		useAbility.rpc(abilityId, targetUnitId)
+	useAbility.rpc(abilityId, _targetUnit.unitId)
 
 @rpc("authority", "call_local")
 func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
@@ -246,13 +242,9 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 		manaBar.modulate = Color.DARK_GRAY
 
 
-func queueAbilityOnServer(abilityId: Global.AbilityIds) -> void:
-	queueAbilityOnClients.rpc(abilityId)
-
 @rpc("any_peer", "call_local")
-func queueAbilityOnClients(abilityId: Global.AbilityIds) -> void:
-	if multiplayer.is_server():
-		queueAbility.rpc(abilityId)
+func queueAbilityOnServer(abilityId: Global.AbilityIds) -> void:
+	queueAbility.rpc(abilityId)
 
 @rpc("authority", "call_local")
 func queueAbility(abilityId: Global.AbilityIds) -> void:
@@ -454,6 +446,7 @@ func _process(_delta: float) -> void:
 		animationPlayer.play("Idle")
 
 
+@rpc("any_peer", "call_local")
 func orderMove(_destination: Vector3) -> void:
 	destination = _destination
 	followTarget = false
