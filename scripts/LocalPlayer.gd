@@ -72,7 +72,7 @@ func setSelectedUnitId(unitId: int) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if playerId == multiplayer.get_unique_id() and is_instance_valid(Global.cameraArm):
-		moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").rotated(-Global.cameraArm.rotation.y)
+		moveDirection = Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down").rotated(-Global.cameraArm.rotation.y)
 	if multiplayer.is_server() and getSelectedUnit():
 		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
