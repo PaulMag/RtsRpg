@@ -21,10 +21,10 @@ const PORT = 4433
 @onready var hostOptions: Container = %HostOptions
 @onready var playerLabelList: GridContainer = %PlayerLabelList
 
-@onready var xpStartMultiplierInput: LineEdit = %XpStartMultiplier
-@onready var xpRewardMultiplierInput: LineEdit = %XpRewardMultiplier
-@onready var enemyStartMultiplierInput: LineEdit = %EnemyStartMultiplier
-@onready var enemyLevelMultiplierInput: LineEdit = %EnemyLevelMultiplier
+@onready var xpStartMultiplierInput: SpinBox = %XpStartMultiplier
+@onready var xpRewardMultiplierInput: SpinBox = %XpRewardMultiplier
+@onready var enemyStartMultiplierInput: SpinBox = %EnemyStartMultiplier
+@onready var enemyLevelMultiplierInput: SpinBox = %EnemyLevelMultiplier
 
 var dungeon: Dungeon
 
@@ -93,15 +93,10 @@ func _on_connect_pressed() -> void:
 func spawn_dungeon() -> void:
 	dungeon = Dungeon.init()
 
-	var xpStartMultiplier := xpStartMultiplierInput.text.to_float()
-	var xpRewardMultiplier := xpRewardMultiplierInput.text.to_float()
-	var enemyStartMultiplier := enemyStartMultiplierInput.text.to_float()
-	var enemyLevelMultiplier := enemyLevelMultiplierInput.text.to_float()
-
-	dungeon.xpStart = xpStartMultiplier
-	dungeon.xpRewardMultiplier = xpRewardMultiplier
-	dungeon.enemyStartMultiplier = enemyStartMultiplier
-	dungeon.enemyLevelMultiplier = enemyLevelMultiplier
+	dungeon.xpStart = xpStartMultiplierInput.value
+	dungeon.xpRewardMultiplier = xpRewardMultiplierInput.value
+	dungeon.enemyStartMultiplier = enemyStartMultiplierInput.value
+	dungeon.enemyLevelMultiplier = enemyLevelMultiplierInput.value
 
 	add_sibling(dungeon, true)
 	print("Spawned dungeon %s" % dungeon)

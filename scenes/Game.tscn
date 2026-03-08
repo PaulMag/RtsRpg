@@ -140,10 +140,12 @@ alignment = 2
 layout_mode = 2
 text = "XP start"
 
-[node name="XpStartMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
+[node name="XpStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "20"
+value = 20.0
+allow_greater = true
+alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
 layout_mode = 2
@@ -153,10 +155,13 @@ alignment = 2
 layout_mode = 2
 text = "XP multiplier"
 
-[node name="XpRewardMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
+[node name="XpRewardMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "1.0"
+step = 0.1
+value = 1.0
+allow_greater = true
+alignment = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
 visible = false
@@ -167,10 +172,13 @@ alignment = 2
 layout_mode = 2
 text = "Enemy start multiplier"
 
-[node name="EnemyStartMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
+[node name="EnemyStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "1.0"
+step = 0.1
+value = 1.0
+allow_greater = true
+alignment = 1
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
 visible = false
@@ -181,10 +189,13 @@ alignment = 2
 layout_mode = 2
 text = "Enemy lvl. multiplier"
 
-[node name="EnemyLevelMultiplier" type="LineEdit" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
+[node name="EnemyLevelMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "1.0"
+step = 0.1
+value = 1.0
+allow_greater = true
+alignment = 1
 
 [node name="GameVersionLabel" type="Label" parent="Multiplayer/UI"]
 unique_name_in_owner = true
