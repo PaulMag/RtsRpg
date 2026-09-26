@@ -42,20 +42,11 @@
 [sub_resource type="Resource" id="Resource_oyts4"]
 script = ExtResource("10_ovit6")
 maxHealth = 100
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
+meleePower = 10
+rangedPower = 10
+firePower = 10
+healingPower = 10
 speed = 4.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cp300"]
@@ -129,200 +120,47 @@ events = [SubResource("InputEventAction_cp300")]
 [sub_resource type="Resource" id="Resource_sa48e"]
 script = ExtResource("10_ovit6")
 maxHealth = 20
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_itqay"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
 maxMana = 20
 manaRegen = 1.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_niwlv"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
 maxMana = 20
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_pdeq4"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
 manaRegen = 1.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_jr5p1"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
 meleeSkill = 10
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_5dcda"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
 rangedSkill = 10
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_h1o0j"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 15
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
+fireSkill = 15
 
 [sub_resource type="Resource" id="Resource_bhwvf"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 15
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
+healingSkill = 15
 
 [sub_resource type="Resource" id="Resource_gbr36"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
 threatSkill = 15
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_87hrl"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
 durationSkill = 20
-speedRatio = 1.0
 
 [sub_resource type="Resource" id="Resource_16wc6"]
 script = ExtResource("10_ovit6")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
 armorSkill = 15
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cg3ic"]
 draw_center = false
@@ -590,10 +428,10 @@ offset_bottom = 101.0
 texture_normal = ExtResource("10_1ssdg")
 ability = ExtResource("10_telu4")
 talentName = "Melee Attack"
-talentDescription = "Melee damage:   10
-Range:          2 m
-Cast time:      1.0 + 1 s
-Targets:        enemy"
+talentDescription = "Damage:     1.0 x MeleePower
+Range:      2 m
+Cast time:  1.0 + 1 s
+Targets:    enemy"
 
 [node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" unique_id=822648170 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -605,10 +443,10 @@ offset_bottom = 101.0
 texture_normal = ExtResource("13_ipap1")
 ability = ExtResource("14_cg3ic")
 talentName = "Ranged Attack"
-talentDescription = "Ranged damage:  10
-Range:          15 m
-Cast time:      1.5 + 1 s
-Targets:        enemy"
+talentDescription = "Damage:     1.0 x RangedPower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Targets:    enemy"
 
 [node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" unique_id=971293459 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -620,11 +458,11 @@ offset_bottom = 101.0
 texture_normal = ExtResource("16_rwbbu")
 ability = ExtResource("17_c54xi")
 talentName = "Taunt"
-talentDescription = "Threat amount:  20
-Range:          5 m
-Cast time:      1.5 + 1 s
-AoE radius:     3 m
-Targets:        enemy"
+talentDescription = "Threat:     20
+Range:      5 m
+Cast time:  1.5 + 1 s
+AoE radius: 3 m
+Targets:    enemy"
 
 [node name="FireBolt" parent="UnitHud/TalentTree/TalentButtons" unique_id=950754549 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -638,11 +476,11 @@ texture_normal = ExtResource("17_8pcfg")
 ability = ExtResource("19_04y5r")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Firebolt"
-talentDescription = "Fire damage:    20
-Range:          15 m
-Cast time:      1.5 + 1 s
-Mana cost:      15
-Targets:        enemy"
+talentDescription = "Damage:     2.0 x FirePower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Mana cost:  15
+Targets:    enemy"
 
 [node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" unique_id=1018411087 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -656,12 +494,12 @@ texture_normal = ExtResource("14_ofk60")
 ability = ExtResource("14_bipdo")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Fireball"
-talentDescription = "Fire damage:    20
-Range:          15 m
-Cast time:      3.0 + 1 s
-AoE radius:     5 m
-Mana cost:      15
-Targets:        enemy"
+talentDescription = "Damage:     2.0 x FirePower
+Range:      15 m
+Cast time:  3.0 + 1 s
+AoE radius: 5 m
+Mana cost:  15
+Targets:    enemy"
 
 [node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" unique_id=1004246315 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -675,14 +513,14 @@ texture_normal = ExtResource("21_opm2l")
 ability = ExtResource("22_6g4ww")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Fire Aura"
-talentDescription = "Range:          10 m
-Cast time:      3.0 + 1 s
-Mana cost:      20
-Targets:        self, friend
-Duration:       3 s
+talentDescription = "Range:      10 m
+Cast time:  3.0 + 1 s
+Mana cost:  20
+Targets:    self, friend
+Duration:   3 s
   Effect on nearby enemies
-Fire damage:    10/s
-AoE radius:     5 m"
+Damage/sec:   1.0 x FirePower
+AoE radius:   5 m"
 
 [node name="HealingWord" parent="UnitHud/TalentTree/TalentButtons" unique_id=1992656545 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -696,11 +534,11 @@ texture_normal = ExtResource("13_05g4s")
 ability = ExtResource("12_5usyn")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Healing Word"
-talentDescription = "Healing amount: 10
-Range:          10 m
-Cast time:      1.0 + 1 s
-Mana cost:      5
-Targets:        self, friend"
+talentDescription = "Healing:    1.0 x HealingPower
+Range:      10 m
+Cast time:  1.0 + 1 s
+Mana cost:  5
+Targets:    self, friend"
 
 [node name="CureWounds" parent="UnitHud/TalentTree/TalentButtons" unique_id=1571639070 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -714,11 +552,11 @@ texture_normal = ExtResource("21_itqay")
 ability = ExtResource("22_d4n80")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Cure Wounds"
-talentDescription = "Healing amount: 25
-Range:          5 m
-Cast time:      3.0 + 1 s
-Mana cost:      10
-Targets:        self, friend"
+talentDescription = "Healing:    2.5 x HealingPower
+Range:      5 m
+Cast time:  3.0 + 1 s
+Mana cost:  10
+Targets:    self, friend"
 
 [node name="Revive" parent="UnitHud/TalentTree/TalentButtons" unique_id=25209363 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -730,10 +568,10 @@ offset_bottom = 201.0
 texture_normal = ExtResource("21_itqay")
 ability = ExtResource("23_d4n80")
 talentName = "Revive"
-talentDescription = "Healing amount: 1
-Range:          2 m
-Cast time:      5.0 + 1 s
-Targets:        friend, dead"
+talentDescription = "Healing:    0.1 x HealingPower
+Range:      2 m
+Cast time:  5.0 + 1 s
+Targets:    friend, dead"
 
 [node name="Slow" parent="UnitHud/TalentTree/TalentButtons" unique_id=345892325 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -747,13 +585,13 @@ texture_normal = ExtResource("20_cp300")
 ability = ExtResource("21_5dcda")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Slow"
-talentDescription = "Range:          15 m
-Cast time:      0.5 + 1 s
-Mana cost:      10
-Targets:        enemy
-Duration:       10 s
+talentDescription = "Range:      15 m
+Cast time:  0.5 + 1 s
+Mana cost:  10
+Targets:    enemy
+Duration:   10 s
   Debuff effect
-Speed ratio:   -50 %"
+Speed Ratio:   -50 %"
 
 [node name="Haste" parent="UnitHud/TalentTree/TalentButtons" unique_id=1257956542 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
@@ -767,11 +605,11 @@ texture_normal = ExtResource("24_oyts4")
 ability = ExtResource("25_8eod5")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Haste"
-talentDescription = "Range:          15 m
-Cast time:      0.5 + 1 s
-Mana cost:      10
-Targets:        self, friend
-Duration:       10 s
+talentDescription = "Range:      15 m
+Cast time:  0.5 + 1 s
+Mana cost:  10
+Targets:    self, friend
+Duration:   10 s
   Buff effect
 Speed:         3.0 m/s"
 
@@ -787,14 +625,14 @@ texture_normal = ExtResource("26_87hrl")
 ability = ExtResource("27_cnuss")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Prowess"
-talentDescription = "Range:          15 m
-Cast time:      2.0 + 1 s
-Mana cost:      10
-Targets:        self, friend
-Duration:       10 s
+talentDescription = "Range:      15 m
+Cast time:  2.0 + 1 s
+Mana cost:  10
+Targets:    self, friend
+Duration:   10 s
   Buff effect
-Melee skill:   60 %
-Ranged skill:  60 %"
+Melee Skill:   60 %
+Ranged Skill:  60 %"
 
 [node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" unique_id=1201673657 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
@@ -808,8 +646,8 @@ offset_top = 300.0
 offset_right = 43.0
 offset_bottom = 349.0
 attributes = SubResource("Resource_sa48e")
-talentName = "Max Health"
-talentDescription = "Max Health:    20"
+talentName = "Health Max"
+talentDescription = "Health Max:    20"
 metadata/_edit_use_anchors_ = true
 
 [node name="Magic" parent="UnitHud/TalentTree/TalentButtons" unique_id=486309966 instance=ExtResource("9_srmse")]
@@ -826,8 +664,8 @@ offset_bottom = 349.0
 attributes = SubResource("Resource_itqay")
 maxRank = 1
 talentName = "Magic"
-talentDescription = "Max Mana:      20
-Mana regen:    1.0/s"
+talentDescription = "Mana Max:      20
+Mana Regen:    1.0/s"
 metadata/_edit_use_anchors_ = true
 
 [node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" unique_id=1070526890 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -845,7 +683,7 @@ disabled = true
 attributes = SubResource("Resource_niwlv")
 requiredTalents = [NodePath("../Magic")]
 talentName = "Max Mana"
-talentDescription = "Max Mana:      20"
+talentDescription = "Mana Max:      20"
 metadata/_edit_use_anchors_ = true
 
 [node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" unique_id=1947294545 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -862,8 +700,8 @@ offset_bottom = 349.0
 disabled = true
 attributes = SubResource("Resource_pdeq4")
 requiredTalents = [NodePath("../Magic")]
-talentName = "Mana regen"
-talentDescription = "Mana regen:    1.0/s"
+talentName = "Mana Regen"
+talentDescription = "Mana Regen:    1.0/s"
 metadata/_edit_use_anchors_ = true
 
 [node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1646807170 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -880,8 +718,8 @@ offset_bottom = 349.0
 disabled = true
 attributes = SubResource("Resource_jr5p1")
 requiredTalents = [NodePath("../MeleeAttack")]
-talentName = "Melee skill"
-talentDescription = "Melee skill:   10 %"
+talentName = "Melee Skill"
+talentDescription = "Melee Skill:   10 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1983501588 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -899,7 +737,7 @@ disabled = true
 attributes = SubResource("Resource_5dcda")
 requiredTalents = [NodePath("../RangedAttack")]
 talentName = "Ranged Skill"
-talentDescription = "Ranged skill:  10 %"
+talentDescription = "Ranged Skill:  10 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=208617065 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -916,8 +754,8 @@ offset_bottom = 774.0
 disabled = true
 attributes = SubResource("Resource_h1o0j")
 requiredTalents = [NodePath("../FireBolt"), NodePath("../FireBall"), NodePath("../FireAura")]
-talentName = "Fire skill"
-talentDescription = "Fire skill:    15 %"
+talentName = "Fire Skill"
+talentDescription = "Fire Skill:    15 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1860187511 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
@@ -934,8 +772,8 @@ offset_bottom = 556.0
 disabled = true
 attributes = SubResource("Resource_bhwvf")
 requiredTalents = [NodePath("../HealingWord"), NodePath("../CureWounds")]
-talentName = "Healing skill"
-talentDescription = "Healing skill: 15 %"
+talentName = "Healing Skill"
+talentDescription = "Healing Skill: 15 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=140872093 instance=ExtResource("9_srmse")]
@@ -951,7 +789,7 @@ offset_right = 340.0
 offset_bottom = 428.0
 attributes = SubResource("Resource_gbr36")
 talentName = "Threat skill"
-talentDescription = "Threat skill:  15 %"
+talentDescription = "Threat Skill:  15 %"
 
 [node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=615355352 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
@@ -967,8 +805,8 @@ offset_bottom = 777.0
 disabled = true
 attributes = SubResource("Resource_87hrl")
 requiredTalents = [NodePath("../Slow"), NodePath("../Haste"), NodePath("../Prowess"), NodePath("../FireAura")]
-talentName = "Duration skill"
-talentDescription = "Duration skill: 20 %"
+talentName = "Duration Skill"
+talentDescription = "Duration Skill: 20 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1778080775 instance=ExtResource("9_srmse")]
@@ -983,8 +821,8 @@ offset_top = 458.0
 offset_right = 192.0
 offset_bottom = 507.0
 attributes = SubResource("Resource_16wc6")
-talentName = "Armor skill"
-talentDescription = "Armor skill:   15 %"
+talentName = "Armor Skill"
+talentDescription = "Armor Skill:   15 %"
 metadata/_edit_use_anchors_ = true
 
 [node name="InventoryPanel" type="Panel" parent="UnitHud" unique_id=1218094769]

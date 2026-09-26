@@ -11,21 +11,6 @@
 
 [sub_resource type="Resource" id="Resource_bskat"]
 script = ExtResource("1_bskat")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
@@ -33,29 +18,16 @@ script = ExtResource("6_5pkak")
 name = "Fire Aura"
 texture = ExtResource("7_f5fgx")
 abilityId = 11
-damageMelee = 0
-damageRanged = 0
-damageMagical = 0
-healingAmount = 0
-threatAmount = 0
 targetRange = 10
 manaCost = 20
-isHealing = false
-aoeRadius = 0.0
 buffDuration = 3.0
 buffAttributes = SubResource("Resource_bskat")
 tickDuration = 0.2
 persistentEffectAbility = ExtResource("2_f5fgx")
 castTime = 3.0
-recoveryTime = 1.0
-speedFactorWhileCasting = 0.5
-projectileSpeed = 20.0
 projectileMesh = ExtResource("4_f5fgx")
 projectileShootAudio = ExtResource("5_kbsw5")
 projectileHitAudio = ExtResource("3_c0ecg")
 castingAudio = ExtResource("1_f5fgx")
 canTargetSelf = true
 canTargetFriend = true
-canTargetEnemy = false
-canTargetAlive = true
-canTargetDead = false

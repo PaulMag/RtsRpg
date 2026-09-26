@@ -7,20 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_gbxim"]
 script = ExtResource("1_2t37f")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
 armorPoints = 35
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
 speedRatio = 0.97
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 

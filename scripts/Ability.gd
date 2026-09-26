@@ -6,10 +6,10 @@ class_name Ability
 @export var texture: Texture
 @export var abilityId: Global.AbilityIds
 
-@export var damageMelee: int
-@export var damageRanged: int
-@export var damageMagical: int
-@export var healingAmount: int
+@export var damageMelee: float
+@export var damageRanged: float
+@export var damageFire: float
+@export var healingAmount: float
 @export var threatAmount: int
 @export var targetRange: int
 @export var manaCost: int
@@ -68,10 +68,10 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 	var attack := Attack.new()
 	attack.attackingUnit = user
 	attack.sourceUnit = source
-	attack.damageMelee = damageMelee * (1 + user.attributes.meleeSkill * 0.01)
-	attack.damageRanged = damageRanged * (1 + user.attributes.rangedSkill * 0.01)
-	attack.damageMagical = damageMagical * (1 + user.attributes.magicSkill * 0.01)
-	attack.healingAmount = healingAmount * (1 + user.attributes.healSkill * 0.01)
+	attack.damageMelee = damageMelee * user.attributes.effMeleePower
+	attack.damageRanged = damageRanged * user.attributes.effRangedPower
+	attack.damageMagical = damageFire * user.attributes.effFirePower
+	attack.healingAmount = healingAmount * user.attributes.effHealPower
 	attack.threat = (attack.damageMelee + attack.damageRanged + attack.damageMagical + threatAmount) * (1 + user.attributes.threatSkill * 0.01)
 	attack.isHealing = isHealing
 	attack.ability = self
@@ -107,22 +107,22 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 func getDescription() -> String:
 	var description := ""
 	if damageMelee != 0:
-		description += "Melee damage:   %d\n" % damageMelee
+		description += "Damage:     %.1f x MeleePower\n" % damageMelee
 	if damageRanged != 0:
-		description += "Ranged damage:  %d\n" % damageRanged
-	if damageMagical != 0:
-		description += "Fire damage:    %d\n" % damageMagical
+		description += "Damage:     %.1f x RangedPower\n" % damageRanged
+	if damageFire != 0:
+		description += "Damage:     %.1f x FirePower\n" % damageFire
 	if healingAmount != 0:
-		description += "Healing amount: %d\n" % healingAmount
+		description += "Healing:    %.1f x HealingPower\n" % healingAmount
 	if threatAmount != 0:
-		description += "Threat amount:  %d\n" % threatAmount
-	description += "Range:          %d m\n" % targetRange
-	description += "Cast time:      %.1f + %d s\n" % [castTime, recoveryTime]
+		description += "Threat:     %d\n" % threatAmount
+	description += "Range:      %d m\n" % targetRange
+	description += "Cast time:  %.1f + %d s\n" % [castTime, recoveryTime]
 	if aoeRadius > 0:
-		description += "AoE radius:     %d m\n" % aoeRadius
+		description += "AoE radius: %d m\n" % aoeRadius
 	if manaCost > 0:
-		description += "Mana cost:      %d\n" % manaCost
-	description += "Targets:        %s%s%s%s" % [
+		description += "Mana cost:  %d\n" % manaCost
+	description += "Targets:    %s%s%s%s" % [
 		"self, " if canTargetSelf else "",
 		"friend, " if canTargetFriend else "",
 		"enemy, " if canTargetEnemy else "",
@@ -130,10 +130,10 @@ func getDescription() -> String:
 	]
 	description = description.trim_suffix(", ") + "\n"
 	if persistentEffectAbility:
-		description += "Duration:       %d s\n" % buffDuration
+		description += "Duration:   %d s\n" % buffDuration
 		description += persistentEffectAbility.getPersistentEffectDescription(tickDuration)
 	elif buffAttributes:
-		description += "Duration:       %d s\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
+		description += "Duration:   %d s\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
 		description += buffAttributes.getDescriptionNoZero()
 
 	return description.trim_suffix("\n")
@@ -149,16 +149,16 @@ func getPersistentEffectDescription(_tickDuration: float) -> String:
 	]
 	description = description.trim_suffix(", ") + "\n"
 	if damageMelee != 0:
-		description += "Melee damage:   %d/s\n" % (damageMelee/_tickDuration)
+		description += "Damage/sec:   %.1f/s\n" % (damageMelee/_tickDuration)
 	if damageRanged != 0:
-		description += "Ranged damage:  %d/s\n" % (damageRanged/_tickDuration)
-	if damageMagical != 0:
-		description += "Fire damage:    %d/s\n" % (damageMagical/_tickDuration)
+		description += "Damage/sec:   %.1f/s\n" % (damageRanged/_tickDuration)
+	if damageFire != 0:
+		description += "Damage/sec:   %.1f x FirePower\n" % (damageFire/_tickDuration)
 	if healingAmount != 0:
-		description += "Healing amount: %d/s\n" % (healingAmount/_tickDuration)
+		description += "Healing/sec:  %.1f/s\n" % (healingAmount/_tickDuration)
 	if threatAmount != 0:
-		description += "Threat amount:  %d/s\n" % (threatAmount/_tickDuration)
+		description += "Threat:       %d/s\n" % (threatAmount/_tickDuration)
 	if aoeRadius > 0:
-		description += "AoE radius:     %d m\n" % aoeRadius
+		description += "AoE radius:   %d m\n" % aoeRadius
 
 	return description.trim_suffix("\n")

@@ -7,21 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_igv88"]
 script = ExtResource("1_mklt1")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 50
-rangedSkill = 0
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
+meleePower = 10
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]

@@ -7,21 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_us7d3"]
 script = ExtResource("1_6hhlr")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
-manaRegen = 0.0
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 50
-magicSkill = 0
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
+rangedPower = 10
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
@@ -32,5 +18,4 @@ texture = ExtResource("4_6hhlr")
 mesh = ExtResource("2_f2c28")
 slot = 1
 attributes = SubResource("Resource_us7d3")
-position = Vector3(0, 0, 0)
 rotation = Vector3(-1.5708, 0, -1.5708)

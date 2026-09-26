@@ -7,21 +7,8 @@
 
 [sub_resource type="Resource" id="Resource_npu3w"]
 script = ExtResource("1_bygrg")
-maxHealth = 0
-healthRegen = 0.0
-maxMana = 0
 manaRegen = 0.5
-armorPoints = 0
-carryCapacity = 0
-armorSkill = 0
-meleeSkill = 0
-rangedSkill = 0
-magicSkill = 40
-healSkill = 0
-speed = 0.0
-threatSkill = 0
-durationSkill = 0
-speedRatio = 1.0
+firePower = 10
 metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
