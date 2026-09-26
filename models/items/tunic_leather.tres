@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://dpg3gm7686ct4"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://dpg3gm7686ct4"]
 
 [ext_resource type="Texture2D" uid="uid://0cbo7dslrnbb" path="res://models/textures/rogue_texture.png" id="1_v22ad"]
 

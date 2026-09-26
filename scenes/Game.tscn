@@ -1,54 +1,54 @@
-[gd_scene load_steps=2 format=3 uid="uid://b38hn31i1vg4d"]
+[gd_scene format=3 uid="uid://b38hn31i1vg4d"]
 
 [ext_resource type="Script" uid="uid://dtqd7xhmj7oj6" path="res://scripts/Multiplayer.gd" id="1_xw4tb"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" unique_id=1422175102]
 
-[node name="Multiplayer" type="Node" parent="."]
+[node name="Multiplayer" type="Node" parent="." unique_id=306366554]
 script = ExtResource("1_xw4tb")
 
-[node name="UI" type="CanvasLayer" parent="Multiplayer"]
+[node name="UI" type="CanvasLayer" parent="Multiplayer" unique_id=2056079998]
 
-[node name="GameHud" type="PanelContainer" parent="Multiplayer/UI"]
+[node name="GameHud" type="PanelContainer" parent="Multiplayer/UI" unique_id=1975273736]
 offset_right = 300.0
 offset_bottom = 27.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Multiplayer/UI/GameHud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Multiplayer/UI/GameHud" unique_id=590342103]
 layout_mode = 2
 
-[node name="LabelPlayerList" type="Label" parent="Multiplayer/UI/GameHud/VBoxContainer"]
+[node name="LabelPlayerList" type="Label" parent="Multiplayer/UI/GameHud/VBoxContainer" unique_id=1009060308]
 modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
 text = "Players:"
 horizontal_alignment = 1
 
-[node name="PlayerLabelList" type="GridContainer" parent="Multiplayer/UI/GameHud/VBoxContainer"]
+[node name="PlayerLabelList" type="GridContainer" parent="Multiplayer/UI/GameHud/VBoxContainer" unique_id=1135981630]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 10
 columns = 3
 
-[node name="MultiplayerOptions" type="VBoxContainer" parent="Multiplayer/UI"]
+[node name="MultiplayerOptions" type="VBoxContainer" parent="Multiplayer/UI" unique_id=1043921481]
 offset_left = 172.0
 offset_top = 22.0
 offset_right = 844.0
 offset_bottom = 467.0
 alignment = 1
 
-[node name="Hosting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+[node name="Hosting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions" unique_id=389633723]
 layout_mode = 2
 alignment = 1
 
-[node name="HostButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Hosting"]
+[node name="HostButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Hosting" unique_id=686978147]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Host new Multiplayer Game"
 
-[node name="Joining" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+[node name="Joining" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions" unique_id=146173412]
 layout_mode = 2
 alignment = 1
 
-[node name="Remote" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Joining"]
+[node name="Remote" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Joining" unique_id=1068793076]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "localhost"
@@ -58,20 +58,20 @@ expand_to_text_length = true
 clear_button_enabled = true
 caret_blink = true
 
-[node name="ConnectButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Joining"]
+[node name="ConnectButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Joining" unique_id=658952351]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Connect to existing game on IP"
 
-[node name="Readying" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+[node name="Readying" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions" unique_id=1343633146]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerName" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="PlayerName" type="LineEdit" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=957880281]
 unique_name_in_owner = true
-clip_contents = true
 custom_minimum_size = Vector2(250, 0)
+clip_contents = true
 layout_mode = 2
 placeholder_text = "Write your name"
 max_length = 16
@@ -79,46 +79,46 @@ expand_to_text_length = true
 clear_button_enabled = true
 caret_blink = true
 
-[node name="VSeparator1" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="VSeparator1" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=75735736]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="ColorPickerLabel" type="Label" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="ColorPickerLabel" type="Label" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=1895709251]
 layout_mode = 2
 text = "Pick your color:"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=1397983322]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="ColorPickerRect" type="ColorRect" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="ColorPickerRect" type="ColorRect" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=1669822489]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
-[node name="VSeparator2" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="VSeparator2" type="VSeparator" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=235227684]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="ReadyButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Readying"]
+[node name="ReadyButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Readying" unique_id=119287988]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Ready"
 
-[node name="Starting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions"]
+[node name="Starting" type="HBoxContainer" parent="Multiplayer/UI/MultiplayerOptions" unique_id=149707132]
 layout_mode = 2
 alignment = 1
 
-[node name="StartButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Starting"]
+[node name="StartButton" type="Button" parent="Multiplayer/UI/MultiplayerOptions/Starting" unique_id=1338029463]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Start new Singleplayer Game"
 
-[node name="HostOptions" type="VBoxContainer" parent="Multiplayer/UI"]
+[node name="HostOptions" type="VBoxContainer" parent="Multiplayer/UI" unique_id=199927289]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 1
@@ -128,34 +128,34 @@ offset_left = -114.0
 offset_bottom = 40.0
 grow_horizontal = 0
 
-[node name="RestartGameButton" type="Button" parent="Multiplayer/UI/HostOptions"]
+[node name="RestartGameButton" type="Button" parent="Multiplayer/UI/HostOptions" unique_id=1074881033]
 layout_mode = 2
 text = "Restart Game"
 
-[node name="HBoxContainer1" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+[node name="HBoxContainer1" type="HBoxContainer" parent="Multiplayer/UI/HostOptions" unique_id=1631265261]
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer1" unique_id=1381264110]
 layout_mode = 2
 text = "XP start"
 
-[node name="XpStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer1"]
+[node name="XpStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer1" unique_id=1637419738]
 unique_name_in_owner = true
 layout_mode = 2
 value = 20.0
 allow_greater = true
 alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Multiplayer/UI/HostOptions" unique_id=23802668]
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer2" unique_id=1069686729]
 layout_mode = 2
 text = "XP multiplier"
 
-[node name="XpRewardMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer2"]
+[node name="XpRewardMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer2" unique_id=1021045924]
 unique_name_in_owner = true
 layout_mode = 2
 step = 0.1
@@ -163,16 +163,16 @@ value = 1.0
 allow_greater = true
 alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Multiplayer/UI/HostOptions" unique_id=1283328452]
 visible = false
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer3" unique_id=1207163767]
 layout_mode = 2
 text = "Enemy start multiplier"
 
-[node name="EnemyStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer3"]
+[node name="EnemyStartMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer3" unique_id=96513574]
 unique_name_in_owner = true
 layout_mode = 2
 step = 0.1
@@ -180,16 +180,16 @@ value = 1.0
 allow_greater = true
 alignment = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Multiplayer/UI/HostOptions"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="Multiplayer/UI/HostOptions" unique_id=243125513]
 visible = false
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
+[node name="Label" type="Label" parent="Multiplayer/UI/HostOptions/HBoxContainer4" unique_id=118438277]
 layout_mode = 2
 text = "Enemy lvl. multiplier"
 
-[node name="EnemyLevelMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer4"]
+[node name="EnemyLevelMultiplier" type="SpinBox" parent="Multiplayer/UI/HostOptions/HBoxContainer4" unique_id=760616511]
 unique_name_in_owner = true
 layout_mode = 2
 step = 0.1
@@ -197,7 +197,7 @@ value = 1.0
 allow_greater = true
 alignment = 1
 
-[node name="GameVersionLabel" type="Label" parent="Multiplayer/UI"]
+[node name="GameVersionLabel" type="Label" parent="Multiplayer/UI" unique_id=1672102900]
 unique_name_in_owner = true
 anchors_preset = 5
 anchor_left = 0.5
@@ -208,13 +208,13 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "Version X.Y.Z"
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer"]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Multiplayer" unique_id=2002758443]
 _spawnable_scenes = PackedStringArray("uid://bi4frn2cgm5la")
 spawn_path = NodePath("../Players")
 
-[node name="Players" type="Node" parent="Multiplayer"]
+[node name="Players" type="Node" parent="Multiplayer" unique_id=1431303480]
 
-[node name="DungeonSpawner" type="MultiplayerSpawner" parent="."]
+[node name="DungeonSpawner" type="MultiplayerSpawner" parent="." unique_id=220570442]
 _spawnable_scenes = PackedStringArray("uid://dee70bilaqhd2")
 spawn_path = NodePath("..")
 

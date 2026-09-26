@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://3j5to0rdhl80"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://3j5to0rdhl80"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_akm7p"]
 [ext_resource type="ArrayMesh" uid="uid://b2sd0hjgswynt" path="res://models/items/helmet_iton.tres" id="2_k65sg"]

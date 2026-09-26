@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://bityem6riduyb"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://bityem6riduyb"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_6v6rl"]
 [ext_resource type="ArrayMesh" uid="uid://doioqlutfbko5" path="res://models/items/cuirass_iron.tres" id="2_ehh5l"]

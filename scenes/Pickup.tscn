@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbln30dr8vpci"]
+[gd_scene format=3 uid="uid://dbln30dr8vpci"]
 
 [ext_resource type="Script" uid="uid://xdcdxu1s1k2f" path="res://scripts/Pickup.gd" id="1_08on1"]
 [ext_resource type="ArrayMesh" uid="uid://b2sd0hjgswynt" path="res://models/items/helmet_iton.tres" id="2_3bp0e"]
@@ -25,30 +25,30 @@ border_width_bottom = 5
 border_color = Color(0.172833, 0.172833, 0.172833, 1)
 border_blend = true
 
-[node name="Pickup" type="Area3D"]
+[node name="Pickup" type="Area3D" unique_id=529698110]
 script = ExtResource("1_08on1")
 
-[node name="MeshInstance" type="MeshInstance3D" parent="."]
+[node name="MeshInstance" type="MeshInstance3D" parent="." unique_id=1140383556]
 mesh = ExtResource("2_3bp0e")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="."]
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=863229018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("CylinderShape3D_axj2u")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2067416780]
 replication_config = SubResource("SceneReplicationConfig_eoid5")
 
-[node name="SpriteTooltip" type="Sprite3D" parent="."]
+[node name="SpriteTooltip" type="Sprite3D" parent="." unique_id=690022875]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28, 2.28, 0)
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_7gm55")
 
-[node name="SubViewport" type="SubViewport" parent="SpriteTooltip"]
+[node name="SubViewport" type="SubViewport" parent="SpriteTooltip" unique_id=1816162556]
 transparent_bg = true
 size = Vector2i(256, 256)
 
-[node name="DescriptionPanel" type="PanelContainer" parent="SpriteTooltip/SubViewport"]
+[node name="DescriptionPanel" type="PanelContainer" parent="SpriteTooltip/SubViewport" unique_id=1823056026]
 unique_name_in_owner = true
 anchors_preset = 2
 anchor_top = 1.0
@@ -59,14 +59,14 @@ grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_j2gyh")
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteTooltip/SubViewport/DescriptionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteTooltip/SubViewport/DescriptionPanel" unique_id=731241463]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 3
 
-[node name="DescriptionLabel" type="Label" parent="SpriteTooltip/SubViewport/DescriptionPanel/MarginContainer"]
+[node name="DescriptionLabel" type="Label" parent="SpriteTooltip/SubViewport/DescriptionPanel/MarginContainer" unique_id=73397765]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7

@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://cksw4yfdv1wen"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://cksw4yfdv1wen"]
 
 [ext_resource type="Texture2D" uid="uid://u32lgb1jbl7u" path="res://models/textures/knight_texture.png" id="1_81r8r"]
 

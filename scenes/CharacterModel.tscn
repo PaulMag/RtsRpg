@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cdg2siq8w8223"]
+[gd_scene format=3 uid="uid://cdg2siq8w8223"]
 
 [ext_resource type="Script" uid="uid://5dpbqxv0vl31" path="res://scripts/CharacterModel.gd" id="1_5ns42"]
 [ext_resource type="ArrayMesh" uid="uid://c1knu2357o3h0" path="res://models/items/barbarian_tunic.tres" id="2_vveyt"]
@@ -158,7 +158,7 @@ properties/2/path = NodePath(".:selectedClothesTextureId")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="CharacterModel" type="Node3D"]
+[node name="CharacterModel" type="Node3D" unique_id=237353305]
 script = ExtResource("1_5ns42")
 defaultMeshes = Dictionary[int, Mesh]({
 4: ExtResource("2_vveyt")
@@ -166,7 +166,7 @@ defaultMeshes = Dictionary[int, Mesh]({
 headMeshes = Array[Mesh]([ExtResource("3_vsap7"), ExtResource("6_ivmjx"), ExtResource("5_llbey"), ExtResource("6_ea55e")])
 textures = Array[Texture2D]([ExtResource("7_4nkgs"), ExtResource("8_cjldq"), ExtResource("9_lgvmk"), ExtResource("10_tf7p1")])
 
-[node name="Skeleton3D" type="Skeleton3D" parent="."]
+[node name="Skeleton3D" type="Skeleton3D" parent="." unique_id=497575235]
 bones/0/name = "root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, 0, 0)
@@ -316,7 +316,7 @@ bones/20/rotation = Quaternion(-7.85026e-37, -7.10543e-15, 1.10483e-22, 1)
 bones/20/scale = Vector3(1, 1, 1)
 bones/21/name = "Barbarian_Cape"
 bones/21/parent = 3
-bones/21/rest = Transform3D(1, 1.25214e-21, -1.42109e-14, -1.25214e-21, 1, 7.17465e-43, 1.42109e-14, 1.77939e-35, 1, -1.90735e-06, 0.243245, -1.39099e-07)
+bones/21/rest = Transform3D(1, 1.25214e-21, -1.42109e-14, -1.25214e-21, 1, 7.17e-43, 1.42109e-14, 1.77939e-35, 1, -1.90735e-06, 0.243245, -1.39099e-07)
 bones/21/enabled = true
 bones/21/position = Vector3(-1.90735e-06, 0.243245, -1.39099e-07)
 bones/21/rotation = Quaternion(4.44848e-36, -7.10543e-15, -6.26068e-22, 1)
@@ -504,82 +504,80 @@ bones/47/position = Vector3(-0.510844, 0.788312, 0.0597369)
 bones/47/rotation = Quaternion(-0.758253, -1.82539e-07, 0.651961, -1.11759e-08)
 bones/47/scale = Vector3(1, 1, 1)
 
-[node name="RightHandBone" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(-2.57213e-08, -0.149894, 0.988702, 0.999999, -9.65599e-07, -1.1188e-06, 1.43722e-06, 0.988701, 0.149893, -0.496053, 0.64103, 0.139528)
+[node name="RightHandBone" type="BoneAttachment3D" parent="Skeleton3D" unique_id=956438496]
+transform = Transform3D(-2.572126e-08, -0.14989391, 0.9887015, 0.9999994, -9.655995e-07, -1.1188021e-06, 1.4372198e-06, 0.9887012, 0.14989336, -0.49605298, 0.64103025, 0.1395285)
 bone_name = "1H_Axe"
 bone_idx = 16
 
-[node name="RightHandItem" type="MeshInstance3D" parent="Skeleton3D/RightHandBone"]
+[node name="RightHandItem" type="MeshInstance3D" parent="Skeleton3D/RightHandBone" unique_id=1075773149]
 unique_name_in_owner = true
 mesh = ExtResource("11_tf7p1")
 skeleton = NodePath("")
 
-[node name="LeftHandBone" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(5.28651e-07, 0.262865, 0.964832, 0.999999, -3.99355e-07, 5.68228e-07, 8.67028e-07, 0.964832, -0.262864, 0.516523, 0.636706, 0.0136165)
+[node name="LeftHandBone" type="BoneAttachment3D" parent="Skeleton3D" unique_id=558497462]
+transform = Transform3D(5.286507e-07, 0.2628648, 0.9648322, 0.9999994, -3.9935514e-07, 5.682276e-07, 8.6702784e-07, 0.9648319, -0.26286426, 0.5165234, 0.6367058, 0.013616469)
 bone_name = "1H_Axe_Offhand"
 bone_idx = 9
 
-[node name="LeftHandItem" type="MeshInstance3D" parent="Skeleton3D/LeftHandBone"]
+[node name="LeftHandItem" type="MeshInstance3D" parent="Skeleton3D/LeftHandBone" unique_id=1470581636]
 unique_name_in_owner = true
 mesh = ExtResource("12_tf7p1")
 skeleton = NodePath("")
 
-[node name="HeadBone" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.99972, -1.40145e-09, 0.0236468, 1.39343e-09, 1, 3.55687e-10, -0.0236468, -3.22638e-10, 0.99972, -7.5573e-09, 1.20228, -1.39052e-07)
+[node name="HeadBone" type="BoneAttachment3D" parent="Skeleton3D" unique_id=1028242253]
+transform = Transform3D(0.9997204, -1.4014482e-09, 0.023646828, 1.3934272e-09, 1, 3.5568748e-10, -0.023646828, -3.226379e-10, 0.9997204, -7.557302e-09, 1.2022752, -1.3905186e-07)
 bone_name = "Barbarian_Hat"
 bone_idx = 20
 
-[node name="HeadItem" type="MeshInstance3D" parent="Skeleton3D/HeadBone"]
+[node name="HeadItem" type="MeshInstance3D" parent="Skeleton3D/HeadBone" unique_id=1734407545]
 unique_name_in_owner = true
 mesh = ExtResource("13_tf7p1")
 skeleton = NodePath("")
 
-[node name="BackBone" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.996275, -5.14962e-09, 0.0862354, 5.13044e-09, 1, 4.44078e-10, -0.0862354, 1.46374e-15, 0.996275, -1.91641e-06, 1.20228, 2.59003e-08)
+[node name="BackBone" type="BoneAttachment3D" parent="Skeleton3D" unique_id=806919759]
+transform = Transform3D(0.9962748, -5.1496194e-09, 0.08623545, 5.1304365e-09, 1, 4.4407827e-10, -0.08623545, 1.4637359e-15, 0.9962748, -1.9164124e-06, 1.202275, 2.5900349e-08)
 bone_name = "Barbarian_Cape"
 bone_idx = 21
 
-[node name="BackItem" type="MeshInstance3D" parent="Skeleton3D/BackBone"]
+[node name="BackItem" type="MeshInstance3D" parent="Skeleton3D/BackBone" unique_id=1060281690]
 unique_name_in_owner = true
 mesh = ExtResource("3_8p1vu")
 skeleton = NodePath("")
 
-[node name="ArmLeft" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="ArmLeft" type="MeshInstance3D" parent="Skeleton3D" unique_id=472104194]
 unique_name_in_owner = true
 mesh = ExtResource("4_ecnjn")
 skin = SubResource("Skin_iyxwi")
 
-[node name="ArmRight" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="ArmRight" type="MeshInstance3D" parent="Skeleton3D" unique_id=635258018]
 unique_name_in_owner = true
 mesh = ExtResource("5_ecnjn")
 skin = SubResource("Skin_iyxwi")
 
-[node name="Torso" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="Torso" type="MeshInstance3D" parent="Skeleton3D" unique_id=757725345]
 unique_name_in_owner = true
 mesh = ExtResource("2_vveyt")
 skin = SubResource("Skin_iyxwi")
 
-[node name="Head" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="Head" type="MeshInstance3D" parent="Skeleton3D" unique_id=2122137380]
 unique_name_in_owner = true
 mesh = ExtResource("6_ivmjx")
 skin = SubResource("Skin_iyxwi")
 
-[node name="LegLeft" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="LegLeft" type="MeshInstance3D" parent="Skeleton3D" unique_id=208387326]
 unique_name_in_owner = true
 mesh = ExtResource("7_vs5p2")
 skin = SubResource("Skin_iyxwi")
 
-[node name="LegRight" type="MeshInstance3D" parent="Skeleton3D"]
+[node name="LegRight" type="MeshInstance3D" parent="Skeleton3D" unique_id=1460973446]
 unique_name_in_owner = true
 mesh = ExtResource("8_8p1vu")
 skin = SubResource("Skin_iyxwi")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": ExtResource("4_vveyt")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=446003761]
+libraries/ = ExtResource("4_vveyt")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=206798646]
 replication_config = SubResource("SceneReplicationConfig_tf7p1")
 
 [connection signal="delta_synchronized" from="MultiplayerSynchronizer" to="." method="setAppearance"]

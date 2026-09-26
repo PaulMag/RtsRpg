@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://beuit1wcq5iw1"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://beuit1wcq5iw1"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_qwi48"]
 [ext_resource type="ArrayMesh" uid="uid://00ug8o8ra0k8" path="res://models/items/shield_kite_spiked.tres" id="2_r02ud"]

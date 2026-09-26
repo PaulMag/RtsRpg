@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c0cy3pn7up1o0"]
+[gd_scene format=3 uid="uid://c0cy3pn7up1o0"]
 
 [ext_resource type="Script" uid="uid://bavi3pwpwvmwb" path="res://scripts/Unit.gd" id="1_m0gx0"]
 [ext_resource type="Texture2D" uid="uid://difwfoey1ysam" path="res://sprites/units/selection_circle.png" id="2_f7eal"]
@@ -339,57 +339,57 @@ stream_0/stream = ExtResource("30_xnap6")
 stream_1/stream = ExtResource("31_itqay")
 stream_2/stream = ExtResource("32_d4n80")
 
-[node name="Unit" type="CharacterBody3D"]
+[node name="Unit" type="CharacterBody3D" unique_id=1878161157]
 script = ExtResource("1_m0gx0")
 baseAttributes = SubResource("Resource_oyts4")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="."]
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=637149284]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_cp300")
 
-[node name="SelectionArea" type="Area3D" parent="."]
+[node name="SelectionArea" type="Area3D" parent="." unique_id=429483011]
 
-[node name="CollisionShape" type="CollisionShape3D" parent="SelectionArea"]
+[node name="CollisionShape" type="CollisionShape3D" parent="SelectionArea" unique_id=395548926]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("CapsuleShape3D_opm2l")
 
-[node name="CharacterModel" parent="." instance=ExtResource("23_cp300")]
+[node name="CharacterModel" parent="." unique_id=517238124 instance=ExtResource("23_cp300")]
 
-[node name="SelectedCircle" type="Sprite3D" parent="."]
+[node name="SelectedCircle" type="Sprite3D" parent="." unique_id=1045863804]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.05, 0)
 pixel_size = 0.0015
 texture = ExtResource("7_rybnc")
 
-[node name="TargetCircle" type="Sprite3D" parent="."]
+[node name="TargetCircle" type="Sprite3D" parent="." unique_id=1630510828]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.06, 0)
 visible = false
 pixel_size = 0.04
 texture = ExtResource("2_f7eal")
 
-[node name="RangeCircle" type="MeshInstance3D" parent="."]
+[node name="RangeCircle" type="MeshInstance3D" parent="." unique_id=1417162139]
 unique_name_in_owner = true
 visible = false
 mesh = SubResource("SphereMesh_v7uyv")
 
-[node name="NavigationAgent" type="NavigationAgent3D" parent="."]
+[node name="NavigationAgent" type="NavigationAgent3D" parent="." unique_id=402593493]
 debug_enabled = true
 
-[node name="NavigationObstacle" type="NavigationObstacle3D" parent="."]
+[node name="NavigationObstacle" type="NavigationObstacle3D" parent="." unique_id=542830083]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 visible = false
 radius = 0.5
 
-[node name="SpriteHud" type="Sprite3D" parent="."]
+[node name="SpriteHud" type="Sprite3D" parent="." unique_id=2043563698]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.9, 0)
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_tlt4j")
 
-[node name="SubViewport" type="SubViewport" parent="SpriteHud"]
+[node name="SubViewport" type="SubViewport" parent="SpriteHud" unique_id=109909639]
 transparent_bg = true
 size = Vector2i(128, 300)
 
-[node name="Label" type="Label" parent="SpriteHud/SubViewport"]
+[node name="Label" type="Label" parent="SpriteHud/SubViewport" unique_id=617690663]
 unique_name_in_owner = true
 offset_right = 128.0
 offset_bottom = 80.0
@@ -399,7 +399,7 @@ text = "UnitName"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="ProgressBars" type="VBoxContainer" parent="SpriteHud/SubViewport"]
+[node name="ProgressBars" type="VBoxContainer" parent="SpriteHud/SubViewport" unique_id=592740912]
 offset_left = 24.0
 offset_top = 80.0
 offset_right = 88.0
@@ -408,29 +408,29 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="HealthBar" parent="SpriteHud/SubViewport/ProgressBars" instance=ExtResource("7_n4dth")]
+[node name="HealthBar" parent="SpriteHud/SubViewport/ProgressBars" unique_id=1073309154 instance=ExtResource("7_n4dth")]
 unique_name_in_owner = true
 layout_mode = 2
 tint_progress = Color(1, 0, 0, 1)
 
-[node name="ManaBar" parent="SpriteHud/SubViewport/ProgressBars" instance=ExtResource("7_n4dth")]
+[node name="ManaBar" parent="SpriteHud/SubViewport/ProgressBars" unique_id=1054335429 instance=ExtResource("7_n4dth")]
 unique_name_in_owner = true
 layout_mode = 2
 tint_progress = Color(0, 0, 1, 1)
 
-[node name="CastBar" parent="SpriteHud/SubViewport" instance=ExtResource("7_me7gl")]
+[node name="CastBar" parent="SpriteHud/SubViewport" unique_id=458065920 instance=ExtResource("7_me7gl")]
 unique_name_in_owner = true
 visible = false
 offset_top = 116.0
 offset_bottom = 132.0
 
-[node name="BuffIcons" type="HBoxContainer" parent="SpriteHud/SubViewport"]
+[node name="BuffIcons" type="HBoxContainer" parent="SpriteHud/SubViewport" unique_id=1841976705]
 unique_name_in_owner = true
 offset_top = 136.0
 offset_right = 64.0
 offset_bottom = 136.0
 
-[node name="ArmorBadge" type="TextureRect" parent="SpriteHud/SubViewport"]
+[node name="ArmorBadge" type="TextureRect" parent="SpriteHud/SubViewport" unique_id=1726837605]
 self_modulate = Color(1, 1, 1, 0.87451)
 offset_left = 82.0
 offset_top = 80.0
@@ -439,7 +439,7 @@ offset_bottom = 208.0
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("7_cp300")
 
-[node name="ArmorLabel" type="Label" parent="SpriteHud/SubViewport/ArmorBadge"]
+[node name="ArmorLabel" type="Label" parent="SpriteHud/SubViewport/ArmorBadge" unique_id=687820628]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -453,21 +453,21 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1800637106]
 replication_config = SubResource("SceneReplicationConfig_bwudf")
 
-[node name="RecoveryTimer" type="Timer" parent="."]
+[node name="RecoveryTimer" type="Timer" parent="." unique_id=1528949877]
 one_shot = true
 
-[node name="CastTimer" type="Timer" parent="."]
+[node name="CastTimer" type="Timer" parent="." unique_id=673977748]
 one_shot = true
 
-[node name="RegenTimer" type="Timer" parent="."]
+[node name="RegenTimer" type="Timer" parent="." unique_id=2097913390]
 wait_time = 0.1
 
-[node name="UnitHud" type="CanvasLayer" parent="."]
+[node name="UnitHud" type="CanvasLayer" parent="." unique_id=449979248]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UnitHud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitHud" unique_id=719105785]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -476,7 +476,7 @@ offset_right = 50.0
 grow_vertical = 0
 alignment = 2
 
-[node name="CancelCastButton" type="TextureButton" parent="UnitHud/VBoxContainer"]
+[node name="CancelCastButton" type="TextureButton" parent="UnitHud/VBoxContainer" unique_id=902281433]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(64, 64)
@@ -487,21 +487,21 @@ texture_normal = ExtResource("10_lf2p5")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="QueuedAbilitiesContainer" type="HBoxContainer" parent="UnitHud/VBoxContainer"]
+[node name="QueuedAbilitiesContainer" type="HBoxContainer" parent="UnitHud/VBoxContainer" unique_id=399349821]
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="UnitHud/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UnitHud/VBoxContainer" unique_id=1724233126]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
-[node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud/VBoxContainer"]
+[node name="AbilityButtonsContainer" type="HBoxContainer" parent="UnitHud/VBoxContainer" unique_id=824760381]
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CharacterPanelButtons" type="VBoxContainer" parent="UnitHud"]
+[node name="CharacterPanelButtons" type="VBoxContainer" parent="UnitHud" unique_id=236118303]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -512,7 +512,7 @@ offset_top = -66.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="InventoryButton" type="Button" parent="UnitHud/CharacterPanelButtons"]
+[node name="InventoryButton" type="Button" parent="UnitHud/CharacterPanelButtons" unique_id=757539958]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -521,7 +521,7 @@ shortcut = SubResource("Shortcut_ipap1")
 text = "Inventory"
 metadata/_edit_use_anchors_ = true
 
-[node name="TalentTreeButton" type="Button" parent="UnitHud/CharacterPanelButtons"]
+[node name="TalentTreeButton" type="Button" parent="UnitHud/CharacterPanelButtons" unique_id=1509782473]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -530,14 +530,14 @@ shortcut = SubResource("Shortcut_i6fgt")
 text = "Talent Tree"
 metadata/_edit_use_anchors_ = true
 
-[node name="TalentTree" type="Panel" parent="UnitHud"]
+[node name="TalentTree" type="Panel" parent="UnitHud" unique_id=1375161591]
 offset_left = 150.0
 offset_top = 150.0
 offset_right = 830.0
 offset_bottom = 930.0
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UnitHud/TalentTree"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UnitHud/TalentTree" unique_id=1654900705]
 layout_mode = 0
 offset_left = 92.0
 offset_top = 15.0
@@ -545,7 +545,7 @@ offset_right = 588.0
 offset_bottom = 698.0
 theme_override_constants/separation = 20
 
-[node name="TalentsHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer"]
+[node name="TalentsHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer" unique_id=1804544583]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
@@ -554,7 +554,7 @@ text = "Talents"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="LabelTalentPoints" type="Label" parent="UnitHud/TalentTree/VBoxContainer"]
+[node name="LabelTalentPoints" type="Label" parent="UnitHud/TalentTree/VBoxContainer" unique_id=1815256917]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -563,7 +563,7 @@ text = "Talent Points: X"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="AbilityTalentHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer"]
+[node name="AbilityTalentHeader" type="Label" parent="UnitHud/TalentTree/VBoxContainer" unique_id=1452498536]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
@@ -572,7 +572,7 @@ text = "Learn new Abilities
 or increase passive Attributes"
 horizontal_alignment = 1
 
-[node name="TalentButtons" type="Control" parent="UnitHud/TalentTree"]
+[node name="TalentButtons" type="Control" parent="UnitHud/TalentTree" unique_id=1383972510]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 92.0
@@ -580,9 +580,9 @@ offset_top = 198.0
 offset_right = 588.0
 offset_bottom = 694.0
 
-[node name="MeleeAttack" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
+[node name="MeleeAttack" parent="UnitHud/TalentTree/TalentButtons" unique_id=674189554 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = -42.0
 offset_top = 52.0
 offset_right = 7.0
@@ -595,9 +595,9 @@ Range:          2 m
 Cast time:      1.0 + 1 s
 Targets:        enemy"
 
-[node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
+[node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" unique_id=822648170 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 83.0
 offset_top = 52.0
 offset_right = 132.0
@@ -610,9 +610,9 @@ Range:          15 m
 Cast time:      1.5 + 1 s
 Targets:        enemy"
 
-[node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
+[node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" unique_id=971293459 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 208.0
 offset_top = 52.0
 offset_right = 257.0
@@ -626,9 +626,9 @@ Cast time:      1.5 + 1 s
 AoE radius:     3 m
 Targets:        enemy"
 
-[node name="FireBolt" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="FireBolt" parent="UnitHud/TalentTree/TalentButtons" unique_id=950754549 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 120.0
 offset_top = 360.0
 offset_right = 169.0
@@ -644,9 +644,9 @@ Cast time:      1.5 + 1 s
 Mana cost:      15
 Targets:        enemy"
 
-[node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" unique_id=1018411087 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 180.0
 offset_top = 378.0
 offset_right = 229.0
@@ -663,9 +663,9 @@ AoE radius:     5 m
 Mana cost:      15
 Targets:        enemy"
 
-[node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" unique_id=1004246315 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 240.0
 offset_top = 396.0
 offset_right = 289.0
@@ -684,9 +684,9 @@ Duration:       3 s
 Fire damage:    10/s
 AoE radius:     5 m"
 
-[node name="HealingWord" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="HealingWord" parent="UnitHud/TalentTree/TalentButtons" unique_id=1992656545 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = -40.0
 offset_top = 378.0
 offset_right = 9.0
@@ -702,9 +702,9 @@ Cast time:      1.0 + 1 s
 Mana cost:      5
 Targets:        self, friend"
 
-[node name="CureWounds" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="CureWounds" parent="UnitHud/TalentTree/TalentButtons" unique_id=1571639070 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 40.0
 offset_top = 396.0
 offset_right = 89.0
@@ -720,9 +720,9 @@ Cast time:      3.0 + 1 s
 Mana cost:      10
 Targets:        self, friend"
 
-[node name="Revive" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_rio8d")]
+[node name="Revive" parent="UnitHud/TalentTree/TalentButtons" unique_id=25209363 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 420.0
 offset_top = 152.0
 offset_right = 469.0
@@ -735,9 +735,9 @@ Range:          2 m
 Cast time:      5.0 + 1 s
 Targets:        friend, dead"
 
-[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" unique_id=345892325 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 333.0
 offset_top = 378.0
 offset_right = 382.0
@@ -755,9 +755,9 @@ Duration:       10 s
   Debuff effect
 Speed ratio:   -50 %"
 
-[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" unique_id=1257956542 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 408.0
 offset_top = 378.0
 offset_right = 457.0
@@ -775,9 +775,9 @@ Duration:       10 s
   Buff effect
 Speed:         3.0 m/s"
 
-[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" unique_id=1419878228 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 offset_left = 483.0
 offset_top = 378.0
 offset_right = 532.0
@@ -796,9 +796,9 @@ Duration:       10 s
 Melee skill:   60 %
 Ranged skill:  60 %"
 
-[node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
+[node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" unique_id=1201673657 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.733871
 anchor_top = -0.5
 anchor_right = 0.733871
@@ -812,9 +812,9 @@ talentName = "Max Health"
 talentDescription = "Max Health:    20"
 metadata/_edit_use_anchors_ = true
 
-[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
+[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" unique_id=486309966 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.181452
 anchor_top = -0.0967742
 anchor_right = 0.181452
@@ -830,9 +830,9 @@ talentDescription = "Max Mana:      20
 Mana regen:    1.0/s"
 metadata/_edit_use_anchors_ = true
 
-[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" unique_id=1070526890 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = -0.0705645
 anchor_top = -0.046371
 anchor_right = -0.0705645
@@ -848,9 +848,9 @@ talentName = "Max Mana"
 talentDescription = "Max Mana:      20"
 metadata/_edit_use_anchors_ = true
 
-[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" unique_id=1947294545 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.133065
 anchor_top = -0.046371
 anchor_right = 0.133065
@@ -866,9 +866,9 @@ talentName = "Mana regen"
 talentDescription = "Mana regen:    1.0/s"
 metadata/_edit_use_anchors_ = true
 
-[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1646807170 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = -0.487903
 anchor_top = -0.298387
 anchor_right = -0.487903
@@ -884,9 +884,9 @@ talentName = "Melee skill"
 talentDescription = "Melee skill:   10 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1983501588 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.179435
 anchor_top = -0.457661
 anchor_right = 0.179435
@@ -902,9 +902,9 @@ talentName = "Ranged Skill"
 talentDescription = "Ranged skill:  10 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=208617065 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.65121
 anchor_top = -0.497984
 anchor_right = 0.65121
@@ -920,9 +920,9 @@ talentName = "Fire skill"
 talentDescription = "Fire skill:    15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1860187511 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.41129
 anchor_top = -0.0584677
 anchor_right = 0.41129
@@ -938,9 +938,9 @@ talentName = "Healing skill"
 talentDescription = "Healing skill: 15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
+[node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=140872093 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = -0.167339
 anchor_top = -0.457661
 anchor_right = -0.167339
@@ -953,9 +953,9 @@ attributes = SubResource("Resource_gbr36")
 talentName = "Threat skill"
 talentDescription = "Threat skill:  15 %"
 
-[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
+[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=615355352 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.784274
 anchor_top = -0.504032
 anchor_right = 0.784274
@@ -971,9 +971,9 @@ talentName = "Duration skill"
 talentDescription = "Duration skill: 20 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" instance=ExtResource("9_srmse")]
+[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1778080775 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.685484
 anchor_top = -0.818548
 anchor_right = 0.685484
@@ -987,7 +987,7 @@ talentName = "Armor skill"
 talentDescription = "Armor skill:   15 %"
 metadata/_edit_use_anchors_ = true
 
-[node name="InventoryPanel" type="Panel" parent="UnitHud"]
+[node name="InventoryPanel" type="Panel" parent="UnitHud" unique_id=1218094769]
 unique_name_in_owner = true
 offset_left = 850.0
 offset_top = 150.0
@@ -995,7 +995,7 @@ offset_right = 1770.0
 offset_bottom = 930.0
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainerAttributes" type="VBoxContainer" parent="UnitHud/InventoryPanel"]
+[node name="VBoxContainerAttributes" type="VBoxContainer" parent="UnitHud/InventoryPanel" unique_id=848792487]
 layout_mode = 0
 offset_left = 80.0
 offset_top = 15.0
@@ -1003,7 +1003,7 @@ offset_right = 410.0
 offset_bottom = 132.0
 theme_override_constants/separation = 20
 
-[node name="AttributesHeader" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerAttributes"]
+[node name="AttributesHeader" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerAttributes" unique_id=149333887]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
@@ -1011,7 +1011,7 @@ theme_override_font_sizes/font_size = 50
 text = "Attributes"
 horizontal_alignment = 1
 
-[node name="AttributesLabel" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerAttributes"]
+[node name="AttributesLabel" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerAttributes" unique_id=1624052960]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
@@ -1019,7 +1019,7 @@ theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("25_ipap1")
 theme_override_font_sizes/font_size = 18
 
-[node name="VBoxContainerInventory" type="VBoxContainer" parent="UnitHud/InventoryPanel"]
+[node name="VBoxContainerInventory" type="VBoxContainer" parent="UnitHud/InventoryPanel" unique_id=1501699075]
 layout_mode = 0
 offset_left = 490.0
 offset_top = 15.0
@@ -1027,7 +1027,7 @@ offset_right = 840.0
 offset_bottom = 497.0
 theme_override_constants/separation = 20
 
-[node name="InventoryHeader" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerInventory"]
+[node name="InventoryHeader" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerInventory" unique_id=1764300684]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
@@ -1035,19 +1035,19 @@ theme_override_font_sizes/font_size = 50
 text = "Inventory"
 horizontal_alignment = 1
 
-[node name="LabelInventoryInstructions" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerInventory"]
+[node name="LabelInventoryInstructions" type="Label" parent="UnitHud/InventoryPanel/VBoxContainerInventory" unique_id=1980380562]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 text = "Left-click to equip item. Right-click to drop."
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="UnitHud/InventoryPanel/VBoxContainerInventory"]
+[node name="PanelContainer" type="PanelContainer" parent="UnitHud/InventoryPanel/VBoxContainerInventory" unique_id=1377762574]
 custom_minimum_size = Vector2(350, 350)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cg3ic")
 
-[node name="InventoryContainer" type="GridContainer" parent="UnitHud/InventoryPanel/VBoxContainerInventory/PanelContainer"]
+[node name="InventoryContainer" type="GridContainer" parent="UnitHud/InventoryPanel/VBoxContainerInventory/PanelContainer" unique_id=1109002679]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 64)
 layout_mode = 2
@@ -1055,14 +1055,14 @@ theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="AudioPlayerWalking" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioPlayerWalking" type="AudioStreamPlayer3D" parent="." unique_id=1914909700]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_04y5r")
 attenuation_model = 1
 max_distance = 50.0
 panning_strength = 3.0
 
-[node name="AudioPlayerCasting" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioPlayerCasting" type="AudioStreamPlayer3D" parent="." unique_id=1991855750]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 attenuation_model = 3

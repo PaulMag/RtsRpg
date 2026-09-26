@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsyghmbk5vvlg"]
+[gd_scene format=3 uid="uid://dsyghmbk5vvlg"]
 
 [ext_resource type="Script" uid="uid://bpx0sfepqvm3p" path="res://scripts/UnitSpawner.gd" id="1_eg8l7"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="2_j6120"]
@@ -15,19 +15,19 @@ border_width_bottom = 5
 border_color = Color(0.172833, 0.172833, 0.172833, 1)
 border_blend = true
 
-[node name="UnitSpawner" type="Node3D"]
+[node name="UnitSpawner" type="Node3D" unique_id=232079786]
 script = ExtResource("1_eg8l7")
 
-[node name="Sprite" type="Sprite3D" parent="."]
+[node name="Sprite" type="Sprite3D" parent="." unique_id=104369579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_j6120")
 
-[node name="SubViewport" type="SubViewport" parent="Sprite"]
+[node name="SubViewport" type="SubViewport" parent="Sprite" unique_id=2088307199]
 transparent_bg = true
 size = Vector2i(200, 100)
 
-[node name="Panel" type="PanelContainer" parent="Sprite/SubViewport"]
+[node name="Panel" type="PanelContainer" parent="Sprite/SubViewport" unique_id=824483321]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,14 +36,14 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yosiq")
 
-[node name="MarginContainer" type="MarginContainer" parent="Sprite/SubViewport/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Sprite/SubViewport/Panel" unique_id=934253386]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 3
 
-[node name="Label" type="Label" parent="Sprite/SubViewport/Panel/MarginContainer"]
+[node name="Label" type="Label" parent="Sprite/SubViewport/Panel/MarginContainer" unique_id=268370905]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 10

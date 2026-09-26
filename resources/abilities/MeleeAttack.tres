@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://daqg1br2ouhnm"]
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://daqg1br2ouhnm"]
 
 [ext_resource type="AudioStream" uid="uid://c2qhcq0cco88t" path="res://audio/effects/07_human_atk_sword_1.wav" id="1_a04w3"]
 [ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="1_nq82w"]

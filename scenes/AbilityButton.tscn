@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://co8rc3ud7cm5v"]
+[gd_scene format=3 uid="uid://co8rc3ud7cm5v"]
 
 [ext_resource type="Script" uid="uid://efn3ilkascdg" path="res://scripts/AbilityButton.gd" id="1_a5wtt"]
 [ext_resource type="Texture2D" uid="uid://3fl6g0678hws" path="res://sprites/ui/black_square.png" id="2_ixn6s"]
@@ -64,14 +64,14 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5pxhw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0mw2"]
 
-[node name="AbilityButton" type="TextureButton"]
+[node name="AbilityButton" type="TextureButton" unique_id=120739262]
 custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0
 offset_bottom = 64.0
@@ -79,7 +79,7 @@ ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("1_a5wtt")
 
-[node name="CooldownProgressBar" type="TextureProgressBar" parent="."]
+[node name="CooldownProgressBar" type="TextureProgressBar" parent="." unique_id=1252159182]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -93,14 +93,14 @@ fill_mode = 5
 texture_progress = ExtResource("2_ixn6s")
 tint_progress = Color(1, 1, 1, 0.498039)
 
-[node name="AutocastBorder" type="AnimatedSprite2D" parent="."]
+[node name="AutocastBorder" type="AnimatedSprite2D" parent="." unique_id=793451544]
 visible = false
 position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_nssm6")
 autoplay = "default"
 frame_progress = 0.446563
 
-[node name="HotkeyLabel" type="Label" parent="."]
+[node name="HotkeyLabel" type="Label" parent="." unique_id=1665185685]
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = -30.0
@@ -112,7 +112,7 @@ theme_override_font_sizes/font_size = 24
 text = "12	"
 horizontal_alignment = 1
 
-[node name="DescriptionPanel" type="PanelContainer" parent="."]
+[node name="DescriptionPanel" type="PanelContainer" parent="." unique_id=800652077]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -127,14 +127,14 @@ grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b0mw2")
 
-[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel" unique_id=569644883]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 3
 
-[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer"]
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer" unique_id=1835158941]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7

@@ -1,4 +1,4 @@
-[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://c5an3tjuvetq4"]
+[gd_resource type="SphereMesh" format=3 uid="uid://c5an3tjuvetq4"]
 
 [ext_resource type="Texture2D" uid="uid://bq1g276ht6vja" path="res://models/textures/fireball.png" id="1_01xjw"]
 

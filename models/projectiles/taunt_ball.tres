@@ -1,4 +1,4 @@
-[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://br7opdqquxsrg"]
+[gd_resource type="SphereMesh" format=3 uid="uid://br7opdqquxsrg"]
 
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="1_omue2"]
 

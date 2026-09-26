@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://c1knu2357o3h0"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://c1knu2357o3h0"]
 
 [ext_resource type="Texture2D" uid="uid://bjfh8bwfn4380" path="res://models/textures/barbarian_texture.png" id="1_l38ru"]
 

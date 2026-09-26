@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://m7j8w03fhcul"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://m7j8w03fhcul"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_khcq8"]
 [ext_resource type="ArrayMesh" uid="uid://cylyasyfg5f6y" path="res://models/items/robe_mage.tres" id="2_v2ss4"]

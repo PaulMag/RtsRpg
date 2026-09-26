@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=10 format=3 uid="uid://dhqv26bjo4n2q"]
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://dhqv26bjo4n2q"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_o8u0r"]
 [ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="2_ks4ha"]

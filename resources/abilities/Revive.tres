@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Revive" load_steps=7 format=3 uid="uid://cjotrctw0c26l"]
+[gd_resource type="Resource" script_class="Revive" format=3 uid="uid://cjotrctw0c26l"]
 
 [ext_resource type="Script" uid="uid://c74fl0ck8ghve" path="res://scripts/Revive.gd" id="1_36yr5"]
 [ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="1_khnxn"]

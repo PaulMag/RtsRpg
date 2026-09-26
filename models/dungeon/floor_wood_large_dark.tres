@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://dg43wx8surutp"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://dg43wx8surutp"]
 
 [ext_resource type="Texture2D" uid="uid://pgogoa6dyqg1" path="res://models/dungeon_imports/dungeon_texture.png" id="1_pah70"]
 

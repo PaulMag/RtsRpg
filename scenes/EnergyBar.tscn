@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://tp1r3bfqfsfu"]
+[gd_scene format=3 uid="uid://tp1r3bfqfsfu"]
 
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="1_qcfja"]
 [ext_resource type="Script" uid="uid://btxn578ib2toa" path="res://scripts/EnergyBar.gd" id="2_ysrby"]
 [ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="3_okmnv"]
 
-[node name="EnergyBar" type="TextureProgressBar"]
+[node name="EnergyBar" type="TextureProgressBar" unique_id=1506666104]
 self_modulate = Color(1, 1, 1, 0.74902)
 custom_minimum_size = Vector2(64, 16)
 offset_right = 64.0
@@ -19,7 +19,7 @@ texture_progress = ExtResource("1_qcfja")
 tint_under = Color(0, 0, 0, 1)
 script = ExtResource("2_ysrby")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1596274642]
 custom_minimum_size = Vector2(64, 16)
 layout_mode = 0
 offset_top = -2.0
@@ -32,7 +32,7 @@ text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=902138984]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15

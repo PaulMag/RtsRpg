@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=77 format=3 uid="uid://cwqc57fjl7fxy"]
+[gd_resource type="AnimationLibrary" format=3 uid="uid://cwqc57fjl7fxy"]
 
 [sub_resource type="Animation" id="Animation_e5kgq"]
 resource_name = "1H_Melee_Attack_Chop"

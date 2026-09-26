@@ -1,4 +1,4 @@
-[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://bokh5ebmardex"]
+[gd_resource type="SphereMesh" format=3 uid="uid://bokh5ebmardex"]
 
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="1_r0bwe"]
 

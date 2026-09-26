@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://vcjsjj5mi5sv"]
+[gd_scene format=3 uid="uid://vcjsjj5mi5sv"]
 
 [ext_resource type="Script" uid="uid://wr35xlfk6fxj" path="res://scripts/AiController.gd" id="1_v5lwr"]
 
@@ -15,14 +15,14 @@ radius = 10.0
 height = 0.001
 is_hemisphere = true
 
-[node name="AiController" type="Area3D"]
+[node name="AiController" type="Area3D" unique_id=472114505]
 input_ray_pickable = false
 script = ExtResource("1_v5lwr")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="."]
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=258171185]
 shape = SubResource("SphereShape3D_2l7rt")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1840203894]
 mesh = SubResource("SphereMesh_6mv76")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

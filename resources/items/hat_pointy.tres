@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Item" load_steps=6 format=3 uid="uid://1h8xqpj2e1n6"]
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://1h8xqpj2e1n6"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_powuj"]
 [ext_resource type="ArrayMesh" uid="uid://ce20tcedu5ubx" path="res://models/items/pointy_hat.tres" id="2_wq5e0"]

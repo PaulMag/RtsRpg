@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dee70bilaqhd2"]
+[gd_scene format=3 uid="uid://dee70bilaqhd2"]
 
 [ext_resource type="Script" uid="uid://c0fu8mb2jag8k" path="res://scripts/Dungeon.gd" id="1_gajge"]
 [ext_resource type="PackedScene" uid="uid://cc1f6nb3jwwpc" path="res://scenes/structures/Floor.tscn" id="2_gajge"]
@@ -15,176 +15,176 @@ background_energy_multiplier = 0.5
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 
-[node name="Dungeon" type="Node3D"]
+[node name="Dungeon" type="Node3D" unique_id=1379425567]
 script = ExtResource("1_gajge")
 
-[node name="UnitAndItemSpawner" type="MultiplayerSpawner" parent="."]
+[node name="UnitAndItemSpawner" type="MultiplayerSpawner" parent="." unique_id=279427448]
 unique_name_in_owner = true
 _spawnable_scenes = PackedStringArray("uid://dbln30dr8vpci", "uid://c0cy3pn7up1o0", "uid://bn8e3enlkea5w", "uid://depa35a7vr4uf")
 spawn_path = NodePath("..")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=55807004]
 navigation_mesh = SubResource("NavigationMesh_ykok4")
 metadata/_edit_lock_ = true
 
-[node name="floors" type="Node3D" parent="NavigationRegion3D"]
+[node name="floors" type="Node3D" parent="NavigationRegion3D" unique_id=934481023]
 
-[node name="Floor001" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor001" parent="NavigationRegion3D/floors" unique_id=1354957743 instance=ExtResource("2_gajge")]
 
-[node name="Floor002" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor002" parent="NavigationRegion3D/floors" unique_id=1709983067 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
 
-[node name="Floor003" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor003" parent="NavigationRegion3D/floors" unique_id=504923335 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 0)
 
-[node name="Floor004" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor004" parent="NavigationRegion3D/floors" unique_id=1066922788 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -16)
 
-[node name="Floor005" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor005" parent="NavigationRegion3D/floors" unique_id=1289803889 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -32)
 
-[node name="Floor006" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor006" parent="NavigationRegion3D/floors" unique_id=327867794 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -32)
 
-[node name="Floor007" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor007" parent="NavigationRegion3D/floors" unique_id=272820259 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
 
-[node name="Floor008" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor008" parent="NavigationRegion3D/floors" unique_id=1471079118 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -32)
 
-[node name="Floor009" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor009" parent="NavigationRegion3D/floors" unique_id=327239365 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -32)
 
-[node name="Floor010" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor010" parent="NavigationRegion3D/floors" unique_id=1716670266 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -16)
 
-[node name="Floor011" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor011" parent="NavigationRegion3D/floors" unique_id=88501165 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 0)
 
-[node name="Floor012" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor012" parent="NavigationRegion3D/floors" unique_id=1230778675 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 16)
 
-[node name="Floor013" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor013" parent="NavigationRegion3D/floors" unique_id=1404303986 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 32)
 
-[node name="Floor014" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor014" parent="NavigationRegion3D/floors" unique_id=1640452583 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 24)
 
-[node name="Floor015" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor015" parent="NavigationRegion3D/floors" unique_id=1916710726 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 40)
 
-[node name="Floor020" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor020" parent="NavigationRegion3D/floors" unique_id=1383026507 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 56)
 
-[node name="Floor021" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor021" parent="NavigationRegion3D/floors" unique_id=1724181230 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 56)
 
-[node name="Floor016" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor016" parent="NavigationRegion3D/floors" unique_id=332403935 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
 
-[node name="Floor018" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor018" parent="NavigationRegion3D/floors" unique_id=169749537 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 40)
 
-[node name="Floor019" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor019" parent="NavigationRegion3D/floors" unique_id=2091336588 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 48)
 
-[node name="Floor022" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor022" parent="NavigationRegion3D/floors" unique_id=1376429197 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 40)
 
-[node name="Floor023" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor023" parent="NavigationRegion3D/floors" unique_id=1752187114 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 56)
 
-[node name="Floor024" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor024" parent="NavigationRegion3D/floors" unique_id=1295606113 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 48)
 
-[node name="Floor025" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor025" parent="NavigationRegion3D/floors" unique_id=1440811602 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 64)
 
-[node name="Floor026" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor026" parent="NavigationRegion3D/floors" unique_id=996163529 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 56)
 
-[node name="Floor027" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor027" parent="NavigationRegion3D/floors" unique_id=1342675072 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 72)
 
-[node name="Floor028" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor028" parent="NavigationRegion3D/floors" unique_id=499802979 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 88)
 
-[node name="Floor029" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor029" parent="NavigationRegion3D/floors" unique_id=1240633854 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 104)
 
-[node name="Floor030" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor030" parent="NavigationRegion3D/floors" unique_id=1327512096 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 120)
 
-[node name="Floor031" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor031" parent="NavigationRegion3D/floors" unique_id=1183054903 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 120)
 
-[node name="Floor032" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor032" parent="NavigationRegion3D/floors" unique_id=1808984817 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 0, 128)
 
-[node name="Floor034" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor034" parent="NavigationRegion3D/floors" unique_id=810492769 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 0, 144)
 
-[node name="Floor036" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor036" parent="NavigationRegion3D/floors" unique_id=546127414 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 0, 160)
 
-[node name="Floor033" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor033" parent="NavigationRegion3D/floors" unique_id=657514646 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 128)
 
-[node name="Floor035" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor035" parent="NavigationRegion3D/floors" unique_id=1461876815 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 144)
 
-[node name="Floor037" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor037" parent="NavigationRegion3D/floors" unique_id=2060493807 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 160)
 
-[node name="Floor039" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor039" parent="NavigationRegion3D/floors" unique_id=463030182 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 160)
 
-[node name="Floor040" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor040" parent="NavigationRegion3D/floors" unique_id=1094763296 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 160)
 
-[node name="Floor041" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor041" parent="NavigationRegion3D/floors" unique_id=1315072855 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 176)
 
-[node name="Floor042" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor042" parent="NavigationRegion3D/floors" unique_id=261891299 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 176)
 
-[node name="Floor043" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor043" parent="NavigationRegion3D/floors" unique_id=522652801 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 176)
 
-[node name="Floor038" parent="NavigationRegion3D/floors" instance=ExtResource("2_gajge")]
+[node name="Floor038" parent="NavigationRegion3D/floors" unique_id=948027410 instance=ExtResource("2_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 136)
 
-[node name="CameraArm" type="Node3D" parent="."]
+[node name="CameraArm" type="Node3D" parent="." unique_id=583018619]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 script = ExtResource("2_ip03w")
 
-[node name="Camera" type="Camera3D" parent="CameraArm"]
+[node name="Camera" type="Camera3D" parent="CameraArm" unique_id=365084155]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="AudioListener" type="AudioListener3D" parent="CameraArm"]
+[node name="AudioListener" type="AudioListener3D" parent="CameraArm" unique_id=874246701]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1753086134]
 environment = SubResource("Environment_ykok4")
 
-[node name="UnitSpawner_01" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_01" parent="." unique_id=1492395965 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, 0)
 afterSpawnTarget = NodePath("Node3D")
 numberOfBarbarians = 2
 numberOfAdditionalBarbarians = 1
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_01"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_01" unique_id=2146111981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
 
-[node name="UnitSpawner_02" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_02" parent="." unique_id=470232986 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -32)
 afterSpawnTarget = NodePath("Node3D")
 numberOfBarbarians = 3
 numberOfAdditionalBarbarians = 2
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_02"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_02" unique_id=671614871]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 
-[node name="UnitSpawner_03" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_03" parent="." unique_id=2067680044 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -32)
 afterSpawnTarget = NodePath("Node3D")
 numberOfBarbarians = 2
@@ -192,10 +192,10 @@ numberOfArchers = 2
 numberOfAdditionalBarbarians = 1
 numberOfAdditionalArchers = 2
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_03"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_03" unique_id=459167436]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 0)
 
-[node name="UnitSpawner_04" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_04" parent="." unique_id=1759976439 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, 24)
 level = 2
 afterSpawnTarget = NodePath("Node3D")
@@ -204,10 +204,10 @@ numberOfArchers = 2
 numberOfAdditionalBarbarians = 2
 numberOfAdditionalArchers = 1
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_04"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_04" unique_id=29105408]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -20)
 
-[node name="UnitSpawner_05" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_05" parent="." unique_id=1067596893 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 56)
 level = 2
 afterSpawnTarget = NodePath("Node3D")
@@ -215,10 +215,10 @@ numberOfBarbarians = 1
 numberOfArchers = 3
 numberOfAdditionalArchers = 4
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_05"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_05" unique_id=1393142397]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
 
-[node name="UnitSpawner_06" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_06" parent="." unique_id=1614985757 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0, 72)
 level = 3
 afterSpawnTarget = NodePath("Node3D")
@@ -227,10 +227,10 @@ numberOfArchers = 2
 numberOfAdditionalBarbarians = 2
 numberOfAdditionalArchers = 2
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_06"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_06" unique_id=1984744901]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -24)
 
-[node name="UnitSpawner_07" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_07" parent="." unique_id=1938369300 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 176)
 level = 3
 afterSpawnTarget = NodePath("Node3D")
@@ -240,10 +240,10 @@ numberOfAdditionalBarbarians = 2
 numberOfAdditionalArchers = 2
 talentPointsReward = 0.0
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_07"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_07" unique_id=209211980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -56)
 
-[node name="UnitSpawner_08" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_08" parent="." unique_id=1411678746 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 0, 176)
 level = 3
 afterSpawnTarget = NodePath("Node3D")
@@ -253,15 +253,15 @@ numberOfAdditionalBarbarians = 2
 numberOfAdditionalArchers = 2
 talentPointsReward = 0.0
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_08"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_08" unique_id=273103179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -56)
 
-[node name="UnitSpawner_09" parent="." node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
+[node name="UnitSpawner_09" parent="." unique_id=1387744100 node_paths=PackedStringArray("afterSpawnTarget") instance=ExtResource("5_gajge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 136)
 level = 6
 afterSpawnTarget = NodePath("Node3D")
 numberOfBarbarians = 1
 talentPointsReward = 0.0
 
-[node name="Node3D" type="Node3D" parent="UnitSpawner_09"]
+[node name="Node3D" type="Node3D" parent="UnitSpawner_09" unique_id=1889324884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)

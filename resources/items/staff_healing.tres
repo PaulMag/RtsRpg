@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://rh6mh3jn2sgk"]
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://rh6mh3jn2sgk"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_cnnhx"]
 [ext_resource type="ArrayMesh" uid="uid://bafyxxc3jlrbj" path="res://models/items/staff_healing.tres" id="2_av6vm"]

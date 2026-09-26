@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Weapon" load_steps=6 format=3 uid="uid://c6fbpcoxcdgy3"]
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://c6fbpcoxcdgy3"]
 
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_bygrg"]
 [ext_resource type="ArrayMesh" uid="uid://1wt63f77jhgc" path="res://models/items/wand_fire.tres" id="2_dff14"]

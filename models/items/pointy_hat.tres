@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://ce20tcedu5ubx"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://ce20tcedu5ubx"]
 
 [ext_resource type="Texture2D" uid="uid://cdnbqhdglyuv4" path="res://models/textures/mage_texture.png" id="1_78jsg"]
 

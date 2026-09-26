@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccoallcn4va30"]
+[gd_scene format=3 uid="uid://ccoallcn4va30"]
 
 [ext_resource type="Texture2D" uid="uid://b7fbw2fhb0qj" path="res://sprites/items/sword.png" id="1_n2vqn"]
 [ext_resource type="Script" uid="uid://1m3oseq0ain5" path="res://scripts/TalentBaseButton.gd" id="2_8p1pd"]
@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1k68"]
 
-[node name="TalentButton" type="TextureButton"]
+[node name="TalentButton" type="TextureButton" unique_id=708132568]
 offset_left = 370.0
 offset_top = 255.0
 offset_right = 419.0
@@ -19,7 +19,7 @@ script = ExtResource("2_8p1pd")
 talentName = "Talent Name"
 talentDescription = "Talent Description"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=162260021]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,7 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RankLabel" type="Label" parent="MarginContainer"]
+[node name="RankLabel" type="Label" parent="MarginContainer" unique_id=1822665028]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -36,14 +36,14 @@ text = "0/1"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DisableTexture" type="TextureRect" parent="MarginContainer"]
+[node name="DisableTexture" type="TextureRect" parent="MarginContainer" unique_id=1161110017]
 visible = false
 modulate = Color(1, 1, 1, 0.333333)
 layout_mode = 2
 texture = ExtResource("3_aojgu")
 expand_mode = 1
 
-[node name="NameLabel" type="Label" parent="."]
+[node name="NameLabel" type="Label" parent="." unique_id=2069814147]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -63,7 +63,7 @@ text = "Talent Name"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="DescriptionPanel" type="PanelContainer" parent="."]
+[node name="DescriptionPanel" type="PanelContainer" parent="." unique_id=1965011160]
 unique_name_in_owner = true
 visible = false
 z_index = 1
@@ -79,14 +79,14 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_s1k68")
 
-[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="DescriptionPanel" unique_id=1985607259]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 3
 
-[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer"]
+[node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer" unique_id=1756326228]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 7

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=11 format=3 uid="uid://b5k3kpp886qi2"]
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://b5k3kpp886qi2"]
 
 [ext_resource type="ArrayMesh" uid="uid://qtm3fcff04ya" path="res://models/projectiles/arrow.tres" id="1_iy8fy"]
 [ext_resource type="AudioStream" uid="uid://b3dlwthbvdhuc" path="res://audio/effects/13_human_jump_land_1.wav" id="1_ugg8o"]

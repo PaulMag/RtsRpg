@@ -1,21 +1,93 @@
-[gd_scene load_steps=6 format=3 uid="uid://bn8e3enlkea5w"]
+[gd_scene format=3 uid="uid://bn8e3enlkea5w"]
 
 [ext_resource type="PackedScene" uid="uid://c0cy3pn7up1o0" path="res://scenes/Unit.tscn" id="1_usceq"]
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="2_gxgwg"]
 [ext_resource type="Script" uid="uid://d0hsl6hkt0ovm" path="res://scripts/UnitBarbarian.gd" id="2_ns5fy"]
 [ext_resource type="Script" uid="uid://cpjsxhjrb2jwr" path="res://scripts/AiControllerMelee.gd" id="4_yrmmf"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_gxgwg"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_yrmmf"]
 viewport_path = NodePath("SpriteHud/SubViewport")
 
-[node name="UnitBarbarian" node_paths=PackedStringArray("aiController") instance=ExtResource("1_usceq")]
+[node name="UnitBarbarian" unique_id=978215301 node_paths=PackedStringArray("aiController") instance=ExtResource("1_usceq")]
 script = ExtResource("2_ns5fy")
 aiController = NodePath("AiController")
 
-[node name="SpriteHud" parent="." index="6"]
-texture = SubResource("ViewportTexture_gxgwg")
+[node name="SpriteHud" parent="." index="8" unique_id=2043563698]
+texture = SubResource("ViewportTexture_yrmmf")
 
-[node name="AiController" parent="." index="13" node_paths=PackedStringArray("unit") instance=ExtResource("2_gxgwg")]
+[node name="AiController" parent="." index="13" unique_id=376832994 node_paths=PackedStringArray("unit") instance=ExtResource("2_gxgwg")]
 visible = false
 script = ExtResource("4_yrmmf")
 unit = NodePath("..")
+
+[node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="5" unique_id=1004246315]
+talentDescription = "Range:      10 m
+Cast time:  3.0 + 1 s
+Mana cost:  20
+Targets:    self, friend
+Duration:   3 s
+  Effect on nearby enemies
+Damage/sec:   1.0 x FirePower
+AoE radius:   5 m"
+
+[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="9" unique_id=345892325]
+talentDescription = "Range:      15 m
+Cast time:  0.5 + 1 s
+Mana cost:  10
+Targets:    enemy
+Duration:   10 s
+  Debuff effect
+Speed Ratio:   -50 %"
+
+[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="10" unique_id=1257956542]
+talentDescription = "Range:      15 m
+Cast time:  0.5 + 1 s
+Mana cost:  10
+Targets:    self, friend
+Duration:   10 s
+  Buff effect
+Speed:         3.0 m/s"
+
+[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="11" unique_id=1419878228]
+talentDescription = "Range:      15 m
+Cast time:  2.0 + 1 s
+Mana cost:  10
+Targets:    self, friend
+Duration:   10 s
+  Buff effect
+Melee Skill:   60 %
+Ranged Skill:  60 %"
+
+[node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="12" unique_id=1201673657]
+talentDescription = "Health Max:    20"
+
+[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="13" unique_id=486309966]
+talentDescription = "Mana Max:      20
+Mana Regen:    1.0/s"
+
+[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="14" unique_id=1070526890]
+talentDescription = "Mana Max:      20"
+
+[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="15" unique_id=1947294545]
+talentDescription = "Mana Regen:    1.0/s"
+
+[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="16" unique_id=1646807170]
+talentDescription = "Melee Skill:   10 %"
+
+[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="17" unique_id=1983501588]
+talentDescription = "Ranged Skill:  10 %"
+
+[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="18" unique_id=208617065]
+talentDescription = "Fire Skill:    15 %"
+
+[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="19" unique_id=1860187511]
+talentDescription = "Healing Skill: 15 %"
+
+[node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="20" unique_id=140872093]
+talentDescription = "Threat Skill:  15 %"
+
+[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="21" unique_id=615355352]
+talentDescription = "Duration Skill: 20 %"
+
+[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="22" unique_id=1778080775]
+talentDescription = "Armor Skill:   15 %"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi4frn2cgm5la"]
+[gd_scene format=3 uid="uid://bi4frn2cgm5la"]
 
 [ext_resource type="Script" uid="uid://cxwm82wh0rmt6" path="res://scripts/LocalPlayer.gd" id="1_3qyin"]
 [ext_resource type="Script" uid="uid://dybeie7mrnd8w" path="res://scripts/DestinationMarker.gd" id="3_a7lnd"]
@@ -21,33 +21,33 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[node name="LocalPlayer" type="Node"]
+[node name="LocalPlayer" type="Node" unique_id=262213004]
 script = ExtResource("1_3qyin")
 playerColor = Color(1, 1, 1, 1)
 
-[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1639397073]
 replication_config = SubResource("SceneReplicationConfig_x4fsh")
 
-[node name="SelectionPanel" type="Panel" parent="."]
+[node name="SelectionPanel" type="Panel" parent="." unique_id=174867930]
 theme_override_styles/panel = SubResource("StyleBoxFlat_x54he")
 
-[node name="DestinationMarker" type="Node3D" parent="."]
+[node name="DestinationMarker" type="Node3D" parent="." unique_id=377225881]
 visible = false
 script = ExtResource("3_a7lnd")
 
-[node name="Sprite" type="Sprite3D" parent="DestinationMarker"]
+[node name="Sprite" type="Sprite3D" parent="DestinationMarker" unique_id=1359842016]
 offset = Vector2(0, 16)
 billboard = 2
 texture = ExtResource("4_src20")
 
-[node name="Timer" type="Timer" parent="DestinationMarker"]
+[node name="Timer" type="Timer" parent="DestinationMarker" unique_id=1198236448]
 wait_time = 1.75
 one_shot = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1828689578]
 visible = false
 
-[node name="GameHud" type="PanelContainer" parent="CanvasLayer"]
+[node name="GameHud" type="PanelContainer" parent="CanvasLayer" unique_id=77754759]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -56,14 +56,14 @@ offset_right = 61.0
 offset_bottom = -243.0
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameHud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameHud" unique_id=1927486630]
 layout_mode = 2
 
-[node name="LabelUnitList" type="Label" parent="CanvasLayer/GameHud/VBoxContainer"]
+[node name="LabelUnitList" type="Label" parent="CanvasLayer/GameHud/VBoxContainer" unique_id=269988871]
 modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
 text = "Units:"
 horizontal_alignment = 1
 
-[node name="UnitList" type="VBoxContainer" parent="CanvasLayer/GameHud/VBoxContainer"]
+[node name="UnitList" type="VBoxContainer" parent="CanvasLayer/GameHud/VBoxContainer" unique_id=891490665]
 layout_mode = 2
