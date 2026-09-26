@@ -26,6 +26,7 @@ rings = 18
 [resource]
 script = ExtResource("1_njlln")
 name = "Prowess"
+description = "Make target deal more physical damage."
 texture = ExtResource("3_og4gn")
 abilityId = 7
 targetRange = 15

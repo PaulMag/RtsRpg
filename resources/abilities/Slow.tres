@@ -16,6 +16,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 [resource]
 script = ExtResource("1_b5cck")
 name = "Slow"
+description = "Target moves slower."
 texture = ExtResource("3_1pynn")
 abilityId = 4
 targetRange = 15

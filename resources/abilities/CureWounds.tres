@@ -10,6 +10,7 @@
 [resource]
 script = ExtResource("5_5dunh")
 name = "Cure Wounds"
+description = "Slow and powerful heal."
 texture = ExtResource("6_e6bfs")
 abilityId = 8
 healingAmount = 2.5

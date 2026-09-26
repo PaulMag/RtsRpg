@@ -10,6 +10,7 @@
 [resource]
 script = ExtResource("5_i51c7")
 name = "Firebolt"
+description = "Less mana efficient than Fireball, but higher damage output for single targets."
 texture = ExtResource("6_t0ksq")
 abilityId = 10
 damageFire = 2.0

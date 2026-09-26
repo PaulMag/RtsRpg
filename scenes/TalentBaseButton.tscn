@@ -65,17 +65,16 @@ vertical_alignment = 2
 
 [node name="DescriptionPanel" type="PanelContainer" parent="." unique_id=1965011160]
 unique_name_in_owner = true
-visible = false
 z_index = 1
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -8.5
-offset_top = 76.0
-offset_right = 188.5
-offset_bottom = 106.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 75.0
+offset_top = -8.5
+offset_right = 272.0
+offset_bottom = 21.5
+grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_s1k68")
 
@@ -88,10 +87,12 @@ theme_override_constants/margin_bottom = 3
 
 [node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer" unique_id=1756326228]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(360, -1)
 layout_mode = 2
 theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("4_srrvw")
 text = "Talent description"
+autowrap_mode = 2
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

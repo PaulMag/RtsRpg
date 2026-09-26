@@ -16,6 +16,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 [resource]
 script = ExtResource("6_5pkak")
 name = "Fire Aura"
+description = "Cause target to continuously damage nearby enemies. The spellcaster is the one causing the threat."
 texture = ExtResource("7_f5fgx")
 abilityId = 11
 targetRange = 10

@@ -11,5 +11,8 @@ talentName = "Ability Name"
 [node name="NameLabel" parent="." index="1" unique_id=2069814147]
 text = "Ability Name"
 
+[node name="DescriptionPanel" parent="." index="2" unique_id=1965011160]
+visible = false
+
 [node name="DescriptionLabel" parent="DescriptionPanel/MarginContainer" parent_id_path=PackedInt32Array(1985607259) index="0" unique_id=1756326228]
 text = "Talent Description"

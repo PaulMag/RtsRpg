@@ -10,6 +10,7 @@
 [resource]
 script = ExtResource("1_1aj02")
 name = "Fireball"
+description = "Damage target and other enemies near it."
 texture = ExtResource("2_ymo3a")
 abilityId = 1
 damageFire = 2.0

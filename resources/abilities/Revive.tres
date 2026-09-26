@@ -10,6 +10,7 @@
 [resource]
 script = ExtResource("1_36yr5")
 name = "Revive"
+description = "Revive a fallen ally. Slow to cast and restores only a little health. Threat is cleared."
 texture = ExtResource("2_ncogc")
 abilityId = 9
 healingAmount = 0.1

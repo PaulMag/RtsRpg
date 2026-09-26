@@ -25,6 +25,7 @@ rings = 8
 [resource]
 script = ExtResource("6_pruea")
 name = "Haste"
+description = "Target moves faster."
 texture = ExtResource("4_wta1p")
 abilityId = 6
 targetRange = 15

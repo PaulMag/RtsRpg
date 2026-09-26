@@ -17,6 +17,7 @@ stream_2/stream = ExtResource("3_tup2o")
 [resource]
 script = ExtResource("1_nq82w")
 name = "Melee Attack"
+description = "Basic melee attack."
 texture = ExtResource("2_8ahld")
 damageMelee = 1.0
 targetRange = 2

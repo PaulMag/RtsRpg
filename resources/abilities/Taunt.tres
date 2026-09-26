@@ -10,6 +10,7 @@
 [resource]
 script = ExtResource("1_jkwt6")
 name = "Taunt"
+description = "Cause a large amount of threat to target and other enemies near it."
 texture = ExtResource("1_pyvia")
 abilityId = 3
 threatAmount = 20

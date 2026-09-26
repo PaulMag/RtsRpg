@@ -27,6 +27,7 @@ stream_2/stream = ExtResource("6_le88i")
 [resource]
 script = ExtResource("2_p07s7")
 name = "Ranged Attack"
+description = "Basic ranged attack."
 texture = ExtResource("3_iy8fy")
 abilityId = 5
 damageRanged = 1.0

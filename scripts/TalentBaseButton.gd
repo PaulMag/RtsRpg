@@ -21,7 +21,7 @@ signal ranked_up
 		if Engine.is_editor_hint() and nameLabel:
 			nameLabel.text = _talentName
 
-@export var talentDescription: String:
+@export_multiline var talentDescription: String:
 	set(_talentDescription):
 		talentDescription = _talentDescription
 		if Engine.is_editor_hint() and nameLabel:

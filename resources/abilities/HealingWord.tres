@@ -22,6 +22,7 @@ rings = 8
 [resource]
 script = ExtResource("1_hclkh")
 name = "Healing Word"
+description = "Fast long range heal."
 texture = ExtResource("2_0sria")
 abilityId = 2
 healingAmount = 1.0

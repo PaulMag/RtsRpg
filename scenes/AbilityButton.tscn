@@ -136,10 +136,12 @@ theme_override_constants/margin_bottom = 3
 
 [node name="DescriptionLabel" type="Label" parent="DescriptionPanel/MarginContainer" unique_id=1835158941]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(360, -1)
 layout_mode = 2
 theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("4_01oq8")
 text = "Ability description"
+autowrap_mode = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

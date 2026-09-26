@@ -3,6 +3,7 @@ extends Resource
 class_name Ability
 
 @export var name: String
+@export_multiline var description: String
 @export var texture: Texture
 @export var abilityId: Global.AbilityIds
 
@@ -105,60 +106,60 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 
 
 func getDescription() -> String:
-	var description := ""
+	var _description := description + "\n\n"
 	if damageMelee != 0:
-		description += "Damage:     %.1f x MeleePower\n" % damageMelee
+		_description += "Damage:     %.1f x MeleePower\n" % damageMelee
 	if damageRanged != 0:
-		description += "Damage:     %.1f x RangedPower\n" % damageRanged
+		_description += "Damage:     %.1f x RangedPower\n" % damageRanged
 	if damageFire != 0:
-		description += "Damage:     %.1f x FirePower\n" % damageFire
+		_description += "Damage:     %.1f x FirePower\n" % damageFire
 	if healingAmount != 0:
-		description += "Healing:    %.1f x HealingPower\n" % healingAmount
+		_description += "Healing:    %.1f x HealingPower\n" % healingAmount
 	if threatAmount != 0:
-		description += "Threat:     %d\n" % threatAmount
-	description += "Range:      %d m\n" % targetRange
-	description += "Cast time:  %.1f + %d s\n" % [castTime, recoveryTime]
+		_description += "Threat:     %d\n" % threatAmount
+	_description += "Range:      %d m\n" % targetRange
+	_description += "Cast time:  %.1f + %d s\n" % [castTime, recoveryTime]
 	if aoeRadius > 0:
-		description += "AoE radius: %d m\n" % aoeRadius
+		_description += "AoE radius: %d m\n" % aoeRadius
 	if manaCost > 0:
-		description += "Mana cost:  %d\n" % manaCost
-	description += "Targets:    %s%s%s%s" % [
+		_description += "Mana cost:  %d\n" % manaCost
+	_description += "Targets:    %s%s%s%s" % [
 		"self, " if canTargetSelf else "",
 		"friend, " if canTargetFriend else "",
 		"enemy, " if canTargetEnemy else "",
 		"dead, " if canTargetDead else "",
 	]
-	description = description.trim_suffix(", ") + "\n"
+	_description = _description.trim_suffix(", ") + "\n"
 	if persistentEffectAbility:
-		description += "Duration:   %d s\n" % buffDuration
-		description += persistentEffectAbility.getPersistentEffectDescription(tickDuration)
+		_description += "Duration:   %d s\n" % buffDuration
+		_description += persistentEffectAbility.getPersistentEffectDescription(tickDuration)
 	elif buffAttributes:
-		description += "Duration:   %d s\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
-		description += buffAttributes.getDescriptionNoZero()
+		_description += "Duration:   %d s\n  %s effect\n" % [buffDuration, "Debuff" if canTargetEnemy else "Buff"]
+		_description += buffAttributes.getDescriptionNoZero()
 
-	return description.trim_suffix("\n")
+	return _description.trim_suffix("\n")
 
 
 func getPersistentEffectDescription(_tickDuration: float) -> String:
-	var description := ""
+	var _description := description + "\n"
 	#TODO: The friend/self here should consider tha sourceUnit
-	description += "  Effect on nearby %s%s%s" % [
+	_description += "  Effect on nearby %s%s%s" % [
 		"friends, " if canTargetFriend else "",
 		"enemies, " if canTargetEnemy else "",
 		"and self, " if canTargetSelf else "",
 	]
-	description = description.trim_suffix(", ") + "\n"
+	_description = _description.trim_suffix(", ") + "\n"
 	if damageMelee != 0:
-		description += "Damage/sec:   %.1f/s\n" % (damageMelee/_tickDuration)
+		_description += "Damage/sec:   %.1f/s\n" % (damageMelee/_tickDuration)
 	if damageRanged != 0:
-		description += "Damage/sec:   %.1f/s\n" % (damageRanged/_tickDuration)
+		_description += "Damage/sec:   %.1f/s\n" % (damageRanged/_tickDuration)
 	if damageFire != 0:
-		description += "Damage/sec:   %.1f x FirePower\n" % (damageFire/_tickDuration)
+		_description += "Damage/sec:   %.1f x FirePower\n" % (damageFire/_tickDuration)
 	if healingAmount != 0:
-		description += "Healing/sec:  %.1f/s\n" % (healingAmount/_tickDuration)
+		_description += "Healing/sec:  %.1f/s\n" % (healingAmount/_tickDuration)
 	if threatAmount != 0:
-		description += "Threat:       %d/s\n" % (threatAmount/_tickDuration)
+		_description += "Threat:       %d/s\n" % (threatAmount/_tickDuration)
 	if aoeRadius > 0:
-		description += "AoE radius:   %d m\n" % aoeRadius
+		_description += "AoE radius:   %d m\n" % aoeRadius
 
-	return description.trim_suffix("\n")
+	return _description.trim_suffix("\n")
