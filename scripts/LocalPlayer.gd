@@ -34,14 +34,16 @@ func _unhandled_input(event: InputEvent) -> void:
 				if select_unit.getAbilityButtons().size() < abilityButtonIndex + 1:
 					print("No ability assigned to button %s." % (abilityButtonIndex + 1))
 					return
-				var ability := select_unit.getAbilityButtons()[abilityButtonIndex].ability
-				if select_unit.isCasting or select_unit.isRecovering:
-					select_unit.queueAbilityOnServer.rpc_id(1, ability.abilityId)
+				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
+				var ability := abilityButton.ability
+				select_unit.setRangeCircle(ability.targetRange)
+				abilityButton.self_modulate = Color.LIGHT_GREEN
+				if abilityButton.onCooldown:
+					return
+				# elif select_unit.isCasting or select_unit.isRecovering:  #TODO: Queue ability disabled for now
+				# 	select_unit.queueAbilityOnServer.rpc_id(1, ability.abilityId)
 				else:
 					select_unit.useAbilityOnServer.rpc_id(1, ability.abilityId)
-				select_unit.setRangeCircle(ability.targetRange)
-				var abilityButton := select_unit.getAbilityButtons()[abilityButtonIndex]
-				abilityButton.self_modulate = Color.LIGHT_GREEN
 				return
 			elif event.is_action_released("cast_%s" % (abilityButtonIndex + 1)):
 				if select_unit.getAbilityButtons().size() < abilityButtonIndex + 1:
