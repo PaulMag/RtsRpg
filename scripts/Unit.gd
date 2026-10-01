@@ -286,8 +286,10 @@ func _on_cast_timer_timeout() -> void:
 	if success:
 		isRecovering = true
 		for abilityButton in getAbilityButtons():
-			abilityButton.cooldownProgressBar.max_value = ability.recoveryTime
-			abilityButton.cooldownProgressBar.value = ability.recoveryTime
+			if abilityButton.ability.abilityId == ability.abilityId:
+				abilityButton.startCooldown(maxf(ability.cooldownTime, ability.recoveryTime))
+			else:
+				abilityButton.startCooldown(ability.recoveryTime)
 		recoveryTimer.start(ability.recoveryTime)
 		print("Unit %s ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
 		castBar.setToRecoveryMode(ability.recoveryTime)
@@ -301,8 +303,6 @@ func _on_recovery_timer_timeout() -> void:
 	canRegenMana = true
 	manaBar.modulate = Color.WHITE
 	castBar.visible = false
-	for abilityButton in getAbilityButtons():
-		abilityButton.cooldownProgressBar.value = 0
 
 
 func canUseAbility(abilityId: Global.AbilityIds) -> bool:
@@ -416,8 +416,6 @@ func _process(_delta: float) -> void:
 		castBar.value = castTimer.wait_time - castTimer.time_left
 	elif isRecovering:
 		castBar.value = recoveryTimer.time_left
-		for abilityButton in getAbilityButtons():
-			abilityButton.cooldownProgressBar.value = recoveryTimer.time_left
 	elif multiplayer.is_server() and queuedAbilityIds.size() > 0:
 		dequeueAbilityOnServer()
 	elif multiplayer.is_server() and isAutocasting:

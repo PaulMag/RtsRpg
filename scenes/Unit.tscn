@@ -464,9 +464,10 @@ ability = ExtResource("17_c54xi")
 talentName = "Taunt"
 talentDescription = "Cause a large amount of threat to target and other enemies near it.
 
-Threat:     20
+Threat:     25
 Range:      5 m
 Cast time:  1.5 + 1 s
+Cooldown:   3 s
 AoE radius: 3 m
 Targets:    enemy"
 
@@ -630,6 +631,7 @@ talentDescription = "Target moves faster.
 
 Range:      15 m
 Cast time:  0.5 + 1 s
+Cooldown:   3 s
 Mana cost:  10
 Targets:    self, friend
 Duration:   10 s

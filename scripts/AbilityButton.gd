@@ -1,6 +1,7 @@
 extends TextureButton
 class_name AbilityButton
 
+@onready var cooldownTimer: Timer = $CooldownTimer
 @onready var cooldownProgressBar: TextureProgressBar = $CooldownProgressBar
 @onready var autocastBorder: AnimatedSprite2D = $AutocastBorder
 @onready var descriptionPanel: PanelContainer = %DescriptionPanel
@@ -9,6 +10,7 @@ class_name AbilityButton
 
 var ability: Ability
 var nodeIndex: int
+var onCooldown: bool = false
 
 signal toggle_autocast
 
@@ -26,6 +28,14 @@ func _ready() -> void:
 	descriptionPanel.visible = false
 	descriptionLabel.text = "  %s\n%s" % [ability.name, ability.getDescription()]
 	hotkeyLabel.text = "%s" % (nodeIndex + 1)
+	cooldownTimer.timeout.connect(_on_cooldown_timeout)
+
+
+func _process(_delta: float) -> void:
+	# if not cooldownTimer.is_stopped():
+	if onCooldown:
+		cooldownProgressBar.value = cooldownTimer.time_left
+
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("mouse_right_click"):
@@ -33,6 +43,20 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func setAutocast(toggledOn: bool) -> void:
 	autocastBorder.visible = toggledOn
+
+
+func startCooldown(duration: float = 0) -> void:
+	if duration > cooldownTimer.time_left:
+		cooldownProgressBar.max_value = duration
+		cooldownProgressBar.value = duration
+		cooldownTimer.start(duration)
+		onCooldown = true
+		disabled = true
+
+
+func _on_cooldown_timeout() -> void:
+	onCooldown = false
+	disabled = false
 
 
 func _on_mouse_entered() -> void:
