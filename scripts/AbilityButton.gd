@@ -7,6 +7,7 @@ class_name AbilityButton
 @onready var descriptionPanel: PanelContainer = %DescriptionPanel
 @onready var descriptionLabel: Label = %DescriptionLabel
 @onready var hotkeyLabel: Label = %HotkeyLabel
+@onready var backgroundRect: ColorRect = $BackgroundRect
 
 var ability: Ability
 var onCooldown: bool = false
@@ -28,12 +29,16 @@ func _process(_delta: float) -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("mouse_right_click"):
 		toggle_autocast.emit()
+	elif event.is_action_released("mouse_middle_click"):
+		clearAbility(Global.getPlayerCurrent().getSelectedUnit())
 
 
 func setAbility(_ability: Ability, unit: Unit) -> void:
 	clearAbility(unit)
 	ability = _ability
 	texture_normal = ability.texture
+	backgroundRect.hide()
+	hotkeyLabel.modulate.a = 1.0
 	descriptionLabel.text = "  %s\n%s" % [ability.name, ability.getDescription()]
 	pressed.connect(unit.useAbilityOnServer.bind(ability.abilityId))
 	toggle_autocast.connect(unit.toggleAutocastOnServer.bind(ability.abilityId))
@@ -45,6 +50,9 @@ func clearAbility(unit: Unit) -> void:
 	if ability:
 		ability = null
 		texture_normal = null
+		backgroundRect.show()
+		autocastBorder.hide()
+		hotkeyLabel.modulate.a = 0.5
 		descriptionLabel.text = ""
 		pressed.disconnect(unit.useAbilityOnServer)
 		toggle_autocast.disconnect(unit.toggleAutocastOnServer)
