@@ -125,6 +125,11 @@ func _ready() -> void:
 			talentAbilityButton.mouse_exited.connect(setRangeCircle.bind(0))
 		nodeIndex += 1
 
+	nodeIndex = 1
+	for abilityButton in getAbilityButtons():
+		abilityButton.hotkeyLabel.text = str(nodeIndex) if nodeIndex <= 9 else ""
+		nodeIndex += 1
+
 	selectedCircle.modulate = playerColor
 
 	unitHud.visible = isSelected
@@ -164,12 +169,11 @@ func learnTalentAttribute(nodeIndex: int) -> void:
 func learnTalentAbility(nodeIndex: int) -> void:
 	var talentAbilityButton := talentTreeButtons.get_children()[nodeIndex] as TalentAbilityButton
 
-	var newAbilityButton := AbilityButton.init(talentAbilityButton.ability, getAbilityButtons().size())
-	newAbilityButton.pressed.connect(useAbilityOnServer.bind(newAbilityButton.ability.abilityId))
-	newAbilityButton.toggle_autocast.connect(toggleAutocastOnServer.bind(newAbilityButton.ability.abilityId))
-	newAbilityButton.mouse_entered.connect(setRangeCircle.bind(newAbilityButton.ability.targetRange))
-	newAbilityButton.mouse_exited.connect(setRangeCircle.bind(0))
-	abilityButtonsContainer.add_child(newAbilityButton)
+	for abilityButton in getAbilityButtons():
+		if not abilityButton.ability:
+			abilityButton.setAbility(talentAbilityButton.ability, self)
+			# Set the first available ability button with the new ability
+			break
 
 	talentAbilityButton.rankUp()
 	print("Learned '%s' rank %s" % [talentAbilityButton.talentName, talentAbilityButton.rank])
@@ -184,11 +188,11 @@ func getAbilityButtons() -> Array[AbilityButton]:
 			abilityButtons.append(node as AbilityButton)
 	return abilityButtons
 
-func getAbilityButton(abilityId: Global.AbilityIds) -> AbilityButton:
-	for abilityButton in getAbilityButtons():
-		if abilityButton.ability.abilityId == abilityId:
-			return abilityButton
-	return null
+func getSpecificAbilityButton(abilityId: Global.AbilityIds) -> Array[AbilityButton]:
+	var abilityButtons := getAbilityButtons()
+	return abilityButtons.filter(func(abilityButton: AbilityButton) -> bool:
+		return abilityButton.ability and abilityButton.ability.abilityId == abilityId
+	)
 
 
 @rpc("any_peer", "call_local")
@@ -286,7 +290,9 @@ func _on_cast_timer_timeout() -> void:
 	if success:
 		isRecovering = true
 		for abilityButton in getAbilityButtons():
-			if abilityButton.ability.abilityId == ability.abilityId:
+			if abilityButton.ability == null:
+				pass
+			elif abilityButton.ability.abilityId == ability.abilityId:
 				abilityButton.startCooldown(maxf(ability.cooldownTime, ability.recoveryTime))
 			else:
 				abilityButton.startCooldown(ability.recoveryTime)
@@ -320,15 +326,19 @@ func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
 @rpc("authority", "call_local")
 func toggleAutocast(abilityId: Global.AbilityIds) -> void:
 	if not isAutocasting:
-		getAbilityButton(abilityId).setAutocast(true)
+		for abilityButton in getSpecificAbilityButton(abilityId):
+			abilityButton.setAutocast(true)
 		autocastAbilityId = abilityId
 		isAutocasting = true
 	elif autocastAbilityId == abilityId:
-		getAbilityButton(abilityId).setAutocast(false)
+		for abilityButton in getSpecificAbilityButton(abilityId):
+			abilityButton.setAutocast(false)
 		isAutocasting = false
 	else:
 		for abilityButton in getAbilityButtons():
-			if abilityButton.ability.abilityId == abilityId:
+			if abilityButton.ability == null:
+				pass
+			elif abilityButton.ability.abilityId == abilityId:
 				abilityButton.setAutocast(true)
 				autocastAbilityId = abilityId
 				isAutocasting = true

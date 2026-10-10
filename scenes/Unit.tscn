@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d2sb2u58buhx4" path="res://scenes/TalentAbilityButton.tscn" id="9_rio8d"]
 [ext_resource type="PackedScene" uid="uid://p2g5dfrrbk41" path="res://scenes/TalentAttributeButton.tscn" id="9_srmse"]
 [ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="10_1ssdg"]
+[ext_resource type="PackedScene" uid="uid://co8rc3ud7cm5v" path="res://scenes/AbilityButton.tscn" id="10_6g4ww"]
 [ext_resource type="Texture2D" uid="uid://bokvb7vxeo53t" path="res://sprites/abilities/cancel.png" id="10_lf2p5"]
 [ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="10_ovit6"]
 [ext_resource type="Resource" uid="uid://daqg1br2ouhnm" path="res://resources/abilities/MeleeAttack.tres" id="10_telu4"]
@@ -338,6 +339,42 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="AbilityButton1" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=120739262 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton2" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=2110817967 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton3" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=449493086 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton4" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=349053193 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton5" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=86114332 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton6" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=99180483 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton7" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=1545375846 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton8" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=1063051278 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton9" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=1981751636 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton10" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=130600633 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton11" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=1971362919 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
+
+[node name="AbilityButton12" parent="UnitHud/VBoxContainer/AbilityButtonsContainer" unique_id=785893353 instance=ExtResource("10_6g4ww")]
+layout_mode = 2
 
 [node name="CharacterPanelButtons" type="VBoxContainer" parent="UnitHud" unique_id=236118303]
 anchors_preset = 3

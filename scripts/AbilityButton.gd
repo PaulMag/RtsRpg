@@ -9,25 +9,14 @@ class_name AbilityButton
 @onready var hotkeyLabel: Label = %HotkeyLabel
 
 var ability: Ability
-var nodeIndex: int
 var onCooldown: bool = false
 
 signal toggle_autocast
 
 
-const SCENE := preload("res://scenes/AbilityButton.tscn")
-static func init(_ability: Ability, _nodeIndex: int) -> AbilityButton:
-	var scene: AbilityButton = SCENE.instantiate()
-	scene.ability = _ability
-	scene.nodeIndex = _nodeIndex
-	scene.texture_normal = _ability.texture
-	return scene
-
 func _ready() -> void:
 	cooldownProgressBar.value = 0
 	descriptionPanel.visible = false
-	descriptionLabel.text = "  %s\n%s" % [ability.name, ability.getDescription()]
-	hotkeyLabel.text = "%s" % (nodeIndex + 1)
 	cooldownTimer.timeout.connect(_on_cooldown_timeout)
 
 
@@ -39,6 +28,29 @@ func _process(_delta: float) -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("mouse_right_click"):
 		toggle_autocast.emit()
+
+
+func setAbility(_ability: Ability, unit: Unit) -> void:
+	clearAbility(unit)
+	ability = _ability
+	texture_normal = ability.texture
+	descriptionLabel.text = "  %s\n%s" % [ability.name, ability.getDescription()]
+	pressed.connect(unit.useAbilityOnServer.bind(ability.abilityId))
+	toggle_autocast.connect(unit.toggleAutocastOnServer.bind(ability.abilityId))
+	mouse_entered.connect(unit.setRangeCircle.bind(ability.targetRange))
+	mouse_exited.connect(unit.setRangeCircle.bind(0))
+
+
+func clearAbility(unit: Unit) -> void:
+	if ability:
+		ability = null
+		texture_normal = null
+		descriptionLabel.text = ""
+		pressed.disconnect(unit.useAbilityOnServer)
+		toggle_autocast.disconnect(unit.toggleAutocastOnServer)
+		mouse_entered.disconnect(unit.setRangeCircle)
+		mouse_exited.disconnect(unit.setRangeCircle)
+
 
 func setAutocast(toggledOn: bool) -> void:
 	autocastBorder.visible = toggledOn
@@ -58,9 +70,23 @@ func _on_cooldown_timeout() -> void:
 	disabled = false
 
 
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if data is Ability:
+		var _ability: Ability = data
+		return true
+	return false
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if data is Ability:
+		var _ability: Ability = data
+		setAbility(_ability, Global.getPlayerCurrent().getSelectedUnit())
+
+
 func _on_mouse_entered() -> void:
-	descriptionPanel.visible = true
-	self_modulate = Color.LIGHT_GREEN
+	if ability:
+		descriptionPanel.visible = true
+		self_modulate = Color.LIGHT_GREEN
 
 func _on_mouse_exited() -> void:
 	descriptionPanel.visible = false
