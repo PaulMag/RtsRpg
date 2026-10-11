@@ -1,7 +1,6 @@
 extends Node
 class_name LocalPlayer
 
-
 @export var isReady: bool = false
 @export var playerId: int
 @export var playerName: String
@@ -75,7 +74,9 @@ func setSelectedUnitId(unitId: int) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if playerId == multiplayer.get_unique_id() and is_instance_valid(Global.cameraArm):
-		moveDirection = Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down").rotated(-Global.cameraArm.rotation.y)
+		moveDirection = Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down").rotated(
+			-Global.cameraArm.rotation.y
+		)
 	if multiplayer.is_server() and getSelectedUnit():
 		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
@@ -92,7 +93,7 @@ func selectUnitByIndex(unitIndex: int) -> void:
 
 func selectUnit(unit: Unit) -> void:
 	var selectedUnit := getSelectedUnit()
-	if unit  == null:
+	if unit == null:
 		if selectedUnit:
 			selectedUnit.setSelected(false)
 			setSelectedUnitId.rpc_id(1, 0)
@@ -103,6 +104,7 @@ func selectUnit(unit: Unit) -> void:
 	selectedUnitId = unit.unitId
 	setSelectedUnitId.rpc_id(1, unit.unitId)
 
+
 func setTargetUnit(unit: Unit, follow: bool) -> void:
 	var selectedUnit := getSelectedUnit()
 	if unit == null or selectedUnit == null:
@@ -111,12 +113,14 @@ func setTargetUnit(unit: Unit, follow: bool) -> void:
 
 
 func setStatusOnServer(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
-	setStatusClients.rpc_id(1,_isReady, _playerName, _playerColor)
+	setStatusClients.rpc_id(1, _isReady, _playerName, _playerColor)
+
 
 @rpc("any_peer", "call_local")
 func setStatusClients(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
 	if multiplayer.is_server():
 		setStatus.rpc(_isReady, _playerName, _playerColor)
+
 
 @rpc("any_peer", "call_local")
 func setStatus(_isReady: bool, _playerName: String, _playerColor: Color) -> void:
@@ -133,7 +137,7 @@ func updateUnitList(selectedUnitIndex: int = -1) -> void:
 
 	for unit in Global.getAllUnitsInFaction(Global.Faction.PLAYERS):
 		var unitSelectButton: Button = Button.new()
-		unitSelectButton.text = "[F%s]  %s" % [unitIndex+1, unit.unitName]
+		unitSelectButton.text = "[F%s]  %s" % [unitIndex + 1, unit.unitName]
 		unitSelectButton.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		unitSelectButton.connect("pressed", selectUnitByIndex.bind(unitIndex))
 

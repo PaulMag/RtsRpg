@@ -5,12 +5,13 @@ class_name PersistentEffect
 @onready var durationTimer: Timer = $DurationTimer
 
 var ability: Ability
-var buff: Buff  #TODO: Need handle buff vs persistentEffectAbility better.
+var buff: Buff #TODO: Need handle buff vs persistentEffectAbility better.
 var castingUnit: Unit
 var targetUnit: Unit
 
-
 const SCENE := preload("res://scenes/PersistentEffect.tscn")
+
+
 static func init(_ability: Ability, _buff: Buff, user: Unit, target: Unit) -> PersistentEffect:
 	var scene: PersistentEffect = SCENE.instantiate()
 	scene.ability = _ability
@@ -27,6 +28,7 @@ func _ready() -> void:
 
 func _on_tick_timer_timeout() -> void:
 	ability.persistentEffectAbility.use(castingUnit, targetUnit, targetUnit)
+
 
 func _on_duration_timer_timeout() -> void:
 	queue_free()

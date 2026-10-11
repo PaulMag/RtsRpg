@@ -1,7 +1,6 @@
 extends Node3D
 class_name UnitSpawner
 
-
 @export var level: int = 1
 @export var afterSpawnTarget: Node3D
 @export var numberOfBarbarians: int
@@ -22,7 +21,13 @@ const SPAWN_RADIUS: float = 3
 const ITEMS: Dictionary[PackedScene, Dictionary] = {
 	BARBARIAN_SCENE: {
 		Global.ItemSlots.MainHand: [Global.Items.sword_long, Global.Items.sword_short, Global.Items.dagger],
-		Global.ItemSlots.OffHand: [Global.Items.NONE, Global.Items.shield_kite, Global.Items.shield_kite_spiked, Global.Items.shield_round, Global.Items.shield_tower],
+		Global.ItemSlots.OffHand: [
+			Global.Items.NONE,
+			Global.Items.shield_kite,
+			Global.Items.shield_kite_spiked,
+			Global.Items.shield_round,
+			Global.Items.shield_tower,
+		],
 		Global.ItemSlots.Torso: [Global.Items.NONE, Global.Items.cuirass_iron, Global.Items.tunic_leather],
 		Global.ItemSlots.Head: [Global.Items.NONE, Global.Items.helmet_iron, Global.Items.hat_bear],
 	},
@@ -76,7 +81,9 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 		var randomItem: Global.Items = possibleItems[randi() % possibleItems.size()]
 		if randomItem != Global.Items.NONE:
 			newUnit.giveItem(randomItem)
-			newUnit.equipItemOnServer(newUnit.inventoryContainer.get_child(newUnit.inventoryContainer.get_child_count() - 1) as ItemButton)
+			newUnit.equipItemOnServer(
+				newUnit.inventoryContainer.get_child(newUnit.inventoryContainer.get_child_count() - 1) as ItemButton
+			)
 
 	if joiningExistingUnits and livingUnits.size() > 0:
 		var randomExistingUnit := livingUnits[randi() % livingUnits.size()]
@@ -91,6 +98,7 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 	setLabel.rpc("Enemies: %d" % (numberOfLivingUnits + remainingSpawns.size()))
 
 	newUnit.died.connect(onUnitDied.bind(newUnit))
+
 
 func onUnitDied(deadUnit: Unit) -> void:
 	numberOfLivingUnits -= 1
@@ -115,6 +123,7 @@ func onUnitDied(deadUnit: Unit) -> void:
 
 		setLabel.rpc("Encounter\ndefeated!")
 		Global.dungeon.distributeTalentPoints(talentPointsReward * Global.dungeon.xpRewardMultiplier)
+
 
 @rpc("authority", "call_local")
 func setLabel(text: String) -> void:

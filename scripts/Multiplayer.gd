@@ -39,13 +39,14 @@ func _ready() -> void:
 	colorPickerButton.color = Color(randf(), randf(), randf())
 	readyButton.hide()
 	readyButton.disabled = true
-	startButton.hide()  # Single player mode is currently broken
+	startButton.hide() # Single player mode is currently broken
 
 	var multiplayerScene := multiplayer as SceneMultiplayer
 	multiplayerScene.server_relay = false
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
+
 
 func _on_host_pressed() -> void:
 	# Start game as server
@@ -66,8 +67,9 @@ func _on_host_pressed() -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 
-	add_player(1)  # Add host as player 1
-	multiplayer.peer_connected.connect(add_player)  # Will be called for each connecting player
+	add_player(1) # Add host as player 1
+	multiplayer.peer_connected.connect(add_player) # Will be called for each connecting player
+
 
 func _on_connect_pressed() -> void:
 	# Start game as client, and join existing host
@@ -103,7 +105,7 @@ func spawn_dungeon() -> void:
 
 	if multiplayer.is_server():
 		const UNIT_SCENE = preload("res://scenes/Unit.tscn")
-		var zPosition := -6  #TODO: Should use dedicated Dungeon.startPosition or similar
+		var zPosition := -6 #TODO: Should use dedicated Dungeon.startPosition or similar
 		for node in players.get_children():
 			print("Adding player unit for %s" % node.name)
 			if node is LocalPlayer:
@@ -146,7 +148,7 @@ func add_player(id: int) -> void:
 	print("Added player %s with id %s." % [localPLayer.name, localPLayer.playerId])
 
 	for player in Global.getPlayers():
-		player.setStatusOnServer(player.isReady, player.playerName, player.playerColor)  # Set correct status for newly joined player
+		player.setStatusOnServer(player.isReady, player.playerName, player.playerColor) # Set correct status for newly joined player
 	updatePlayerStatsOnClients.rpc()
 
 
@@ -172,7 +174,7 @@ func _on_ready_toggled(toggledOn: bool) -> void:
 		colorPickerButton.visible = false
 		colorPickerRect.visible = true
 		readyButton.text = "Un-ready"
-		await get_tree().create_timer(0.2).timeout  #TODO: Do this properly
+		await get_tree().create_timer(0.2).timeout #TODO: Do this properly
 		updatePlayerStatsOnClients.rpc()
 	else:
 		currentPlayer.setStatusOnServer(false, playerNameInput.text, colorPickerButton.color)
@@ -180,7 +182,7 @@ func _on_ready_toggled(toggledOn: bool) -> void:
 		colorPickerButton.visible = true
 		colorPickerRect.visible = false
 		readyButton.text = "Ready"
-		await get_tree().create_timer(0.2).timeout  #TODO: Do this properly
+		await get_tree().create_timer(0.2).timeout #TODO: Do this properly
 		updatePlayerStatsOnClients.rpc()
 
 
@@ -218,7 +220,7 @@ func updatePlayerStats() -> void:
 		label.modulate = player.playerColor
 		playerLabelList.add_child(label, true)
 
-		if not player.isReady:  # All players must be ready to start the game
+		if not player.isReady: # All players must be ready to start the game
 			isReady = false
 
 	startButton.disabled = not isReady

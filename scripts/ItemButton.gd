@@ -1,7 +1,6 @@
 extends TextureButton
 class_name ItemButton
 
-
 @onready var equippedBorder: Sprite2D = %EquippedBorder
 @onready var descriptionPanel: PanelContainer = %DescriptionPanel
 @onready var descriptionLabel: Label = %DescriptionLabel
@@ -11,8 +10,9 @@ var nodeIndex: int
 
 signal drop_item
 
-
 const SCENE := preload("res://scenes/ItemButton.tscn")
+
+
 static func init(_item: Item, _nodeIndex: int) -> ItemButton:
 	var scene: ItemButton = SCENE.instantiate()
 	scene.item = _item
@@ -38,6 +38,7 @@ func setEquipped(toggledOn: bool) -> void:
 func _on_mouse_entered() -> void:
 	descriptionPanel.visible = true
 	self_modulate = Color.LIGHT_GREEN
+
 
 func _on_mouse_exited() -> void:
 	descriptionPanel.visible = false

@@ -2,7 +2,6 @@ extends Node3D
 
 class_name DestinationMarker
 
-
 const AMPLITUDE := -0.5
 const SPEED := 2 * PI
 const COLOR_MOVE := Color.GREEN
@@ -23,22 +22,25 @@ func _process(delta: float) -> void:
 		sprite.position.y = offset + sin(markerMotion * SPEED) * AMPLITUDE - AMPLITUDE
 		markerMotion += delta
 
+
 func markMove(pos: Vector3) -> void:
 	targetUnit = null
 	position = pos
 	# modulate = COLOR_MOVE
-	markerMotion = - SPEED / 2
+	markerMotion = -SPEED / 2
 	offset = 0
 	visible = true
 	timer.start()
 
+
 func markAttack(unit: Unit) -> void:
 	targetUnit = unit
 	# modulate = COLOR_ATTACK
-	markerMotion = - SPEED / 2
-	offset = - 64
+	markerMotion = -SPEED / 2
+	offset = -64
 	visible = true
 	timer.start()
+
 
 func _on_timer_timeout() -> void:
 	visible = false

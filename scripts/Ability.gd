@@ -1,4 +1,4 @@
-@tool  # Necessary for TalentAbilityButton button to not complain
+@tool # Necessary for TalentAbilityButton button to not complain
 extends Resource
 class_name Ability
 
@@ -22,9 +22,9 @@ class_name Ability
 @export var tickDuration: float
 @export var persistentEffectAbility: Ability = null
 
-@export var castTime: float = 2  # Time in seconds to cast the ability.
-@export var recoveryTime: float = 1  # Time in seconds before Unit can use an ability again.
-@export var cooldownTime: float = 0  # Time in seconds before Unit can use this ability again.
+@export var castTime: float = 2 # Time in seconds to cast the ability.
+@export var recoveryTime: float = 1 # Time in seconds before Unit can use an ability again.
+@export var cooldownTime: float = 0 # Time in seconds before Unit can use this ability again.
 @export var speedFactorWhileCasting: float = 0.5
 
 @export var projectileSpeed: float = 20
@@ -59,12 +59,15 @@ func canUse(user: Unit, target: Unit) -> bool:
 		return false
 	return true
 
+
 func payCost(user: Unit) -> void:
 	user.mana -= manaCost
+
 
 func refundCost(user: Unit) -> void:
 	user.mana += manaCost
 	user.mana = clampf(user.mana, 0, user.attributes.maxMana)
+
 
 func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 	var attack := Attack.new()
@@ -74,7 +77,9 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 	attack.damageRanged = damageRanged * user.attributes.effRangedPower
 	attack.damageMagical = damageFire * user.attributes.effFirePower
 	attack.healingAmount = healingAmount * user.attributes.effHealPower
-	attack.threat = (attack.damageMelee + attack.damageRanged + attack.damageMagical + threatAmount) * (1 + user.attributes.threatSkill * 0.01)
+	attack.threat = (attack.damageMelee + attack.damageRanged + attack.damageMagical + threatAmount) * (
+		1 + user.attributes.threatSkill * 0.01
+	)
 	attack.isHealing = isHealing
 	attack.ability = self
 
@@ -91,16 +96,29 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 			func(u: Unit) -> bool:
 				return (
 					(target.position.distance_to(u.position) <= aoeRadius)
-					and !(user == u and !canTargetSelf)
-					and !(user.faction == u.faction and !canTargetFriend)
+					and !(user == u and !canTargetSelf) and !(user.faction == u.faction and !canTargetFriend)
 					and !(user.faction != u.faction and !canTargetEnemy)
-				)
+				),
 		) as Array[Unit]
 		for _target in _targets:
-			var newProjectile := Projectile.init(attack, _target, projectileMesh, projectileHitAudio, projectileShootAudio, projectileSpeed)
+			var newProjectile := Projectile.init(
+				attack,
+				_target,
+				projectileMesh,
+				projectileHitAudio,
+				projectileShootAudio,
+				projectileSpeed,
+			)
 			user.add_sibling(newProjectile, true)
 	else:
-		var newProjectile := Projectile.init(attack, target, projectileMesh, projectileHitAudio, projectileShootAudio, projectileSpeed)
+		var newProjectile := Projectile.init(
+			attack,
+			target,
+			projectileMesh,
+			projectileHitAudio,
+			projectileShootAudio,
+			projectileSpeed,
+		)
 		user.add_sibling(newProjectile, true)
 
 	return true
@@ -153,15 +171,15 @@ func getPersistentEffectDescription(_tickDuration: float) -> String:
 	]
 	_description = _description.trim_suffix(", ") + "\n"
 	if damageMelee != 0:
-		_description += "Damage/sec:   %.1f/s\n" % (damageMelee/_tickDuration)
+		_description += "Damage/sec:   %.1f/s\n" % (damageMelee / _tickDuration)
 	if damageRanged != 0:
-		_description += "Damage/sec:   %.1f/s\n" % (damageRanged/_tickDuration)
+		_description += "Damage/sec:   %.1f/s\n" % (damageRanged / _tickDuration)
 	if damageFire != 0:
-		_description += "Damage/sec:   %.1f x FirePower\n" % (damageFire/_tickDuration)
+		_description += "Damage/sec:   %.1f x FirePower\n" % (damageFire / _tickDuration)
 	if healingAmount != 0:
-		_description += "Healing/sec:  %.1f/s\n" % (healingAmount/_tickDuration)
+		_description += "Healing/sec:  %.1f/s\n" % (healingAmount / _tickDuration)
 	if threatAmount != 0:
-		_description += "Threat:       %d/s\n" % (threatAmount/_tickDuration)
+		_description += "Threat:       %d/s\n" % (threatAmount / _tickDuration)
 	if aoeRadius > 0:
 		_description += "AoE radius:   %d m\n" % aoeRadius
 

@@ -1,7 +1,6 @@
 extends Area3D
 class_name AiController
 
-
 @export var unit: Unit
 
 # Which abilities the AI will use, in prioritized order.
@@ -17,12 +16,15 @@ func _process(_delta: float) -> void:
 		return
 
 	if unit.targetUnit:
-		unit.followTarget = unit.position.distance_to(unit.targetUnit.position) > Global.getAbility[abilityIdsPrioritized[0]].targetRange
+		unit.followTarget = (
+			unit.position.distance_to(unit.targetUnit.position)
+			> Global.getAbility[abilityIdsPrioritized[0]].targetRange
+		)
 		if not unit.followTarget:
 			var target_pos := unit.targetUnit.position
-			target_pos.y = unit.position.y  # Ignore vertical difference
+			target_pos.y = unit.position.y # Ignore vertical difference
 			unit.look_at(target_pos, Vector3.UP)
-			unit.rotate_y(PI)  # Mesh is rotated the wrong way.
+			unit.rotate_y(PI) # Mesh is rotated the wrong way.
 
 	# Use the first viable ability
 	if unit.targetUnit and not unit.isCasting and not unit.isRecovering:
@@ -52,7 +54,7 @@ func getMostThreateningUnit() -> Unit:
 	var threatTable := unit.threatTable.keys()
 	for u: Unit in threatTable:
 		if not is_instance_valid(u):
-			unit.threatTable.erase(u)  # Remove dead units from threat list.
+			unit.threatTable.erase(u) # Remove dead units from threat list.
 		elif not u.isDead and unit.threatTable[u] > highestThreat:
 			mostThreateningUnit = u
 			highestThreat = unit.threatTable[u]

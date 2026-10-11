@@ -96,6 +96,7 @@ func _on_mouse_entered() -> void:
 		descriptionPanel.visible = true
 		self_modulate = Color.LIGHT_GREEN
 
+
 func _on_mouse_exited() -> void:
 	descriptionPanel.visible = false
 	self_modulate = Color.WHITE

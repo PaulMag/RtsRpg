@@ -10,7 +10,6 @@ signal ranked_up
 @onready var descriptionPanel: PanelContainer = %DescriptionPanel
 @onready var descriptionLabel: Label = %DescriptionLabel
 
-
 @export var maxRank: int = 1
 @export var rank: int = 0
 @export var requiredTalents: Array[TalentBaseButton] = []
@@ -37,6 +36,7 @@ func _ready() -> void:
 	for requiredTalent in requiredTalents:
 		requiredTalent.ranked_up.connect(drawLines)
 
+
 func drawLines() -> void:
 	disabled = true
 	disableTexture.visible = true
@@ -55,6 +55,7 @@ func drawLines() -> void:
 			line.default_color = Color.LIGHT_GRAY
 		add_child(line)
 
+
 func rankUp() -> void:
 	rank += 1
 	rankLabel.text = "%d/%d" % [rank, maxRank]
@@ -68,6 +69,7 @@ func _on_mouse_entered() -> void:
 	descriptionPanel.visible = true
 	if not disabled:
 		self_modulate = Color.LIGHT_GREEN
+
 
 func _on_mouse_exited() -> void:
 	descriptionPanel.visible = false

@@ -18,14 +18,19 @@ func _process(_delta: float) -> void:
 		var targetPos := Global.vec3_to_vec2(unit.targetUnit.position)
 		var direction := targetPos.direction_to(selfPos)
 
-		var intendedPosition := Global.vec2_to_vec3(targetPos + direction * Global.getAbility[abilityIdsPrioritized[0]].targetRange * 0.95)
-		var closest_point := NavigationServer3D.map_get_closest_point(unit.navigationAgent.get_navigation_map(), intendedPosition)
+		var intendedPosition := Global.vec2_to_vec3(
+			targetPos + direction * Global.getAbility[abilityIdsPrioritized[0]].targetRange * 0.95
+		)
+		var closest_point := NavigationServer3D.map_get_closest_point(
+			unit.navigationAgent.get_navigation_map(),
+			intendedPosition,
+		)
 
 		unit.destination = closest_point
 
 		if unit.isCasting:
 			unit.look_at(unit.targetUnit.position, Vector3.UP)
-			unit.rotate_y(PI)  # Mesh is rotated the wrong way.
+			unit.rotate_y(PI) # Mesh is rotated the wrong way.
 
 	# Use the first viable ability
 	if unit.targetUnit and not unit.isCasting and not unit.isRecovering:

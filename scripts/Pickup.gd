@@ -2,7 +2,6 @@ extends Area3D
 
 class_name Pickup
 
-
 @export var itemType: Global.Items
 var itemResource: Item
 
@@ -12,6 +11,8 @@ var itemResource: Item
 @onready var descriptionLabel: Label = %DescriptionLabel
 
 const SCENE := preload("res://scenes/Pickup.tscn")
+
+
 static func init(_itemType: Global.Items) -> Pickup:
 	var scene := SCENE.instantiate() as Pickup
 	scene.itemType = _itemType
@@ -53,6 +54,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 func _on_mouse_entered() -> void:
 	descriptionPanel.visible = true
+
 
 func _on_mouse_exited() -> void:
 	descriptionPanel.visible = false

@@ -1,6 +1,5 @@
 extends Node3D
 
-
 @onready var camera: Camera3D = $Camera
 
 var rotate_mode: bool = false
@@ -14,7 +13,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var currentPlayer := Global.getPlayerCurrent()
-	if currentPlayer == null:  #TODO: Workaround for bug.
+	if currentPlayer == null: #TODO: Workaround for bug.
 		return
 
 	var selectedUnit := Global.getUnitFromUnitId(currentPlayer.selectedUnitId)
@@ -37,7 +36,7 @@ func _process(delta: float) -> void:
 		camera.position.z += 10 * delta
 		camera.position.z = clamp(camera.position.z, 1, 20)
 
-	rot_y = clamp(rot_y, -PI / 2, -0.087)  # 90 to 5 degrees
+	rot_y = clamp(rot_y, -PI / 2, -0.087) # 90 to 5 degrees
 	transform.basis = Basis()
 	rotate_object_local(Vector3(0, 1, 0), rot_x)
 	rotate_object_local(Vector3(1, 0, 0), rot_y)

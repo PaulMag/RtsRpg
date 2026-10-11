@@ -2,7 +2,6 @@ extends Area3D
 
 class_name Projectile
 
-
 @onready var meshInstance: MeshInstance3D = $MeshInstance
 @onready var audioPlayer: AudioStreamPlayer3D = $AudioPlayer
 
@@ -15,17 +14,18 @@ var speed: float
 
 var isActive: bool = true
 
-const heightAboveGround := Vector3(0, 0.8, 0)  # Keep projectile above ground
-
+const heightAboveGround := Vector3(0, 0.8, 0) # Keep projectile above ground
 
 const SCENE := preload("res://scenes/Projectile.tscn")
+
+
 static func init(
-		_attack: Attack,
-		_target: Unit,
-		_mesh: Mesh = null,
-		_audioStreamShoot: AudioStream = null,
-		_audioStreamHit: AudioStream = null,
-		_speed: float = 999,
+	_attack: Attack,
+	_target: Unit,
+	_mesh: Mesh = null,
+	_audioStreamShoot: AudioStream = null,
+	_audioStreamHit: AudioStream = null,
+	_speed: float = 999,
 ) -> Projectile:
 	var scene: Projectile = SCENE.instantiate()
 	scene.attack = _attack
@@ -37,12 +37,14 @@ static func init(
 	scene.position = (_attack.sourceUnit.position if _attack.sourceUnit else _attack.attackingUnit.position) + heightAboveGround
 	return scene
 
+
 func _ready() -> void:
 	if mesh:
 		meshInstance.mesh = mesh
 	if audioStreamShoot:
 		audioPlayer.stream = audioStreamShoot
 		audioPlayer.play()
+
 
 func _physics_process(delta: float) -> void:
 	if not isActive:
@@ -53,6 +55,7 @@ func _physics_process(delta: float) -> void:
 		position += position.direction_to(target.position + heightAboveGround) * speed * delta
 	else:
 		position += -transform.basis.z * speed * delta
+
 
 func _on_body_entered(body: Node3D) -> void:
 	if body == target and isActive:

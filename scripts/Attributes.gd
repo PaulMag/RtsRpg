@@ -1,4 +1,4 @@
-@tool  # Necessary for TalentAttributeButton button to not complain
+@tool # Necessary for TalentAttributeButton button to not complain
 extends Resource
 class_name Attributes
 
@@ -27,16 +27,20 @@ class_name Attributes
 @export var speedRatio: float = 1.0
 
 var effMeleePower: float:
-	get: return meleePower * (1 + meleeSkill / 100.0)
+	get:
+		return meleePower * (1 + meleeSkill / 100.0)
 
 var effRangedPower: float:
-	get: return rangedPower * (1 + rangedSkill / 100.0)
+	get:
+		return rangedPower * (1 + rangedSkill / 100.0)
 
 var effFirePower: float:
-	get: return firePower * (1 + fireSkill / 100.0)
+	get:
+		return firePower * (1 + fireSkill / 100.0)
 
 var effHealPower: float:
-	get: return healingPower * (1 + healingSkill / 100.0)
+	get:
+		return healingPower * (1 + healingSkill / 100.0)
 
 
 func add(other: Attributes) -> Attributes:
@@ -92,38 +96,39 @@ Damage Reduction: %5.2f %%
  Speed      Ratio   Eff.Speed
 %4.1f m/s   %5.1f %%   %4.1f m/s
 """.trim_prefix("\n") % [
-	maxHealth,
-	healthRegen,
-	maxMana,
-	manaRegen,
+		maxHealth,
+		healthRegen,
+		maxMana,
+		manaRegen,
 
-	meleePower,
-	meleeSkill,
-	effMeleePower,
+		meleePower,
+		meleeSkill,
+		effMeleePower,
 
-	rangedPower,
-	rangedSkill,
-	effRangedPower,
+		rangedPower,
+		rangedSkill,
+		effRangedPower,
 
-	firePower,
-	fireSkill,
-	effFirePower,
+		firePower,
+		fireSkill,
+		effFirePower,
 
-	healingPower,
-	healingSkill,
-	effHealPower,
+		healingPower,
+		healingSkill,
+		effHealPower,
 
-	threatSkill,
-	durationSkill,
-	armorPoints,
-	armorSkill,
-	effectiveArmorPoints * 0.01,
-	damageReduction,
+		threatSkill,
+		durationSkill,
+		armorPoints,
+		armorSkill,
+		effectiveArmorPoints * 0.01,
+		damageReduction,
 
-	speed,
-	(speedRatio - 1) * 100,
-	effectiveSpeed,
-]
+		speed,
+		(speedRatio - 1) * 100,
+		effectiveSpeed,
+	]
+
 
 func getDescriptionNoZero() -> String:
 	var lines := []
