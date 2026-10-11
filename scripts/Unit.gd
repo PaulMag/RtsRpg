@@ -369,10 +369,7 @@ func queueAbilityOnServer(abilityId: Global.AbilityIds) -> void:
 @rpc("authority", "call_local")
 func queueAbility(abilityId: Global.AbilityIds) -> void:
 	queuedAbilityIds.append(abilityId)
-
-	const SCENE := preload("res://scenes/AbilityIcon.tscn")
-	var queuedAbilityIcon: AbilityIcon = SCENE.instantiate()
-	queuedAbilityIcon.abilityId = abilityId
+	var queuedAbilityIcon: AbilityIcon = AbilityIcon.init(abilityId)
 	queuedAbilitiesContainer.add_child(queuedAbilityIcon, true)
 	print("Unit %s queued ability %s" % [unitName, abilityId])
 
