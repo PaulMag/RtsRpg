@@ -3,7 +3,7 @@ extends Area3D
 
 const heightAboveGround := Vector3(0, 0.8, 0) # Keep projectile above ground
 
-const SCENE := preload("res://scenes/Projectile.tscn")
+const SCENE := preload("res://scenes/abilities/Projectile.tscn")
 
 var attack: Attack
 var target: Unit

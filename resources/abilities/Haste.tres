@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="3_kp5dx"]
 [ext_resource type="Texture2D" uid="uid://ciri42xpna2il" path="res://sprites/abilities/speed.png" id="4_wta1p"]
 [ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="5_i12di"]
-[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="6_pruea"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="6_pruea"]
 
 [sub_resource type="Resource" id="Resource_jw3ch"]
 script = ExtResource("1_o8u0r")

@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cdwf4yc2u7mty" path="res://audio/effects/10_human_special_atk_2.wav" id="2_bov08"]
 [ext_resource type="SphereMesh" uid="uid://dn568oe8vvl2p" path="res://models/projectiles/healing_ball.tres" id="3_dsanm"]
 [ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="4_nih6m"]
-[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/Ability.gd" id="5_5dunh"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="5_5dunh"]
 [ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="6_e6bfs"]
 
 [resource]

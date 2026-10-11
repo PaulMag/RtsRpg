@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://p2g5dfrrbk41"]
 
-[ext_resource type="PackedScene" uid="uid://ccoallcn4va30" path="res://scenes/TalentBaseButton.tscn" id="1_67xqx"]
-[ext_resource type="Script" uid="uid://406flp665rc" path="res://scripts/TalentAttributeButton.gd" id="2_iod4t"]
+[ext_resource type="PackedScene" uid="uid://ccoallcn4va30" path="res://scenes/ui/TalentBaseButton.tscn" id="1_67xqx"]
+[ext_resource type="Script" uid="uid://406flp665rc" path="res://scripts/ui/TalentAttributeButton.gd" id="2_iod4t"]
 [ext_resource type="Texture2D" uid="uid://b8x5pugwwbapf" path="res://sprites/ui/attribute_increase.png" id="2_lg63a"]
 
 [node name="TalentAttributeButton" unique_id=1268509614 instance=ExtResource("1_67xqx")]

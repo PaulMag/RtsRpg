@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Revive" format=3 uid="uid://cjotrctw0c26l"]
 
-[ext_resource type="Script" uid="uid://c74fl0ck8ghve" path="res://scripts/Revive.gd" id="1_36yr5"]
+[ext_resource type="Script" uid="uid://c74fl0ck8ghve" path="res://scripts/abilities/Revive.gd" id="1_36yr5"]
 [ext_resource type="AudioStream" uid="uid://djnegbmbk54kr" path="res://audio/effects/09_human_charging_2_loop.wav" id="1_khnxn"]
 [ext_resource type="AudioStream" uid="uid://dsbvv58yv5wfi" path="res://audio/effects/15_human_dash_2.wav" id="1_s1poe"]
 [ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="2_ncogc"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmd7i0to56qc"]
 
-[ext_resource type="Script" uid="uid://088q0qkegbp1" path="res://scripts/BuffIcon.gd" id="1_fv1tp"]
+[ext_resource type="Script" uid="uid://088q0qkegbp1" path="res://scripts/ui/BuffIcon.gd" id="1_fv1tp"]
 [ext_resource type="Texture2D" uid="uid://3fl6g0678hws" path="res://sprites/ui/black_square.png" id="1_lnqg7"]
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="1_mtlp1"]
 

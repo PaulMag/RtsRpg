@@ -1,7 +1,7 @@
 class_name PersistentEffect
 extends Node
 
-const SCENE := preload("res://scenes/PersistentEffect.tscn")
+const SCENE := preload("res://scenes/abilities/PersistentEffect.tscn")
 
 var ability: Ability
 var buff: Buff #TODO: Need handle buff vs persistentEffectAbility better.

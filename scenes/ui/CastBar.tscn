@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dhj6n5k8ewb2v"]
 
 [ext_resource type="Texture2D" uid="uid://b0esjo1o4d0cy" path="res://sprites/progress_bar/progress_bar.png" id="1_588on"]
-[ext_resource type="Script" uid="uid://bispccejqtrp4" path="res://scripts/CastBar.gd" id="2_588on"]
+[ext_resource type="Script" uid="uid://bispccejqtrp4" path="res://scripts/ui/CastBar.gd" id="2_588on"]
 [ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="3_ed0al"]
 
 [node name="CastBar" type="TextureProgressBar" unique_id=121797500]

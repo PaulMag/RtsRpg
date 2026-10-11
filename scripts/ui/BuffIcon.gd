@@ -1,7 +1,7 @@
 class_name BuffIcon
 extends TextureRect
 
-const SCENE := preload("res://scenes/BuffIcon.tscn")
+const SCENE := preload("res://scenes/ui/BuffIcon.tscn")
 
 var buff: Buff
 

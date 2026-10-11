@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cvxwufk3f5u5r"]
 
-[ext_resource type="Script" uid="uid://cqvisvioxr6er" path="res://scripts/ItemButton.gd" id="1_hhgsf"]
+[ext_resource type="Script" uid="uid://cqvisvioxr6er" path="res://scripts/ui/ItemButton.gd" id="1_hhgsf"]
 [ext_resource type="Texture2D" uid="uid://bnq5no0chd288" path="res://sprites/ui/button_border.png" id="2_ps3q3"]
 [ext_resource type="FontFile" uid="uid://cwmwxoi7vuub1" path="res://fonts/SpaceMono-Bold.ttf" id="3_hhgsf"]
 

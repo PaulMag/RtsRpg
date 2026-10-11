@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dy6my6pasg0gn"]
 
-[ext_resource type="Script" uid="uid://jk3vpt142wws" path="res://scripts/PersistentEffect.gd" id="1_kl80b"]
+[ext_resource type="Script" uid="uid://jk3vpt142wws" path="res://scripts/abilities/PersistentEffect.gd" id="1_63bfv"]
 
 [node name="PersistentEffect" type="Node" unique_id=1299912955]
-script = ExtResource("1_kl80b")
+script = ExtResource("1_63bfv")
 
 [node name="TickTimer" type="Timer" parent="." unique_id=752620588]
 

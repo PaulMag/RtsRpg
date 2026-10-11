@@ -3,7 +3,7 @@ extends TextureButton
 
 signal drop_item
 
-const SCENE := preload("res://scenes/ItemButton.tscn")
+const SCENE := preload("res://scenes/ui/ItemButton.tscn")
 
 var item: Item
 var nodeIndex: int

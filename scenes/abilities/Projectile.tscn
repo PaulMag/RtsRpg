@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://kocsghk8ql1o"]
 
-[ext_resource type="Script" uid="uid://w2dluhohlg2u" path="res://scripts/Projectile.gd" id="1_r56g8"]
+[ext_resource type="Script" uid="uid://w2dluhohlg2u" path="res://scripts/abilities/Projectile.gd" id="1_r56g8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dprbf"]
 radius = 0.2

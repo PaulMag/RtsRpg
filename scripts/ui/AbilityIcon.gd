@@ -1,7 +1,7 @@
 class_name AbilityIcon
 extends TextureRect
 
-const SCENE := preload("res://scenes/AbilityIcon.tscn")
+const SCENE := preload("res://scenes/ui/AbilityIcon.tscn")
 
 var abilityId: Global.AbilityIds
 
