@@ -1,16 +1,5 @@
-extends Node3D
 class_name UnitSpawner
-
-@export var level: int = 1
-@export var afterSpawnTarget: Node3D
-@export var numberOfBarbarians: int
-@export var numberOfArchers: int
-@export var numberOfAdditionalBarbarians: int
-@export var numberOfAdditionalArchers: int
-@export var numberOfLoot: int = 3
-@export var talentPointsReward: float = 10
-
-@onready var label: Label = %Label
+extends Node3D
 
 const BARBARIAN_SCENE := preload("res://scenes/UnitBarbarian.tscn")
 const ARCHER_SCENE := preload("res://scenes/UnitArcher.tscn")
@@ -37,9 +26,20 @@ const ITEMS: Dictionary[PackedScene, Dictionary] = {
 	},
 }
 
+@export var level: int = 1
+@export var afterSpawnTarget: Node3D
+@export var numberOfBarbarians: int
+@export var numberOfArchers: int
+@export var numberOfAdditionalBarbarians: int
+@export var numberOfAdditionalArchers: int
+@export var numberOfLoot: int = 3
+@export var talentPointsReward: float = 10
+
 var numberOfLivingUnits: int = 0
 var remainingSpawns: Array[PackedScene] = []
 var livingUnits: Array[Unit] = []
+
+@onready var label: Label = %Label
 
 
 func _ready() -> void:

@@ -1,18 +1,17 @@
-extends Node3D
-
 class_name DestinationMarker
+extends Node3D
 
 const AMPLITUDE := -0.5
 const SPEED := 2 * PI
 const COLOR_MOVE := Color.GREEN
 const COLOR_ATTACK := Color.RED
 
-@onready var sprite: Sprite3D = $Sprite
-@onready var timer: Timer = $Timer
-
 var markerMotion: float
 var targetUnit: Unit = null
 var offset: float
+
+@onready var sprite: Sprite3D = $Sprite
+@onready var timer: Timer = $Timer
 
 
 func _process(delta: float) -> void:

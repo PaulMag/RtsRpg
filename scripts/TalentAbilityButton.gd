@@ -1,6 +1,6 @@
 @tool
-extends TalentBaseButton
 class_name TalentAbilityButton
+extends TalentBaseButton
 
 @export var ability: Ability:
 	set(_ability):

@@ -1,5 +1,5 @@
-extends Unit
 class_name UnitBarbarian
+extends Unit
 
 
 func _ready() -> void:

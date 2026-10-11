@@ -1,6 +1,6 @@
 @tool # Necessary for TalentAbilityButton button to not complain
-extends Resource
 class_name Ability
+extends Resource
 
 @export var name: String
 @export_multiline var description: String

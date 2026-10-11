@@ -4,6 +4,8 @@ const LOCAL_PLAYER = preload("res://scenes/LocalPlayer.tscn")
 
 const PORT = 4433
 
+var dungeon: Dungeon
+
 @onready var gameVersionLabel: Label = %GameVersionLabel
 @onready var multiplayerOptions: VBoxContainer = $UI/MultiplayerOptions
 @onready var readying: Container = %Readying
@@ -26,8 +28,6 @@ const PORT = 4433
 @onready var enemyStartMultiplierInput: SpinBox = %EnemyStartMultiplier
 @onready var enemyLevelMultiplierInput: SpinBox = %EnemyLevelMultiplier
 
-var dungeon: Dungeon
-
 
 func _ready() -> void:
 	var gameName: String = ProjectSettings.get_setting("application/config/name")
@@ -46,6 +46,96 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless":
 		print("Automatically starting dedicated server.")
 		_on_host_pressed.call_deferred()
+
+
+func spawn_dungeon() -> void:
+	dungeon = Dungeon.init()
+
+	dungeon.xpStart = xpStartMultiplierInput.value
+	dungeon.xpRewardMultiplier = xpRewardMultiplierInput.value
+	dungeon.enemyStartMultiplier = enemyStartMultiplierInput.value
+	dungeon.enemyLevelMultiplier = enemyLevelMultiplierInput.value
+
+	add_sibling(dungeon, true)
+	print("Spawned dungeon %s" % dungeon)
+
+	if multiplayer.is_server():
+		const UNIT_SCENE = preload("res://scenes/Unit.tscn")
+		var zPosition := -6 #TODO: Should use dedicated Dungeon.startPosition or similar
+		for node in players.get_children():
+			print("Adding player unit for %s" % node.name)
+			if node is LocalPlayer:
+				var localPLayer: LocalPlayer = node as LocalPlayer
+				var unit: Unit = UNIT_SCENE.instantiate() as Unit
+				unit.faction = Global.Faction.PLAYERS
+				unit.unitName = localPLayer.playerName
+				unit.playerColor = localPLayer.playerColor
+				unit.position = Vector3(-5, 0.01, zPosition)
+				zPosition += 3
+				dungeon.add_child(unit, true)
+		showUnitList.rpc()
+
+
+@rpc("authority", "call_local")
+func showUnitList() -> void:
+	Global.getPlayerCurrent().updateUnitList()
+	Global.getPlayerCurrent().canvasLayer.visible = true
+
+
+@rpc("authority", "call_local")
+func hideMultiplayerOptions() -> void:
+	multiplayerOptions.hide()
+
+
+func add_player(id: int) -> void:
+	var localPLayer: LocalPlayer = LOCAL_PLAYER.instantiate() as LocalPlayer
+	localPLayer.name = str(id)
+	players.add_child(localPLayer, true)
+	print("Added player %s with id %s." % [localPLayer.name, localPLayer.playerId])
+
+	for player in Global.getPlayers():
+		player.setStatusOnServer(player.isReady, player.playerName, player.playerColor) # Set correct status for newly joined player
+	updatePlayerStatsOnClients.rpc()
+
+
+@rpc("any_peer", "call_local")
+func updatePlayerStatsOnClients() -> void:
+	if multiplayer.is_server():
+		updatePlayerStats.rpc()
+
+
+@rpc("authority", "call_local")
+func updatePlayerStats() -> void:
+	var isReady := true
+
+	for node in playerLabelList.get_children():
+		node.queue_free()
+	for player in Global.getPlayers():
+		var label: Label = Label.new()
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.set_custom_minimum_size(Vector2(100, 0))
+		label.text = str(player.playerId)
+		label.modulate = player.playerColor
+		playerLabelList.add_child(label, true)
+
+		label = Label.new()
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.set_custom_minimum_size(Vector2(100, 0))
+		label.text = player.playerName
+		label.modulate = player.playerColor
+		playerLabelList.add_child(label, true)
+
+		label = Label.new()
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.set_custom_minimum_size(Vector2(100, 0))
+		label.text = "Ready" if player.isReady else "Not Ready"
+		label.modulate = player.playerColor
+		playerLabelList.add_child(label, true)
+
+		if not player.isReady: # All players must be ready to start the game
+			isReady = false
+
+	startButton.disabled = not isReady
 
 
 func _on_host_pressed() -> void:
@@ -92,40 +182,6 @@ func _on_connect_pressed() -> void:
 	startButton.hide()
 
 
-func spawn_dungeon() -> void:
-	dungeon = Dungeon.init()
-
-	dungeon.xpStart = xpStartMultiplierInput.value
-	dungeon.xpRewardMultiplier = xpRewardMultiplierInput.value
-	dungeon.enemyStartMultiplier = enemyStartMultiplierInput.value
-	dungeon.enemyLevelMultiplier = enemyLevelMultiplierInput.value
-
-	add_sibling(dungeon, true)
-	print("Spawned dungeon %s" % dungeon)
-
-	if multiplayer.is_server():
-		const UNIT_SCENE = preload("res://scenes/Unit.tscn")
-		var zPosition := -6 #TODO: Should use dedicated Dungeon.startPosition or similar
-		for node in players.get_children():
-			print("Adding player unit for %s" % node.name)
-			if node is LocalPlayer:
-				var localPLayer: LocalPlayer = node as LocalPlayer
-				var unit: Unit = UNIT_SCENE.instantiate() as Unit
-				unit.faction = Global.Faction.PLAYERS
-				unit.unitName = localPLayer.playerName
-				unit.playerColor = localPLayer.playerColor
-				unit.position = Vector3(-5, 0.01, zPosition)
-				zPosition += 3
-				dungeon.add_child(unit, true)
-		showUnitList.rpc()
-
-
-@rpc("authority", "call_local")
-func showUnitList() -> void:
-	Global.getPlayerCurrent().updateUnitList()
-	Global.getPlayerCurrent().canvasLayer.visible = true
-
-
 func _on_start_game_pressed() -> void:
 	hideMultiplayerOptions.rpc()
 	print("Game started")
@@ -134,22 +190,6 @@ func _on_start_game_pressed() -> void:
 	if multiplayer.is_server():
 		spawn_dungeon()
 		hostOptions.show()
-
-
-@rpc("authority", "call_local")
-func hideMultiplayerOptions() -> void:
-	multiplayerOptions.hide()
-
-
-func add_player(id: int) -> void:
-	var localPLayer: LocalPlayer = LOCAL_PLAYER.instantiate() as LocalPlayer
-	localPLayer.name = str(id)
-	players.add_child(localPLayer, true)
-	print("Added player %s with id %s." % [localPLayer.name, localPLayer.playerId])
-
-	for player in Global.getPlayers():
-		player.setStatusOnServer(player.isReady, player.playerName, player.playerColor) # Set correct status for newly joined player
-	updatePlayerStatsOnClients.rpc()
 
 
 func _on_restart_game_button_pressed() -> void:
@@ -184,43 +224,3 @@ func _on_ready_toggled(toggledOn: bool) -> void:
 		readyButton.text = "Ready"
 		await get_tree().create_timer(0.2).timeout #TODO: Do this properly
 		updatePlayerStatsOnClients.rpc()
-
-
-@rpc("any_peer", "call_local")
-func updatePlayerStatsOnClients() -> void:
-	if multiplayer.is_server():
-		updatePlayerStats.rpc()
-
-
-@rpc("authority", "call_local")
-func updatePlayerStats() -> void:
-	var isReady := true
-
-	for node in playerLabelList.get_children():
-		node.queue_free()
-	for player in Global.getPlayers():
-		var label: Label = Label.new()
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.set_custom_minimum_size(Vector2(100, 0))
-		label.text = str(player.playerId)
-		label.modulate = player.playerColor
-		playerLabelList.add_child(label, true)
-
-		label = Label.new()
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.set_custom_minimum_size(Vector2(100, 0))
-		label.text = player.playerName
-		label.modulate = player.playerColor
-		playerLabelList.add_child(label, true)
-
-		label = Label.new()
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.set_custom_minimum_size(Vector2(100, 0))
-		label.text = "Ready" if player.isReady else "Not Ready"
-		label.modulate = player.playerColor
-		playerLabelList.add_child(label, true)
-
-		if not player.isReady: # All players must be ready to start the game
-			isReady = false
-
-	startButton.disabled = not isReady

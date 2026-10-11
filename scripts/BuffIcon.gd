@@ -1,11 +1,11 @@
-extends TextureRect
 class_name BuffIcon
+extends TextureRect
 
-@onready var buffProgressBar: TextureProgressBar = $BuffProgressBar
+const SCENE := preload("res://scenes/BuffIcon.tscn")
 
 var buff: Buff
 
-const SCENE := preload("res://scenes/BuffIcon.tscn")
+@onready var buffProgressBar: TextureProgressBar = $BuffProgressBar
 
 
 static func init(_buff: Buff) -> BuffIcon:

@@ -1,14 +1,8 @@
 @tool
-extends TextureButton
 class_name TalentBaseButton
+extends TextureButton
 
 signal ranked_up
-
-@onready var nameLabel: Label = $NameLabel
-@onready var rankLabel: Label = $MarginContainer/RankLabel
-@onready var disableTexture: TextureRect = $MarginContainer/DisableTexture
-@onready var descriptionPanel: PanelContainer = %DescriptionPanel
-@onready var descriptionLabel: Label = %DescriptionLabel
 
 @export var maxRank: int = 1
 @export var rank: int = 0
@@ -25,6 +19,12 @@ signal ranked_up
 		talentDescription = _talentDescription
 		if Engine.is_editor_hint() and nameLabel:
 			descriptionLabel.text = _talentDescription
+
+@onready var nameLabel: Label = $NameLabel
+@onready var rankLabel: Label = $MarginContainer/RankLabel
+@onready var disableTexture: TextureRect = $MarginContainer/DisableTexture
+@onready var descriptionPanel: PanelContainer = %DescriptionPanel
+@onready var descriptionLabel: Label = %DescriptionLabel
 
 
 func _ready() -> void:

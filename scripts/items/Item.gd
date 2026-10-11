@@ -1,6 +1,5 @@
-extends Resource
-
 class_name Item
+extends Resource
 
 @export var itemType: Global.Items
 @export var name: String

@@ -1,5 +1,5 @@
-extends Area3D
 class_name AiController
+extends Area3D
 
 @export var unit: Unit
 
@@ -70,15 +70,6 @@ func alertAllies() -> void:
 					nearbyAlliedUnit.aiController.becomeAwareOfUnit(u)
 
 
-func _on_body_entered(body: Node3D) -> void:
-	if not multiplayer.is_server():
-		return
-	if body is Unit:
-		var u := body as Unit
-		if u.faction != unit.faction:
-			becomeAwareOfUnit(u)
-
-
 func becomeAwareOfUnit(u: Unit) -> void:
 	if not u in unit.threatTable:
 		print("%s is aware of unit %s" % [unit.unitName, u.unitName])
@@ -93,3 +84,12 @@ func enemyRessurected(ressurectedUnit: Unit) -> void:
 		return
 	print("%s is aware of ressurected unit %s" % [unit.unitName, ressurectedUnit.unitName])
 	recalculateTarget()
+
+
+func _on_body_entered(body: Node3D) -> void:
+	if not multiplayer.is_server():
+		return
+	if body is Unit:
+		var u := body as Unit
+		if u.faction != unit.faction:
+			becomeAwareOfUnit(u)

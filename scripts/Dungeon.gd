@@ -1,5 +1,7 @@
-extends Node3D
 class_name Dungeon
+extends Node3D
+
+const SCENE := preload("res://scenes/Dungeon.tscn")
 
 var xpStart: float = 1.0
 var xpRewardMultiplier: float = 1.0
@@ -7,8 +9,6 @@ var enemyStartMultiplier: float = 1.0
 var enemyLevelMultiplier: float = 1.0
 
 var remainingLoot: Array[Global.Items] = []
-
-const SCENE := preload("res://scenes/Dungeon.tscn")
 
 
 static func init() -> Dungeon:

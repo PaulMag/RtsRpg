@@ -1,18 +1,8 @@
-extends CharacterBody3D
 class_name Unit
+extends CharacterBody3D
 
 signal died
 signal ressurected
-
-@export var unitId: int
-@export var faction := Global.Faction.ENEMIES
-@export var loot: Array[Global.Items]
-@export var playerColor := Color.DIM_GRAY
-
-# Attributes
-var damageReduction: float = 0
-var attributes: Attributes
-@export var baseAttributes: Attributes
 
 enum states {
 	IDLE,
@@ -21,12 +11,49 @@ enum states {
 	SPELLCASTING,
 }
 
+@export var unitId: int
+@export var faction := Global.Faction.ENEMIES
+@export var loot: Array[Global.Items]
+@export var playerColor := Color.DIM_GRAY
+@export var baseAttributes: Attributes
+
 @export var unitName: String = ""
 @export var level: int = 1 # Only relevant for enemies for now
 @export var health: float = 75
 @export var mana: float = 40
 @export var state := states.IDLE
 @export var aiController: AiController
+
+# Attributes
+var damageReduction: float = 0
+var attributes: Attributes
+var moveDirection := Vector3.ZERO
+
+var targetUnit: Unit = null
+var castTargetUnit: Unit = null
+
+var isSelected := false
+var followCursor := false
+var followTarget := false
+var isCasting := false
+var castingAbilityId: Global.AbilityIds
+var queuedAbilityIds: Array[Global.AbilityIds] = []
+var isRecovering := false
+var canRegenMana := true
+var isAutocasting := false
+var autocastAbilityId: Global.AbilityIds
+var isDead := false
+
+var threatTable: Dictionary[Unit, float] = { }
+var buffs: Array[Buff] = []
+
+var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
+	Global.ItemSlots.MainHand: null,
+	Global.ItemSlots.OffHand: null,
+	Global.ItemSlots.Head: null,
+	Global.ItemSlots.Torso: null,
+}
+var talentPoints: float = 0
 
 @onready var characterModel: CharacterModel = $CharacterModel
 @onready var animationPlayer: AnimationPlayer = characterModel.animationPlayer
@@ -62,33 +89,6 @@ enum states {
 @onready var audioPlayerCasting: AudioStreamPlayer3D = $AudioPlayerCasting
 
 @onready var destination: Vector3
-var moveDirection := Vector3.ZERO
-
-var targetUnit: Unit = null
-var castTargetUnit: Unit = null
-
-var isSelected := false
-var followCursor := false
-var followTarget := false
-var isCasting := false
-var castingAbilityId: Global.AbilityIds
-var queuedAbilityIds: Array[Global.AbilityIds] = []
-var isRecovering := false
-var canRegenMana := true
-var isAutocasting := false
-var autocastAbilityId: Global.AbilityIds
-var isDead := false
-
-var threatTable: Dictionary[Unit, float] = { }
-var buffs: Array[Buff] = []
-
-var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
-	Global.ItemSlots.MainHand: null,
-	Global.ItemSlots.OffHand: null,
-	Global.ItemSlots.Head: null,
-	Global.ItemSlots.Torso: null,
-}
-var talentPoints: float = 0
 
 
 func _ready() -> void:
@@ -134,6 +134,110 @@ func _ready() -> void:
 	unitHud.visible = isSelected
 	talentTree.visible = talentTreeButton.button_pressed
 	inventoryPanel.visible = inventoryButton.button_pressed
+
+
+func _process(_delta: float) -> void:
+	healthBar.setValue(health)
+	manaBar.setValue(mana)
+
+	if isCasting:
+		castBar.value = castTimer.wait_time - castTimer.time_left
+	elif isRecovering:
+		castBar.value = recoveryTimer.time_left
+	elif multiplayer.is_server() and queuedAbilityIds.size() > 0:
+		dequeueAbilityOnServer()
+	elif multiplayer.is_server() and isAutocasting:
+		useAbilityOnServer(autocastAbilityId)
+
+	if multiplayer.is_server():
+		if isCasting:
+			state = states.SPELLCASTING
+		elif velocity:
+			state = states.WALKING
+		else:
+			state = states.IDLE
+
+	if velocity:
+		rotation.y = -Vector2(velocity.x, velocity.z).angle() + PI / 2
+		if not audioPlayerWalking.is_playing():
+			audioPlayerWalking.play()
+
+	if animationPlayer.current_animation == "Spellcast_Shoot" and animationPlayer.is_playing():
+		pass
+	elif state == states.SPELLCASTING:
+		animationPlayer.play("Spellcasting")
+	elif state == states.WALKING:
+		animationPlayer.play("Walking_A")
+	elif state == states.IDLE:
+		animationPlayer.play("Idle")
+
+
+func _physics_process(delta: float) -> void:
+	if multiplayer.is_server():
+		if moveDirection != Vector3.ZERO:
+			for i in range(5):
+				# This is a hack that allows sliding along the edges of the navigation mesh
+				var intended_velocity: Vector3
+				if i == 0:
+					intended_velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
+				elif i == 1:
+					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, PI / 8) * attributes.speed * attributes.speedRatio
+				elif i == 2:
+					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, -PI / 8) * attributes.speed * attributes.speedRatio
+				elif i == 3:
+					intended_velocity = Vector3(moveDirection.normalized().x, 0, 0) * attributes.speed * attributes.speedRatio
+				elif i == 4:
+					intended_velocity = Vector3(0, 0, moveDirection.normalized().z) * attributes.speed * attributes.speedRatio
+
+				var intended_position := position + intended_velocity * delta
+
+				var closest_point := NavigationServer3D.map_get_closest_point(
+					navigationAgent.get_navigation_map(),
+					intended_position,
+				)
+
+				if intended_position.distance_to(closest_point) < 0.4:
+					velocity = intended_velocity
+					followCursor = false
+					followTarget = false
+					break
+				else:
+					velocity = Vector3.ZERO
+
+		else:
+			velocity = Vector3.ZERO
+
+		if followCursor:
+			navigationAgent.target_position = destination
+		elif followTarget:
+			if is_instance_valid(targetUnit):
+				navigationAgent.target_position = targetUnit.position
+			else:
+				followTarget = false
+
+		if (followCursor or followTarget) and navigationAgent.is_target_reachable():
+			var destinationNext := navigationAgent.get_next_path_position()
+
+			velocity = position.direction_to(destinationNext).normalized() * attributes.speed * attributes.speedRatio
+			navigationAgent.set_velocity(velocity)
+
+			var followRange := 1.5
+
+			if (
+				followCursor
+				and Vector2(position.x, position.z).distance_to(Vector2(destination.x, destination.z)) < 0.05
+			): # Close enough to stop
+				velocity = Vector3.ZERO
+				followCursor = false
+			elif followTarget and position.distance_to(targetUnit.position) < followRange:
+				velocity = Vector3.ZERO
+		elif moveDirection == Vector3.ZERO:
+			velocity = Vector3.ZERO
+
+		if isCasting:
+			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
+
+		move_and_slide()
 
 
 func learnTalentAttributeOnServer(nodeIndex: int) -> void:
@@ -292,46 +396,6 @@ func dequeueAbility() -> void:
 		useAbilityOnServer(queuedAbilityId)
 
 
-func _on_cast_timer_timeout() -> void:
-	animationPlayer.play("Spellcast_Shoot")
-	isCasting = false
-	audioPlayerCasting.stop()
-	cancelCastButton.visible = false
-
-	var ability := Global.getAbility[castingAbilityId]
-	var success := (
-		false
-		if (castTargetUnit == null or not is_instance_valid(castTargetUnit))
-		else ability.use(self, castTargetUnit)
-	)
-
-	if success:
-		isRecovering = true
-		for abilityButton in getAbilityButtons():
-			if abilityButton.ability == null:
-				pass
-			elif abilityButton.ability.abilityId == ability.abilityId:
-				abilityButton.startCooldown(maxf(ability.cooldownTime, ability.recoveryTime))
-			else:
-				abilityButton.startCooldown(ability.recoveryTime)
-		recoveryTimer.start(ability.recoveryTime)
-		print("Unit %s ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
-		castBar.setToRecoveryMode(ability.recoveryTime)
-	else:
-		ability.refundCost(self)
-		print(
-			"Unit %s failed to use ability %s on unit %s"
-			% [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"]
-		)
-
-
-func _on_recovery_timer_timeout() -> void:
-	isRecovering = false
-	canRegenMana = true
-	manaBar.modulate = Color.WHITE
-	castBar.visible = false
-
-
 func canUseAbility(abilityId: Global.AbilityIds) -> bool:
 	var ability := Global.getAbility[abilityId]
 	return ability.canUse(self, targetUnit)
@@ -456,42 +520,6 @@ func setTargeted(toggleOn: bool) -> void: # Display/hide TargetCircle. This is o
 	targetCircle.visible = toggleOn
 
 
-func _process(_delta: float) -> void:
-	healthBar.setValue(health)
-	manaBar.setValue(mana)
-
-	if isCasting:
-		castBar.value = castTimer.wait_time - castTimer.time_left
-	elif isRecovering:
-		castBar.value = recoveryTimer.time_left
-	elif multiplayer.is_server() and queuedAbilityIds.size() > 0:
-		dequeueAbilityOnServer()
-	elif multiplayer.is_server() and isAutocasting:
-		useAbilityOnServer(autocastAbilityId)
-
-	if multiplayer.is_server():
-		if isCasting:
-			state = states.SPELLCASTING
-		elif velocity:
-			state = states.WALKING
-		else:
-			state = states.IDLE
-
-	if velocity:
-		rotation.y = -Vector2(velocity.x, velocity.z).angle() + PI / 2
-		if not audioPlayerWalking.is_playing():
-			audioPlayerWalking.play()
-
-	if animationPlayer.current_animation == "Spellcast_Shoot" and animationPlayer.is_playing():
-		pass
-	elif state == states.SPELLCASTING:
-		animationPlayer.play("Spellcasting")
-	elif state == states.WALKING:
-		animationPlayer.play("Walking_A")
-	elif state == states.IDLE:
-		animationPlayer.play("Idle")
-
-
 @rpc("any_peer", "call_local")
 func orderMove(_destination: Vector3) -> void:
 	destination = _destination
@@ -503,74 +531,6 @@ func orderFollowUnit(unit: Unit) -> void:
 	targetUnit = unit
 	followCursor = false
 	followTarget = true
-
-
-func _physics_process(delta: float) -> void:
-	if multiplayer.is_server():
-		if moveDirection != Vector3.ZERO:
-			for i in range(5):
-				# This is a hack that allows sliding along the edges of the navigation mesh
-				var intended_velocity: Vector3
-				if i == 0:
-					intended_velocity = moveDirection.normalized() * attributes.speed * attributes.speedRatio
-				elif i == 1:
-					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, PI / 8) * attributes.speed * attributes.speedRatio
-				elif i == 2:
-					intended_velocity = moveDirection.normalized().rotated(Vector3.UP, -PI / 8) * attributes.speed * attributes.speedRatio
-				elif i == 3:
-					intended_velocity = Vector3(moveDirection.normalized().x, 0, 0) * attributes.speed * attributes.speedRatio
-				elif i == 4:
-					intended_velocity = Vector3(0, 0, moveDirection.normalized().z) * attributes.speed * attributes.speedRatio
-
-				var intended_position := position + intended_velocity * delta
-
-				var closest_point := NavigationServer3D.map_get_closest_point(
-					navigationAgent.get_navigation_map(),
-					intended_position,
-				)
-
-				if intended_position.distance_to(closest_point) < 0.4:
-					velocity = intended_velocity
-					followCursor = false
-					followTarget = false
-					break
-				else:
-					velocity = Vector3.ZERO
-
-		else:
-			velocity = Vector3.ZERO
-
-		if followCursor:
-			navigationAgent.target_position = destination
-		elif followTarget:
-			if is_instance_valid(targetUnit):
-				navigationAgent.target_position = targetUnit.position
-			else:
-				followTarget = false
-
-		if (followCursor or followTarget) and navigationAgent.is_target_reachable():
-			var destinationNext := navigationAgent.get_next_path_position()
-
-			velocity = position.direction_to(destinationNext).normalized() * attributes.speed * attributes.speedRatio
-			navigationAgent.set_velocity(velocity)
-
-			var followRange := 1.5
-
-			if (
-				followCursor
-				and Vector2(position.x, position.z).distance_to(Vector2(destination.x, destination.z)) < 0.05
-			): # Close enough to stop
-				velocity = Vector3.ZERO
-				followCursor = false
-			elif followTarget and position.distance_to(targetUnit.position) < followRange:
-				velocity = Vector3.ZERO
-		elif moveDirection == Vector3.ZERO:
-			velocity = Vector3.ZERO
-
-		if isCasting:
-			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
-
-		move_and_slide()
 
 
 func damage(_attack: Attack) -> void:
@@ -766,6 +726,81 @@ func dropItem(nodeIndex: int) -> void:
 		print("Dropped item %s" % item.name)
 
 
+@rpc("any_peer", "call_local")
+func cancelCastOnClients() -> void:
+	if multiplayer.is_server():
+		cancelCast.rpc()
+
+
+@rpc("authority", "call_local")
+func cancelCast() -> void:
+	if isCasting:
+		castTimer.stop()
+		castBar.visible = false
+		isCasting = false
+		audioPlayerCasting.stop()
+		cancelCastButton.visible = false
+		Global.getAbility[castingAbilityId].refundCost(self)
+		canRegenMana = true
+		manaBar.modulate = Color.WHITE
+
+
+func giveTalentPointsOnServer(amount: float) -> void:
+	giveTalentPointsOnClients.rpc(amount)
+
+
+@rpc("any_peer", "call_local")
+func giveTalentPointsOnClients(amount: float) -> void:
+	if multiplayer.is_server():
+		giveTalentPoints.rpc(amount)
+
+
+@rpc("authority", "call_local")
+func giveTalentPoints(amount: float) -> void:
+	talentPoints += amount
+	labelTalentPoints.text = "Talent Points: %d" % talentPoints
+
+
+func _on_cast_timer_timeout() -> void:
+	animationPlayer.play("Spellcast_Shoot")
+	isCasting = false
+	audioPlayerCasting.stop()
+	cancelCastButton.visible = false
+
+	var ability := Global.getAbility[castingAbilityId]
+	var success := (
+		false
+		if (castTargetUnit == null or not is_instance_valid(castTargetUnit))
+		else ability.use(self, castTargetUnit)
+	)
+
+	if success:
+		isRecovering = true
+		for abilityButton in getAbilityButtons():
+			if abilityButton.ability == null:
+				pass
+			elif abilityButton.ability.abilityId == ability.abilityId:
+				abilityButton.startCooldown(maxf(ability.cooldownTime, ability.recoveryTime))
+			else:
+				abilityButton.startCooldown(ability.recoveryTime)
+		recoveryTimer.start(ability.recoveryTime)
+		print("Unit %s ability %s on unit %s" % [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"])
+		castBar.setToRecoveryMode(ability.recoveryTime)
+	else:
+		ability.refundCost(self)
+		print(
+			"Unit %s failed to use ability %s on unit %s"
+			% [unitName, ability.name, targetUnit.unitName if targetUnit else "NULL"]
+		)
+
+
+func _on_recovery_timer_timeout() -> void:
+	isRecovering = false
+	canRegenMana = true
+	manaBar.modulate = Color.WHITE
+	castBar.visible = false
+
+
 func _on_talent_tree_button_toggled(toggledOn: bool) -> void:
 	talentTree.visible = toggledOn
 	inventoryPanel.visible = toggledOn
@@ -793,25 +828,6 @@ func _on_cancel_cast_button_pressed() -> void:
 		cancelCastOnClients.rpc_id(1)
 
 
-@rpc("any_peer", "call_local")
-func cancelCastOnClients() -> void:
-	if multiplayer.is_server():
-		cancelCast.rpc()
-
-
-@rpc("authority", "call_local")
-func cancelCast() -> void:
-	if isCasting:
-		castTimer.stop()
-		castBar.visible = false
-		isCasting = false
-		audioPlayerCasting.stop()
-		cancelCastButton.visible = false
-		Global.getAbility[castingAbilityId].refundCost(self)
-		canRegenMana = true
-		manaBar.modulate = Color.WHITE
-
-
 func _on_input_event(
 	_camera: Node,
 	event: InputEvent,
@@ -836,19 +852,3 @@ func _on_mouse_exited() -> void:
 	selectedCircle.modulate = playerColor
 	if aiController:
 		aiController.visible = false
-
-
-func giveTalentPointsOnServer(amount: float) -> void:
-	giveTalentPointsOnClients.rpc(amount)
-
-
-@rpc("any_peer", "call_local")
-func giveTalentPointsOnClients(amount: float) -> void:
-	if multiplayer.is_server():
-		giveTalentPoints.rpc(amount)
-
-
-@rpc("authority", "call_local")
-func giveTalentPoints(amount: float) -> void:
-	talentPoints += amount
-	labelTalentPoints.text = "Talent Points: %d" % talentPoints

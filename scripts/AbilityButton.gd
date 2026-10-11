@@ -1,5 +1,10 @@
-extends TextureButton
 class_name AbilityButton
+extends TextureButton
+
+signal toggle_autocast
+
+var ability: Ability
+var onCooldown: bool = false
 
 @onready var cooldownTimer: Timer = $CooldownTimer
 @onready var cooldownProgressBar: TextureProgressBar = $CooldownProgressBar
@@ -8,11 +13,6 @@ class_name AbilityButton
 @onready var descriptionLabel: Label = %DescriptionLabel
 @onready var hotkeyLabel: Label = %HotkeyLabel
 @onready var backgroundRect: ColorRect = $BackgroundRect
-
-var ability: Ability
-var onCooldown: bool = false
-
-signal toggle_autocast
 
 
 func _ready() -> void:
@@ -26,11 +26,17 @@ func _process(_delta: float) -> void:
 		cooldownProgressBar.value = cooldownTimer.time_left
 
 
-func _on_gui_input(event: InputEvent) -> void:
-	if event.is_action_released("mouse_right_click"):
-		toggle_autocast.emit()
-	elif event.is_action_released("mouse_middle_click"):
-		clearAbility(Global.getPlayerCurrent().getSelectedUnit())
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	if data is Ability:
+		var _ability: Ability = data
+		return true
+	return false
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if data is Ability:
+		var _ability: Ability = data
+		setAbility(_ability, Global.getPlayerCurrent().getSelectedUnit())
 
 
 func setAbility(_ability: Ability, unit: Unit) -> void:
@@ -73,22 +79,16 @@ func startCooldown(duration: float = 0) -> void:
 		disabled = true
 
 
+func _on_gui_input(event: InputEvent) -> void:
+	if event.is_action_released("mouse_right_click"):
+		toggle_autocast.emit()
+	elif event.is_action_released("mouse_middle_click"):
+		clearAbility(Global.getPlayerCurrent().getSelectedUnit())
+
+
 func _on_cooldown_timeout() -> void:
 	onCooldown = false
 	disabled = false
-
-
-func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	if data is Ability:
-		var _ability: Ability = data
-		return true
-	return false
-
-
-func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	if data is Ability:
-		var _ability: Ability = data
-		setAbility(_ability, Global.getPlayerCurrent().getSelectedUnit())
 
 
 func _on_mouse_entered() -> void:

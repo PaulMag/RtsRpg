@@ -1,16 +1,16 @@
+class_name Pickup
 extends Area3D
 
-class_name Pickup
+const SCENE := preload("res://scenes/Pickup.tscn")
 
 @export var itemType: Global.Items
+
 var itemResource: Item
 
 @onready var meshInstance: MeshInstance3D = $MeshInstance
 @onready var collisionShape: CollisionShape3D = $CollisionShape
 @onready var descriptionPanel: PanelContainer = %DescriptionPanel
 @onready var descriptionLabel: Label = %DescriptionLabel
-
-const SCENE := preload("res://scenes/Pickup.tscn")
 
 
 static func init(_itemType: Global.Items) -> Pickup:

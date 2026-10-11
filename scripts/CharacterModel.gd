@@ -1,7 +1,6 @@
+class_name CharacterModel
 # @tool
 extends Node3D
-
-class_name CharacterModel
 
 @export var selectedHeadMeshId: int
 @export var selectedHeadTextureId: int
@@ -10,6 +9,8 @@ class_name CharacterModel
 @export var defaultMeshes: Dictionary[Global.ItemSlots, Mesh]
 @export var headMeshes: Array[Mesh]
 @export var textures: Array[Texture2D]
+
+var clothesMaterial: StandardMaterial3D
 
 @onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 @onready var itemMeshes: Dictionary[Global.ItemSlots, MeshInstance3D] = {
@@ -30,8 +31,6 @@ class_name CharacterModel
 	%RightHandItem,
 	%LeftHandItem,
 ]
-
-var clothesMaterial: StandardMaterial3D
 
 
 func _ready() -> void:

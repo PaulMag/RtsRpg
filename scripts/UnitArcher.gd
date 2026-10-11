@@ -1,5 +1,5 @@
-extends Unit
 class_name UnitArcher
+extends Unit
 
 
 func _ready() -> void:

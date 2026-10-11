@@ -1,16 +1,16 @@
-extends TextureButton
 class_name ItemButton
-
-@onready var equippedBorder: Sprite2D = %EquippedBorder
-@onready var descriptionPanel: PanelContainer = %DescriptionPanel
-@onready var descriptionLabel: Label = %DescriptionLabel
-
-var item: Item
-var nodeIndex: int
+extends TextureButton
 
 signal drop_item
 
 const SCENE := preload("res://scenes/ItemButton.tscn")
+
+var item: Item
+var nodeIndex: int
+
+@onready var equippedBorder: Sprite2D = %EquippedBorder
+@onready var descriptionPanel: PanelContainer = %DescriptionPanel
+@onready var descriptionLabel: Label = %DescriptionLabel
 
 
 static func init(_item: Item, _nodeIndex: int) -> ItemButton:
@@ -26,13 +26,13 @@ func _ready() -> void:
 	descriptionLabel.text = item.getDescription()
 
 
+func setEquipped(toggledOn: bool) -> void:
+	equippedBorder.visible = toggledOn
+
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("mouse_right_click"):
 		drop_item.emit()
-
-
-func setEquipped(toggledOn: bool) -> void:
-	equippedBorder.visible = toggledOn
 
 
 func _on_mouse_entered() -> void:

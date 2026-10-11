@@ -1,5 +1,5 @@
-extends AiController
 class_name AiControllerMelee
+extends AiController
 
 
 func _ready() -> void:

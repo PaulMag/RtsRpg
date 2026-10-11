@@ -1,5 +1,5 @@
-extends TextureProgressBar
 class_name CastBar
+extends TextureProgressBar
 
 @onready var label: Label = $Label
 

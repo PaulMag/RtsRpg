@@ -1,9 +1,9 @@
+class_name Projectile
 extends Area3D
 
-class_name Projectile
+const heightAboveGround := Vector3(0, 0.8, 0) # Keep projectile above ground
 
-@onready var meshInstance: MeshInstance3D = $MeshInstance
-@onready var audioPlayer: AudioStreamPlayer3D = $AudioPlayer
+const SCENE := preload("res://scenes/Projectile.tscn")
 
 var attack: Attack
 var target: Unit
@@ -14,9 +14,8 @@ var speed: float
 
 var isActive: bool = true
 
-const heightAboveGround := Vector3(0, 0.8, 0) # Keep projectile above ground
-
-const SCENE := preload("res://scenes/Projectile.tscn")
+@onready var meshInstance: MeshInstance3D = $MeshInstance
+@onready var audioPlayer: AudioStreamPlayer3D = $AudioPlayer
 
 
 static func init(

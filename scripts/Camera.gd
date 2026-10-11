@@ -1,10 +1,10 @@
 extends Node3D
 
-@onready var camera: Camera3D = $Camera
-
 var rotate_mode: bool = false
 var rot_x: float = 0
 var rot_y: float = -PI / 4
+
+@onready var camera: Camera3D = $Camera
 
 
 func _ready() -> void:

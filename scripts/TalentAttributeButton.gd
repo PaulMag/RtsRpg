@@ -1,6 +1,6 @@
 @tool
-extends TalentBaseButton
 class_name TalentAttributeButton
+extends TalentBaseButton
 
 @export var attributes: Attributes
 

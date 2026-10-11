@@ -1,6 +1,6 @@
 @tool
-extends Ability
 class_name Revive
+extends Ability
 
 
 func use(user: Unit, target: Unit, source: Unit = null) -> bool:

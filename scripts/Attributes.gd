@@ -1,6 +1,6 @@
 @tool # Necessary for TalentAttributeButton button to not complain
-extends Resource
 class_name Attributes
+extends Resource
 
 @export var maxHealth: int = 0
 @export var healthRegen: float = 0
@@ -41,6 +41,13 @@ var effFirePower: float:
 var effHealPower: float:
 	get:
 		return healingPower * (1 + healingSkill / 100.0)
+
+
+static func sum(attributesList: Array[Attributes]) -> Attributes:
+	var total := Attributes.new()
+	for attributes in attributesList:
+		total = total.add(attributes)
+	return total
 
 
 func add(other: Attributes) -> Attributes:
@@ -171,10 +178,3 @@ func getDescriptionNoZero() -> String:
 	if speedRatio != 1.0:
 		lines.append("Speed Ratio:   %d %%" % ((speedRatio - 1) * 100))
 	return "\n".join(lines)
-
-
-static func sum(attributesList: Array[Attributes]) -> Attributes:
-	var total := Attributes.new()
-	for attributes in attributesList:
-		total = total.add(attributes)
-	return total

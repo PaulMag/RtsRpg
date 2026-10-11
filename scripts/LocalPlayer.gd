@@ -1,24 +1,33 @@
-extends Node
 class_name LocalPlayer
+extends Node
 
 @export var isReady: bool = false
 @export var playerId: int
 @export var playerName: String
 @export var playerColor: Color
 
-@onready var destinationMarker: DestinationMarker = $DestinationMarker
-@onready var canvasLayer: CanvasLayer = $CanvasLayer
-@onready var unitList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/UnitList
+@export var moveDirection := Vector2.ZERO
 
 var selectedUnitId: int
 
-@export var moveDirection := Vector2.ZERO
+@onready var destinationMarker: DestinationMarker = $DestinationMarker
+@onready var canvasLayer: CanvasLayer = $CanvasLayer
+@onready var unitList: VBoxContainer = $CanvasLayer/GameHud/VBoxContainer/UnitList
 
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	playerId = name.to_int()
 	add_to_group("players")
+
+
+func _physics_process(_delta: float) -> void:
+	if playerId == multiplayer.get_unique_id() and is_instance_valid(Global.cameraArm):
+		moveDirection = Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down").rotated(
+			-Global.cameraArm.rotation.y
+		)
+	if multiplayer.is_server() and getSelectedUnit():
+		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -70,15 +79,6 @@ func issueMoveOrder(destination: Vector3) -> void:
 @rpc("call_local")
 func setSelectedUnitId(unitId: int) -> void:
 	selectedUnitId = unitId
-
-
-func _physics_process(_delta: float) -> void:
-	if playerId == multiplayer.get_unique_id() and is_instance_valid(Global.cameraArm):
-		moveDirection = Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down").rotated(
-			-Global.cameraArm.rotation.y
-		)
-	if multiplayer.is_server() and getSelectedUnit():
-		getSelectedUnit().moveDirection = Vector3(moveDirection.x, 0, moveDirection.y)
 
 
 func getSelectedUnit() -> Unit:
