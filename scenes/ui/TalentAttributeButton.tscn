@@ -10,7 +10,7 @@ script = ExtResource("2_iod4t")
 attributes = null
 maxRank = 100
 
-[node name="RankLabel" parent="MarginContainer" parent_id_path=PackedInt32Array(162260021) index="0" unique_id=1822665028]
+[node name="RankLabel" parent="MarginContainer" parent_id_path=PackedInt32Array(162260021) index="1" unique_id=1822665028]
 text = "0/100"
 
 [node name="NameLabel" parent="." index="1" unique_id=2069814147]

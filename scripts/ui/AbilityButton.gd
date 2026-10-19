@@ -45,7 +45,7 @@ func setAbility(_ability: Ability, unit: Unit) -> void:
 	texture_normal = ability.texture
 	backgroundRect.hide()
 	hotkeyLabel.modulate.a = 1.0
-	descriptionLabel.text = "  %s\n%s" % [ability.name, ability.getDescription()]
+	descriptionLabel.text = ability.getDescription()
 	pressed.connect(unit.useAbilityOnServer.bind(ability.abilityId))
 	toggle_autocast.connect(unit.toggleAutocastOnServer.bind(ability.abilityId))
 	mouse_entered.connect(unit.setRangeCircle.bind(ability.targetRange))
