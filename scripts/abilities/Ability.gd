@@ -16,15 +16,16 @@ extends Resource
 @export var manaCost: int
 @export var isHealing: bool = false
 @export var aoeRadius: float = 0
+@export var maxTargets: int = 0 ## Only relevant for AoE abilities. 0 means no limit.
 
 @export var buffDuration: float
 @export var buffAttributes: Attributes = null
-@export var tickDuration: float
-@export var persistentEffectAbility: Ability = null
+@export var tickDuration: float ## Time in seconds between each tick of the persistent effect.
+@export var persistentEffectAbility: Ability ## Secondary ability which activates for each tick.
 
-@export var castTime: float = 2 # Time in seconds to cast the ability.
-@export var recoveryTime: float = 1 # Time in seconds before Unit can use an ability again.
-@export var cooldownTime: float = 0 # Time in seconds before Unit can use this ability again.
+@export var castTime: float = 2 ## Time in seconds to cast the ability.
+@export var recoveryTime: float = 1 ## Time in seconds before Unit can use any ability again.
+@export var cooldownTime: float = 0 ## Time in seconds before Unit can use this ability again.
 @export var speedFactorWhileCasting: float = 0.5
 
 @export var projectileSpeed: float = 20
@@ -100,6 +101,12 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 					and !(user.faction != u.faction and !canTargetEnemy)
 				),
 		) as Array[Unit]
+		if maxTargets > 0 and _targets.size() > maxTargets: # Get the closest targets to the main target
+			_targets.sort_custom(
+				func(a: Unit, b: Unit) -> bool:
+					return target.position.distance_to(a.position) < target.position.distance_to(b.position),
+			)
+			_targets = _targets.slice(0, maxTargets)
 		for _target in _targets:
 			var newProjectile := Projectile.init(
 				attack,
@@ -142,6 +149,8 @@ func getDescription() -> String:
 		_description += "Cooldown:   %d s\n" % cooldownTime
 	if aoeRadius > 0:
 		_description += "AoE radius: %d m\n" % aoeRadius
+		if maxTargets > 0:
+			_description += "Max targets: %d\n" % maxTargets
 	if manaCost > 0:
 		_description += "Mana cost:  %d\n" % manaCost
 	_description += "Targets:    %s%s%s%s" % [

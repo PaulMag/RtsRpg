@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://dfg0xds0owi72"]
+
+[ext_resource type="AudioStream" uid="uid://b3dlwthbvdhuc" path="res://audio/effects/13_human_jump_land_1.wav" id="1_5y3i4"]
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_ksvpw"]
+[ext_resource type="AudioStream" uid="uid://cpj636pcqw5q4" path="res://audio/effects/13_human_jump_land_2.wav" id="2_ksvpw"]
+[ext_resource type="ArrayMesh" uid="uid://qtm3fcff04ya" path="res://models/projectiles/arrow.tres" id="3_s7207"]
+[ext_resource type="AudioStream" uid="uid://cg6dq5h1jtnrl" path="res://audio/effects/12_human_jump_1.wav" id="4_6380p"]
+[ext_resource type="AudioStream" uid="uid://bk8ifcev7na30" path="res://audio/effects/12_human_jump_2.wav" id="5_31g6a"]
+[ext_resource type="AudioStream" uid="uid://dd6w8u60plhp7" path="res://audio/effects/12_human_jump_3.wav" id="6_acxpy"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="7_16dev"]
+[ext_resource type="Texture2D" uid="uid://np8lsmjupvri" path="res://sprites/abilities/ranged_attack.png" id="8_tirep"]
+
+[sub_resource type="Resource" id="Resource_extec"]
+script = ExtResource("1_ksvpw")
+speedRatio = 0.5
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xa5h0"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 2
+stream_0/stream = ExtResource("1_5y3i4")
+stream_1/stream = ExtResource("2_ksvpw")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yl5wn"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("4_6380p")
+stream_1/stream = ExtResource("5_31g6a")
+stream_2/stream = ExtResource("6_acxpy")
+
+[resource]
+script = ExtResource("7_16dev")
+name = "AchillesShot"
+description = "Ranged attack that slows the target."
+texture = ExtResource("8_tirep")
+abilityId = 17
+damageRanged = 0.5
+targetRange = 15
+buffDuration = 5.0
+buffAttributes = SubResource("Resource_extec")
+castTime = 1.5
+cooldownTime = 4.0
+projectileMesh = ExtResource("3_s7207")
+projectileShootAudio = SubResource("AudioStreamRandomizer_yl5wn")
+projectileHitAudio = SubResource("AudioStreamRandomizer_xa5h0")
+canTargetEnemy = true

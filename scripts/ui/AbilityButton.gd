@@ -77,6 +77,7 @@ func startCooldown(duration: float = 0) -> void:
 		cooldownTimer.start(duration)
 		onCooldown = true
 		disabled = true
+		cooldownProgressBar.show()
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -89,6 +90,7 @@ func _on_gui_input(event: InputEvent) -> void:
 func _on_cooldown_timeout() -> void:
 	onCooldown = false
 	disabled = false
+	cooldownProgressBar.hide()
 
 
 func _on_mouse_entered() -> void:

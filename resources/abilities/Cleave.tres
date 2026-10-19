@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://brjwfbdhrdscb"]
+
+[ext_resource type="AudioStream" uid="uid://c2qhcq0cco88t" path="res://audio/effects/07_human_atk_sword_1.wav" id="1_cwmvg"]
+[ext_resource type="AudioStream" uid="uid://bejqibvj3xan6" path="res://audio/effects/07_human_atk_sword_2.wav" id="2_jijcg"]
+[ext_resource type="AudioStream" uid="uid://diejgckfoupai" path="res://audio/effects/07_human_atk_sword_3.wav" id="3_aqcna"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="4_i3um8"]
+[ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="5_s4jvo"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e8v6u"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("1_cwmvg")
+stream_1/stream = ExtResource("2_jijcg")
+stream_2/stream = ExtResource("3_aqcna")
+
+[resource]
+script = ExtResource("4_i3um8")
+name = "Cleave"
+description = "Melee attack that hits a second target near the primary target."
+texture = ExtResource("5_s4jvo")
+abilityId = 14
+damageMelee = 1.0
+targetRange = 2
+aoeRadius = 2.0
+maxTargets = 2
+castTime = 1.5
+cooldownTime = 3.0
+projectileHitAudio = SubResource("AudioStreamRandomizer_e8v6u")
+canTargetEnemy = true

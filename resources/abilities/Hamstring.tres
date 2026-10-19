@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://dyxgfcpkhikrb"]
+
+[ext_resource type="AudioStream" uid="uid://c2qhcq0cco88t" path="res://audio/effects/07_human_atk_sword_1.wav" id="1_nxyx5"]
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="1_p3a3h"]
+[ext_resource type="AudioStream" uid="uid://bejqibvj3xan6" path="res://audio/effects/07_human_atk_sword_2.wav" id="2_p3a3h"]
+[ext_resource type="AudioStream" uid="uid://diejgckfoupai" path="res://audio/effects/07_human_atk_sword_3.wav" id="3_adxyx"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="4_in4uq"]
+[ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="5_htx03"]
+
+[sub_resource type="Resource" id="Resource_nxyx5"]
+script = ExtResource("1_p3a3h")
+speedRatio = 0.5
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e8v6u"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("1_nxyx5")
+stream_1/stream = ExtResource("2_p3a3h")
+stream_2/stream = ExtResource("3_adxyx")
+
+[resource]
+script = ExtResource("4_in4uq")
+name = "Hamstring"
+description = "Melee attack that slows the target."
+texture = ExtResource("5_htx03")
+abilityId = 15
+damageMelee = 0.5
+targetRange = 2
+buffDuration = 5.0
+buffAttributes = SubResource("Resource_nxyx5")
+castTime = 1.0
+cooldownTime = 4.0
+projectileHitAudio = SubResource("AudioStreamRandomizer_e8v6u")
+canTargetEnemy = true

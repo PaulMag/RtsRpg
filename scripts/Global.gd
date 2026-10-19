@@ -50,6 +50,11 @@ enum AbilityIds {
 	Firebolt,
 	FireAura,
 	FireAuraEffect,
+	SavageStrike,
+	Cleave,
+	Hamstring,
+	Volley,
+	AchillesShot,
 }
 
 var getAbility: Array[Ability] = [
@@ -66,6 +71,11 @@ var getAbility: Array[Ability] = [
 	load("res://resources/abilities/Firebolt.tres"),
 	load("res://resources/abilities/FireAura.tres"),
 	load("res://resources/abilities/FireAuraEffect.tres"),
+	load("res://resources/abilities/SavageStrike.tres"),
+	load("res://resources/abilities/Cleave.tres"),
+	load("res://resources/abilities/Hamstring.tres"),
+	load("res://resources/abilities/Volley.tres"),
+	load("res://resources/abilities/AchillesShot.tres"),
 ]
 
 var cameraArm: Node3D
