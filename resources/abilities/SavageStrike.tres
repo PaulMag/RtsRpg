@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Ability" format=3 uid="uid://cxymv33dd6yqg"]
+
+[ext_resource type="AudioStream" uid="uid://c2qhcq0cco88t" path="res://audio/effects/07_human_atk_sword_1.wav" id="1_extec"]
+[ext_resource type="AudioStream" uid="uid://bejqibvj3xan6" path="res://audio/effects/07_human_atk_sword_2.wav" id="2_052cw"]
+[ext_resource type="AudioStream" uid="uid://diejgckfoupai" path="res://audio/effects/07_human_atk_sword_3.wav" id="3_utyb1"]
+[ext_resource type="Script" uid="uid://csw5vmahp3gxr" path="res://scripts/abilities/Ability.gd" id="4_amxnp"]
+[ext_resource type="Texture2D" uid="uid://bpq8gkaku5ls3" path="res://sprites/abilities/melee_attack.png" id="5_gpfnk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e8v6u"]
+random_pitch = 1.2
+random_volume_offset_db = 5.0
+streams_count = 3
+stream_0/stream = ExtResource("1_extec")
+stream_1/stream = ExtResource("2_052cw")
+stream_2/stream = ExtResource("3_utyb1")
+
+[resource]
+script = ExtResource("4_amxnp")
+name = "Savage Strike"
+description = "Melee attack that deals less damage but increased Threat."
+texture = ExtResource("5_gpfnk")
+abilityId = 13
+damageMelee = 0.5
+threatAmount = 25
+targetRange = 2
+castTime = 3.0
+projectileHitAudio = SubResource("AudioStreamRandomizer_e8v6u")
+canTargetEnemy = true

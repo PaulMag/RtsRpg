@@ -16,14 +16,19 @@
 [ext_resource type="Resource" uid="uid://dvixwcti6forv" path="res://resources/abilities/HealingWord.tres" id="12_5usyn"]
 [ext_resource type="Texture2D" uid="uid://djekvburbflla" path="res://sprites/abilities/healing_word.png" id="13_05g4s"]
 [ext_resource type="Texture2D" uid="uid://np8lsmjupvri" path="res://sprites/abilities/ranged_attack.png" id="13_ipap1"]
+[ext_resource type="Resource" uid="uid://brjwfbdhrdscb" path="res://resources/abilities/Cleave.tres" id="14_3wkp1"]
 [ext_resource type="Resource" uid="uid://csi0odxr0r80r" path="res://resources/abilities/Fireball.tres" id="14_bipdo"]
 [ext_resource type="Resource" uid="uid://b5k3kpp886qi2" path="res://resources/abilities/RangedAttack.tres" id="14_cg3ic"]
 [ext_resource type="Texture2D" uid="uid://df5oa6ms0mgpg" path="res://sprites/abilities/fireball.png" id="14_ofk60"]
+[ext_resource type="Resource" uid="uid://cxymv33dd6yqg" path="res://resources/abilities/SavageStrike.tres" id="15_l02vo"]
+[ext_resource type="Resource" uid="uid://dyxgfcpkhikrb" path="res://resources/abilities/Hamstring.tres" id="15_l32uw"]
 [ext_resource type="Texture2D" uid="uid://wjkd0i5ytq7c" path="res://sprites/abilities/taunt.png" id="16_rwbbu"]
 [ext_resource type="Texture2D" uid="uid://cjmcnk8tg4qpv" path="res://sprites/abilities/firebolt.png" id="17_8pcfg"]
 [ext_resource type="Resource" uid="uid://vfj7qpv0rm26" path="res://resources/abilities/Taunt.tres" id="17_c54xi"]
 [ext_resource type="Resource" uid="uid://b20n1yb7j1i6s" path="res://resources/abilities/Firebolt.tres" id="19_04y5r"]
+[ext_resource type="Resource" uid="uid://4vp63i0h5ruh" path="res://resources/abilities/Volley.tres" id="19_hqlbv"]
 [ext_resource type="Texture2D" uid="uid://bjsk4arfc8pii" path="res://sprites/abilities/slow.png" id="20_cp300"]
+[ext_resource type="Resource" uid="uid://dfg0xds0owi72" path="res://resources/abilities/AchillesShot.tres" id="20_njlos"]
 [ext_resource type="Resource" uid="uid://ci1xy610j6cqf" path="res://resources/abilities/Slow.tres" id="21_5dcda"]
 [ext_resource type="Texture2D" uid="uid://d3xl2tj2f5uw6" path="res://sprites/abilities/cure_wounds.png" id="21_itqay"]
 [ext_resource type="Texture2D" uid="uid://byrr7adyvlirg" path="res://sprites/abilities/fire_aura.png" id="21_opm2l"]
@@ -458,9 +463,9 @@ offset_bottom = 694.0
 [node name="MeleeAttack" parent="UnitHud/TalentTree/TalentButtons" unique_id=674189554 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 0
-offset_left = -42.0
+offset_left = -57.0
 offset_top = 52.0
-offset_right = 7.0
+offset_right = -8.0
 offset_bottom = 101.0
 texture_normal = ExtResource("10_1ssdg")
 ability = ExtResource("10_telu4")
@@ -472,12 +477,77 @@ Range:      2 m
 Cast time:  1.0 + 1 s
 Targets:    enemy"
 
+[node name="SavageStrike" parent="UnitHud/TalentTree/TalentButtons" unique_id=1025940482 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 0
+offset_left = -64.0
+offset_top = 220.0
+offset_right = -15.0
+offset_bottom = 269.0
+disabled = true
+texture_normal = ExtResource("10_1ssdg")
+ability = ExtResource("15_l02vo")
+requiredTalents = [NodePath("../MeleeAttack")]
+talentName = "Savage Strike"
+talentDescription = "Melee attack that deals less damage but increased Threat.
+
+Damage:     0.5 x MeleePower
+Threat:     25
+Range:      2 m
+Cast time:  3.0 + 1 s
+Targets:    enemy"
+
+[node name="Hamstring" parent="UnitHud/TalentTree/TalentButtons" unique_id=848765121 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 0
+offset_left = 13.0
+offset_top = 195.0
+offset_right = 62.0
+offset_bottom = 244.0
+disabled = true
+texture_normal = ExtResource("10_1ssdg")
+ability = ExtResource("15_l32uw")
+requiredTalents = [NodePath("../MeleeAttack")]
+talentName = "Hamstring"
+talentDescription = "Melee attack that slows the target.
+
+Damage:     0.5 x MeleePower
+Range:      2 m
+Cast time:  1.0 + 1 s
+Cooldown:   4 s
+Targets:    enemy
+Duration:   5 s
+  Debuff effect
+Speed Ratio:   -50 %"
+
+[node name="Cleave" parent="UnitHud/TalentTree/TalentButtons" unique_id=1438235551 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 0
+offset_left = 79.0
+offset_top = 182.0
+offset_right = 128.0
+offset_bottom = 231.0
+disabled = true
+texture_normal = ExtResource("10_1ssdg")
+ability = ExtResource("14_3wkp1")
+requiredTalents = [NodePath("../MeleeAttack")]
+talentName = "Cleave"
+talentDescription = "Melee attack that hits a second target near the primary target.
+
+Damage:     1.0 x MeleePower
+Range:      2 m
+Cast time:  1.5 + 1 s
+Cooldown:   3 s
+AoE radius: 2 m
+Max targets: 2
+Targets:    enemy"
+
 [node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" unique_id=822648170 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 0
-offset_left = 83.0
+offset_left = 130.0
 offset_top = 52.0
-offset_right = 132.0
+offset_right = 179.0
 offset_bottom = 101.0
 texture_normal = ExtResource("13_ipap1")
 ability = ExtResource("14_cg3ic")
@@ -489,13 +559,58 @@ Range:      15 m
 Cast time:  1.5 + 1 s
 Targets:    enemy"
 
+[node name="AchiilesShot" parent="UnitHud/TalentTree/TalentButtons" unique_id=479329952 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 0
+offset_left = 163.0
+offset_top = 161.0
+offset_right = 212.0
+offset_bottom = 210.0
+disabled = true
+texture_normal = ExtResource("13_ipap1")
+ability = ExtResource("20_njlos")
+requiredTalents = [NodePath("../RangedAttack")]
+talentName = "AchillesShot"
+talentDescription = "Ranged attack that slows the target.
+
+Damage:     0.5 x RangedPower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Cooldown:   4 s
+Targets:    enemy
+Duration:   5 s
+  Debuff effect
+Speed Ratio:   -50 %"
+
+[node name="Volley" parent="UnitHud/TalentTree/TalentButtons" unique_id=1558768772 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_rio8d")]
+custom_minimum_size = Vector2(49, 49)
+layout_mode = 0
+offset_left = 243.0
+offset_top = 135.0
+offset_right = 292.0
+offset_bottom = 184.0
+disabled = true
+texture_normal = ExtResource("13_ipap1")
+ability = ExtResource("19_hqlbv")
+requiredTalents = [NodePath("../RangedAttack")]
+talentName = "Volley"
+talentDescription = "Ranged attack that hits two extra targets near the primary target. Has shorter range.
+
+Damage:     1.0 x RangedPower
+Range:      12 m
+Cast time:  2.5 + 1 s
+Cooldown:   5 s
+AoE radius: 3 m
+Max targets: 3
+Targets:    enemy"
+
 [node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" unique_id=971293459 instance=ExtResource("9_rio8d")]
 custom_minimum_size = Vector2(49, 49)
 layout_mode = 0
-offset_left = 208.0
-offset_top = 52.0
-offset_right = 257.0
-offset_bottom = 101.0
+offset_left = 329.00015
+offset_top = 51.0
+offset_right = 378.00015
+offset_bottom = 100.0
 texture_normal = ExtResource("16_rwbbu")
 ability = ExtResource("17_c54xi")
 talentName = "Taunt"
@@ -699,11 +814,12 @@ Ranged Skill:  60 %"
 
 [node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" unique_id=1201673657 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 0
-anchor_left = 0.733871
-anchor_top = -0.5
-anchor_right = 0.733871
-anchor_bottom = -0.5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828629
+anchor_top = -0.49798387
+anchor_right = 0.828629
+anchor_bottom = -0.49798387
 offset_left = -6.0
 offset_top = 300.0
 offset_right = 43.0
@@ -769,11 +885,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1646807170 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 0
-anchor_left = -0.487903
-anchor_top = -0.298387
-anchor_right = -0.487903
-anchor_bottom = -0.298387
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.37298387
+anchor_top = -0.4979839
+anchor_right = -0.37298387
+anchor_bottom = -0.4979839
 offset_left = 200.0
 offset_top = 300.0
 offset_right = 249.0
@@ -787,11 +904,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1983501588 node_paths=PackedStringArray("requiredTalents") instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 0
-anchor_left = 0.179435
-anchor_top = -0.457661
-anchor_right = 0.179435
-anchor_bottom = -0.457661
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48790324
+anchor_top = -0.6552419
+anchor_right = 0.48790324
+anchor_bottom = -0.6552419
 offset_left = -6.0
 offset_top = 379.0
 offset_right = 43.0
@@ -841,15 +959,16 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=140872093 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = -0.167339
 anchor_top = -0.457661
 anchor_right = -0.167339
 anchor_bottom = -0.457661
-offset_left = 291.0
-offset_top = 379.0
-offset_right = 340.0
-offset_bottom = 428.0
+offset_left = 412.00015
+offset_top = 378.0
+offset_right = 461.00015
+offset_bottom = 427.0
 attributes = SubResource("Resource_gbr36")
 talentName = "Threat skill"
 talentDescription = "Threat Skill:  15 %"
@@ -874,11 +993,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" unique_id=1778080775 instance=ExtResource("9_srmse")]
 custom_minimum_size = Vector2(49, 49)
-layout_mode = 0
-anchor_left = 0.685484
-anchor_top = -0.818548
-anchor_right = 0.685484
-anchor_bottom = -0.818548
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7177419
+anchor_top = -0.8145161
+anchor_right = 0.7177419
+anchor_bottom = -0.8145161
 offset_left = 143.0
 offset_top = 458.0
 offset_right = 192.0
