@@ -132,7 +132,7 @@ func use(user: Unit, target: Unit, source: Unit = null) -> bool:
 
 
 func getDescription() -> String:
-	var _description := description + "\n\n"
+	var _description := "  %s\n%s\n\n" % [name, description]
 	if damageMelee != 0:
 		_description += "Damage:     %.1f x MeleePower\n" % damageMelee
 	if damageRanged != 0:
