@@ -24,7 +24,7 @@ func _ready() -> void:
 		queue_free()
 		return
 
-	itemResource = load("res://resources/items/%s.tres" % Global.Items.find_key(itemType))
+	itemResource = Item.load(itemType)
 	meshInstance.mesh = itemResource.mesh
 
 	var aabb := meshInstance.get_aabb()

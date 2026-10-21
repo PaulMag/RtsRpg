@@ -17,8 +17,7 @@ func _process(_delta: float) -> void:
 
 	if unit.targetUnit:
 		unit.followTarget = (
-			unit.position.distance_to(unit.targetUnit.position)
-			> Global.getAbility[abilityIdsPrioritized[0]].targetRange
+			unit.position.distance_to(unit.targetUnit.position) > Ability.load(abilityIdsPrioritized[0]).targetRange
 		)
 		if not unit.followTarget:
 			var target_pos := unit.targetUnit.position

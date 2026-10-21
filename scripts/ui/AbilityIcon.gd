@@ -13,4 +13,4 @@ static func init(_abilityId: Global.AbilityIds) -> AbilityIcon:
 
 
 func _ready() -> void:
-	texture = Global.getAbility[abilityId].texture
+	texture = Ability.load(abilityId).texture

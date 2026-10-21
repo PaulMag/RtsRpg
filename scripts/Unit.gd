@@ -235,7 +235,7 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector3.ZERO
 
 		if isCasting:
-			velocity *= Global.getAbility[castingAbilityId].speedFactorWhileCasting
+			velocity *= Ability.load(castingAbilityId).speedFactorWhileCasting
 
 		move_and_slide()
 
@@ -311,7 +311,7 @@ func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) 
 	if _targetUnit == null:
 		_targetUnit = targetUnit
 	if _targetUnit == null:
-		var ability := Global.getAbility[abilityId]
+		var ability := Ability.load(abilityId)
 		if ability.canTargetSelf:
 			_targetUnit = self # Default to targeting self if valid
 		else:
@@ -330,7 +330,7 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 
 	var _targetUnit := Global.getUnitFromUnitId(targetUnitId)
 
-	var ability := Global.getAbility[abilityId]
+	var ability := Ability.load(abilityId)
 
 	# Self-Abilities default to targeting self when no other valid target
 	if self != _targetUnit and ability.canTargetSelf:
@@ -394,7 +394,7 @@ func dequeueAbility() -> void:
 
 
 func canUseAbility(abilityId: Global.AbilityIds) -> bool:
-	var ability := Global.getAbility[abilityId]
+	var ability := Ability.load(abilityId)
 	return ability.canUse(self, targetUnit)
 
 
@@ -677,7 +677,7 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 @rpc("call_remote")
 func giveItem(itemType: Global.Items) -> bool:
 	# This method is called normally only on the server, which calls it again on the clients with rpc.
-	var item := load("res://resources/items/%s.tres" % Global.Items.find_key(itemType)) as Item
+	var item := Item.load(itemType)
 
 	if multiplayer.is_server():
 		giveItem.rpc(itemType)
@@ -737,7 +737,7 @@ func cancelCast() -> void:
 		isCasting = false
 		audioPlayerCasting.stop()
 		cancelCastButton.visible = false
-		Global.getAbility[castingAbilityId].refundCost(self)
+		Ability.load(castingAbilityId).refundCost(self)
 		canRegenMana = true
 		manaBar.modulate = Color.WHITE
 
@@ -764,7 +764,7 @@ func _on_cast_timer_timeout() -> void:
 	audioPlayerCasting.stop()
 	cancelCastButton.visible = false
 
-	var ability := Global.getAbility[castingAbilityId]
+	var ability := Ability.load(castingAbilityId)
 	var success := (
 		false
 		if (castTargetUnit == null or not is_instance_valid(castTargetUnit))

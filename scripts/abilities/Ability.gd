@@ -41,6 +41,10 @@ extends Resource
 @export var canTargetDead: bool = false
 
 
+static func load(_abilityId: Global.AbilityIds) -> Ability:
+	return load("res://resources/abilities/%s.tres" % Global.AbilityIds.find_key(_abilityId))
+
+
 func canUse(user: Unit, target: Unit) -> bool:
 	if target == null:
 		return false
