@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 		var direction := targetPos.direction_to(selfPos)
 
 		var intendedPosition := Global.vec2_to_vec3(
-			targetPos + direction * Global.getAbility[abilityIdsPrioritized[0]].targetRange * 0.95
+			targetPos + direction * Ability.load(abilityIdsPrioritized[0]).targetRange * 0.95
 		)
 		var closest_point := NavigationServer3D.map_get_closest_point(
 			unit.navigationAgent.get_navigation_map(),

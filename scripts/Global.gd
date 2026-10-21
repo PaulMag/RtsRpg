@@ -35,7 +35,6 @@ enum ItemSlots {
 	Torso,
 }
 
-# AbilityIds and getAbility array MUST be in the same order
 enum AbilityIds {
 	MeleeAttack,
 	Fireball,
@@ -56,27 +55,6 @@ enum AbilityIds {
 	Volley,
 	AchillesShot,
 }
-
-var getAbility: Array[Ability] = [
-	load("res://resources/abilities/MeleeAttack.tres"),
-	load("res://resources/abilities/Fireball.tres"),
-	load("res://resources/abilities/HealingWord.tres"),
-	load("res://resources/abilities/Taunt.tres"),
-	load("res://resources/abilities/Slow.tres"),
-	load("res://resources/abilities/RangedAttack.tres"),
-	load("res://resources/abilities/Haste.tres"),
-	load("res://resources/abilities/Prowess.tres"),
-	load("res://resources/abilities/CureWounds.tres"),
-	load("res://resources/abilities/Revive.tres"),
-	load("res://resources/abilities/Firebolt.tres"),
-	load("res://resources/abilities/FireAura.tres"),
-	load("res://resources/abilities/FireAuraEffect.tres"),
-	load("res://resources/abilities/SavageStrike.tres"),
-	load("res://resources/abilities/Cleave.tres"),
-	load("res://resources/abilities/Hamstring.tres"),
-	load("res://resources/abilities/Volley.tres"),
-	load("res://resources/abilities/AchillesShot.tres"),
-]
 
 var cameraArm: Node3D
 var dungeon: Dungeon

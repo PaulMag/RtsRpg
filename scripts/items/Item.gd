@@ -11,6 +11,10 @@ extends Resource
 @export var rotation: Vector3
 
 
+static func load(_itemType: Global.Items) -> Item:
+	return load("res://resources/items/%s.tres" % Global.Items.find_key(_itemType))
+
+
 func getDescription() -> String:
 	var description := "  %s\n" % name
 	if slot != Global.ItemSlots.None:
