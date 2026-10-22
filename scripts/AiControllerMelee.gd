@@ -5,4 +5,4 @@ extends AiController
 func _ready() -> void:
 	super._ready()
 
-	abilityIdsPrioritized = [Global.AbilityIds.MeleeAttack]
+	abilityIdsPrioritized = [Ability.Id.MeleeAttack]

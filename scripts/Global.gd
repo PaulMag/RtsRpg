@@ -5,57 +5,6 @@ enum Faction {
 	ENEMIES,
 }
 
-enum Items {
-	NONE,
-	dagger,
-	sword_short,
-	sword_long,
-	crossbow_light,
-	crossbow_heavy,
-	staff_healing,
-	wand_fire,
-	cuirass_iron,
-	robe_mage,
-	tunic_leather,
-	helmet_iron,
-	hat_pointy,
-	hat_bear,
-	shield_round,
-	shield_kite,
-	shield_kite_spiked,
-	shield_tower,
-	spellbook,
-}
-
-enum ItemSlots {
-	None, # For items that don't fit in a slot
-	MainHand,
-	OffHand,
-	Head,
-	Torso,
-}
-
-enum AbilityIds {
-	MeleeAttack,
-	Fireball,
-	HealingWord,
-	Taunt,
-	Slow,
-	RangedAttack,
-	Haste,
-	Prowess,
-	CureWounds,
-	Revive,
-	Firebolt,
-	FireAura,
-	FireAuraEffect,
-	SavageStrike,
-	Cleave,
-	Hamstring,
-	Volley,
-	AchillesShot,
-}
-
 var cameraArm: Node3D
 var dungeon: Dungeon
 

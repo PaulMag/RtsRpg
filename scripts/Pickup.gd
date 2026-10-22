@@ -3,7 +3,7 @@ extends Area3D
 
 const SCENE := preload("res://scenes/Pickup.tscn")
 
-@export var itemType: Global.Items
+@export var itemId: Item.Id
 
 var itemResource: Item
 
@@ -13,18 +13,18 @@ var itemResource: Item
 @onready var descriptionLabel: Label = %DescriptionLabel
 
 
-static func init(_itemType: Global.Items) -> Pickup:
+static func init(_itemId: Item.Id) -> Pickup:
 	var scene := SCENE.instantiate() as Pickup
-	scene.itemType = _itemType
+	scene.itemId = _itemId
 	return scene
 
 
 func _ready() -> void:
-	if itemType == Global.Items.NONE:
+	if itemId == Item.Id.NONE:
 		queue_free()
 		return
 
-	itemResource = Item.load(itemType)
+	itemResource = Item.load(itemId)
 	meshInstance.mesh = itemResource.mesh
 
 	var aabb := meshInstance.get_aabb()
@@ -48,7 +48,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body is Unit and multiplayer.is_server():
 		var unit := body as Unit
 		if unit.faction == Global.Faction.PLAYERS:
-			if unit.giveItem(itemType):
+			if unit.giveItem(itemId):
 				queue_free()
 
 

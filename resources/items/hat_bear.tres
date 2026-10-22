@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("3_21sya")
-itemType = 13
+itemId = 13
 name = "Bear Heat"
 texture = ExtResource("4_vjbfs")
 mesh = ExtResource("2_rn1qv")

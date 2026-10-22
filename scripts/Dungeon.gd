@@ -8,7 +8,7 @@ var xpRewardMultiplier: float = 1.0
 var enemyStartMultiplier: float = 1.0
 var enemyLevelMultiplier: float = 1.0
 
-var remainingLoot: Array[Global.Items] = []
+var remainingLoot: Array[Item.Id] = []
 
 
 static func init() -> Dungeon:
@@ -31,9 +31,9 @@ func distributeTalentPoints(amount: float) -> void:
 		unit.giveTalentPointsOnServer(amount / numberOfPlayers)
 
 
-func getNextLoot() -> Global.Items:
+func getNextLoot() -> Item.Id:
 	if remainingLoot.is_empty():
-		for item in range(1, Global.Items.values().size()):
+		for item in range(1, Item.Id.values().size()):
 			remainingLoot.append(item)
 		remainingLoot.shuffle()
 	return remainingLoot.pop_back()

@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("3_vi0y0")
-itemType = 16
+itemId = 16
 name = "Spiked Kite Shield"
 texture = ExtResource("4_r02ud")
 mesh = ExtResource("2_r02ud")

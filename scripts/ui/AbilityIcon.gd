@@ -3,10 +3,10 @@ extends TextureRect
 
 const SCENE := preload("res://scenes/ui/AbilityIcon.tscn")
 
-var abilityId: Global.AbilityIds
+var abilityId: Ability.Id
 
 
-static func init(_abilityId: Global.AbilityIds) -> AbilityIcon:
+static func init(_abilityId: Ability.Id) -> AbilityIcon:
 	var scene: AbilityIcon = SCENE.instantiate()
 	scene.abilityId = _abilityId
 	return scene

@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("3_i858r")
-itemType = 9
+itemId = 9
 name = "Mage's Robe"
 texture = ExtResource("4_khcq8")
 mesh = ExtResource("2_v2ss4")

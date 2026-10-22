@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("3_08so1")
-itemType = 10
+itemId = 10
 name = "Leather Tunic"
 texture = ExtResource("4_4b5y8")
 mesh = ExtResource("2_yjcpe")

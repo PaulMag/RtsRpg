@@ -9,20 +9,20 @@ const SPAWN_RADIUS: float = 3
 # Spawn with random items based on the unit type
 const ITEMS: Dictionary[PackedScene, Dictionary] = {
 	BARBARIAN_SCENE: {
-		Global.ItemSlots.MainHand: [Global.Items.sword_long, Global.Items.sword_short, Global.Items.dagger],
-		Global.ItemSlots.OffHand: [
-			Global.Items.NONE,
-			Global.Items.shield_kite,
-			Global.Items.shield_kite_spiked,
-			Global.Items.shield_round,
-			Global.Items.shield_tower,
+		Item.Slot.MAIN_HAND: [Item.Id.sword_long, Item.Id.sword_short, Item.Id.dagger],
+		Item.Slot.OFF_HAND: [
+			Item.Id.NONE,
+			Item.Id.shield_kite,
+			Item.Id.shield_kite_spiked,
+			Item.Id.shield_round,
+			Item.Id.shield_tower,
 		],
-		Global.ItemSlots.Torso: [Global.Items.NONE, Global.Items.cuirass_iron, Global.Items.tunic_leather],
-		Global.ItemSlots.Head: [Global.Items.NONE, Global.Items.helmet_iron, Global.Items.hat_bear],
+		Item.Slot.TORSO: [Item.Id.NONE, Item.Id.cuirass_iron, Item.Id.tunic_leather],
+		Item.Slot.HEAD: [Item.Id.NONE, Item.Id.helmet_iron, Item.Id.hat_bear],
 	},
 	ARCHER_SCENE: {
-		Global.ItemSlots.MainHand: [Global.Items.crossbow_heavy, Global.Items.crossbow_light],
-		Global.ItemSlots.Torso: [Global.Items.NONE, Global.Items.cuirass_iron, Global.Items.tunic_leather],
+		Item.Slot.MAIN_HAND: [Item.Id.crossbow_heavy, Item.Id.crossbow_light],
+		Item.Slot.TORSO: [Item.Id.NONE, Item.Id.cuirass_iron, Item.Id.tunic_leather],
 	},
 }
 
@@ -76,10 +76,10 @@ func spawnUnit(UNIT_SCENE: PackedScene, joiningExistingUnits: bool = false) -> v
 	# MUST wait until setAppearance on CharacterModel is finished.
 	await get_tree().create_timer(1.0).timeout
 
-	for itemSlot: Global.ItemSlots in ITEMS[UNIT_SCENE]:
+	for itemSlot: Item.Slot in ITEMS[UNIT_SCENE]:
 		var possibleItems: Array = ITEMS[UNIT_SCENE][itemSlot]
-		var randomItem: Global.Items = possibleItems[randi() % possibleItems.size()]
-		if randomItem != Global.Items.NONE:
+		var randomItem: Item.Id = possibleItems[randi() % possibleItems.size()]
+		if randomItem != Item.Id.NONE:
 			newUnit.giveItem(randomItem)
 			newUnit.equipItemOnServer(
 				newUnit.inventoryContainer.get_child(newUnit.inventoryContainer.get_child_count() - 1) as ItemButton

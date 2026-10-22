@@ -5,7 +5,7 @@ extends Resource
 @export var name: String
 @export_multiline var description: String
 @export var texture: Texture
-@export var abilityId: Global.AbilityIds
+@export var abilityId: Ability.Id
 
 @export var damageMelee: float
 @export var damageRanged: float
@@ -40,9 +40,30 @@ extends Resource
 @export var canTargetAlive: bool = true
 @export var canTargetDead: bool = false
 
+enum Id {
+	MeleeAttack,
+	Fireball,
+	HealingWord,
+	Taunt,
+	Slow,
+	RangedAttack,
+	Haste,
+	Prowess,
+	CureWounds,
+	Revive,
+	Firebolt,
+	FireAura,
+	FireAuraEffect,
+	SavageStrike,
+	Cleave,
+	Hamstring,
+	Volley,
+	AchillesShot,
+}
 
-static func load(_abilityId: Global.AbilityIds) -> Ability:
-	return load("res://resources/abilities/%s.tres" % Global.AbilityIds.find_key(_abilityId))
+
+static func load(_abilityId: Id) -> Ability:
+	return load("res://resources/abilities/%s.tres" % Id.find_key(_abilityId))
 
 
 func canUse(user: Unit, target: Unit) -> bool:

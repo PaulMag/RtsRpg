@@ -6,18 +6,18 @@ extends Node3D
 @export var selectedHeadTextureId: int
 @export var selectedClothesTextureId: int
 
-@export var defaultMeshes: Dictionary[Global.ItemSlots, Mesh]
+@export var defaultMeshes: Dictionary[Item.Slot, Mesh]
 @export var headMeshes: Array[Mesh]
 @export var textures: Array[Texture2D]
 
 var clothesMaterial: StandardMaterial3D
 
 @onready var animationPlayer: AnimationPlayer = $AnimationPlayer
-@onready var itemMeshes: Dictionary[Global.ItemSlots, MeshInstance3D] = {
-	Global.ItemSlots.MainHand: %RightHandItem,
-	Global.ItemSlots.OffHand: %LeftHandItem,
-	Global.ItemSlots.Head: %HeadItem,
-	Global.ItemSlots.Torso: %Torso,
+@onready var itemMeshes: Dictionary[Item.Slot, MeshInstance3D] = {
+	Item.Slot.MAIN_HAND: %RightHandItem,
+	Item.Slot.OFF_HAND: %LeftHandItem,
+	Item.Slot.HEAD: %HeadItem,
+	Item.Slot.TORSO: %Torso,
 }
 @onready var headMeshInstance: MeshInstance3D = %Head
 @onready var meshInstances: Array[MeshInstance3D] = [
@@ -65,7 +65,7 @@ func equipItem(item: Item) -> void:
 		meshInstance.rotation = item.rotation
 
 
-func unEquipItemSlot(itemSlot: Global.ItemSlots) -> void:
+func unEquipItemSlot(itemSlot: Item.Slot) -> void:
 	if itemSlot in itemMeshes:
 		var meshInstance := itemMeshes[itemSlot]
 		if itemSlot in defaultMeshes:
