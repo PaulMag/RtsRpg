@@ -4,7 +4,7 @@ extends Area3D
 @export var unit: Unit
 
 # Which abilities the AI will use, in prioritized order.
-var abilityIdsPrioritized: Array[Global.AbilityIds] = []
+var abilityIdsPrioritized: Array[Ability.Id] = []
 
 
 func _ready() -> void:

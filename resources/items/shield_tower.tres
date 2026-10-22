@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("2_2t37f")
-itemType = 17
+itemId = 17
 name = "Tower Shield"
 texture = ExtResource("4_6gfhd")
 mesh = ExtResource("2_6gfhd")

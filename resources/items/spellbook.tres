@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("2_aebjh")
-itemType = 18
+itemId = 18
 name = "Spellbook"
 texture = ExtResource("4_op6ac")
 mesh = ExtResource("1_6ep0h")

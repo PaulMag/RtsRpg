@@ -3,7 +3,7 @@ extends AiController
 
 
 func _ready() -> void:
-	abilityIdsPrioritized = [Global.AbilityIds.RangedAttack]
+	abilityIdsPrioritized = [Ability.Id.RangedAttack]
 
 
 func _process(_delta: float) -> void:

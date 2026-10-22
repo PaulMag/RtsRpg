@@ -12,7 +12,7 @@ metadata/_custom_type_script = "uid://wh8mlk2fgja1"
 
 [resource]
 script = ExtResource("3_8v7v2")
-itemType = 2
+itemId = 2
 name = "Shortsword"
 texture = ExtResource("4_mklt1")
 mesh = ExtResource("2_dlh6q")

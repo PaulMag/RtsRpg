@@ -7,7 +7,7 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_axj2u"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eoid5"]
-properties/0/path = NodePath(".:itemType")
+properties/0/path = NodePath(".:itemId")
 properties/0/spawn = true
 properties/0/replication_mode = 0
 properties/1/path = NodePath(".:position")

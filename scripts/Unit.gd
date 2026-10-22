@@ -4,7 +4,7 @@ extends CharacterBody3D
 signal died
 signal ressurected
 
-enum states {
+enum State {
 	IDLE,
 	WALKING,
 	ATTACKING,
@@ -13,7 +13,7 @@ enum states {
 
 @export var unitId: int
 @export var faction := Global.Faction.ENEMIES
-@export var loot: Array[Global.Items]
+@export var loot: Array[Item.Id]
 @export var playerColor := Color.DIM_GRAY
 @export var baseAttributes: Attributes
 
@@ -21,7 +21,7 @@ enum states {
 @export var level: int = 1 # Only relevant for enemies for now
 @export var health: float = 75
 @export var mana: float = 40
-@export var state := states.IDLE
+@export var state := State.IDLE
 @export var aiController: AiController
 
 # Attributes
@@ -36,22 +36,22 @@ var isSelected := false
 var followCursor := false
 var followTarget := false
 var isCasting := false
-var castingAbilityId: Global.AbilityIds
-var queuedAbilityIds: Array[Global.AbilityIds] = []
+var castingAbilityId: Ability.Id
+var queuedAbilityIds: Array[Ability.Id] = []
 var isRecovering := false
 var canRegenMana := true
 var isAutocasting := false
-var autocastAbilityId: Global.AbilityIds
+var autocastAbilityId: Ability.Id
 var isDead := false
 
 var threatTable: Dictionary[Unit, float] = { }
 var buffs: Array[Buff] = []
 
-var equippedItemButtons: Dictionary[Global.ItemSlots, ItemButton] = {
-	Global.ItemSlots.MainHand: null,
-	Global.ItemSlots.OffHand: null,
-	Global.ItemSlots.Head: null,
-	Global.ItemSlots.Torso: null,
+var equippedItemButtons: Dictionary[Item.Slot, ItemButton] = {
+	Item.Slot.MAIN_HAND: null,
+	Item.Slot.OFF_HAND: null,
+	Item.Slot.HEAD: null,
+	Item.Slot.TORSO: null,
 }
 var talentPoints: float = 0
 
@@ -151,11 +151,11 @@ func _process(_delta: float) -> void:
 
 	if multiplayer.is_server():
 		if isCasting:
-			state = states.SPELLCASTING
+			state = State.SPELLCASTING
 		elif velocity:
-			state = states.WALKING
+			state = State.WALKING
 		else:
-			state = states.IDLE
+			state = State.IDLE
 
 	if velocity:
 		rotation.y = -Vector2(velocity.x, velocity.z).angle() + PI / 2
@@ -164,11 +164,11 @@ func _process(_delta: float) -> void:
 
 	if animationPlayer.current_animation == "Spellcast_Shoot" and animationPlayer.is_playing():
 		pass
-	elif state == states.SPELLCASTING:
+	elif state == State.SPELLCASTING:
 		animationPlayer.play("Spellcasting")
-	elif state == states.WALKING:
+	elif state == State.WALKING:
 		animationPlayer.play("Walking_A")
-	elif state == states.IDLE:
+	elif state == State.IDLE:
 		animationPlayer.play("Idle")
 
 
@@ -298,7 +298,7 @@ func getAbilityButtons() -> Array[AbilityButton]:
 	return abilityButtons
 
 
-func getSpecificAbilityButton(abilityId: Global.AbilityIds) -> Array[AbilityButton]:
+func getSpecificAbilityButton(abilityId: Ability.Id) -> Array[AbilityButton]:
 	var abilityButtons := getAbilityButtons()
 	return abilityButtons.filter(
 		func(abilityButton: AbilityButton) -> bool:
@@ -307,7 +307,7 @@ func getSpecificAbilityButton(abilityId: Global.AbilityIds) -> Array[AbilityButt
 
 
 @rpc("any_peer", "call_local")
-func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) -> void:
+func useAbilityOnServer(abilityId: Ability.Id, _targetUnit: Unit = null) -> void:
 	if _targetUnit == null:
 		_targetUnit = targetUnit
 	if _targetUnit == null:
@@ -320,7 +320,7 @@ func useAbilityOnServer(abilityId: Global.AbilityIds, _targetUnit: Unit = null) 
 
 
 @rpc("authority", "call_local")
-func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
+func useAbility(abilityId: Ability.Id, targetUnitId: int) -> void:
 	if isCasting:
 		print("Unit %s is already casting" % [unitName])
 		return
@@ -362,12 +362,12 @@ func useAbility(abilityId: Global.AbilityIds, targetUnitId: int) -> void:
 
 
 @rpc("any_peer", "call_local")
-func queueAbilityOnServer(abilityId: Global.AbilityIds) -> void:
+func queueAbilityOnServer(abilityId: Ability.Id) -> void:
 	queueAbility.rpc(abilityId)
 
 
 @rpc("authority", "call_local")
-func queueAbility(abilityId: Global.AbilityIds) -> void:
+func queueAbility(abilityId: Ability.Id) -> void:
 	queuedAbilityIds.append(abilityId)
 	var queuedAbilityIcon: AbilityIcon = AbilityIcon.init(abilityId)
 	queuedAbilitiesContainer.add_child(queuedAbilityIcon, true)
@@ -393,23 +393,23 @@ func dequeueAbility() -> void:
 		useAbilityOnServer(queuedAbilityId)
 
 
-func canUseAbility(abilityId: Global.AbilityIds) -> bool:
+func canUseAbility(abilityId: Ability.Id) -> bool:
 	var ability := Ability.load(abilityId)
 	return ability.canUse(self, targetUnit)
 
 
-func toggleAutocastOnServer(abilityId: Global.AbilityIds) -> void:
+func toggleAutocastOnServer(abilityId: Ability.Id) -> void:
 	toggleAutocastOnClients.rpc(abilityId)
 
 
 @rpc("any_peer", "call_local")
-func toggleAutocastOnClients(abilityId: Global.AbilityIds) -> void:
+func toggleAutocastOnClients(abilityId: Ability.Id) -> void:
 	if multiplayer.is_server():
 		toggleAutocast.rpc(abilityId)
 
 
 @rpc("authority", "call_local")
-func toggleAutocast(abilityId: Global.AbilityIds) -> void:
+func toggleAutocast(abilityId: Ability.Id) -> void:
 	if not isAutocasting:
 		for abilityButton in getSpecificAbilityButton(abilityId):
 			abilityButton.setAutocast(true)
@@ -627,7 +627,7 @@ func spendMana(amount: int) -> void:
 	mana -= amount
 
 
-func equipItemOnServer(itemButton: ItemButton, unEquipSlot: Global.ItemSlots = Global.ItemSlots.None) -> void:
+func equipItemOnServer(itemButton: ItemButton, unEquipSlot: Item.Slot = Item.Slot.NONE) -> void:
 	var nodeIndex := 0
 	for node in inventoryContainer.get_children():
 		if node == itemButton:
@@ -638,14 +638,14 @@ func equipItemOnServer(itemButton: ItemButton, unEquipSlot: Global.ItemSlots = G
 
 
 @rpc("any_peer", "call_local")
-func equipItemOnClients(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -> void:
+func equipItemOnClients(nodeIndex: int, toggledOn: bool, unEquipSlot: Item.Slot) -> void:
 	if multiplayer.is_server():
 		equipItem.rpc(nodeIndex, toggledOn, unEquipSlot)
 
 
 @rpc("authority", "call_local")
-func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -> void:
-	if unEquipSlot != Global.ItemSlots.None:
+func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Item.Slot) -> void:
+	if unEquipSlot != Item.Slot.NONE:
 		var oldItemButton := equippedItemButtons[unEquipSlot]
 		if oldItemButton:
 			oldItemButton.setEquipped(false)
@@ -675,12 +675,12 @@ func equipItem(nodeIndex: int, toggledOn: bool, unEquipSlot: Global.ItemSlots) -
 
 
 @rpc("call_remote")
-func giveItem(itemType: Global.Items) -> bool:
+func giveItem(itemId: Item.Id) -> bool:
 	# This method is called normally only on the server, which calls it again on the clients with rpc.
-	var item := Item.load(itemType)
+	var item := Item.load(itemId)
 
 	if multiplayer.is_server():
-		giveItem.rpc(itemType)
+		giveItem.rpc(itemId)
 
 	var itemButton := ItemButton.init(item, 0)
 	inventoryContainer.add_child(itemButton)
@@ -717,7 +717,7 @@ func dropItem(nodeIndex: int) -> void:
 	inventoryContainer.remove_child(itemButton)
 
 	if multiplayer.is_server():
-		var pickup := Pickup.init(item.itemType)
+		var pickup := Pickup.init(item.itemId)
 		pickup.position = position + Vector3(2, 0, 0) # Just a small offset to avoid collision with the unit
 		call_deferred("add_sibling", pickup, true)
 		print("Dropped item %s" % item.name)
