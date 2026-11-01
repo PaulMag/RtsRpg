@@ -31,7 +31,7 @@ func setEquipped(toggledOn: bool) -> void:
 
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event.is_action_released("mouse_right_click"):
+	if event.is_action_released("mouse_middle_click"):
 		drop_item.emit()
 
 
