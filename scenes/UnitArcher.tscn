@@ -4,34 +4,308 @@
 [ext_resource type="PackedScene" uid="uid://vcjsjj5mi5sv" path="res://scenes/AiController.tscn" id="2_3yftl"]
 [ext_resource type="Script" uid="uid://bpbcb4tf1d6u0" path="res://scripts/UnitArcher.gd" id="2_ojf4o"]
 [ext_resource type="Script" uid="uid://bi8oox0y3l0iu" path="res://scripts/AiControllerArcher.gd" id="3_gn7mc"]
+[ext_resource type="Script" uid="uid://wh8mlk2fgja1" path="res://scripts/Attributes.gd" id="3_w5tjg"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ojf4o"]
+[sub_resource type="Resource" id="Resource_xxxif"]
+script = ExtResource("3_w5tjg")
+maxHealth = 100
+meleePower = 3
+rangedPower = 3
+firePower = 3
+healingPower = 10
+speed = 4.0
+metadata/_custom_type_script = "uid://wh8mlk2fgja1"
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_6mqk3"]
 viewport_path = NodePath("SpriteHud/SubViewport")
 
 [node name="UnitArcher" unique_id=581664411 node_paths=PackedStringArray("aiController") instance=ExtResource("1_grh4b")]
 script = ExtResource("2_ojf4o")
+baseAttributes = SubResource("Resource_xxxif")
 aiController = NodePath("AiController")
 
 [node name="SpriteHud" parent="." index="8" unique_id=2043563698]
-texture = SubResource("ViewportTexture_ojf4o")
+texture = SubResource("ViewportTexture_6mqk3")
 
 [node name="AiController" parent="." index="13" unique_id=1135834324 node_paths=PackedStringArray("unit") instance=ExtResource("2_3yftl")]
 visible = false
 script = ExtResource("3_gn7mc")
 unit = NodePath("..")
 
-[node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="5" unique_id=1004246315]
-talentDescription = "Range:      10 m
+[node name="MeleeAttack" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="0" unique_id=674189554]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Melee Attack
+Basic melee attack.
+
+Damage:     1.0 x MeleePower
+Range:      2 m
+Cast time:  1.0 + 1 s
+Targets:    enemy"
+
+[node name="SavageStrike" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="1" unique_id=1025940482]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Savage Strike
+Melee attack that deals less damage but increased Threat.
+
+Damage:     0.5 x MeleePower
+Threat:     25
+Range:      2 m
+Cast time:  3.0 + 1 s
+Targets:    enemy"
+
+[node name="Hamstring" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="2" unique_id=848765121]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Hamstring
+Melee attack that slows the target.
+
+Damage:     0.5 x MeleePower
+Range:      2 m
+Cast time:  1.0 + 1 s
+Cooldown:   4 s
+Targets:    enemy
+Duration:   5 s
+  Debuff effect
+Speed Ratio:   -50 %"
+
+[node name="Cleave" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="3" unique_id=1438235551]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Cleave
+Melee attack that hits a second target near the primary target.
+
+Damage:     1.0 x MeleePower
+Range:      2 m
+Cast time:  1.5 + 1 s
+Cooldown:   3 s
+AoE radius: 2 m
+Max targets: 2
+Targets:    enemy"
+
+[node name="RangedAttack" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="4" unique_id=822648170]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Ranged Attack
+Basic ranged attack.
+
+Damage:     1.0 x RangedPower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Targets:    enemy"
+
+[node name="AchiilesShot" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="5" unique_id=479329952]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  AchillesShot
+Ranged attack that slows the target.
+
+Damage:     0.5 x RangedPower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Cooldown:   4 s
+Targets:    enemy
+Duration:   5 s
+  Debuff effect
+Speed Ratio:   -50 %"
+
+[node name="Volley" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="6" unique_id=1558768772]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Volley
+Ranged attack that hits two extra targets near the primary target. Has shorter range.
+
+Damage:     1.0 x RangedPower
+Range:      12 m
+Cast time:  2.5 + 1 s
+Cooldown:   5 s
+AoE radius: 3 m
+Max targets: 3
+Targets:    enemy"
+
+[node name="Taunt" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="7" unique_id=971293459]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Taunt
+Cause a large amount of threat to target and other enemies near it.
+
+Threat:     25
+Range:      5 m
+Cast time:  1.5 + 1 s
+Cooldown:   3 s
+AoE radius: 3 m
+Targets:    enemy"
+
+[node name="FireBolt" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="8" unique_id=950754549]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Firebolt
+Less mana efficient than Fireball, but higher damage output for single targets.
+
+Damage:     2.0 x FirePower
+Range:      15 m
+Cast time:  1.5 + 1 s
+Mana cost:  15
+Targets:    enemy"
+
+[node name="FireBall" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="9" unique_id=1018411087]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Fireball
+Damage target and other enemies near it.
+
+Damage:     2.0 x FirePower
+Range:      15 m
+Cast time:  3.0 + 1 s
+AoE radius: 5 m
+Mana cost:  15
+Targets:    enemy"
+
+[node name="FireAura" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="10" unique_id=1004246315]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Fire Aura
+Cause target to continuously damage nearby enemies. The spellcaster is the one causing the threat.
+
+Range:      10 m
 Cast time:  3.0 + 1 s
 Mana cost:  20
 Targets:    self, friend
 Duration:   3 s
+
   Effect on nearby enemies
 Damage/sec:   1.0 x FirePower
 AoE radius:   5 m"
 
-[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="9" unique_id=345892325]
-talentDescription = "Range:      15 m
+[node name="HealingWord" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="11" unique_id=1992656545]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Healing Word
+Fast long range heal.
+
+Healing:    1.0 x HealingPower
+Range:      10 m
+Cast time:  1.0 + 1 s
+Mana cost:  5
+Targets:    self, friend"
+
+[node name="CureWounds" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="12" unique_id=1571639070]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Cure Wounds
+Slow and powerful heal.
+
+Healing:    2.5 x HealingPower
+Range:      5 m
+Cast time:  3.0 + 1 s
+Mana cost:  10
+Targets:    self, friend"
+
+[node name="Revive" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="13" unique_id=25209363]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Revive
+Revive a fallen ally. Slow to cast and restores only a little health. Threat is cleared.
+
+Healing:    0.1 x HealingPower
+Range:      2 m
+Cast time:  5.0 + 1 s
+Targets:    friend, dead"
+
+[node name="Slow" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="14" unique_id=345892325]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Slow
+Target moves slower.
+
+Range:      15 m
 Cast time:  0.5 + 1 s
 Mana cost:  10
 Targets:    enemy
@@ -39,8 +313,19 @@ Duration:   10 s
   Debuff effect
 Speed Ratio:   -50 %"
 
-[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="10" unique_id=1257956542]
-talentDescription = "Range:      15 m
+[node name="Haste" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="15" unique_id=1257956542]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Haste
+Target moves faster.
+
+Range:      15 m
 Cast time:  0.5 + 1 s
 Mana cost:  10
 Targets:    self, friend
@@ -48,8 +333,19 @@ Duration:   10 s
   Buff effect
 Speed:         3.0 m/s"
 
-[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="11" unique_id=1419878228]
-talentDescription = "Range:      15 m
+[node name="Prowess" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="16" unique_id=1419878228]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+talentDescription = "  Prowess
+Make target deal more physical damage.
+
+Range:      15 m
 Cast time:  2.0 + 1 s
 Mana cost:  10
 Targets:    self, friend
@@ -58,36 +354,43 @@ Duration:   10 s
 Melee Skill:   60 %
 Ranged Skill:  60 %"
 
-[node name="HealthMax" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="12" unique_id=1201673657]
-talentDescription = "Health Max:    20"
+[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="18" unique_id=486309966]
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="Magic" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="13" unique_id=486309966]
-talentDescription = "Mana Max:      20
-Mana Regen:    1.0/s"
+[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="19" unique_id=1070526890]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="ManaMax" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="14" unique_id=1070526890]
-talentDescription = "Mana Max:      20"
+[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="20" unique_id=1947294545]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="ManaRegen" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="15" unique_id=1947294545]
-talentDescription = "Mana Regen:    1.0/s"
+[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="21" unique_id=1646807170]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
 
-[node name="MeleeSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="16" unique_id=1646807170]
-talentDescription = "Melee Skill:   10 %"
+[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="22" unique_id=1983501588]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
 
-[node name="RangedSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="17" unique_id=1983501588]
-talentDescription = "Ranged Skill:  10 %"
+[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="23" unique_id=208617065]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="FireSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="18" unique_id=208617065]
-talentDescription = "Fire Skill:    15 %"
+[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="24" unique_id=1860187511]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="HealSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="19" unique_id=1860187511]
-talentDescription = "Healing Skill: 15 %"
-
-[node name="ThreatSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="20" unique_id=140872093]
-talentDescription = "Threat Skill:  15 %"
-
-[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="21" unique_id=615355352]
-talentDescription = "Duration Skill: 20 %"
-
-[node name="ArmorSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="22" unique_id=1778080775]
-talentDescription = "Armor Skill:   15 %"
+[node name="DurationSkill" parent="UnitHud/TalentTree/TalentButtons" parent_id_path=PackedInt32Array(1383972510) index="26" unique_id=615355352]
+self_modulate = Color(0.6627451, 0.6627451, 0.6627451, 1)
+anchors_preset = 0
+grow_horizontal = 1
+grow_vertical = 1
